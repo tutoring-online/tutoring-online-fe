@@ -11,9 +11,8 @@ import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthHeader from "components/Headers/AuthHeader.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
-import routes from "routes.js";
-
 import componentStyles from "assets/theme/layouts/auth.js";
+import routes from "routes.js";
 
 const useStyles = makeStyles(componentStyles);
 
