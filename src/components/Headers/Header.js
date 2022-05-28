@@ -1,17 +1,16 @@
 import React from "react";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import { useTheme } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-// @material-ui/icons components
-import ArrowDownward from "@material-ui/icons/ArrowDownward";
-import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import EmojiEvents from "@material-ui/icons/EmojiEvents";
-import GroupAdd from "@material-ui/icons/GroupAdd";
-import InsertChartOutlined from "@material-ui/icons/InsertChartOutlined";
-import PieChart from "@material-ui/icons/PieChart";
+import makeStyles from '@mui/styles/makeStyles';
+import { useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+// @mui/icons-material components
+import ArrowDownward from "@mui/icons-material/ArrowDownward";
+import ArrowUpward from "@mui/icons-material/ArrowUpward";
+import EmojiEvents from "@mui/icons-material/EmojiEvents";
+import GroupAdd from "@mui/icons-material/GroupAdd";
+import InsertChartOutlined from "@mui/icons-material/InsertChartOutlined";
+import PieChart from "@mui/icons-material/PieChart";
 
 // core components
 import CardStats from "components/Cards/CardStats.js";

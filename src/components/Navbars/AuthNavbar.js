@@ -1,25 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import { useTheme } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-import Divider from "@material-ui/core/Divider";
-import Hidden from "@material-ui/core/Hidden";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Menu from "@material-ui/core/Menu";
-import Toolbar from "@material-ui/core/Toolbar";
-// @material-ui/icons components
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import Clear from "@material-ui/icons/Clear";
-import Dashboard from "@material-ui/icons/Dashboard";
-import MenuIcon from "@material-ui/icons/Menu";
-import Person from "@material-ui/icons/Person";
-import VpnKey from "@material-ui/icons/VpnKey";
+import makeStyles from '@mui/styles/makeStyles';
+import { useTheme } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Divider from "@mui/material/Divider";
+import Hidden from "@mui/material/Hidden";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import Menu from "@mui/material/Menu";
+import Toolbar from "@mui/material/Toolbar";
+// @mui/icons-material components
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import Clear from "@mui/icons-material/Clear";
+import Dashboard from "@mui/icons-material/Dashboard";
+import MenuIcon from "@mui/icons-material/Menu";
+import Person from "@mui/icons-material/Person";
+import VpnKey from "@mui/icons-material/VpnKey";
 
 // core components
 import componentStyles from "assets/theme/components/auth-navbar.js";
@@ -116,95 +115,93 @@ export default function AuthNavbar() {
       </ListItem>
     </Box>
   );
-  return (
-    <>
-      <AppBar position="absolute" color="transparent" elevation={0}>
-        <Toolbar>
-          <Container
-            display="flex!important"
-            justifyContent="space-between"
-            alignItems="center"
-            marginTop=".75rem"
-            component={Box}
-            maxWidth="xl"
-          >
-            <Box
-              alt="..."
-              height="30px"
-              component="img"
-              className={classes.headerImg}
-              src={require("assets/img/brand/argon-react-white.png").default}
-            />
-            <Hidden mdUp implementation="css">
-              <IconButton
-                edge="start"
-                color="inherit"
-                onClick={handleMenuOpen}
-                aria-controls={menuId}
-                aria-haspopup="true"
+  return <>
+    <AppBar position="absolute" color="transparent" elevation={0}>
+      <Toolbar>
+        <Container
+          display="flex!important"
+          justifyContent="space-between"
+          alignItems="center"
+          marginTop=".75rem"
+          component={Box}
+          maxWidth="xl"
+        >
+          <Box
+            alt="..."
+            height="30px"
+            component="img"
+            className={classes.headerImg}
+            src={require("assets/img/brand/argon-react-white.png").default}
+          />
+          <Hidden mdUp implementation="css">
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleMenuOpen}
+              aria-controls={menuId}
+              aria-haspopup="true"
+              size="large">
+              <Box
+                component={MenuIcon}
+                color={theme.palette.white.main}
+                width="2rem!important"
+                height="2rem!important"
+              />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+              id={menuId}
+              keepMounted
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
+              open={isMenuOpen}
+              onClose={handleMenuClose}
+              classes={{ paper: classes.menuPaper }}
+            >
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                paddingLeft="1.25rem"
+                paddingRight="1.25rem"
+                paddingBottom="1rem"
+                className={classes.outlineNone}
               >
                 <Box
-                  component={MenuIcon}
-                  color={theme.palette.white.main}
-                  width="2rem!important"
-                  height="2rem!important"
+                  alt="..."
+                  height="36px"
+                  component="img"
+                  className={classes.headerImg}
+                  src={require("assets/img/brand/argon-react.png").default}
                 />
-              </IconButton>
-              <Menu
-                anchorEl={anchorEl}
-                anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                id={menuId}
-                keepMounted
-                transformOrigin={{ vertical: "top", horizontal: "right" }}
-                open={isMenuOpen}
-                onClose={handleMenuClose}
-                classes={{ paper: classes.menuPaper }}
-              >
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  paddingLeft="1.25rem"
-                  paddingRight="1.25rem"
-                  paddingBottom="1rem"
-                  className={classes.outlineNone}
-                >
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  onClick={handleMenuClose}
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  size="large">
                   <Box
-                    alt="..."
-                    height="36px"
-                    component="img"
-                    className={classes.headerImg}
-                    src={require("assets/img/brand/argon-react.png").default}
+                    component={Clear}
+                    width="2rem!important"
+                    height="2rem!important"
                   />
-                  <IconButton
-                    edge="start"
-                    color="inherit"
-                    onClick={handleMenuClose}
-                    aria-controls={menuId}
-                    aria-haspopup="true"
-                  >
-                    <Box
-                      component={Clear}
-                      width="2rem!important"
-                      height="2rem!important"
-                    />
-                  </IconButton>
-                </Box>
-                <Box
-                  component={Divider}
-                  marginBottom="1rem!important"
-                  marginLeft="1.25rem!important"
-                  marginRight="1.25rem!important"
-                />
-                {ListObject}
-              </Menu>
-            </Hidden>
-            <Hidden smDown implementation="css">
+                </IconButton>
+              </Box>
+              <Box
+                component={Divider}
+                marginBottom="1rem!important"
+                marginLeft="1.25rem!important"
+                marginRight="1.25rem!important"
+              />
               {ListObject}
-            </Hidden>
-          </Container>
-        </Toolbar>
-      </AppBar>
-    </>
-  );
+            </Menu>
+          </Hidden>
+          <Hidden mdDown implementation="css">
+            {ListObject}
+          </Hidden>
+        </Container>
+      </Toolbar>
+    </AppBar>
+  </>;
 }

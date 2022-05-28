@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-// react component that copies the given text inside your clipboard
 import { CopyToClipboard } from "react-copy-to-clipboard";
-// @material-ui/core components
+
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";

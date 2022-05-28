@@ -7,17 +7,17 @@ import Profile from "views/admin/Profile.js";
 import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
 
-// @material-ui/icons components
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import FlashOn from "@material-ui/icons/FlashOn";
-import FormatListBulleted from "@material-ui/icons/FormatListBulleted";
-import Grain from "@material-ui/icons/Grain";
-import LocationOn from "@material-ui/icons/LocationOn";
-import Person from "@material-ui/icons/Person";
-import Tv from "@material-ui/icons/Tv";
-import VpnKey from "@material-ui/icons/VpnKey";
+// @mui/icons-material components
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import FlashOn from "@mui/icons-material/FlashOn";
+import FormatListBulleted from "@mui/icons-material/FormatListBulleted";
+import Grain from "@mui/icons-material/Grain";
+import LocationOn from "@mui/icons-material/LocationOn";
+import Person from "@mui/icons-material/Person";
+import Tv from "@mui/icons-material/Tv";
+import VpnKey from "@mui/icons-material/VpnKey";
 
-var routes = [
+const routes = [
 	{
 		href: "#pablo",
 		name: "Upgrade to pro",

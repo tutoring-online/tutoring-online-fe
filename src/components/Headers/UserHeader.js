@@ -1,13 +1,12 @@
 import React from "react";
 
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import { useTheme } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import makeStyles from '@mui/styles/makeStyles';
+import { useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 // core components
 import componentStyles from "assets/theme/components/user-header.js";

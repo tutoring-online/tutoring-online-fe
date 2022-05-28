@@ -1,30 +1,29 @@
 import React from "react";
 
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import { useTheme } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardHeader from "@material-ui/core/CardHeader";
-import Container from "@material-ui/core/Container";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Tooltip from "@material-ui/core/Tooltip";
-// @material-ui/lab components
-import AvatarGroup from "@material-ui/lab/AvatarGroup";
-import Pagination from "@material-ui/lab/Pagination";
-// @material-ui/icons components
-import MoreVert from "@material-ui/icons/MoreVert";
+import makeStyles from '@mui/styles/makeStyles';
+import { useTheme } from "@mui/material/styles";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardHeader from "@mui/material/CardHeader";
+import Container from "@mui/material/Container";
+import LinearProgress from "@mui/material/LinearProgress";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Tooltip from "@mui/material/Tooltip";
+// @mui/lab components
+import AvatarGroup from '@mui/material/AvatarGroup';
+import Pagination from '@mui/material/Pagination';
+// @mui/icons-material components
+import MoreVert from "@mui/icons-material/MoreVert";
 
 // core components
 import Header from "components/Headers/Header.js";

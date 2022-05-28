@@ -2,8 +2,8 @@ import React from 'react'
 
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { ThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 
 import theme from "assets/theme/theme.js";
 
@@ -17,15 +17,17 @@ import AuthLayout from "layouts/Auth.js";
 
 export default function App() {
   return (
-    <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <BrowserRouter basename="/">
-            <Switch>
-                <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-                <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
-                <Redirect from="/" to="/auth/login" />
-            </Switch>
-        </BrowserRouter>
-    </ThemeProvider>
-  )
+      <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <BrowserRouter basename="/">
+                  <Switch>
+                      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+                      <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
+                      <Redirect from="/" to="/auth/login" />
+                  </Switch>
+              </BrowserRouter>
+          </ThemeProvider>
+      </StyledEngineProvider>
+  );
 }

@@ -1,15 +1,14 @@
 import React from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-import FormControl from "@material-ui/core/FormControl";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import InputLabel from "@material-ui/core/InputLabel";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-// @material-ui/icons components
-import Search from "@material-ui/icons/Search";
+import makeStyles from '@mui/styles/makeStyles';
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import FormControl from "@mui/material/FormControl";
+import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+// @mui/icons-material components
+import Search from "@mui/icons-material/Search";
 
 // core components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
