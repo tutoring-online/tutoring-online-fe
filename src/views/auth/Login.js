@@ -19,6 +19,8 @@ import Lock from "@mui/icons-material/Lock";
 // core components
 import componentStyles from "assets/theme/views/auth/login.js";
 
+// firebase
+
 const useStyles = makeStyles(componentStyles);
 
 function Login() {
