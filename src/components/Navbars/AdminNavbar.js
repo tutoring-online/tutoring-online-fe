@@ -1,14 +1,13 @@
 import React from "react";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-import InputBase from "@material-ui/core/InputBase";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-// @material-ui/icons components
-import SearchIcon from "@material-ui/icons/Search";
+import makeStyles from '@mui/styles/makeStyles';
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import InputBase from "@mui/material/InputBase";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+// @mui/icons-material components
+import SearchIcon from "@mui/icons-material/Search";
 
 // core components
 import NavbarDropdown from "components/Dropdowns/NavbarDropdown.js";

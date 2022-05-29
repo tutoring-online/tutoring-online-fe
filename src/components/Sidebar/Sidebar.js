@@ -1,22 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useLocation, Link } from "react-router-dom";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Menu from "@material-ui/core/Menu";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-// @material-ui/icons components
-import Clear from "@material-ui/icons/Clear";
-import MenuIcon from "@material-ui/icons/Menu";
+import makeStyles from '@mui/styles/makeStyles';
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import Hidden from "@mui/material/Hidden";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import Menu from "@mui/material/Menu";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+// @mui/icons-material components
+import Clear from "@mui/icons-material/Clear";
+import MenuIcon from "@mui/icons-material/Menu";
 
 // core components
 import componentStyles from "assets/theme/components/sidebar.js";
@@ -137,87 +136,85 @@ export default function Sidebar({ routes, logo, dropdown, input }) {
         {logoImage}
       </a>
     ) : null;
-  return (
-    <>
-      <Hidden smDown implementation="css">
-        <Drawer variant="permanent" anchor="left" open>
-          <Box paddingBottom="1rem">{logoObject}</Box>
-          <List classes={{ root: classes.listRoot }}>
-            {createLinks(routes)}
-          </List>
-        </Drawer>
-      </Hidden>
-      <Hidden mdUp implementation="css">
-        <AppBar position="relative" color="default" elevation={0}>
-          <Toolbar>
-            <Container
-              display="flex!important"
-              justifyContent="space-between"
-              alignItems="center"
-              marginTop=".75rem"
-              marginBottom=".75rem"
-              component={Box}
-              maxWidth={false}
-              padding="0!important"
-            >
-              <Box
-                component={MenuIcon}
-                width="2rem!important"
-                height="2rem!important"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleMenuOpen}
-              />
-              {logoObject}
-              {dropdown}
-            </Container>
-          </Toolbar>
-        </AppBar>
-        <Menu
-          anchorEl={anchorEl}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-          id={menuId}
-          keepMounted
-          transformOrigin={{ vertical: "top", horizontal: "right" }}
-          open={isMenuOpen}
-          onClose={handleMenuClose}
-          classes={{ paper: classes.menuPaper }}
-        >
-          <Box
-            display="flex"
+  return <>
+    <Hidden mdDown implementation="css">
+      <Drawer variant="permanent" anchor="left" open>
+        <Box paddingBottom="1rem">{logoObject}</Box>
+        <List classes={{ root: classes.listRoot }}>
+          {createLinks(routes)}
+        </List>
+      </Drawer>
+    </Hidden>
+    <Hidden mdUp implementation="css">
+      <AppBar position="relative" color="default" elevation={0}>
+        <Toolbar>
+          <Container
+            display="flex!important"
             justifyContent="space-between"
             alignItems="center"
-            paddingLeft="1.25rem"
-            paddingRight="1.25rem"
-            paddingBottom="1rem"
-            className={classes.outlineNone}
+            marginTop=".75rem"
+            marginBottom=".75rem"
+            component={Box}
+            maxWidth={false}
+            padding="0!important"
           >
-            {logoObject}
             <Box
-              component={Clear}
+              component={MenuIcon}
               width="2rem!important"
               height="2rem!important"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleMenuClose}
+              onClick={handleMenuOpen}
             />
-          </Box>
+            {logoObject}
+            {dropdown}
+          </Container>
+        </Toolbar>
+      </AppBar>
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        id={menuId}
+        keepMounted
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        open={isMenuOpen}
+        onClose={handleMenuClose}
+        classes={{ paper: classes.menuPaper }}
+      >
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          paddingLeft="1.25rem"
+          paddingRight="1.25rem"
+          paddingBottom="1rem"
+          className={classes.outlineNone}
+        >
+          {logoObject}
           <Box
-            component={Divider}
-            marginBottom="1rem!important"
-            marginLeft="1.25rem!important"
-            marginRight="1.25rem!important"
+            component={Clear}
+            width="2rem!important"
+            height="2rem!important"
+            aria-controls={menuId}
+            aria-haspopup="true"
+            onClick={handleMenuClose}
           />
-          <Box paddingLeft="1.25rem" paddingRight="1.25rem">
-            {input}
-          </Box>
-          <List classes={{ root: classes.listRoot }}>
-            {createLinks(routes)}
-          </List>
-        </Menu>
-      </Hidden>
-    </>
-  );
+        </Box>
+        <Box
+          component={Divider}
+          marginBottom="1rem!important"
+          marginLeft="1.25rem!important"
+          marginRight="1.25rem!important"
+        />
+        <Box paddingLeft="1.25rem" paddingRight="1.25rem">
+          {input}
+        </Box>
+        <List classes={{ root: classes.listRoot }}>
+          {createLinks(routes)}
+        </List>
+      </Menu>
+    </Hidden>
+  </>;
 }
 
 Sidebar.defaultProps = {
@@ -261,7 +258,7 @@ Sidebar.propTypes = {
         icon: PropTypes.oneOfType([
           // this refers to icons such as ni ni-spaceship or fa fa-heart
           PropTypes.string,
-          // this refers to icons from @material-ui/icons
+          // this refers to icons from @mui/icons-material
           PropTypes.object,
         ]),
         iconColor: PropTypes.oneOf([
@@ -285,7 +282,7 @@ Sidebar.propTypes = {
         icon: PropTypes.oneOfType([
           // this refers to icons such as ni ni-spaceship or fa fa-heart
           PropTypes.string,
-          // this refers to icons from @material-ui/icons
+          // this refers to icons from @mui/icons-material
           PropTypes.object,
         ]),
         iconColor: PropTypes.oneOf([

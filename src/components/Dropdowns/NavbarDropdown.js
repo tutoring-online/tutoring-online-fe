@@ -1,20 +1,19 @@
 import React from "react";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
-import Hidden from "@material-ui/core/Hidden";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Typography from "@material-ui/core/Typography";
-// @material-ui/icons components
-import DirectionsRun from "@material-ui/icons/DirectionsRun";
-import EventNote from "@material-ui/icons/EventNote";
-import LiveHelp from "@material-ui/icons/LiveHelp";
-import Person from "@material-ui/icons/Person";
-import Settings from "@material-ui/icons/Settings";
+import makeStyles from '@mui/styles/makeStyles';
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import Hidden from "@mui/material/Hidden";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Typography from "@mui/material/Typography";
+// @mui/icons-material components
+import DirectionsRun from "@mui/icons-material/DirectionsRun";
+import EventNote from "@mui/icons-material/EventNote";
+import LiveHelp from "@mui/icons-material/LiveHelp";
+import Person from "@mui/icons-material/Person";
+import Settings from "@mui/icons-material/Settings";
 
 // core components
 import componentStyles from "assets/theme/components/navbar-dropdown.js";
@@ -127,30 +126,28 @@ export default function NavbarDropdown() {
     </Menu>
   );
 
-  return (
-    <>
-      <Button
-        edge="end"
-        aria-label="account of current user"
-        aria-controls={menuId}
-        aria-haspopup="true"
-        onClick={handleProfileMenuOpen}
-        color="inherit"
+  return <>
+    <Button
+      edge="end"
+      aria-label="account of current user"
+      aria-controls={menuId}
+      aria-haspopup="true"
+      onClick={handleProfileMenuOpen}
+      color="inherit"
+      classes={{
+        label: classes.buttonLabel,
+        root: classes.buttonRoot,
+      }}
+    >
+      <Avatar
+        alt="..."
+        src={require("assets/img/theme/team-4-800x800.jpg").default}
         classes={{
-          label: classes.buttonLabel,
-          root: classes.buttonRoot,
+          root: classes.avatarRoot,
         }}
-      >
-        <Avatar
-          alt="..."
-          src={require("assets/img/theme/team-4-800x800.jpg").default}
-          classes={{
-            root: classes.avatarRoot,
-          }}
-        />
-        <Hidden smDown>Jessica Jones</Hidden>
-      </Button>
-      {renderMenu}
-    </>
-  );
+      />
+      <Hidden mdDown>Jessica Jones</Hidden>
+    </Button>
+    {renderMenu}
+  </>;
 }
