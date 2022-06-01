@@ -85,7 +85,6 @@ const Admin = () => {
                                         />
                                     </InputAdornment>
                                 }
-                                labelWidth={70}
                             />
                         </FormControl>
                     }

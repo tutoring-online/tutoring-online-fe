@@ -12,9 +12,12 @@ const slice = createSlice({
     initialState: INITIAL_STATE,
     reducers: {
         [constants.LOGIN_USER]: (state) => {
-
+            console.log(state);
         }
     },
 })
+
+export const authReducer = slice.reducer;
+export const actions = slice.actions;
 
 export default slice;
