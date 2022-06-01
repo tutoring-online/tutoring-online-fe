@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 import makeStyles from '@mui/styles/makeStyles';
 import Box from "@mui/material/Box";
@@ -20,23 +20,37 @@ import routes from "route/routes.js";
 
 import componentStyles from "assets/theme/layouts/admin.js";
 
+import logoImg from "assets/img/brand/argon-react.png";
+import { useSelector } from "react-redux";
+
 const useStyles = makeStyles(componentStyles);
+
+const PrivateRoute = (props) => {
+    const isSignedIn = useSelector(state => state.auth.isSignedIn);
+
+    if (!isSignedIn) {
+        return <Redirect from="*" to="/auth/login" />
+    }
+
+    return (
+        <Route {...props} />
+    );
+}
 
 const Admin = () => {
     const classes = useStyles();
     const location = useLocation();
 
-    React.useEffect(() => {
+    useEffect(() => {
         document.documentElement.scrollTop = 0;
         document.scrollingElement.scrollTop = 0;
-        // mainContent.current.scrollTop = 0;
     }, [location]);
 
     const getRoutes = (routes) => {
         return routes.map((prop, key) => {
             if (prop.layout === "/admin") {
                 return (
-                    <Route
+                    <PrivateRoute
                         path={prop.layout + prop.path}
                         component={prop.component}
                         key={key}
@@ -64,7 +78,7 @@ const Admin = () => {
                     routes={routes}
                     logo={{
                         innerLink: "/admin/index",
-                        imgSrc: require("../assets/img/brand/argon-react.png").default,
+                        imgSrc: logoImg,
                         imgAlt: "...",
                     }}
                     dropdown={<NavbarDropdown />}
