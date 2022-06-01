@@ -6,15 +6,8 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
-import Checkbox from "@mui/material/Checkbox";
-import FilledInput from "@mui/material/FilledInput";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
-import InputAdornment from "@mui/material/InputAdornment";
 // @mui/icons-material components
-import Email from "@mui/icons-material/Email";
-import Lock from "@mui/icons-material/Lock";
 
 // core components
 import componentStyles from "assets/theme/views/auth/login.js";
@@ -53,8 +46,10 @@ function Login() {
                             <Box textAlign="center">
                                 <Box
                                     component={Button}
+                                    width="200px"
                                     variant="contained"
                                     marginRight=".5rem!important"
+                                    marginBottom=".3rem!important"
                                     classes={{ root: classes.buttonRoot }}
                                 >
                                     <Box component="span" marginRight="4px">
@@ -72,8 +67,13 @@ function Login() {
                                         Github
                                     </Box>
                                 </Box>
-                                <Button
+                                <br></br>
+                                <Box
+                                    component={Button}
+                                    width="200px"
                                     variant="contained"
+                                    marginRight=".5rem!important"
+                                    marginBottom=".3rem!important"
                                     classes={{ root: classes.buttonRoot }}
                                 >
                                     <Box component="span" marginRight="4px">
@@ -90,71 +90,59 @@ function Login() {
                                     <Box component="span" marginLeft=".75rem">
                                         Google
                                     </Box>
-                                </Button>
+                                </Box>
+                                <br></br>
+                                <Box
+                                    component={Button}
+                                    width="200px"
+                                    variant="contained"
+                                    marginRight=".5rem!important"
+                                    marginBottom=".3rem!important"
+                                    classes={{ root: classes.buttonRoot }}
+                                >
+                                    <Box component="span" marginRight="4px">
+                                        <Box
+                                            alt="..."
+                                            component="img"
+                                            width="20px"
+                                            className={classes.buttonImg}
+                                            src={
+                                                require("assets/img/icons/common/facebook.svg").default
+                                            }
+                                        ></Box>
+                                    </Box>
+                                    <Box component="span" marginLeft=".75rem">
+                                        Facebook
+                                    </Box>
+                                </Box>
+                                <br></br>
+                                <Box
+                                    component={Button}
+                                    width="200px"
+                                    variant="contained"
+                                    marginRight=".5rem!important"
+                                    marginBottom=".3rem!important"
+                                    classes={{ root: classes.buttonRoot }}
+                                >
+                                    <Box component="span" marginRight="4px">
+                                        <Box
+                                            alt="..."
+                                            component="img"                                            
+                                            width="20px"
+                                            className={classes.buttonImg}
+                                            src={
+                                                require("assets/img/icons/common/twitter.svg").default
+                                            }
+                                        ></Box>
+                                    </Box>
+                                    <Box component="span" marginLeft=".75rem">
+                                        Twitter
+                                    </Box>
+                                </Box>
                             </Box>
                         }
                     ></CardHeader>
                     <CardContent classes={{ root: classes.cardContent }}>
-                        <Box
-                            color={theme.palette.gray[600]}
-                            textAlign="center"
-                            marginBottom="1rem"
-                            marginTop=".5rem"
-                            fontSize="1rem"
-                        >
-                            <Box fontSize="80%" fontWeight="400" component="small">
-                                Or sign in with credentials
-                            </Box>
-                        </Box>
-                        <FormControl
-                            variant="filled"
-                            component={Box}
-                            width="100%"
-                            marginBottom="1rem!important"
-                        >
-                            <FilledInput
-                                autoComplete="off"
-                                type="email"
-                                placeholder="Email"
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <Email />
-                                    </InputAdornment>
-                                }
-                            />
-                        </FormControl>
-                        <FormControl
-                            variant="filled"
-                            component={Box}
-                            width="100%"
-                            marginBottom="1rem!important"
-                        >
-                            <FilledInput
-                                autoComplete="off"
-                                type="password"
-                                placeholder="Password"
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <Lock />
-                                    </InputAdornment>
-                                }
-                            />
-                        </FormControl>
-                        <FormControlLabel
-                            value="end"
-                            control={<Checkbox color="primary" />}
-                            label="Remeber me"
-                            labelPlacement="end"
-                            classes={{
-                                root: classes.formControlLabelRoot,
-                                label: classes.formControlLabelLabel,
-                            }}
-                        />
-                        <Box textAlign="center" marginTop="1.5rem" marginBottom="1.5rem">
-                            <Button color="primary" variant="contained">
-                                Sign in
-                            </Button>
-                        </Box>
                     </CardContent>
                 </Card>
                 <Grid container component={Box} marginTop="1rem">

@@ -13,7 +13,6 @@ import ListItem from "@mui/material/ListItem";
 import Menu from "@mui/material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 // @mui/icons-material components
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import Clear from "@mui/icons-material/Clear";
 import Dashboard from "@mui/icons-material/Dashboard";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -64,22 +63,6 @@ export default function AuthNavbar() {
           marginRight=".5rem!important"
         />
         Dashboard
-      </ListItem>
-      <ListItem
-        component={Link}
-        to="/auth/register"
-        onClick={handleMenuClose}
-        classes={{
-          root: classes.listItemRoot,
-        }}
-      >
-        <Box
-          component={AccountCircle}
-          width="1.25rem!important"
-          height="1.25rem!important"
-          marginRight=".5rem!important"
-        />
-        Register
       </ListItem>
       <ListItem
         component={Link}
