@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
-import { hot } from 'react-hot-loader/root';
 import theme from "assets/theme/theme.js";
 
 import "assets/plugins/nucleo/css/nucleo.css";
@@ -31,4 +30,4 @@ const App = () => {
     );
 }
 
-export default hot(App);
+export default App;
