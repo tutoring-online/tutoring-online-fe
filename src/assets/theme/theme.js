@@ -221,7 +221,7 @@ const theme = createTheme(adaptV4Theme({
         minWidth: 0,
         marginBottom: 0,
         padding: ".625rem .75rem",
-        "&:not(:first-child)": {
+        "&:not(:first-of-type)": {
           borderLeft: 0,
           borderTopLeftRadius: 0,
           borderBottomLeftRadius: 0,
@@ -340,7 +340,7 @@ const theme = createTheme(adaptV4Theme({
         backgroundColor: themeColors.white.main,
         borderBottom:
           "1px solid rgba(" + hexToRgb(themeColors.black.main) + ",.05)",
-        "&:first-child": {
+        "&:first-of-type": {
           borderRadius: "calc(.375rem - 1px) calc(.375rem - 1px) 0 0",
         },
       },

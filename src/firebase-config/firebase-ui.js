@@ -2,7 +2,7 @@ import { auth } from "./firebase.js";
 
 const uiConfig = {
     signInFlow: "redirect",
-    signInSuccessUrl: '/user-profile',
+    signInSuccessUrl: '/admin/user-profile',
     signInOptions: [
         auth.GoogleAuthProvider.PROVIDER_ID,
         auth.FacebookAuthProvider.PROVIDER_ID,
