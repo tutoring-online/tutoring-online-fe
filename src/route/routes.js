@@ -6,6 +6,8 @@ import Maps from "views/admin/Maps.js";
 import Profile from "views/admin/Profile.js";
 import Tables from "views/admin/Tables.js";
 
+import Logout from "components/Logout";
+
 // @mui/icons-material components
 import FlashOn from "@mui/icons-material/FlashOn";
 import FormatListBulleted from "@mui/icons-material/FormatListBulleted";
@@ -60,6 +62,14 @@ const routes = [
 		icon: FormatListBulleted,
 		iconColor: "Error",
 		component: Tables,
+		layout: "/admin",
+	},
+	{
+		path: "/logout",
+		name: "Logout",
+		icon: VpnKey,
+		iconColor: "Primary",
+		component: Logout,
 		layout: "/admin",
 	},
 	{

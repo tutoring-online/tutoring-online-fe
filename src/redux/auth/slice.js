@@ -1,19 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit'
-import * as constants from "./constants";
+import * as types from "./types";
 
 
 const INITIAL_STATE = {
-    name: null,
-    email: null,
+    user: {},
+    isSignedIn: false,
 }
 
 const slice = createSlice({
-    name: constants.AUTH_REDUCER_NAME,
+    name: "authReducer",
     initialState: INITIAL_STATE,
     reducers: {
-        [constants.LOGIN_USER]: (state) => {
-            console.log(state);
-        }
+        [types.SUBSCRIBE_USER]: (state, payload) => {
+            state.isSignedIn = true;
+            state.user = { ...payload }
+        },
+        [types.UNSUBSCRIBE_USER]: (state) => {
+            state.isSignedIn = false;
+            state.user = null
+        },
     },
 })
 
