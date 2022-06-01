@@ -53,7 +53,6 @@ const Auth = () => {
             <div className="main-content" ref={mainContent}>
                 <AuthNavbar />
                 <AuthHeader />
-                {/* Page content */}
                 <Container
                     component={Box}
                     maxWidth="xl"

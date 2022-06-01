@@ -26,7 +26,6 @@
     "@mui/styles": "^5.8.0",
     "chart.js": "2.9.4",
     "firebase": "^9.8.2",
-    "firebaseui": "^6.0.1",
     "moment": "^2.16.0",
     "nouislider": "14.6.3",
     "prop-types": "15.7.2",
@@ -35,6 +34,8 @@
     "react-copy-to-clipboard": "5.0.3",
     "react-datetime": "^3.1.1",
     "react-dom": "^17.0.2",
+    "react-firebaseui": "^6.0.0",
+    "react-hot-loader": "^4.13.0",
     "react-router-dom": "^5.2.0",
     "sass": "^1.52.1"
   },
@@ -46,8 +47,8 @@
       "unused-imports"
     ],
     "rules": {
-      "no-unused-vars": "off",
-      "unused-imports/no-unused-imports": "error",
+      "no-unused-vars": "warn",
+      "unused-imports/no-unused-imports": "warn",
       "unused-imports/no-unused-vars": [
         "warn",
         {
