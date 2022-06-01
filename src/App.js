@@ -1,33 +1,29 @@
 import React from 'react'
 
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-
+import Router from "./route/index";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import theme from "assets/theme/theme.js";
+
+import { store } from './redux/store'
+import { Provider } from 'react-redux';
 
 import "assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/scss/argon-dashboard-react.scss";
 
-import AdminLayout from "layouts/Admin.js";
-import AuthLayout from "layouts/Auth.js";
-
-const App = () => {
+export default function App() {
     return (
-        <StyledEngineProvider injectFirst>
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <BrowserRouter basename="/">
-                    <Switch>
-                        <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-                        <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
-                        <Redirect from="/" to="/auth/login" />
-                    </Switch>
-                </BrowserRouter>
-            </ThemeProvider>
-        </StyledEngineProvider>
+        //Redux
+        <Provider store={store}>
+            {/*Template*/}
+            <StyledEngineProvider injectFirst>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+
+                    <Router />
+                </ThemeProvider>
+            </StyledEngineProvider>
+        </Provider>
     );
 }
-
-export default App;
