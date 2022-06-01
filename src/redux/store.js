@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit'
-<<<<<<< HEAD
 import rootReducer from './reducer';
 import {
     persistStore,
@@ -31,10 +30,4 @@ export const store = configureStore({
         }),
 })
 
-export const persistor = persistStore(store)
-=======
-
-export const store = configureStore({
-  reducer: {},
-})
->>>>>>> b1f73a4 (config redux)
+export const persistor = persistStore(store);
