@@ -1,5 +1,5 @@
 import React from "react";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -14,6 +14,9 @@ import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 // @mui/icons-material components
 import LocationOn from "@mui/icons-material/LocationOn";
 import School from "@mui/icons-material/School";
@@ -67,7 +70,7 @@ function Profile() {
                         variant="h3"
                         marginBottom="0!important"
                       >
-                        My Account
+                        [AdminName] Profile
                       </Box>
                     </Grid>
                     <Grid item xs="auto">
@@ -75,15 +78,7 @@ function Profile() {
                         justifyContent="flex-end"
                         display="flex"
                         flexWrap="wrap"
-                      >
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          size="small"
-                        >
-                          Settings
-                        </Button>
-                      </Box>
+                      />
                     </Grid>
                   </Grid>
                 }
@@ -107,26 +102,6 @@ function Profile() {
                   <Grid container>
                     <Grid item xs={12} lg={6}>
                       <FormGroup>
-                        <FormLabel>Username</FormLabel>
-                        <FormControl
-                          variant="filled"
-                          component={Box}
-                          width="100%"
-                          marginBottom="1rem!important"
-                        >
-                          <Box
-                            paddingLeft="0.75rem"
-                            paddingRight="0.75rem"
-                            component={FilledInput}
-                            autoComplete="off"
-                            type="text"
-                            defaultValue="lucky.jesse"
-                          />
-                        </FormControl>
-                      </FormGroup>
-                    </Grid>
-                    <Grid item xs={12} lg={6}>
-                      <FormGroup>
                         <FormLabel>Email</FormLabel>
                         <FormControl
                           variant="filled"
@@ -140,7 +115,8 @@ function Profile() {
                             component={FilledInput}
                             autoComplete="off"
                             type="email"
-                            placeholder="jesse@example.com"
+                            defaultValue="linhse111111@fu.vn"
+                            disabled="true"
                           />
                         </FormControl>
                       </FormGroup>
@@ -149,7 +125,7 @@ function Profile() {
                   <Grid container>
                     <Grid item xs={12} lg={6}>
                       <FormGroup>
-                        <FormLabel>First name</FormLabel>
+                        <FormLabel>Name</FormLabel>
                         <FormControl
                           variant="filled"
                           component={Box}
@@ -162,14 +138,60 @@ function Profile() {
                             component={FilledInput}
                             autoComplete="off"
                             type="text"
-                            defaultValue="Lucky"
+                            defaultValue="Linh"
                           />
                         </FormControl>
                       </FormGroup>
                     </Grid>
                     <Grid item xs={12} lg={6}>
                       <FormGroup>
-                        <FormLabel>Last Name</FormLabel>
+                        <FormLabel>Gender</FormLabel>
+                        <FormControl
+                          variant="filled"
+                          component={Box}
+                          width="100%"
+                          marginBottom="1rem!important"
+                        >
+                          <RadioGroup row>
+                            <FormControlLabel
+                              value="Male"
+                              control={<Radio />}
+                              label="Male"
+                            />
+                            <FormControlLabel
+                              value="Female"
+                              control={<Radio />}
+                              label="Female"
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                      </FormGroup>
+                    </Grid>
+                  </Grid>
+                  <Grid container>
+                    <Grid item xs={12} lg={6}>
+                      <FormGroup>
+                        <FormLabel>Birthday</FormLabel>
+                        <FormControl
+                          variant="filled"
+                          component={Box}
+                          width="100%"
+                          marginBottom="1rem!important"
+                        >
+                          <Box
+                            paddingLeft="0.75rem"
+                            paddingRight="0.75rem"
+                            component={FilledInput}
+                            autoComplete="off"
+                            type="date"
+                            defaultValue="2003-02-01"
+                          />
+                        </FormControl>
+                      </FormGroup>
+                    </Grid>
+                    <Grid item xs={12} lg={6}>
+                      <FormGroup>
+                        <FormLabel>Phone</FormLabel>
                         <FormControl
                           variant="filled"
                           component={Box}
@@ -182,31 +204,13 @@ function Profile() {
                             component={FilledInput}
                             autoComplete="off"
                             type="text"
-                            defaultValue="Jesse"
+                            defaultValue="0123456789"
                           />
                         </FormControl>
                       </FormGroup>
                     </Grid>
                   </Grid>
                 </div>
-                <Box
-                  component={Divider}
-                  marginBottom="1.5rem!important"
-                  marginTop="1.5rem!important"
-                />
-                <Box
-                  component={Typography}
-                  variant="h6"
-                  color={theme.palette.gray[600] + "!important"}
-                  paddingTop=".25rem"
-                  paddingBottom=".25rem"
-                  fontSize=".75rem!important"
-                  letterSpacing=".04em"
-                  marginBottom="1.5rem!important"
-                  classes={{ root: classes.typographyRootH6 }}
-                >
-                  Contact Information
-                </Box>
                 <div className={classes.plLg4}>
                   <Grid container>
                     <Grid item xs={12}>
@@ -224,16 +228,16 @@ function Profile() {
                             component={FilledInput}
                             autoComplete="off"
                             type="text"
-                            defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                            defaultValue="12 Duong D1, Phuong TT, Quan 9, TP.HCM"
                           />
                         </FormControl>
                       </FormGroup>
                     </Grid>
                   </Grid>
                   <Grid container>
-                    <Grid item xs={12} lg={4}>
+                    <Grid item xs={12} lg={6}>
                       <FormGroup>
-                        <FormLabel>City</FormLabel>
+                        <FormLabel>Avatar URL</FormLabel>
                         <FormControl
                           variant="filled"
                           component={Box}
@@ -246,49 +250,21 @@ function Profile() {
                             component={FilledInput}
                             autoComplete="off"
                             type="text"
-                            defaultValue="New York"
+                            defaultValue="Image/Axxx/Bxxx/Cxxx...."
                           />
                         </FormControl>
                       </FormGroup>
                     </Grid>
-                    <Grid item xs={12} lg={4}>
+                    <Grid item xs={12} lg={3}>
                       <FormGroup>
-                        <FormLabel>Country</FormLabel>
-                        <FormControl
-                          variant="filled"
-                          component={Box}
-                          width="100%"
-                          marginBottom="1rem!important"
+                        <FormLabel>Choose Image</FormLabel>
+                        <Button
+                          variant="contained"
+                          size="medium"
+                          classes={{ root: classes.buttonRootInfo }}
                         >
-                          <Box
-                            paddingLeft="0.75rem"
-                            paddingRight="0.75rem"
-                            component={FilledInput}
-                            autoComplete="off"
-                            type="text"
-                            defaultValue="United States"
-                          />
-                        </FormControl>
-                      </FormGroup>
-                    </Grid>
-                    <Grid item xs={12} lg={4}>
-                      <FormGroup>
-                        <FormLabel>Postal code</FormLabel>
-                        <FormControl
-                          variant="filled"
-                          component={Box}
-                          width="100%"
-                          marginBottom="1rem!important"
-                        >
-                          <Box
-                            paddingLeft="0.75rem"
-                            paddingRight="0.75rem"
-                            component={FilledInput}
-                            autoComplete="off"
-                            type="text"
-                            placeholder="Postal code"
-                          />
-                        </FormControl>
+                          Browse...
+                        </Button>
                       </FormGroup>
                     </Grid>
                   </Grid>
@@ -309,13 +285,13 @@ function Profile() {
                   marginBottom="1.5rem!important"
                   classes={{ root: classes.typographyRootH6 }}
                 >
-                  About me
+                  Account Information
                 </Box>
                 <div className={classes.plLg4}>
                   <Grid container>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} lg={6}>
                       <FormGroup>
-                        <FormLabel>About me</FormLabel>
+                        <FormLabel>Create Date</FormLabel>
                         <FormControl
                           variant="filled"
                           component={Box}
@@ -327,9 +303,30 @@ function Profile() {
                             paddingRight="0.75rem"
                             component={FilledInput}
                             autoComplete="off"
-                            multiline
-                            defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and Open Source."
-                            rows="4"
+                            type="date"
+                            defaultValue="2021-02-01"
+                            disabled="true"
+                          />
+                        </FormControl>
+                      </FormGroup>
+                    </Grid>
+                    <Grid item xs={12} lg={6}>
+                      <FormGroup>
+                        <FormLabel>Update Date</FormLabel>
+                        <FormControl
+                          variant="filled"
+                          component={Box}
+                          width="100%"
+                          marginBottom="1rem!important"
+                        >
+                          <Box
+                            paddingLeft="0.75rem"
+                            paddingRight="0.75rem"
+                            component={FilledInput}
+                            autoComplete="off"
+                            type="date"
+                            defaultValue="2022-05-30"
+                            disabled="true"
                           />
                         </FormControl>
                       </FormGroup>
@@ -467,9 +464,7 @@ function Profile() {
                           component="span"
                           fontSize=".875rem"
                           color={theme.palette.gray[500]}
-                        >
-                          Comments
-                        </Box>
+                        ></Box>
                       </Box>
                     </Box>
                   </Grid>
