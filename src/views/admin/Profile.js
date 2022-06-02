@@ -157,6 +157,7 @@ function Profile() {
                               value="Male"
                               control={<Radio />}
                               label="Male"
+                              checked="true"
                             />
                             <FormControlLabel
                               value="Female"
