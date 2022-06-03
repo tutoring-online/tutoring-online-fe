@@ -1,15 +1,16 @@
-// import { auth } from "./firebase.js";
-// const uiConfig = {
-//     // Popup signin flow rather than redirect flow.
-//     signInFlow: 'popup',
-//     // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-//     signInSuccessUrl: '/signedIn',
-//     // We will display Google and Facebook as auth providers.
-//     signInOptions: [
-//         auth.
-//         auth.GoogleAuthProvider.PROVIDER_ID,
-//         auth.FacebookAuthProvider.PROVIDER_ID,
-//     ],
-// };
+import { auth } from "./firebase.js";
 
-// export default uiConfig;
+const uiConfig = {
+    signInFlow: "redirect",
+    signInSuccessUrl: '/admin/user-profile',
+    signInOptions: [
+        auth.GoogleAuthProvider.PROVIDER_ID,
+        // auth.FacebookAuthProvider.PROVIDER_ID,
+        // auth.TwitterAuthProvider.PROVIDER_ID,
+        // auth.GithubAuthProvider.PROVIDER_ID,
+        // auth.EmailAuthProvider.PROVIDER_ID,
+        // auth.PhoneAuthProvider.PROVIDER_ID,
+    ],
+};
+
+export default uiConfig;

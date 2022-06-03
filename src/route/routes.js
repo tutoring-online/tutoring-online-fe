@@ -4,11 +4,11 @@ import Icons from "views/admin/Icons.js";
 import Login from "views/auth/Login.js";
 import Maps from "views/admin/Maps.js";
 import Profile from "views/admin/Profile.js";
-import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
 
+import Logout from "components/Logout";
+
 // @mui/icons-material components
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import FlashOn from "@mui/icons-material/FlashOn";
 import FormatListBulleted from "@mui/icons-material/FormatListBulleted";
 import Grain from "@mui/icons-material/Grain";
@@ -65,19 +65,19 @@ const routes = [
 		layout: "/admin",
 	},
 	{
+		path: "/logout",
+		name: "Logout",
+		icon: VpnKey,
+		iconColor: "Primary",
+		component: Logout,
+		layout: "/admin",
+	},
+	{
 		path: "/login",
 		name: "Login",
 		icon: VpnKey,
 		iconColor: "Info",
 		component: Login,
-		layout: "/auth",
-	},
-	{
-		path: "/register",
-		name: "Register",
-		icon: AccountCircle,
-		iconColor: "ErrorLight",
-		component: Register,
 		layout: "/auth",
 	},
 ];

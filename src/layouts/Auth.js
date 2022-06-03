@@ -11,9 +11,25 @@ import AuthHeader from "components/Headers/AuthHeader.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
 import componentStyles from "assets/theme/layouts/auth.js";
-import routes from "routes.js";
+import routes from "route/routes.js";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(componentStyles);
+
+const AuthRoute = (props) => {
+    const isSignedIn = useSelector(state => state.auth.isSignedIn);
+
+    console.log(isSignedIn);
+
+    if (isSignedIn) {
+        return <Redirect from="*" to="/admin/dashboard" />
+    }
+
+    return (
+        <Route {...props} />
+    );
+}
+
 
 const Auth = () => {
     const classes = useStyles();
@@ -36,7 +52,7 @@ const Auth = () => {
         return routes.map((prop, key) => {
             if (prop.layout === "/auth") {
                 return (
-                    <Route
+                    <AuthRoute
                         path={prop.layout + prop.path}
                         component={prop.component}
                         key={key}
@@ -53,7 +69,6 @@ const Auth = () => {
             <div className="main-content" ref={mainContent}>
                 <AuthNavbar />
                 <AuthHeader />
-                {/* Page content */}
                 <Container
                     component={Box}
                     maxWidth="xl"
