@@ -42,7 +42,8 @@
     "react-router-dom": "^5.2.0",
     "redux-persist": "^6.0.0",
     "sass": "^1.52.1",
-    "toastr": "^2.1.4"
+    "toastr": "^2.1.4",
+    "react-scripts": "^5.0.1"
   },
   "eslintConfig": {
     "extends": [
@@ -89,7 +90,6 @@
     "eslint-plugin-unused-imports": "1.1.0",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8",
-    "react-scripts": "^5.0.1",
     "webpack": "^4.37.0",
     "webpack-dev-server": "^4.9.0"
   }
