@@ -1,2 +1,5 @@
+[![Deploy to Firebase Hosting on merge](https://github.com/tutoring-online/tutoring-online-fe/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://github.com/tutoring-online/tutoring-online-fe/actions/workflows/firebase-hosting-merge.yml)
+[![Deploy to Firebase Hosting on PR](https://github.com/tutoring-online/tutoring-online-fe/actions/workflows/firebase-hosting-pull-request.yml/badge.svg)](https://github.com/tutoring-online/tutoring-online-fe/actions/workflows/firebase-hosting-pull-request.yml)
+
 # Template
 ## [Argon Dashboard Material-UI](https://demos.creative-tim.com/argon-dashboard-material-ui?ref=admui-github-readme) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fdemos.creative-tim.com%2Fargon-dashboard-material-ui%2F%23%2Fadmin%2Findex&text=Start%20your%20development%20with%20a%20Dashboard%20for%20React%2C%20React%20Hooks%2C%20Create%20React%20App%2C%20and%20Material-UI.%20It%20is%20open-source%2C%20free%20and%20it%20features%20many%20components%20that%20can%20help%20you%20create%20amazing%20websites.)
