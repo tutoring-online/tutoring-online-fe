@@ -1,6 +1,8 @@
 import axios from 'axios';
 import queryString from 'query-string';
 import firebase from 'firebase';
+import { ENV_DOMAIN } from './api';
+import toastr from 'toastr';
 
 const getFirebaseToken = async () => {
 	const currentUser = firebase.auth().currentUser;
@@ -31,7 +33,7 @@ const getFirebaseToken = async () => {
 }
 
 const axiosClient = axios.create({
-	baseURL: process.env.REACT_APP_API_URL,
+	baseURL: ENV_DOMAIN,
 	headers: {
 		'content-type': 'application/json',
 	},
@@ -59,3 +61,38 @@ axiosClient.interceptors.response.use((response) => {
 });
 
 export default axiosClient;
+
+
+const SUCCESSFUL_CODE = 200;
+
+export const axiosRequest = async (url, options = {}, params = {}) => {
+	const newUrl = new URL(url);
+	if (params) {
+		newUrl.search = new URLSearchParams(params).toString();
+	}
+
+	try {
+		const response = await axiosClient({ url: newUrl, ...(options || {}) });
+		console.log(response);
+
+		if (response.status !== SUCCESSFUL_CODE) {
+			//Do something here
+			throw response.data;
+		}
+
+		return response.data;
+	} catch (error) {
+		if (error.response) {
+			toastr.error(error.response.data);
+			toastr.error(error.response.status);
+			toastr.error(error.response.headers);
+		} else if (error.request) {
+			toastr.error(error.request);
+		} else {
+			toastr.error('Error', error.message);
+		}
+		toastr.error(error.config);
+		throw error
+	}
+
+}

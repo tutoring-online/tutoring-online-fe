@@ -12,6 +12,7 @@ import { StyledFirebaseAuth } from "react-firebaseui";
 import uiConfig from "firebase-config/firebase-ui";
 import { auth } from "firebase-config/firebase";
 import useAuthActions from "hooks/useAuthActions";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -19,6 +20,7 @@ function Login() {
     const classes = useStyles();
     const theme = useTheme();
     const actions = useAuthActions();
+    const history = useHistory();
 
     useEffect(() => {
         const unregisterAuthObserver = auth().onAuthStateChanged(async (user) => {
@@ -28,9 +30,13 @@ function Login() {
             }
 
             //Refresh token if needed
-            await user.getIdToken();
+            const token = await user.getIdToken();
             actions.subscribeUser(user.providerData[0]);
+
+            console.log(token);
             console.log(user);
+
+            history.push("/admin/user-profile");
         });
 
         return () => unregisterAuthObserver();
