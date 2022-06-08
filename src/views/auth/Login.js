@@ -34,7 +34,6 @@ function Login() {
             actions.subscribeUser(user.providerData[0]);
 
             console.log(token);
-            console.log(user);
 
             history.push("/admin/user-profile");
         });
