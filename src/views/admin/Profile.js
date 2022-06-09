@@ -67,7 +67,7 @@ function Profile() {
                         variant="h3"
                         marginBottom="0!important"
                       >
-                        [AdminName] Profile
+                        [Tutor] Profile
                       </Box>
                     </Grid>
                     <Grid item xs="auto">
@@ -147,6 +147,21 @@ function Profile() {
                              component={Card}
                              image/>
                       </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid container>
+                    <Grid item xs={12} lg={2}>
+                    <FormGroup>
+                        <FormLabel>Meet URL:</FormLabel>
+                        <Button
+                          variant="contained"
+                          color="success"
+                          size="medium"
+                          classes={{ root: classes.buttonRootInfo }}
+                        >
+                          Join now
+                        </Button>
+                      </FormGroup>
                     </Grid>
                   </Grid>
                   <Grid container>
