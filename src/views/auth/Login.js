@@ -39,7 +39,7 @@ function Login() {
         });
 
         return () => unregisterAuthObserver();
-    }, [actions]);
+    }, [actions, history]);
 
 
     return (
