@@ -142,16 +142,18 @@ function Profile() {
                     </Grid>
                     <Grid container item xs={6} lg={3}>
                       <Grid>
-                        <Box width='250px'
-                             height='250px'
-                             component={Card}
-                             image/>
+                        <Box
+                          width="250px"
+                          height="250px"
+                          component={Card}
+                          image
+                        />
                       </Grid>
                     </Grid>
                   </Grid>
                   <Grid container>
                     <Grid item xs={12} lg={2}>
-                    <FormGroup>
+                      <FormGroup>
                         <FormLabel>Meet URL:</FormLabel>
                         <Button
                           variant="contained"
@@ -187,6 +189,34 @@ function Profile() {
                               label="Female"
                             />
                           </RadioGroup>
+                        </FormControl>
+                      </FormGroup>
+                    </Grid>
+                  </Grid>
+                  <Grid container>
+                    <Grid item xs={12} lg={6}>
+                      <FormGroup>
+                        <FormLabel>Description</FormLabel>
+                        <FormControl
+                          variant="filled"
+                          component={Box}
+                          width="100%"
+                          height="100%"
+                          marginBottom="1rem!important"
+                        >
+                          <Box
+                            paddingLeft="0.75rem"
+                            paddingRight="0.75rem"
+                            component={FilledInput}
+                            multiline="true"
+                            autoComplete="off"
+                            type="text"
+                            placeholder="Tutor Description"
+                            defaultValue="Tutor Description is simply dummy text of the printing and typesetting industry. 
+                                          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                                          when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+                                          It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchan"
+                          />
                         </FormControl>
                       </FormGroup>
                     </Grid>
