@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 import makeStyles from '@mui/styles/makeStyles';
 import Box from "@mui/material/Box";
@@ -16,7 +16,7 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import NavbarDropdown from "components/Dropdowns/NavbarDropdown.js";
 
-import routes from "route/routes.js";
+import { adminRoutes } from "route/routes.js";
 
 import componentStyles from "assets/theme/layouts/admin.js";
 
@@ -40,6 +40,8 @@ const PrivateRoute = (props) => {
 const Admin = () => {
     const classes = useStyles();
     const location = useLocation();
+
+    const [routes] = useState(() => [...adminRoutes]);
 
     useEffect(() => {
         document.documentElement.scrollTop = 0;

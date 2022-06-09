@@ -1,22 +1,8 @@
 import React, { Suspense } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-// import routes from "./routes";
 
-// import { LAYOUTS } from "layouts/setting";
 const AuthLayout = React.lazy(() => import('layouts/Auth.js'));
 const AdminLayout = React.lazy(() => import('layouts/Admin.js'));
-
-// const getLayout = (layout) => {
-//     if(layout === LAYOUTS.admin) {
-//         return AdminLayout;
-//     }
-
-//     if(layout === LAYOUTS.auth) {
-//         return AuthLayout;
-//     }
-
-//     return AuthLayout;
-// }
 
 const Router = () => (
     <BrowserRouter basename="/">
