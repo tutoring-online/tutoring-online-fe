@@ -67,7 +67,7 @@ function Profile() {
                         variant="h3"
                         marginBottom="0!important"
                       >
-                        [Tutor] Profile
+                        [Student] Profile
                       </Box>
                     </Grid>
                     <Grid item xs="auto">
