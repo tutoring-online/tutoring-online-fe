@@ -21,11 +21,14 @@ export const TutorCard = () => {
                     'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/2000px-Git_icon.svg.png'
                 }
             />
-            <CardContent>
+            <CardContent className={styles.content}>
                 <Typography variant="body2" gutterBottom>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
                     blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
+                    neque doloribus. Tquam beatae rerum inventore consectetur,
                     neque doloribus.
+                    quam beatae rerum inventore consectetur,
+                    neque doloribus
                 </Typography>
                 <Button>Read more</Button>
             </CardContent>

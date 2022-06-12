@@ -1,25 +1,49 @@
 import React from "react";
 
-import Grid from "@mui/material/Grid";
 import TutorCard from "components/Cards/TutorCard";
-import TutorSearch from "components/Search/TutorSearch";
+import TutorSchedule from "components/Cards/TutorSchedule";
+import { Container } from "@mui/material";
+
+import "./index.scss";
+
+const Item = ({ children }) => (
+    <div className="home-view__item">
+        {children}
+    </div>
+)
+
+const RightItem = ({ children }) => (
+    <div className="home-view__right-item">
+        {children}
+    </div>
+)
 
 function Home() {
 
     return (
-        <>
-            <Grid item xs={12} lg={12} md={12}>
-                <TutorSearch />
-            </Grid>
-            <Grid item xs={12} lg={8} md={12} rowGap={16}>
-                <TutorCard />
-                <TutorCard />
-                <TutorCard />
-                <TutorCard />
-                <TutorCard />
-                <TutorCard />
-            </Grid>
-        </>
+        <Container maxWidth="xl">
+            <div className="home-view">
+                <Item>
+                    <TutorCard />
+                </Item>
+                <Item>
+                    <TutorCard />
+                </Item>
+                <Item>
+                    <TutorCard />
+                </Item>
+                <Item>
+                    <TutorCard />
+                </Item>
+                <Item>
+                    <TutorCard />
+                </Item>
+
+                <RightItem>
+                    <TutorSchedule />
+                </RightItem>
+            </div>
+        </Container>
     );
 }
 

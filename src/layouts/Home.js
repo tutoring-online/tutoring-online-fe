@@ -56,7 +56,7 @@ const Home = () => {
                 <HomeHeader />
                 <Container
                     component={Box}
-                    maxWidth="lg"
+                    maxWidth="xl"
                     marginTop="-8rem"
                     paddingBottom="3rem"
                     position="relative"

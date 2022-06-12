@@ -78,8 +78,8 @@ export default function GeneralNavbar() {
                 label: "Login",
                 icon: VpnKey
             },
-            isSignedIn && {
-                to: getFullPath(ROUTES.profile),
+            isSignedIn && isAdmin(user?.role) && {
+                to: getFullPath(ROUTES.adminProfile),
                 label: "Profile",
                 icon: Person
             },
@@ -92,7 +92,6 @@ export default function GeneralNavbar() {
         setListItem(() => list.filter(item => Boolean(item)));
     }, [isSignedIn, user])
 
-
     const ListObject = (
         <Box
             display="flex"
@@ -101,9 +100,9 @@ export default function GeneralNavbar() {
             component={List}
             className={classes.flexDirectionColumn}
         >
-            {isAvailableArray(listItem) && listItem.map(item =>
+            {isAvailableArray(listItem) && listItem.map((item, index) =>
                 <ListItem
-                    key={item.to}
+                    key={item.to || index}
                     component={Link}
                     to={item.to}
                     onClick={handleMenuClose}

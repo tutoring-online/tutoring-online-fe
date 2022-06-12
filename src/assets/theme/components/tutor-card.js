@@ -8,7 +8,7 @@ const componentStyles = ({ breakpoints, spacing }) => ({
         maxWidth: 800,
         marginLeft: 'auto',
         overflow: 'initial',
-        background: '#ffffff',
+        background: '#f7fafc',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -20,19 +20,17 @@ const componentStyles = ({ breakpoints, spacing }) => ({
     },
     media: {
         width: '100%',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        marginTop: spacing(-3),
         height: 0,
-        paddingBottom: '200px',
+        marginLeft: 16,
+        marginRight: 'auto',
+        paddingBottom: '150px',
+
         borderRadius: spacing(2),
         backgroundColor: '#fff',
         position: 'relative',
         [breakpoints.up('md')]: {
             width: '100%',
-            marginLeft: spacing(-3),
             marginTop: 0,
-            transform: 'translateX(-8px)',
         },
         '&:after': {
             content: '" "',
@@ -47,10 +45,10 @@ const componentStyles = ({ breakpoints, spacing }) => ({
         },
     },
     content: {
-        padding: 24,
+        padding: "0 16px !important",
     },
     cta: {
-        marginTop: 24,
+        marginTop: 20,
         textTransform: 'initial',
     },
 })
