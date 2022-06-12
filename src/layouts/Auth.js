@@ -6,13 +6,13 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 
 // core components
-import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthHeader from "components/Headers/AuthHeader.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
 import componentStyles from "assets/theme/layouts/auth.js";
-import routes from "route/routes.js";
+import routes, { getFullPath, ROUTES } from "route/routes";
 import { useSelector } from "react-redux";
+import GeneralNavbar from "components/Navbars/GeneralNavbar";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -20,7 +20,7 @@ const AuthRoute = (props) => {
     const isSignedIn = useSelector(state => state.auth.isSignedIn);
 
     if (isSignedIn) {
-        return <Redirect from="*" to="/admin/dashboard" />
+        return <Redirect from="*" to={getFullPath(ROUTES.home)} />
     }
 
     return (
@@ -71,7 +71,7 @@ const Auth = () => {
     return (
         <>
             <div className="main-content" ref={mainContent}>
-                <AuthNavbar />
+                <GeneralNavbar />
                 <AuthHeader />
                 <Container
                     component={Box}
@@ -83,7 +83,7 @@ const Auth = () => {
                 >
                     <Box component={Grid} container justifyContent="center">
                         <Switch>
-                            {getRoutes(routes)}
+                            {getRoutes()}
                             <Redirect from="*" to="/auth/login" />
                         </Switch>
                     </Box>

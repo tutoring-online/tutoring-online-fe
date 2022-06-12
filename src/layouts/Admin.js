@@ -23,18 +23,20 @@ import logoImg from "assets/img/brand/argon-react.png";
 import routes from "route/routes.js";
 import { isAvailableArray } from "helpers/arrayUtils";
 import { ROUTE_PATHS } from "route/routes";
+import { isAdmin } from "settings/setting";
 
 const useStyles = makeStyles(componentStyles);
 
 const PrivateRoute = (props) => {
     const isSignedIn = useSelector(state => state.auth.isSignedIn);
+    const user = useSelector(state => state.auth.user);
 
-    if (!isSignedIn) {
-        return <Redirect from="*" to="/auth/login" />
+    if (isSignedIn && isAdmin(user?.role)) {
+        return <Route {...props} />
     }
 
     return (
-        <Route {...props} />
+        <Redirect from="*" to="/home/index" />
     );
 }
 
@@ -68,7 +70,7 @@ const getSidebarRoutes = () => {
     sidebarRoutes.push(...adminRoutes);
 
     const logoutRoute = getLogoutRoute();
-    if(logoutRoute) {
+    if (logoutRoute) {
         sidebarRoutes.push(logoutRoute);
     }
 

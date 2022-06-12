@@ -6,12 +6,15 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 
 // core components
-import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
+import GeneralNavbar from "components/Navbars/GeneralNavbar";
 
 import componentStyles from "assets/theme/layouts/auth.js";
 import routes from "route/routes.js";
 import { LAYOUT_PATHS } from "route/routes";
+import { getFullPath } from "route/routes";
+import { ROUTES } from "route/routes";
+import HomeHeader from "components/Headers/HomeHeader";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -49,10 +52,11 @@ const Home = () => {
     return (
         <>
             <div className="main-content" ref={mainContent}>
-                <AuthNavbar />
+                <GeneralNavbar />
+                <HomeHeader />
                 <Container
                     component={Box}
-                    maxWidth="xl"
+                    maxWidth="lg"
                     marginTop="-8rem"
                     paddingBottom="3rem"
                     position="relative"
@@ -60,8 +64,8 @@ const Home = () => {
                 >
                     <Box component={Grid} container justifyContent="center">
                         <Switch>
-                            {getRoutes(routes)}
-                            <Redirect from="*" to="/home/index" />
+                            {getRoutes()}
+                            <Redirect from="*" to={getFullPath(ROUTES.home)} />
                         </Switch>
                     </Box>
                 </Container>

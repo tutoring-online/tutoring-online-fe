@@ -16,6 +16,7 @@ import VpnKey from "@mui/icons-material/VpnKey";
 
 
 // core components
+const Home = React.lazy(() => import('views/home/Home.jsx'));
 const Dashboard = React.lazy(() => import('views/admin/Dashboard.js'));
 const Login = React.lazy(() => import('views/auth/Login.js'));
 const Profile = React.lazy(() => import('views/admin/Profile.js'));
@@ -85,13 +86,20 @@ export const ROUTES = {
 	home: {
 		key: "home",
 		name: "Home Page",
-		component: () => <div>Home page</div>,
+		component: Home,
 		path: ROUTE_PATHS.home,
 		layout: LAYOUT_PATHS.home,
 	}
 }
 
-export const routes = Object.values(ROUTES);
+export const getFullPath = (route, defaultPath = "/home/index") => {
+	if (!route) return defaultPath;
+
+	const fullPath = (route.layout || "") + (route.path || "");
+	return fullPath || defaultPath;
+}
+
+const routes = Object.values(ROUTES);
 
 // {
 // 	path: "/maps",
