@@ -19,8 +19,6 @@ const useStyles = makeStyles(componentStyles);
 const AuthRoute = (props) => {
     const isSignedIn = useSelector(state => state.auth.isSignedIn);
 
-    console.log(isSignedIn);
-
     if (isSignedIn) {
         return <Redirect from="*" to="/admin/dashboard" />
     }
@@ -30,6 +28,28 @@ const AuthRoute = (props) => {
     );
 }
 
+const getRoutes = () => {
+    const authRoutes = routes.filter(route => route.layout === "/auth");
+
+    return authRoutes.map((prop, key) => {
+        if (prop.path === "/logout") {
+            return <Route
+                path={prop.layout + prop.path}
+                exact
+                key={prop.key || key}
+                component={prop.component}
+            />
+        }
+
+        return (
+            <AuthRoute
+                path={prop.layout + prop.path}
+                component={prop.component}
+                key={prop.key || key}
+            />
+        );
+    });
+};
 
 const Auth = () => {
     const classes = useStyles();
@@ -47,22 +67,6 @@ const Auth = () => {
         document.scrollingElement.scrollTop = 0;
         mainContent.current.scrollTop = 0;
     }, [location]);
-
-    const getRoutes = (routes) => {
-        return routes.map((prop, key) => {
-            if (prop.layout === "/auth") {
-                return (
-                    <AuthRoute
-                        path={prop.layout + prop.path}
-                        component={prop.component}
-                        key={key}
-                    />
-                );
-            } else {
-                return null;
-            }
-        });
-    };
 
     return (
         <>

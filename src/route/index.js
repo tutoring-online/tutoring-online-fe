@@ -1,16 +1,21 @@
+import FullPageLoader from "components/Loading/FullPageLoader";
 import React, { Suspense } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { LAYOUT_PATHS } from "./routes";
 
 const AuthLayout = React.lazy(() => import('layouts/Auth.js'));
 const AdminLayout = React.lazy(() => import('layouts/Admin.js'));
+const HomeLayout = React.lazy(() => import('layouts/Home.js'));
 
 const Router = () => (
     <BrowserRouter basename="/">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<FullPageLoader />}>
             <Switch>
-                <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-                <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
-                <Redirect from="/" to="/auth/login" />
+                <Route path={LAYOUT_PATHS.admin} render={(props) => <AdminLayout {...props} />} />
+                <Route path={LAYOUT_PATHS.auth} render={(props) => <AuthLayout {...props} />} />
+                <Route path={LAYOUT_PATHS.home} render={(props) => <HomeLayout {...props} />} />
+                <Redirect from="/" to="/home/index" />
+                <Redirect to="/auth/page-not-found" />
             </Switch>
         </Suspense>
     </BrowserRouter>

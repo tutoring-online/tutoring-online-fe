@@ -11,9 +11,9 @@ const slice = createSlice({
     name: "authReducer",
     initialState: INITIAL_STATE,
     reducers: {
-        [types.SUBSCRIBE_USER]: (state, payload) => {
+        [types.SUBSCRIBE_USER]: (state, action) => {
             state.isSignedIn = true;
-            state.user = { ...payload }
+            state.user = { ...action.payload }
         },
         [types.UNSUBSCRIBE_USER]: (state) => {
             state.isSignedIn = false;

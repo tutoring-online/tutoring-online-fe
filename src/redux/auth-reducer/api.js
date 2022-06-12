@@ -1,7 +1,0 @@
-
-
-//Get
-const fetchLoginUser = () => {
-
-    return;
-}
