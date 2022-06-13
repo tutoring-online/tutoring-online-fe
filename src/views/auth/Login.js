@@ -13,6 +13,9 @@ import uiConfig from "firebase-config/firebase-ui";
 import { auth } from "firebase-config/firebase";
 import useAuthActions from "hooks/useAuthActions";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { loginUser } from "redux/auth/asyncThunk";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -21,26 +24,34 @@ function Login() {
     const theme = useTheme();
     const actions = useAuthActions();
     const history = useHistory();
+    const dispatch = useDispatch();
+
+    const isSignedIn = useSelector(state => state.auth.isSignedIn);
+    const user = useSelector(state => state.auth.user);
+
+    console.log(user);
 
     useEffect(() => {
-        const unregisterAuthObserver = auth().onAuthStateChanged(async (user) => {
-            if(!user) {
+        const unregisterAuthObserver = auth().onAuthStateChanged(async (currentUser) => {
+            if (!currentUser) {
                 actions.unsubscribeUser();
                 return;
             }
 
-            //Refresh token if needed
-            const token = await user.getIdToken();
-            actions.subscribeUser(user.providerData[0]);
-
+            const token = await currentUser.getIdToken();
             console.log(token);
 
-            history.push("/admin/user-profile");
+            const action = loginUser({ token, role: null });
+            dispatch(action);
         });
 
         return () => unregisterAuthObserver();
-    }, [actions, history]);
+    }, [actions, dispatch]);
 
+    useEffect(() => {
+        if (!isSignedIn) return;
+        history.push("/home/index");
+    }, [history, isSignedIn])
 
     return (
         <Grid item xs={12} lg={5} md={7}>

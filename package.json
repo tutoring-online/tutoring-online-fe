@@ -3,13 +3,6 @@
   "version": "1.0.0",
   "author": "LDT",
   "homepage": "https://tutoring-online-e3711.web.app/",
-  "bugs": {
-    "url": "https://github.com/creativetimofficial/argon-dashboard-material-ui/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/creativetimofficial/argon-dashboard-material-ui.git"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && gulp licenses",

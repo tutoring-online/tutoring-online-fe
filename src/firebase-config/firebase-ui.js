@@ -2,6 +2,9 @@ import { auth } from "./firebase.js";
 
 const uiConfig = {
     signInFlow: "popup",
+    callbacks: {
+        signInSuccessWithAuthResult: () => false,
+    },
     signInOptions: [
         auth.GoogleAuthProvider.PROVIDER_ID,
         auth.FacebookAuthProvider.PROVIDER_ID,

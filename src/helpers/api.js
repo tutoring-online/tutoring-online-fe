@@ -10,5 +10,6 @@ export const ENV_API = `/api/${ENV_API_VERSION}`
 
 //API path
 export const LESSON_API = `${ENV_API}/lessons`;
+export const AUTHENTICATION_API = `${ENV_API}/authentication`;
 
 
