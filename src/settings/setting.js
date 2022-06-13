@@ -1,3 +1,5 @@
+import { equalIgnoreCase } from "helpers/stringUtils";
+
 export const ROLES = {
     ADMIN: "ADMIN",
     STUDENT: "STUDENT",
@@ -5,13 +7,13 @@ export const ROLES = {
 }
 
 export const isAdmin = (role) => {
-    return role && role === ROLES.ADMIN;
+    return equalIgnoreCase(role, ROLES.ADMIN);
 }
 
 export const isTutor = (role) => {
-    return role && role === ROLES.TUTOR;
+    return equalIgnoreCase(role, ROLES.TUTOR);
 }
 
 export const isStudent = (role) => {
-    return role && role === ROLES.STUDENT;
+    return equalIgnoreCase(role, ROLES.STUDENT);
 }

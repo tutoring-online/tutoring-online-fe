@@ -23,13 +23,15 @@ const slice = createSlice({
             state.user = null
         },
     },
-    extraReducers: {
-        [asyncThunks.loginUser.fulfilled] : (state, action) => {
+    extraReducers: (builder) => {
+        builder.addCase(asyncThunks.loginUser.fulfilled, (state, action) => {
             console.log(action.payload);
-        },
-        [asyncThunks.loginUser.rejected] : (state, action) => {
+            state.user = { ...(action.payload || {}) }
+        })
+
+        builder.addCase(asyncThunks.loginUser.rejected, (state, action) => {
             console.log(action.error);
-        }
+        })
     }
 })
 

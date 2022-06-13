@@ -15,8 +15,8 @@ import useAuthActions from "hooks/useAuthActions";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-// import { loginUser } from "redux/auth/asyncThunk";
-import { ROLES } from "settings/setting";
+import { loginUser } from "redux/auth/asyncThunk";
+// import { ROLES } from "settings/setting";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -40,15 +40,16 @@ function Login() {
             const token = await currentUser.getIdToken();
             console.log(token);
 
-            const userData = {
-                ...currentUser.providerData[0],
-                role: ROLES.ADMIN,
-            }
-            actions.subscribeUser(userData);
+            // const userData = {
+            //     ...currentUser.providerData[0],
+            //     role: ROLES.TUTOR,
+            // }
+            // actions.subscribeUser(userData);
 
             //TODO: apply code below when be is ready
-            // const action = loginUser({ token, role: null });
-            // dispatch(action);
+            const action = loginUser({ token, role: null });
+            const response = await dispatch(action);
+            console.log(response);
         });
 
         return () => unregisterAuthObserver();

@@ -1,21 +1,21 @@
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { ROLES } from "settings/setting";
+import { isAdmin, isStudent, isTutor } from "settings/setting";
 import AdminProfile from "./AdminProfile";
 
 
 const Profile = () => {
     const user = useSelector(state => state.auth.user);
 
-    if (user.role === ROLES.ADMIN) {
+    if (isAdmin(user?.role)) {
         return <AdminProfile />
     }
 
-    if (user.role === ROLES.TUTOR) {
+    if (isTutor(user?.role)) {
         return <div>tutor profile</div>
     }
 
-    if (user.role === ROLES.STUDENT) {
+    if (isStudent(user?.role)) {
         return <div>student profile</div>
     }
 
