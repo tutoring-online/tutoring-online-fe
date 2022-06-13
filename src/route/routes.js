@@ -19,7 +19,7 @@ import VpnKey from "@mui/icons-material/VpnKey";
 const Home = React.lazy(() => import('views/home/Home.jsx'));
 const Dashboard = React.lazy(() => import('views/admin/Dashboard.js'));
 const Login = React.lazy(() => import('views/auth/Login.js'));
-const Profile = React.lazy(() => import('views/admin/Profile.js'));
+const Profile = React.lazy(() => import('views/profile/index.js'));
 const Logout = React.lazy(() => import('views/auth/Logout.js'));
 const PageNotFound = React.lazy(() => import('views/auth/PageNotFound.jsx'));
 
@@ -36,7 +36,8 @@ export const ROUTE_PATHS = {
 export const LAYOUT_PATHS = {
 	admin: "/admin",
 	auth: "/auth",
-	home: "/home"
+	home: "/home",
+	detail: "/detail"
 }
 
 export const ROUTES = {
@@ -49,14 +50,14 @@ export const ROUTES = {
 		layout: LAYOUT_PATHS.admin,
 		path: ROUTE_PATHS.dashboard,
 	},
-	adminProfile: {
+	profile: {
 		key: "profile",
 		name: "User Profile",
 		icon: Person,
 		iconColor: "WarningLight",
 		component: Profile,
 		path: ROUTE_PATHS.profile,
-		layout: LAYOUT_PATHS.admin,
+		layout: LAYOUT_PATHS.detail,
 	},
 	login: {
 		icon: VpnKey,

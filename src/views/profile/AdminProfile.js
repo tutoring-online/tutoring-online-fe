@@ -50,7 +50,7 @@ import componentStyles from "assets/theme/views/admin/profile.js";
 const useStyles = makeStyles(componentStyles);
 
 
-function Profile() {
+export default function AdminProfile() {
     const classes = useStyles();
     const theme = useTheme();
     return (
@@ -373,5 +373,3 @@ function Profile() {
         </>
     );
 }
-
-export default Profile;

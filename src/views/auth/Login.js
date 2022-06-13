@@ -15,7 +15,7 @@ import useAuthActions from "hooks/useAuthActions";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { loginUser } from "redux/auth/asyncThunk";
+// import { loginUser } from "redux/auth/asyncThunk";
 import { ROLES } from "settings/setting";
 
 const useStyles = makeStyles(componentStyles);
@@ -28,9 +28,7 @@ function Login() {
     const dispatch = useDispatch();
 
     const isSignedIn = useSelector(state => state.auth.isSignedIn);
-    const user = useSelector(state => state.auth.user);
-
-    console.log(user);
+    // const user = useSelector(state => state.auth.user);
 
     useEffect(() => {
         const unregisterAuthObserver = auth().onAuthStateChanged(async (currentUser) => {
@@ -41,7 +39,7 @@ function Login() {
 
             const token = await currentUser.getIdToken();
             console.log(token);
-            
+
             const userData = {
                 ...currentUser.providerData[0],
                 role: ROLES.ADMIN,
@@ -91,6 +89,7 @@ function Login() {
                     }
                 ></CardHeader>
             </Card>
+
         </Grid>
     );
 }

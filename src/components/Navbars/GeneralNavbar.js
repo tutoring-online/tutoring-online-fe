@@ -79,7 +79,7 @@ export default function GeneralNavbar() {
                 icon: VpnKey
             },
             isSignedIn && isAdmin(user?.role) && {
-                to: getFullPath(ROUTES.adminProfile),
+                to: getFullPath(ROUTES.profile),
                 label: "Profile",
                 icon: Person
             },
