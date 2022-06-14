@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { compose } from "redux";
-import asyncThunks from "redux/admin/asyncThunk";
+import asyncThunks from "redux/syllabus/asyncThunk";
 
-const useAuthActions = () => {
+const useSyllabusActions = () => {
     const dispatch = useDispatch();
     const [actions] = useState({
-        fetchAdmins: compose(dispatch, asyncThunks.fetchAdmins)
+        fetchSyllabuses: compose(dispatch, asyncThunks.fetchSyllabuses)
     })
 
     return actions;
 }
 
-export default useAuthActions;
+export default useSyllabusActions;

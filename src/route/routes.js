@@ -27,7 +27,13 @@ const Login = React.lazy(() => import('views/auth/Login.js'));
 const Profile = React.lazy(() => import('views/profile/index.js'));
 const Logout = React.lazy(() => import('views/auth/Logout.js'));
 const PageNotFound = React.lazy(() => import('views/auth/PageNotFound.jsx'));
+
 const Admin = React.lazy(() => import("views/admin/Admin.js"));
+const Tutor = React.lazy(() => import("views/admin/Tutor.js"));
+const Student = React.lazy(() => import("views/admin/Student.js"));
+const Subject = React.lazy(() => import("views/admin/Subject.js"));
+const Syllabus = React.lazy(() => import("views/admin/Syllabus.js"));
+const Payment = React.lazy(() => import("views/admin/Payment.js"));
 
 export const ICON_COLORS = {
 	Primary: "Primary",
@@ -81,19 +87,19 @@ const ADMIN_ROUTES = {
 	},
 	tutor: {
 		key: "tutor",
-		name: "Tutors",
+		name: "Tutor",
 		icon: GroupIcon,
 		iconColor: ICON_COLORS.Primary,
-		component: () => <div>Table tutor</div>,
+		component: Tutor,
 		path: ROUTE_PATHS.tutor,
 		layout: LAYOUT_PATHS.admin
 	},
 	student: {
 		key: "student",
-		name: "Students",
+		name: "Student",
 		icon: SchoolIcon,
 		iconColor: ICON_COLORS.PrimaryLight,
-		component: () => <div>Table student</div>,
+		component: Student,
 		path: ROUTE_PATHS.student,
 		layout: LAYOUT_PATHS.admin
 	},
@@ -102,26 +108,26 @@ const ADMIN_ROUTES = {
 		name: "Subject",
 		icon: TopicIcon,
 		iconColor: ICON_COLORS.InfoLight,
-		component: () => <div>Table subject</div>,
+		component: Subject,
 		path: ROUTE_PATHS.subject,
-		layout: LAYOUT_PATHS.admin
-	},
-	payment: {
-		key: "payment",
-		name: "Payments",
-		icon: PaymentsIcon,
-		iconColor: ICON_COLORS.Warning,
-		component: () => <div>Table payment</div>,
-		path: ROUTE_PATHS.payment,
 		layout: LAYOUT_PATHS.admin
 	},
 	syllabus: {
 		key: "syllabus",
 		name: "Syllabus",
 		icon: ReceiptLongIcon,
-		iconColor: ICON_COLORS.ErrorLight,
-		component: () => <div>Table syllabus</div>,
+		iconColor: ICON_COLORS.Info,
+		component: Syllabus,
 		path: ROUTE_PATHS.syllabus,
+		layout: LAYOUT_PATHS.admin
+	},
+	payment: {
+		key: "payment",
+		name: "Payment",
+		icon: PaymentsIcon,
+		iconColor: ICON_COLORS.Warning,
+		component: Payment,
+		path: ROUTE_PATHS.payment,
 		layout: LAYOUT_PATHS.admin
 	},
 	admin: {

@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { compose } from "redux";
-import asyncThunks from "redux/admin/asyncThunk";
+import asyncThunks from "redux/student/asyncThunk";
 
-const useAuthActions = () => {
+const useStudentActions = () => {
     const dispatch = useDispatch();
     const [actions] = useState({
-        fetchAdmins: compose(dispatch, asyncThunks.fetchAdmins)
+        fetchStudents: compose(dispatch, asyncThunks.fetchStudents)
     })
 
     return actions;
 }
 
-export default useAuthActions;
+export default useStudentActions;

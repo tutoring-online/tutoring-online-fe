@@ -24,8 +24,8 @@ export const STATUS_COLORS = {
         bgColor: "#d7d9db"
     },
     ACTIVE: {
-        textColor: "#3d623f",
-        bgColor: "#d0edd9"
+        textColor: "#2e624b",
+        bgColor: "#d4ecda"
     },
     PENDING: {
         textColor:"#927722",

@@ -22,7 +22,7 @@ import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
 
 const useStyles = makeStyles(componentStyles);
 
-const Admin = () => {
+const Student = () => {
 	const classes = useStyles();
 	const adminList = useAdminList();
 	console.log(adminList);
@@ -112,4 +112,4 @@ const Admin = () => {
 	)
 }
 
-export default Admin;
+export default Student;
