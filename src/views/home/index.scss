@@ -1,0 +1,14 @@
+.home-view {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+
+    &__item {
+        grid-column: 1 / span 1;
+    }
+
+    &__right-item {
+        grid-column: 2/-1;
+        grid-row: 1/4;
+    }
+}

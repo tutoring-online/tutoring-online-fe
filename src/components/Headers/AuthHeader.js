@@ -8,12 +8,15 @@ import Grid from "@mui/material/Grid";
 // core components
 import componentStyles from "assets/theme/components/auth-header.js";
 import "./index.scss";
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles(componentStyles);
 
 const AuthHeader = () => {
     const classes = useStyles();
     const theme = useTheme();
+    const location = useLocation();
+
     return (
         <>
             <Box
@@ -24,24 +27,26 @@ const AuthHeader = () => {
             >
                 <Container maxWidth="xl">
                     <Box marginBottom="6rem" textAlign="center">
-                        <Box
-                            component={Grid}
-                            container
-                            justifyContent="center"
-                            color={theme.palette.white.main}
-                        >
-                            <Grid item lg={5} md={6} xs={12}>
-                                <h1>Welcome to Tutoring Online!</h1>
-                                <Box
-                                    component="p"
-                                    color={theme.palette.gray[400]}
-                                    lineHeight="1.7"
-                                    fontSize="1rem"
-                                >
-                                    We do care for the kids of the generation.
-                                </Box>
-                            </Grid>
-                        </Box>
+                        {location.pathname === "/auth/login" &&
+                            <Box
+                                component={Grid}
+                                container
+                                justifyContent="center"
+                                color={theme.palette.white.main}
+                            >
+                                <Grid item lg={5} md={6} xs={12}>
+                                    <h1>Welcome to Tutoring Online!</h1>
+                                    <Box
+                                        component="p"
+                                        color={theme.palette.gray[400]}
+                                        lineHeight="1.7"
+                                        fontSize="1rem"
+                                    >
+                                        We do care for the kids of the generation.
+                                    </Box>
+                                </Grid>
+                            </Box>
+                        }
                     </Box>
                 </Container>
                 <Box

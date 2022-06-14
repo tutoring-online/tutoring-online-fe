@@ -22,10 +22,28 @@ import componentStyles from "assets/theme/components/sidebar.js";
 
 const useStyles = makeStyles(componentStyles);
 
+const getLogoImage = (logo, classes) => (
+    <img alt={logo.imgAlt} className={classes.logoClasses} src={logo.imgSrc} />
+);
+
+const getLogoObject = (logo, classes) => (
+    logo && logo.innerLink ? (
+        <Link to={logo.innerLink} className={classes.logoLinkClasses}>
+            {getLogoImage(logo, classes)}
+        </Link>
+    ) : logo && logo.outterLink ? (
+        <a href={logo.outterLink} className={classes.logoLinkClasses}>
+            {getLogoImage(logo, classes)}
+        </a>
+    ) : null
+)
+
+
 export default function Sidebar({ routes, logo, dropdown, input }) {
     const classes = useStyles();
     const location = useLocation();
     const [anchorEl, setAnchorEl] = React.useState(null);
+
 
     const isMenuOpen = Boolean(anchorEl);
 
@@ -123,23 +141,11 @@ export default function Sidebar({ routes, logo, dropdown, input }) {
             }
         });
     };
-    let logoImage = (
-        <img alt={logo.imgAlt} className={classes.logoClasses} src={logo.imgSrc} />
-    );
-    let logoObject =
-        logo && logo.innerLink ? (
-            <Link to={logo.innerLink} className={classes.logoLinkClasses}>
-                {logoImage}
-            </Link>
-        ) : logo && logo.outterLink ? (
-            <a href={logo.outterLink} className={classes.logoLinkClasses}>
-                {logoImage}
-            </a>
-        ) : null;
+
     return <>
         <Hidden mdDown implementation="css">
             <Drawer variant="permanent" anchor="left" open>
-                <Box paddingBottom="1rem">{logoObject}</Box>
+                <Box paddingBottom="1rem">{getLogoObject(logo, classes)}</Box>
                 <List classes={{ root: classes.listRoot }}>
                     {createLinks(routes)}
                 </List>
@@ -166,7 +172,7 @@ export default function Sidebar({ routes, logo, dropdown, input }) {
                             aria-haspopup="true"
                             onClick={handleMenuOpen}
                         />
-                        {logoObject}
+                        {getLogoObject(logo, classes)}
                         {dropdown}
                     </Container>
                 </Toolbar>
@@ -190,7 +196,7 @@ export default function Sidebar({ routes, logo, dropdown, input }) {
                     paddingBottom="1rem"
                     className={classes.outlineNone}
                 >
-                    {logoObject}
+                    {getLogoObject(logo, classes)}
                     <Box
                         component={Clear}
                         width="2rem!important"

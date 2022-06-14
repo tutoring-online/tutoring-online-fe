@@ -1,30 +1,23 @@
+import FullPageLoader from "components/Loading/FullPageLoader";
 import React, { Suspense } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-// import routes from "./routes";
+import { LAYOUT_PATHS } from "./routes";
 
-// import { LAYOUTS } from "layouts/setting";
 const AuthLayout = React.lazy(() => import('layouts/Auth.js'));
 const AdminLayout = React.lazy(() => import('layouts/Admin.js'));
-
-// const getLayout = (layout) => {
-//     if(layout === LAYOUTS.admin) {
-//         return AdminLayout;
-//     }
-
-//     if(layout === LAYOUTS.auth) {
-//         return AuthLayout;
-//     }
-
-//     return AuthLayout;
-// }
+const HomeLayout = React.lazy(() => import('layouts/Home.js'));
+const DetailLayout = React.lazy(() => import('layouts/Detail'));
 
 const Router = () => (
     <BrowserRouter basename="/">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<FullPageLoader />}>
             <Switch>
-                <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-                <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
-                <Redirect from="/" to="/auth/login" />
+                <Route path={LAYOUT_PATHS.admin} render={(props) => <AdminLayout {...props} />} />
+                <Route path={LAYOUT_PATHS.auth} render={(props) => <AuthLayout {...props} />} />
+                <Route path={LAYOUT_PATHS.home} render={(props) => <HomeLayout {...props} />} />
+                <Route path={LAYOUT_PATHS.detail} render={(props) => <DetailLayout {...props} />} />
+                <Redirect from="/" to="/home/index" />
+                <Redirect to="/auth/page-not-found" />
             </Switch>
         </Suspense>
     </BrowserRouter>

@@ -3,13 +3,6 @@
   "version": "1.0.0",
   "author": "LDT",
   "homepage": "https://tutoring-online-e3711.web.app/",
-  "bugs": {
-    "url": "https://github.com/creativetimofficial/argon-dashboard-material-ui/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/creativetimofficial/argon-dashboard-material-ui.git"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && gulp licenses",
@@ -38,8 +31,10 @@
     "react-datetime": "^3.1.1",
     "react-dom": "^17.0.2",
     "react-firebaseui": "^6.0.0",
+    "react-number-format": "^4.9.3",
     "react-redux": "^8.0.2",
     "react-router-dom": "^5.2.0",
+    "react-scripts": "^5.0.1",
     "redux-persist": "^6.0.0",
     "sass": "^1.52.1",
     "toastr": "^2.1.4",

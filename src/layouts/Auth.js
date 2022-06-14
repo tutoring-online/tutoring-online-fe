@@ -6,23 +6,37 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 
 // core components
-import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthHeader from "components/Headers/AuthHeader.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
 import componentStyles from "assets/theme/layouts/auth.js";
-import routes from "route/routes.js";
+import routes, { getFullPath, ROUTES } from "route/routes";
 import { useSelector } from "react-redux";
+import GeneralNavbar from "components/Navbars/GeneralNavbar";
+import { isAdmin } from "settings/setting";
+import { isTutor } from "settings/setting";
+import { isStudent } from "settings/setting";
 
 const useStyles = makeStyles(componentStyles);
 
 const AuthRoute = (props) => {
     const isSignedIn = useSelector(state => state.auth.isSignedIn);
-
-    console.log(isSignedIn);
+    const user = useSelector(state => state.auth.user);
 
     if (isSignedIn) {
-        return <Redirect from="*" to="/admin/dashboard" />
+        if (isAdmin(user?.role)) {
+            return <Redirect from="*" to={getFullPath(ROUTES.dashboard)} />
+        }
+
+        if (isTutor(user?.role)) {
+            return <Redirect from="*" to={getFullPath(ROUTES.home)} />
+        }
+
+        if (isStudent(user?.role)) {
+            return <Redirect from="*" to={getFullPath(ROUTES.home)} />
+        }
+
+        return <Redirect from="*" to={getFullPath(ROUTES.redirectHome)} />
     }
 
     return (
@@ -30,6 +44,28 @@ const AuthRoute = (props) => {
     );
 }
 
+const getRoutes = () => {
+    const authRoutes = routes.filter(route => route.layout === "/auth");
+
+    return authRoutes.map((prop, key) => {
+        if (prop.path === "/logout") {
+            return <Route
+                path={prop.layout + prop.path}
+                exact
+                key={prop.key || key}
+                component={prop.component}
+            />
+        }
+
+        return (
+            <AuthRoute
+                path={prop.layout + prop.path}
+                component={prop.component}
+                key={prop.key || key}
+            />
+        );
+    });
+};
 
 const Auth = () => {
     const classes = useStyles();
@@ -48,26 +84,10 @@ const Auth = () => {
         mainContent.current.scrollTop = 0;
     }, [location]);
 
-    const getRoutes = (routes) => {
-        return routes.map((prop, key) => {
-            if (prop.layout === "/auth") {
-                return (
-                    <AuthRoute
-                        path={prop.layout + prop.path}
-                        component={prop.component}
-                        key={key}
-                    />
-                );
-            } else {
-                return null;
-            }
-        });
-    };
-
     return (
         <>
             <div className="main-content" ref={mainContent}>
-                <AuthNavbar />
+                <GeneralNavbar />
                 <AuthHeader />
                 <Container
                     component={Box}
@@ -79,7 +99,7 @@ const Auth = () => {
                 >
                     <Box component={Grid} container justifyContent="center">
                         <Switch>
-                            {getRoutes(routes)}
+                            {getRoutes()}
                             <Redirect from="*" to="/auth/login" />
                         </Switch>
                     </Box>

@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
+
 import makeStyles from '@mui/styles/makeStyles';
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -15,26 +17,64 @@ import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import NavbarDropdown from "components/Dropdowns/NavbarDropdown.js";
+import componentStyles from "assets/theme/layouts/admin.js";
+import logoImg from "assets/img/brand/argon-react.png";
 
 import routes from "route/routes.js";
-
-import componentStyles from "assets/theme/layouts/admin.js";
-
-import logoImg from "assets/img/brand/argon-react.png";
-import { useSelector } from "react-redux";
+import { isAvailableArray } from "helpers/arrayUtils";
+import { ROUTE_PATHS } from "route/routes";
+import { isAdmin } from "settings/setting";
 
 const useStyles = makeStyles(componentStyles);
 
 const PrivateRoute = (props) => {
     const isSignedIn = useSelector(state => state.auth.isSignedIn);
+    const user = useSelector(state => state.auth.user);
 
-    if (!isSignedIn) {
-        return <Redirect from="*" to="/auth/login" />
+    if (isSignedIn && isAdmin(user?.role)) {
+        return <Route {...props} />
     }
 
     return (
-        <Route {...props} />
+        <Redirect from="*" to="/auth/login" />
     );
+}
+
+const getAdminRoutes = () => {
+    const adminRoutes = routes.filter(route => route.layout === "/admin");
+    return isAvailableArray(adminRoutes) ? [...adminRoutes] : [];
+}
+
+const getRoutes = () => {
+    const adminRoutes = getAdminRoutes();
+
+    return adminRoutes.map((prop, key) => {
+        return (
+            <PrivateRoute
+                path={prop.layout + prop.path}
+                component={prop.component}
+                key={prop.key || key}
+            />
+        );
+    });
+};
+
+const getLogoutRoute = () => {
+    const logoutRoute = routes.find(route => route.path === ROUTE_PATHS.logout);
+    return logoutRoute || null;
+}
+
+const getSidebarRoutes = () => {
+    const sidebarRoutes = [];
+    const adminRoutes = getAdminRoutes();
+    sidebarRoutes.push(...adminRoutes);
+
+    const logoutRoute = getLogoutRoute();
+    if (logoutRoute) {
+        sidebarRoutes.push(logoutRoute);
+    }
+
+    return sidebarRoutes;
 }
 
 const Admin = () => {
@@ -45,22 +85,6 @@ const Admin = () => {
         document.documentElement.scrollTop = 0;
         document.scrollingElement.scrollTop = 0;
     }, [location]);
-
-    const getRoutes = (routes) => {
-        return routes.map((prop, key) => {
-            if (prop.layout === "/admin") {
-                return (
-                    <PrivateRoute
-                        path={prop.layout + prop.path}
-                        component={prop.component}
-                        key={key}
-                    />
-                );
-            } else {
-                return null;
-            }
-        });
-    };
 
     const getBrandText = () => {
         for (let i = 0; i < routes.length; i++) {
@@ -75,9 +99,9 @@ const Admin = () => {
         <>
             <>
                 <Sidebar
-                    routes={routes}
+                    routes={getSidebarRoutes()}
                     logo={{
-                        innerLink: "/admin/index",
+                        innerLink: "/home/index",
                         imgSrc: logoImg,
                         imgAlt: "...",
                     }}
@@ -106,8 +130,8 @@ const Admin = () => {
                 <Box position="relative" className={classes.mainContent}>
                     <AdminNavbar brandText={getBrandText(location.pathname)} />
                     <Switch>
-                        {getRoutes(routes)}
-                        <Redirect from="*" to="/admin/index" />
+                        {getRoutes()}
+                        <Redirect from="*" to="/home/index" />
                     </Switch>
                     <Container
                         maxWidth={false}

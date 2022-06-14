@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { compose } from "redux";
+import asyncThunks from "redux/auth/asyncThunk";
 import { actions } from "redux/auth/slice";
-import { UNSUBSCRIBE_USER, SUBSCRIBE_USER } from "redux/auth/types";
+import * as types from "redux/auth/types";
 
 const useAuthActions = () => {
     const dispatch = useDispatch();
     const [authActions] = useState({
-        subscribeUser: compose(dispatch, actions[SUBSCRIBE_USER]),
-        unsubscribeUser: compose(dispatch, actions[UNSUBSCRIBE_USER]),
+        subscribeUser: compose(dispatch, actions[types.SUBSCRIBE_USER]),
+        unsubscribeUser: compose(dispatch, actions[types.UNSUBSCRIBE_USER]),
+        asyncLoginUser: compose(dispatch, asyncThunks.loginUser)
     })
 
     return authActions;

@@ -383,7 +383,7 @@ const theme = createTheme(adaptV4Theme({
         boxShadow: "0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%)",
         "&:hover": {
           boxShadow: boxShadows.buttonBoxShadow,
-          transform: "translateY(-1px)",
+          // transform: "translateY(-1px)",
         },
       },
       text: {
