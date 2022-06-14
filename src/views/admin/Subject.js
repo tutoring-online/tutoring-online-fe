@@ -1,72 +1,59 @@
+import { useEffect, useState } from "react";
 
 //MUI
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import EditIcon from '@mui/icons-material/Edit';
+import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { IconButton } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 
 //Core component
 import Header from "components/Headers/Header.js";
 import Table from "components/Table/Table.jsx";
 
 //Hooks
-import useAdminList from "hooks/admin/useAdminList";
+import useSubjectList from "hooks/subject/useSubjectList";
+
+import NoInformation from "components/Text/NoInformation";
+import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
+import { renderSubjectStatus } from "settings/subjectSetting";
 
 import componentStyles from "assets/theme/views/admin/tables.js";
-import makeStyles from '@mui/styles/makeStyles';
-import { useEffect, useState } from "react";
-import { Avatar, IconButton } from "@mui/material";
-import NoInformation from "components/Text/NoInformation";
-import { renderAdminStatus } from "settings/adminSetting";
-import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
-
 const useStyles = makeStyles(componentStyles);
 
-const Admin = () => {
+const Subject = () => {
 	const classes = useStyles();
-	const adminList = useAdminList();
-	console.log(adminList);
+	const subjectList = useSubjectList();
+	console.log(subjectList);
 
 	const [columns, setColumns] = useState([]);
 
 	useEffect(() => {
 		setColumns([
 			{
+				key: "code",
+				label: "Code",
+				render: (row) => row.code
+			},
+			{
 				key: "name",
 				label: "Name",
-				render: (admin) => (
-					<Box
-						display="flex"
-						alignItems="center"
-					>
-						<Box
-							component={Avatar}
-							marginRight="1rem"
-							alt="avatar"
-							src={admin.avatarURL}
-							sx={{ width: 32, height: 32 }}
-						/>
-						{admin.name}
-					</Box>
-				)
+				render: (row) => row.name || <NoInformation />
 			},
 			{
-				key: "email",
-				label: "Email",
-				render: (admin) => admin.email || <NoInformation />
-			},
-			{
-				key: "phone",
-				label: "Phone",
-				render: (admin) => admin.phone || <NoInformation />
+				key: "description",
+				label: "Description",
+				render: (row) => row.description || <NoInformation />
 			},
 			{
 				key: "status",
 				label: "Status",
-				render: (admin) => renderAdminStatus(admin.status)
+				render: (row) => renderSubjectStatus(row.status) || <NoInformation />
 			},
 			{
 				key: "action",
+				align: "center",
 				label: "Actions",
 				render: () => (
 					<Box
@@ -76,9 +63,9 @@ const Admin = () => {
 						columnGap="8px"
 						fontSize="13px"
 					>
-						<BootstrapTooltip title="Edit">
+						<BootstrapTooltip title="Detail">
 							<IconButton style={{ padding: 5 }}>
-								<EditIcon sx={{ width: 18, height: 18 }} />
+								<SettingsIcon sx={{ width: 18, height: 18 }} />
 							</IconButton>
 						</BootstrapTooltip>
 						<BootstrapTooltip title="Delete">
@@ -92,7 +79,6 @@ const Admin = () => {
 		])
 	}, [])
 
-
 	return (
 		<>
 			<Header />
@@ -103,13 +89,13 @@ const Admin = () => {
 				classes={{ root: classes.containerRoot }}
 			>
 				<Table
-					title={"Admin List"}
+					title={"List Subjects"}
 					columns={columns}
-					data={adminList}
+					data={subjectList}
 				/>
 			</Container>
 		</>
 	)
 }
 
-export default Admin;
+export default Subject;

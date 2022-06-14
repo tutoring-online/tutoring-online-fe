@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { equalIgnoreCase } from "helpers/stringUtils";
 
 export const ROLES = {
@@ -24,16 +25,16 @@ export const STATUS_COLORS = {
         bgColor: "#d7d9db"
     },
     ACTIVE: {
-        textColor: "#2e624b",
-        bgColor: "#d4ecda"
+        textColor: "#3e5e30",
+        bgColor: "#d2edda"
     },
     PENDING: {
-        textColor:"#927722",
-        bgColor: "#ebd282"
+        textColor: "#866416",
+        bgColor: "#ead186"
     },
     AVAILABLE: {
-        textColor: "",
-        bgColor: ""
+        textColor: "#1d3f7b",
+        bgColor: "#c8e6ff"
     },
     CANCELED: {
         textColor: "#7c2f3d",
@@ -44,4 +45,24 @@ export const STATUS_COLORS = {
         bgColor: "#573e7d"
     },
 
+}
+
+
+export const renderStatus = (statusObject) => {
+    if (!statusObject) return null;
+    return (
+        <Box
+            component="div"
+            display="inline-block"
+            padding="4px 8px"
+            borderRadius={1}
+
+            fontSize="inherit"
+            fontWeight={600}
+            color={statusObject.textColor}
+            bgcolor={statusObject.bgColor}
+        >
+            {statusObject.label}
+        </Box>
+    )
 }

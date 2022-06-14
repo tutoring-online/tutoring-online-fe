@@ -2,7 +2,6 @@ import { auth } from "./firebase.js";
 
 const uiConfig = {
     signInFlow: "popup",
-    signInSuccessUrl: "/home/index",
     callbacks: {
         signInSuccessWithAuthResult: () => false,
     },

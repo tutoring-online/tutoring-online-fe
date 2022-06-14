@@ -2,7 +2,7 @@
 //MUI
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import EditIcon from '@mui/icons-material/Edit';
+import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 //Core component
@@ -19,6 +19,7 @@ import { Avatar, IconButton } from "@mui/material";
 import NoInformation from "components/Text/NoInformation";
 import { renderAdminStatus } from "settings/adminSetting";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
+
 
 const useStyles = makeStyles(componentStyles);
 
@@ -46,7 +47,7 @@ const Admin = () => {
 							src={admin.avatarURL}
 							sx={{ width: 32, height: 32 }}
 						/>
-						{admin.name}
+						{admin.name || <NoInformation />}
 					</Box>
 				)
 			},
@@ -76,9 +77,9 @@ const Admin = () => {
 						columnGap="8px"
 						fontSize="13px"
 					>
-						<BootstrapTooltip title="Edit">
+						<BootstrapTooltip title="Detail">
 							<IconButton style={{ padding: 5 }}>
-								<EditIcon sx={{ width: 18, height: 18 }} />
+								<SettingsIcon sx={{ width: 18, height: 18 }} />
 							</IconButton>
 						</BootstrapTooltip>
 						<BootstrapTooltip title="Delete">
@@ -103,7 +104,7 @@ const Admin = () => {
 				classes={{ root: classes.containerRoot }}
 			>
 				<Table
-					title={"Admin List"}
+					title={"List Admin Users"}
 					columns={columns}
 					data={adminList}
 				/>

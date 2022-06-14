@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import makeStyles from '@mui/styles/makeStyles';
 import Box from "@mui/material/Box";
@@ -15,6 +15,7 @@ import CustomTableHeader from "./CustomTableHeader";
 import CustomTableBody from "./CustomTableBody";
 import CustomTablePagination from "./CusomTablePagination";
 import { isAvailableArray } from "helpers/arrayUtils";
+import { DEFAULT_PAGINATION } from "settings/table-setting";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -24,6 +25,31 @@ const Tables = ({
     data
 }) => {
     const classes = useStyles();
+
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_PAGINATION.rowsPerPage);
+
+    const [paginationData, setPaginationData] = useState([]);
+
+    useEffect(() => {
+        const startIndex = page * rowsPerPage;
+        const endIndex = (page + 1) * rowsPerPage;
+        setPaginationData(() => {
+            if (!isAvailableArray(data)) return [];
+
+            return data.slice(startIndex, endIndex);
+        });
+    }, [data, page, rowsPerPage])
+
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
 
     return (
         <>
@@ -49,7 +75,7 @@ const Tables = ({
 
                         <CustomTableBody
                             columns={columns}
-                            data={data}
+                            data={paginationData}
                         />
                     </Box>
                 </TableContainer>
@@ -60,6 +86,10 @@ const Tables = ({
                 >
                     <CustomTablePagination
                         count={isAvailableArray(data) ? data.length : 0}
+                        page={page}
+                        rowsPerPage={rowsPerPage}
+                        handleChangePage={handleChangePage}
+                        handleChangeRowsPerPage={handleChangeRowsPerPage}
                     />
                 </Box>
             </Card>

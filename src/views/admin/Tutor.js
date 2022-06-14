@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react";
 
 //MUI
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import EditIcon from '@mui/icons-material/Edit';
+import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { Avatar, IconButton } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 
 //Core component
 import Header from "components/Headers/Header.js";
@@ -12,19 +15,15 @@ import Table from "components/Table/Table.jsx";
 //Hooks
 import useTutorList from "hooks/tutor/useTutorList";
 
-import componentStyles from "assets/theme/views/admin/tables.js";
-import makeStyles from '@mui/styles/makeStyles';
-import { useEffect, useState } from "react";
-import { Avatar, IconButton } from "@mui/material";
+import { renderTutorStatus } from "settings/tutorSetting";
 import NoInformation from "components/Text/NoInformation";
-import { renderAdminStatus } from "settings/adminSetting";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
 
+import componentStyles from "assets/theme/views/admin/tables.js";
 const useStyles = makeStyles(componentStyles);
 
-const Admin = () => {
+const Tutor = () => {
 	const classes = useStyles();
-	
 	const tutorList = useTutorList();
 	console.log(tutorList);
 
@@ -35,7 +34,7 @@ const Admin = () => {
 			{
 				key: "name",
 				label: "Name",
-				render: (admin) => (
+				render: (row) => (
 					<Box
 						display="flex"
 						alignItems="center"
@@ -44,30 +43,41 @@ const Admin = () => {
 							component={Avatar}
 							marginRight="1rem"
 							alt="avatar"
-							src={admin.avatarURL}
+							src={row.avatarURL}
 							sx={{ width: 32, height: 32 }}
 						/>
-						{admin.name}
+						{row.name || <NoInformation />}
 					</Box>
 				)
 			},
 			{
+				key: "totalLessons",
+				align: "center",
+				label: (
+					<BootstrapTooltip title="Total lessons">
+						<div>Lessons</div>
+					</BootstrapTooltip>
+				),
+				render: (row) => row.totalLessons || 0
+			},
+			{
 				key: "email",
 				label: "Email",
-				render: (admin) => admin.email || <NoInformation />
+				render: (row) => row.email || <NoInformation />
 			},
 			{
 				key: "phone",
 				label: "Phone",
-				render: (admin) => admin.phone || <NoInformation />
+				render: (row) => row.phone || <NoInformation />
 			},
 			{
 				key: "status",
 				label: "Status",
-				render: (admin) => renderAdminStatus(admin.status)
+				render: (row) => renderTutorStatus(row.status)
 			},
 			{
 				key: "action",
+				align: "center",
 				label: "Actions",
 				render: () => (
 					<Box
@@ -77,9 +87,9 @@ const Admin = () => {
 						columnGap="8px"
 						fontSize="13px"
 					>
-						<BootstrapTooltip title="Edit">
+						<BootstrapTooltip title="Detail">
 							<IconButton style={{ padding: 5 }}>
-								<EditIcon sx={{ width: 18, height: 18 }} />
+								<SettingsIcon sx={{ width: 18, height: 18 }} />
 							</IconButton>
 						</BootstrapTooltip>
 						<BootstrapTooltip title="Delete">
@@ -104,7 +114,7 @@ const Admin = () => {
 				classes={{ root: classes.containerRoot }}
 			>
 				<Table
-					title={"Admin List"}
+					title={"List Tutor Users"}
 					columns={columns}
 					data={tutorList}
 				/>
@@ -113,4 +123,4 @@ const Admin = () => {
 	)
 }
 
-export default Admin;
+export default Tutor;

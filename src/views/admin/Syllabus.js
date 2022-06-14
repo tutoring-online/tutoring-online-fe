@@ -1,31 +1,39 @@
+import { useEffect, useState } from "react";
 
 //MUI
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import EditIcon from '@mui/icons-material/Edit';
+import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { IconButton } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 
 //Core component
 import Header from "components/Headers/Header.js";
 import Table from "components/Table/Table.jsx";
 
 //Hooks
-import useAdminList from "hooks/admin/useAdminList";
+import useSyllabusList from "hooks/syllabus/useSyllabusList";
 
-import componentStyles from "assets/theme/views/admin/tables.js";
-import makeStyles from '@mui/styles/makeStyles';
-import { useEffect, useState } from "react";
-import { Avatar, IconButton } from "@mui/material";
 import NoInformation from "components/Text/NoInformation";
-import { renderAdminStatus } from "settings/adminSetting";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
+import ReactNumberFormat from 'react-number-format';
+import componentStyles from "assets/theme/views/admin/tables.js";
+import { renderSyllabusStatus } from "settings/syllabusSetting";
 
 const useStyles = makeStyles(componentStyles);
 
-const Admin = () => {
+const getPrice = (syllabus) => {
+	const price = syllabus?.price;
+	if (!price) return 0;
+	if (isNaN(price)) return 0;
+	return parseInt(price);
+}
+
+const Syllabus = () => {
 	const classes = useStyles();
-	const adminList = useAdminList();
-	console.log(adminList);
+	const syllabusList = useSyllabusList();
+	console.log(syllabusList);
 
 	const [columns, setColumns] = useState([]);
 
@@ -34,39 +42,33 @@ const Admin = () => {
 			{
 				key: "name",
 				label: "Name",
-				render: (admin) => (
-					<Box
-						display="flex"
-						alignItems="center"
-					>
-						<Box
-							component={Avatar}
-							marginRight="1rem"
-							alt="avatar"
-							src={admin.avatarURL}
-							sx={{ width: 32, height: 32 }}
-						/>
-						{admin.name}
-					</Box>
+				render: (row) => row.name || <NoInformation />
+			},
+			{
+				key: "price",
+				label: "Price",
+				render: (row) => (
+					<ReactNumberFormat
+						displayType="text"
+						value={getPrice(row) || 0}
+						thousandSeparator={true}
+						suffix=" ₫"
+					/>
 				)
 			},
 			{
-				key: "email",
-				label: "Email",
-				render: (admin) => admin.email || <NoInformation />
-			},
-			{
-				key: "phone",
-				label: "Phone",
-				render: (admin) => admin.phone || <NoInformation />
+				key: "description",
+				label: "Description",
+				render: (row) => row.description || <NoInformation />
 			},
 			{
 				key: "status",
 				label: "Status",
-				render: (admin) => renderAdminStatus(admin.status)
+				render: (row) => renderSyllabusStatus(row.status) || <NoInformation />
 			},
 			{
 				key: "action",
+				align: "center",
 				label: "Actions",
 				render: () => (
 					<Box
@@ -76,9 +78,9 @@ const Admin = () => {
 						columnGap="8px"
 						fontSize="13px"
 					>
-						<BootstrapTooltip title="Edit">
+						<BootstrapTooltip title="Detail">
 							<IconButton style={{ padding: 5 }}>
-								<EditIcon sx={{ width: 18, height: 18 }} />
+								<SettingsIcon sx={{ width: 18, height: 18 }} />
 							</IconButton>
 						</BootstrapTooltip>
 						<BootstrapTooltip title="Delete">
@@ -92,7 +94,6 @@ const Admin = () => {
 		])
 	}, [])
 
-
 	return (
 		<>
 			<Header />
@@ -103,13 +104,13 @@ const Admin = () => {
 				classes={{ root: classes.containerRoot }}
 			>
 				<Table
-					title={"Admin List"}
+					title={"List Syllabuses"}
 					columns={columns}
-					data={adminList}
+					data={syllabusList}
 				/>
 			</Container>
 		</>
 	)
 }
 
-export default Admin;
+export default Syllabus;

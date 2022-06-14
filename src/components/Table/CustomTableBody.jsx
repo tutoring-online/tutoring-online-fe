@@ -12,7 +12,6 @@ import { isAvailableArray } from 'helpers/arrayUtils';
 import componentStyles from "assets/theme/views/admin/tables.js";
 const useStyles = makeStyles(componentStyles);
 
-
 export default function CustomTableBody({
     columns,
     data,
@@ -30,6 +29,7 @@ export default function CustomTableBody({
                         {isAvailableArray(columns) && columns.map((column, index) =>
                             <TableCell
                                 key={column.key || index}
+                                align={column.align || "left"}
                                 classes={{ root: classes.tableCellRoot }}
                             >
                                 {column.render ? column.render(row) : (row[column.key] || "N/A")}

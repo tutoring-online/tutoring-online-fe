@@ -1,72 +1,119 @@
+import { useEffect, useState } from "react";
 
 //MUI
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import EditIcon from '@mui/icons-material/Edit';
+import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { Avatar, IconButton } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 
 //Core component
 import Header from "components/Headers/Header.js";
 import Table from "components/Table/Table.jsx";
+import NoInformation from "components/Text/NoInformation";
+import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
+import ReactNumberFormat from 'react-number-format';
 
 //Hooks
-import useAdminList from "hooks/admin/useAdminList";
+import usePaymentList from "hooks/payment/usePaymentList";
+import useStudentList from "hooks/student/useStudentList";
+import useSyllabusList from "hooks/syllabus/useSyllabusList";
 
+//Helpers
+import { renderPaymentStatus } from "settings/paymentSetting";
+import { isAvailableArray } from "helpers/arrayUtils";
+import { formatDateTime, datetimeFormatReverseDate } from "helpers/dateUtils";
+
+//other
 import componentStyles from "assets/theme/views/admin/tables.js";
-import makeStyles from '@mui/styles/makeStyles';
-import { useEffect, useState } from "react";
-import { Avatar, IconButton } from "@mui/material";
-import NoInformation from "components/Text/NoInformation";
-import { renderAdminStatus } from "settings/adminSetting";
-import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
 
 const useStyles = makeStyles(componentStyles);
 
-const Admin = () => {
+const getPrice = (syllabus) => {
+	const price = syllabus?.price;
+	if (!price) return 0;
+	if (isNaN(price)) return 0;
+	return parseInt(price);
+}
+
+const Payment = () => {
 	const classes = useStyles();
-	const adminList = useAdminList();
-	console.log(adminList);
+	const studentList = useStudentList();
+	const syllabusList = useSyllabusList();
+	const paymentList = usePaymentList();
+	console.log(paymentList);
 
 	const [columns, setColumns] = useState([]);
 
 	useEffect(() => {
+		const getStudentById = (studentId) => {
+			const student = isAvailableArray(studentList) &&
+				studentList.find(item => item.id === studentId);
+			return student || null;
+		}
+
+		const getSyllabusById = (syllabusId) => {
+			const syllabus = isAvailableArray(syllabusList) &&
+				syllabusList.find(item => item.id === syllabusId);
+			return syllabus || null;
+		}
+
 		setColumns([
 			{
-				key: "name",
-				label: "Name",
-				render: (admin) => (
-					<Box
-						display="flex"
-						alignItems="center"
-					>
-						<Box
-							component={Avatar}
-							marginRight="1rem"
-							alt="avatar"
-							src={admin.avatarURL}
-							sx={{ width: 32, height: 32 }}
-						/>
-						{admin.name}
-					</Box>
+				key: "studentId",
+				label: "Student",
+				render: (row) => {
+					const student = getStudentById(row.studentId);
+					return !student ?
+						<NoInformation text="Student doesn't exist." />
+						: (
+							<Box
+								display="flex"
+								alignItems="center"
+							>
+								<Box
+									component={Avatar}
+									marginRight="1rem"
+									alt="avatar"
+									src={student.avatarURL}
+									sx={{ width: 32, height: 32 }}
+								/>
+								{student.name || <NoInformation />}
+							</Box>
+						)
+				}
+			},
+			{
+				key: "syllabusName",
+				label: "Syllabus",
+				render: (row) => getSyllabusById(row.syllabusId)?.name || <NoInformation text="Syllabus doesn't exist." />
+			},
+			{
+				key: "price",
+				label: "Cost",
+				render: (row) => (
+					<ReactNumberFormat
+						displayType="text"
+						value={getPrice(getSyllabusById(row.syllabusId)) || 0}
+						thousandSeparator={true}
+						suffix=" ₫"
+					/>
 				)
 			},
 			{
-				key: "email",
-				label: "Email",
-				render: (admin) => admin.email || <NoInformation />
-			},
-			{
-				key: "phone",
-				label: "Phone",
-				render: (admin) => admin.phone || <NoInformation />
+				key: "createdDate",
+				label: "Order's date",
+				render: (row) => formatDateTime(row.createdDate, datetimeFormatReverseDate, "") || <NoInformation />
 			},
 			{
 				key: "status",
 				label: "Status",
-				render: (admin) => renderAdminStatus(admin.status)
+				render: (row) => renderPaymentStatus(row.status) || <NoInformation />
 			},
 			{
 				key: "action",
+				align: "center",
 				label: "Actions",
 				render: () => (
 					<Box
@@ -76,9 +123,9 @@ const Admin = () => {
 						columnGap="8px"
 						fontSize="13px"
 					>
-						<BootstrapTooltip title="Edit">
+						<BootstrapTooltip title="Detail">
 							<IconButton style={{ padding: 5 }}>
-								<EditIcon sx={{ width: 18, height: 18 }} />
+								<SettingsIcon sx={{ width: 18, height: 18 }} />
 							</IconButton>
 						</BootstrapTooltip>
 						<BootstrapTooltip title="Delete">
@@ -90,8 +137,7 @@ const Admin = () => {
 				)
 			},
 		])
-	}, [])
-
+	}, [studentList, syllabusList])
 
 	return (
 		<>
@@ -103,13 +149,13 @@ const Admin = () => {
 				classes={{ root: classes.containerRoot }}
 			>
 				<Table
-					title={"Admin List"}
+					title={"List Payments"}
 					columns={columns}
-					data={adminList}
+					data={paymentList}
 				/>
 			</Container>
 		</>
 	)
 }
 
-export default Admin;
+export default Payment;
