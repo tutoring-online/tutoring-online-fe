@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import * as types from "./types";
 
-import * as asyncThunks from "./asyncThunk";
+import asyncThunks from "./asyncThunk";
 
 
 const INITIAL_STATE = {
@@ -37,5 +37,4 @@ const slice = createSlice({
 
 export const authReducer = slice.reducer;
 export const actions = slice.actions;
-
 export default slice;
