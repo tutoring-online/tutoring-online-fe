@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+
+//MUI
 import makeStyles from '@mui/styles/makeStyles';
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -18,14 +20,52 @@ import Settings from "@mui/icons-material/Settings";
 // core components
 import componentStyles from "assets/theme/components/navbar-dropdown.js";
 import { useSelector } from "react-redux";
+import { getFullPath } from "route/routes";
+import { ROUTES } from "route/routes";
+import { useHistory } from "react-router-dom";
 
+import "./index.scss";
 const useStyles = makeStyles(componentStyles);
+
+const menuList = [
+    {
+        key: "profile",
+        icon: Person,
+        label: "My Profile",
+        path: getFullPath(ROUTES.profile)
+    },
+    {
+        key: "setting",
+        icon: Settings,
+        label: "Settings",
+        path: "#"
+    },
+    {
+        key: "activity",
+        icon: EventNote,
+        label: "Activity",
+        path: "#"
+    },
+    {
+        key: "support",
+        icon: LiveHelp,
+        label: "Support",
+        path: "#"
+    },
+    {
+        key: "logout",
+        icon: DirectionsRun,
+        label: "Logout",
+        path: getFullPath(ROUTES.logout)
+    }
+]
 
 export default function NavbarDropdown() {
     const classes = useStyles();
     const user = useSelector(state => state.auth.user);
+    const history = useHistory();
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const isMenuOpen = Boolean(anchorEl);
 
@@ -33,9 +73,10 @@ export default function NavbarDropdown() {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleMenuClose = (event) => {
-        console.log(event.target.value);
+    const handleMenuClose = (path) => {
         setAnchorEl(null);
+        if (!path) return;
+        history.push(path);
     };
 
     const menuId = "primary-search-account-menu";
@@ -50,83 +91,30 @@ export default function NavbarDropdown() {
             onClose={handleMenuClose}
         >
             <Typography
-                variant="h6"
-                component="h6"
+                variant="h5"
+                component="h5"
                 classes={{ root: classes.menuTitle }}
             >
-                Welcome!
+                {`Hi, ${user?.name}`}
             </Typography>
-            <Box
-                display="flex!important"
-                alignItems="center!important"
-                component={MenuItem}
-                onClick={handleMenuClose}
-            >
-                <Box
-                    component={Person}
-                    width="1.25rem!important"
-                    height="1.25rem!important"
-                    marginRight="1rem"
-                />
-                <span>My profile</span>
-            </Box>
-            <Box
-                display="flex!important"
-                alignItems="center!important"
-                component={MenuItem}
-                onClick={handleMenuClose}
-            >
-                <Box
-                    component={Settings}
-                    width="1.25rem!important"
-                    height="1.25rem!important"
-                    marginRight="1rem"
-                />
-                <span>Settings</span>
-            </Box>
-            <Box
-                display="flex!important"
-                alignItems="center!important"
-                component={MenuItem}
-                onClick={handleMenuClose}
-            >
-                <Box
-                    component={EventNote}
-                    width="1.25rem!important"
-                    height="1.25rem!important"
-                    marginRight="1rem"
-                />
-                <span>Activity</span>
-            </Box>
-            <Box
-                display="flex!important"
-                alignItems="center!important"
-                component={MenuItem}
-                onClick={handleMenuClose}
-            >
-                <Box
-                    component={LiveHelp}
-                    width="1.25rem!important"
-                    height="1.25rem!important"
-                    marginRight="1rem"
-                />
-                <span>Support</span>
-            </Box>
             <Divider component="div" classes={{ root: classes.dividerRoot }} />
-            <Box
-                display="flex!important"
-                alignItems="center!important"
-                component={MenuItem}
-                onClick={handleMenuClose}
-            >
+            {menuList.map((item, index) =>
                 <Box
-                    component={DirectionsRun}
-                    width="1.25rem!important"
-                    height="1.25rem!important"
-                    marginRight="1rem"
-                />
-                <span>Logout</span>
-            </Box>
+                    key={item.key || index}
+                    display="flex!important"
+                    alignItems="center!important"
+                    component={MenuItem}
+                    onClick={() => handleMenuClose(item.path)}
+                >
+                    <Box
+                        component={item.icon}
+                        width="1.25rem!important"
+                        height="1.25rem!important"
+                        marginRight="1rem"
+                    />
+                    <span>{item.label}</span>
+                </Box>
+            )}
         </Menu>
     );
 
@@ -142,20 +130,16 @@ export default function NavbarDropdown() {
                 label: classes.buttonLabel,
                 root: classes.buttonRoot,
             }}
-            style={{
-                display: "flex",
-                alignItems: "center",
-                color: "#fff"
-            }}
+            className="navbar-dropdown"
         >
             <Avatar
                 alt="..."
-                src={user?.photoURL}
+                src={user?.avatarURL}
                 classes={{
                     root: classes.avatarRoot,
                 }}
             />
-            <Hidden mdDown>{user?.displayName || ""}</Hidden>
+            <Hidden mdDown>{user?.name || ""}</Hidden>
         </Button>
         {renderMenu}
     </>;

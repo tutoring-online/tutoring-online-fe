@@ -30,7 +30,7 @@ const slice = createSlice({
             if (action.payload) {
                 state.user = {
                     role: action.payload.role,
-                    ...(action.payload.data || {})
+                    ...(action.payload.data[0] || {})
                 }
             }
         })

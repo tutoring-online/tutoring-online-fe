@@ -36,7 +36,7 @@ const PrivateRoute = (props) => {
     }
 
     return (
-        <Redirect from="*" to="/home/index" />
+        <Redirect from="*" to="/auth/login" />
     );
 }
 

@@ -34,7 +34,7 @@ const componentStyles = (theme) => ({
     outline: "none!important",
   },
   flexDirectionColumn: {
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       flexDirection: "column",
     },
   },

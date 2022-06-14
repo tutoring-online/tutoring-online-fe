@@ -19,6 +19,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import TopicIcon from '@mui/icons-material/Topic';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import DirectionsRun from "@mui/icons-material/DirectionsRun";
 
 // core components
 const Home = React.lazy(() => import('views/home/Home.jsx'));
@@ -169,7 +170,7 @@ export const ROUTES = {
 	logout: {
 		key: "logout",
 		name: "Logout",
-		icon: VpnKey,
+		icon: DirectionsRun,
 		iconColor: "Primary",
 		component: Logout,
 		path: ROUTE_PATHS.logout,

@@ -16,12 +16,19 @@ import Toolbar from "@mui/material/Toolbar";
 import Clear from "@mui/icons-material/Clear";
 import Dashboard from "@mui/icons-material/Dashboard";
 import MenuIcon from "@mui/icons-material/Menu";
-import Person from "@mui/icons-material/Person";
 import VpnKey from "@mui/icons-material/VpnKey";
 import HomeIcon from '@mui/icons-material/Home';
 
+import DirectionsRun from "@mui/icons-material/DirectionsRun";
+import EventNote from "@mui/icons-material/EventNote";
+import LiveHelp from "@mui/icons-material/LiveHelp";
+import Person from "@mui/icons-material/Person";
+import Settings from "@mui/icons-material/Settings";
+
+
 // core components
 import componentStyles from "assets/theme/components/auth-navbar.js";
+import dropdownComponentStyles from "assets/theme/components/navbar-dropdown.js";
 
 import LogoWhite from "assets/img/brand/argon-react-white.png";
 import Logo from "assets/img/brand/argon-react.png";
@@ -30,13 +37,51 @@ import { ROUTES } from "route/routes";
 import { isAvailableArray } from "helpers/arrayUtils";
 import { useSelector } from "react-redux";
 import { isAdmin } from "settings/setting";
+import NavbarDropdown from "components/Dropdowns/NavbarDropdown";
+import { Avatar } from "@mui/material";
 
 const useStyles = makeStyles(componentStyles);
+const useDropdownStyles = makeStyles(dropdownComponentStyles);
 
 const menuId = "responsive-menu-id";
 
+const menuList = [
+    {
+        key: "profile",
+        icon: Person,
+        label: "My Profile",
+        to: getFullPath(ROUTES.profile)
+    },
+    {
+        key: "setting",
+        icon: Settings,
+        label: "Settings",
+        to: "#"
+    },
+    {
+        key: "activity",
+        icon: EventNote,
+        label: "Activity",
+        to: "#"
+    },
+    {
+        key: "support",
+        icon: LiveHelp,
+        label: "Support",
+        to: "#"
+    },
+    {
+        key: "logout",
+        icon: DirectionsRun,
+        label: "Logout",
+        to: getFullPath(ROUTES.logout)
+    }
+]
+
+
 export default function GeneralNavbar() {
     const classes = useStyles();
+    const dropdownClasses = useDropdownStyles();
     const theme = useTheme();
 
     const history = useHistory();
@@ -56,7 +101,7 @@ export default function GeneralNavbar() {
     };
 
     const handleOnClickLogo = () => {
-        history.push("/index");
+        history.push("/home/index");
     }
 
     const [listItem, setListItem] = useState([]);
@@ -78,16 +123,6 @@ export default function GeneralNavbar() {
                 label: "Login",
                 icon: VpnKey
             },
-            isSignedIn && isAdmin(user?.role) && {
-                to: getFullPath(ROUTES.profile),
-                label: "Profile",
-                icon: Person
-            },
-            isSignedIn && {
-                to: getFullPath(ROUTES.logout),
-                label: "Logout",
-                icon: VpnKey
-            },
         ];
         setListItem(() => list.filter(item => Boolean(item)));
     }, [isSignedIn, user])
@@ -103,7 +138,7 @@ export default function GeneralNavbar() {
             {isAvailableArray(listItem) && listItem.map((item, index) =>
                 <ListItem
                     key={item.to || index}
-                    component={Link}
+                    component={item.isLink ? Link : item.component}
                     to={item.to}
                     onClick={handleMenuClose}
                     classes={{
@@ -117,10 +152,63 @@ export default function GeneralNavbar() {
                         marginRight=".5rem!important"
                     />
                     {item.label || "N/A"}
+
                 </ListItem>
             )}
         </Box>
     );
+
+    const UserObject = (
+        <Box
+            display="flex"
+            alignItems="center"
+            width="auto"
+            component={List}
+            className={classes.flexDirectionColumn}
+        >
+            <ListItem
+                classes={{
+                    root: classes.listItemRoot,
+                }}
+            >
+                <Box
+                    component={Avatar}
+                    alt="..."
+                    src={user?.avatarURL}
+                    classes={{
+                        root: dropdownClasses.avatarRoot,
+                    }}
+                    marginRight="0.5rem!important"
+                >
+
+                </Box>
+                {user?.name || ""}
+            </ListItem>
+
+            {isAvailableArray(menuList) && menuList.map((item, index) =>
+                <ListItem
+                    key={item.to || index}
+                    component={item.isLink ? Link : item.component}
+                    to={item.to}
+                    onClick={handleMenuClose}
+                    classes={{
+                        root: classes.listItemRoot,
+                    }}
+                >
+                    <Box
+                        component={item.icon}
+                        width="1.25rem!important"
+                        height="1.25rem!important"
+                        marginRight=".5rem!important"
+                    />
+                    {item.label || "N/A"}
+
+                </ListItem>
+            )
+            }
+        </Box>
+    );
+
     return <>
         <AppBar position="absolute" color="transparent" elevation={0}>
             <Toolbar>
@@ -208,10 +296,26 @@ export default function GeneralNavbar() {
                                 marginRight="1.25rem!important"
                             />
                             {ListObject}
+                            <Box
+                                component={Divider}
+                                marginBottom="1rem!important"
+                                marginLeft="1.25rem!important"
+                                marginRight="1.25rem!important"
+                            />
+                            {UserObject}
                         </Menu>
                     </Hidden>
-                    <Hidden lgDown implementation="css">
-                        {ListObject}
+                    <Hidden mdDown implementation="css">
+                        <Box
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="space-between"
+                        >
+                            {ListObject}
+                            {isSignedIn &&
+                                <NavbarDropdown />
+                            }
+                        </Box>
                     </Hidden>
                 </Container>
             </Toolbar>
