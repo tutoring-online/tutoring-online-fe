@@ -109,16 +109,19 @@ export default function GeneralNavbar() {
     useEffect(() => {
         const list = [
             {
+                key: "home",
                 to: getFullPath(ROUTES.home),
                 label: "Home",
                 icon: HomeIcon
             },
             isSignedIn && isAdmin(user?.role) && {
+                key: "dashboard",
                 to: getFullPath(ROUTES.dashboard),
                 label: "Dashboard",
                 icon: Dashboard
             },
             !isSignedIn && {
+                key: "login",
                 to: getFullPath(ROUTES.login),
                 label: "Login",
                 icon: VpnKey
@@ -137,8 +140,8 @@ export default function GeneralNavbar() {
         >
             {isAvailableArray(listItem) && listItem.map((item, index) =>
                 <ListItem
-                    key={item.to || index}
-                    component={item.isLink ? Link : item.component}
+                    key={item.key || index}
+                    component={Link}
                     to={item.to}
                     onClick={handleMenuClose}
                     classes={{
@@ -187,8 +190,8 @@ export default function GeneralNavbar() {
 
             {isAvailableArray(menuList) && menuList.map((item, index) =>
                 <ListItem
-                    key={item.to || index}
-                    component={item.isLink ? Link : item.component}
+                    key={item.key || index}
+                    component={Link}
                     to={item.to}
                     onClick={handleMenuClose}
                     classes={{

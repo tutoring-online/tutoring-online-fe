@@ -62,8 +62,8 @@ const menuList = [
 
 export default function NavbarDropdown() {
     const classes = useStyles();
-    const user = useSelector(state => state.auth.user);
     const history = useHistory();
+    const user = useSelector(state => state.auth.user);
 
     const [anchorEl, setAnchorEl] = useState(null);
 

@@ -25,8 +25,8 @@ import DirectionsRun from "@mui/icons-material/DirectionsRun";
 const Home = React.lazy(() => import('views/home/Home.jsx'));
 const Dashboard = React.lazy(() => import('views/admin/Dashboard.js'));
 const Login = React.lazy(() => import('views/auth/Login.js'));
-const Profile = React.lazy(() => import('views/profile/index.js'));
 const Logout = React.lazy(() => import('views/auth/Logout.js'));
+const Profile = React.lazy(() => import('views/profile/index.js'));
 const PageNotFound = React.lazy(() => import('views/auth/PageNotFound.jsx'));
 
 const Admin = React.lazy(() => import("views/admin/Admin.js"));

@@ -52,8 +52,12 @@ const Student = () => {
 				)
 			},
 			{
+				key: "grade",
+				label: "Grade",
+				render: (row) => row.grade != null ? row.grade : <NoInformation />
+			},
+			{
 				key: "totalLessons",
-				align: "center",
 				label: (
 					<BootstrapTooltip title="Total lessons">
 						<div>Lessons</div>

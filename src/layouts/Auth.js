@@ -13,14 +13,30 @@ import componentStyles from "assets/theme/layouts/auth.js";
 import routes, { getFullPath, ROUTES } from "route/routes";
 import { useSelector } from "react-redux";
 import GeneralNavbar from "components/Navbars/GeneralNavbar";
+import { isAdmin } from "settings/setting";
+import { isTutor } from "settings/setting";
+import { isStudent } from "settings/setting";
 
 const useStyles = makeStyles(componentStyles);
 
 const AuthRoute = (props) => {
     const isSignedIn = useSelector(state => state.auth.isSignedIn);
+    const user = useSelector(state => state.auth.user);
 
     if (isSignedIn) {
-        return <Redirect from="*" to={getFullPath(ROUTES.home)} />
+        if (isAdmin(user?.role)) {
+            return <Redirect from="*" to={getFullPath(ROUTES.dashboard)} />
+        }
+
+        if (isTutor(user?.role)) {
+            return <Redirect from="*" to={getFullPath(ROUTES.home)} />
+        }
+
+        if (isStudent(user?.role)) {
+            return <Redirect from="*" to={getFullPath(ROUTES.home)} />
+        }
+
+        return <Redirect from="*" to={getFullPath(ROUTES.redirectHome)} />
     }
 
     return (
