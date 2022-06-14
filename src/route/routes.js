@@ -27,6 +27,7 @@ const Login = React.lazy(() => import('views/auth/Login.js'));
 const Profile = React.lazy(() => import('views/profile/index.js'));
 const Logout = React.lazy(() => import('views/auth/Logout.js'));
 const PageNotFound = React.lazy(() => import('views/auth/PageNotFound.jsx'));
+const Admin = React.lazy(() => import("views/admin/Admin.js"));
 
 export const ICON_COLORS = {
 	Primary: "Primary",
@@ -128,7 +129,7 @@ const ADMIN_ROUTES = {
 		name: "Administrators",
 		icon: AdminIcon,
 		iconColor: ICON_COLORS.WarningLight,
-		component: () => <div>Table admin</div>,
+		component: Admin,
 		path: ROUTE_PATHS.admin,
 		layout: LAYOUT_PATHS.admin
 	},
