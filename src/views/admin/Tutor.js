@@ -10,7 +10,7 @@ import Header from "components/Headers/Header.js";
 import Table from "components/Table/Table.jsx";
 
 //Hooks
-import useAdminList from "hooks/admin/useAdminList";
+import useTutorList from "hooks/tutor/useTutorList";
 
 import componentStyles from "assets/theme/views/admin/tables.js";
 import makeStyles from '@mui/styles/makeStyles';
@@ -24,8 +24,9 @@ const useStyles = makeStyles(componentStyles);
 
 const Admin = () => {
 	const classes = useStyles();
-	const adminList = useAdminList();
-	console.log(adminList);
+	
+	const tutorList = useTutorList();
+	console.log(tutorList);
 
 	const [columns, setColumns] = useState([]);
 
@@ -105,7 +106,7 @@ const Admin = () => {
 				<Table
 					title={"Admin List"}
 					columns={columns}
-					data={adminList}
+					data={tutorList}
 				/>
 			</Container>
 		</>

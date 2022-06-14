@@ -5,7 +5,6 @@ import * as api from "./api.js";
 const fetchAdmins = createAsyncThunk(types.FETCH_ADMINS, async () => {
     try {
         const response = await api.fetchAdmins();
-        console.log(response);
         return response;
     } catch (error) {
         return null;

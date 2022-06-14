@@ -5,7 +5,6 @@ import * as api from "./api.js";
 const fetchPayments = createAsyncThunk(types.FETCH_PAYMENTS, async () => {
     try {
         const response = await api.fetchPayments();
-        console.log(response);
         return response;
     } catch (error) {
         return null;

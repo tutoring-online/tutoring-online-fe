@@ -26,11 +26,19 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.loginUser.fulfilled, (state, action) => {
             console.log(action.payload);
-            state.user = { ...(action.payload || {}) }
+            state.isSignedIn = true;
+            if (action.payload) {
+                state.user = {
+                    role: action.payload.role,
+                    ...(action.payload.data || {})
+                }
+            }
         })
 
         builder.addCase(asyncThunks.loginUser.rejected, (state, action) => {
             console.log(action.error);
+            state.isSignedIn = false;
+            state.user = {}
         })
     }
 })

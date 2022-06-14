@@ -5,7 +5,6 @@ import * as api from "./api.js";
 const fetchSubjects = createAsyncThunk(types.FETCH_SUBJECTS, async () => {
     try {
         const response = await api.fetchSubjects();
-        console.log(response);
         return response;
     } catch (error) {
         return null;

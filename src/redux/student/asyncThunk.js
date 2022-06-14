@@ -5,7 +5,6 @@ import * as api from "./api.js";
 const fetchStudents = createAsyncThunk(types.FETCH_STUDENTS, async () => {
     try {
         const response = await api.fetchStudents();
-        console.log(response);
         return response;
     } catch (error) {
         return null;
