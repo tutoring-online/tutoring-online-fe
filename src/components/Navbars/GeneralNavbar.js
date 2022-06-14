@@ -210,7 +210,7 @@ export default function GeneralNavbar() {
                             {ListObject}
                         </Menu>
                     </Hidden>
-                    <Hidden mdDown implementation="css">
+                    <Hidden lgDown implementation="css">
                         {ListObject}
                     </Hidden>
                 </Container>

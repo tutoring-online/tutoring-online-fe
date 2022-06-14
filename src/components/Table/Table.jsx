@@ -25,7 +25,6 @@ const Tables = ({
 }) => {
     const classes = useStyles();
 
-
     return (
         <>
             <Card classes={{ root: classes.cardRoot }}>
@@ -48,7 +47,10 @@ const Tables = ({
                             columns={columns}
                         />
 
-                        <CustomTableBody />
+                        <CustomTableBody
+                            columns={columns}
+                            data={data}
+                        />
                     </Box>
                 </TableContainer>
                 <Box

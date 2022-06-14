@@ -62,9 +62,6 @@ axiosClient.interceptors.response.use((response) => {
 
 export default axiosClient;
 
-
-const SUCCESSFUL_CODE = 200;
-
 const urlWithParams = (url, params) => {
 	const newUrl = new URL(ENV_DOMAIN + url);
 	if (params) {
@@ -82,15 +79,9 @@ export const axiosRequest = async (url, options = {}, params = {}) => {
 
 	try {
 		const response = await axiosClient(config);
-		console.log(response);
-
-		if (response.status !== SUCCESSFUL_CODE) {
-			//Do something here
-			throw response.data;
-		}
-
-		return response.data;
+		return response;
 	} catch (error) {
+		console.log(error);
 		if (error.response) {
 			toastr.error(error.response.data);
 			toastr.error(error.response.status);
