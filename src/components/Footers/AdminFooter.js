@@ -33,7 +33,7 @@ const Footer = () => {
                             rel="noopener noreferrer"
                             target="_blank"
                         >
-                            NTA Team
+                            TuOn Team
                         </a>
                     </div>
                 </Box>
@@ -61,7 +61,7 @@ const Footer = () => {
                                 root: classes.listItemRoot,
                             }}
                         >
-                            NTA Team
+                            TuOn Team
                         </ListItem>
 
                         <ListItem

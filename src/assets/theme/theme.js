@@ -376,10 +376,10 @@ const theme = createTheme(adaptV4Theme({
         lineHeight: "1.5",
         borderRadius: ".375rem",
         userSelect: "none",
-        display: "inline-block",
+        display: "flex",
         fontWeight: "600",
-        textAlign: "center",
-        verticalAlign: "middle",
+        alignItems: "center",
+        justifyContent: "center",
         boxShadow: "0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%)",
         "&:hover": {
           boxShadow: boxShadows.buttonBoxShadow,

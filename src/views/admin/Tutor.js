@@ -5,8 +5,10 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { Avatar, IconButton } from "@mui/material";
+import { Avatar, Button, IconButton } from "@mui/material";
 import makeStyles from '@mui/styles/makeStyles';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 //Core component
 import Header from "components/Headers/Header.js";
@@ -20,6 +22,7 @@ import NoInformation from "components/Text/NoInformation";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
 
 import componentStyles from "assets/theme/views/admin/tables.js";
+
 const useStyles = makeStyles(componentStyles);
 
 const Tutor = () => {
@@ -103,6 +106,31 @@ const Tutor = () => {
 		])
 	}, [])
 
+	const renderPanel = () => (
+		<Box
+			display="flex"
+			flexFlow="row nowrap"
+			alignItems="center"
+			columnGap="0.5rem"
+		>
+			<Button
+				variant="contained"
+				color="primary"
+				size="small"
+				startIcon={<RefreshIcon fontSize="medium" />}
+			>
+				Refresh
+			</Button>
+			<Button
+				variant="contained"
+				color="primary"
+				size="small"
+				startIcon={<AddBoxIcon fontSize="medium" />}
+			>
+				Add
+			</Button>
+		</Box>
+	)
 
 	return (
 		<>
@@ -117,6 +145,7 @@ const Tutor = () => {
 					title={"List Tutor Users"}
 					columns={columns}
 					data={tutorList}
+					panel={renderPanel()}
 				/>
 			</Container>
 		</>

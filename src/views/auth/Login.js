@@ -21,6 +21,7 @@ function Login() {
     const classes = useStyles();
     const theme = useTheme();
     const actions = useAuthActions();
+    
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -34,7 +35,10 @@ function Login() {
             console.log(token);
 
             setIsLoading(true);
-            await actions.asyncLoginUser({ token, role: ROLES.ADMIN });
+            const response = await actions.asyncLoginUser({ token, role: ROLES.ADMIN });
+
+            console.log(response);
+            setIsLoading(false);
         });
 
         return () => {

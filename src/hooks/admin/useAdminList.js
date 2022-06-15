@@ -1,16 +1,26 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useAdminActions from "./useAdminActions";
 
 const useAdminList = () => {
-    const adminList = useSelector(state => state.admin.admins);
     const actions = useAdminActions();
 
+    const adminList = useSelector(state => state.admin.admins);
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
-        actions.fetchAdmins();
+        actions.fetchAdmins({ setLoading });
     }, [actions])
-    
-    return adminList;
+
+    const refresh = useCallback(() => {
+        actions.fetchAdmins({ setLoading });
+    }, [actions])
+
+    return {
+        adminList,
+        loading,
+        refresh
+    };
 }
 
 export default useAdminList;

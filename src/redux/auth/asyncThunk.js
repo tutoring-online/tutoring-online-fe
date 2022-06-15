@@ -11,7 +11,7 @@ const loginUser = createAsyncThunk(types.LOGIN_USER, async (params) => {
         return response;
     } catch (error) {
         toastr.error("Login failed.");
-        return null;
+        throw error;
     }
 })
 

@@ -2,7 +2,6 @@ import axios from 'axios';
 import queryString from 'query-string';
 import { auth } from 'firebase-config/firebase';
 import { ENV_DOMAIN } from './api';
-import toastr from 'toastr';
 
 const getFirebaseToken = async () => {
 	const currentUser = auth().currentUser;
@@ -70,6 +69,14 @@ const urlWithParams = (url, params) => {
 	return newUrl;
 }
 
+const isAxiosError = (errorName) => {
+	return errorName != null && errorName === "AxiosError";
+}
+
+const isResponseError = (response) => {
+	return isAxiosError(response?.name);
+}
+
 export const axiosRequest = async (url, options = {}, params = {}) => {
 	const preparedUrl = urlWithParams(url, params);
 	const config = {
@@ -79,19 +86,14 @@ export const axiosRequest = async (url, options = {}, params = {}) => {
 
 	try {
 		const response = await axiosClient(config);
+
+		if (isResponseError(response)) {
+			throw new Error(response.message);
+		}
+
 		return response;
 	} catch (error) {
 		console.log(error);
-		if (error.response) {
-			toastr.error(error.response.data);
-			toastr.error(error.response.status);
-			toastr.error(error.response.headers);
-		} else if (error.request) {
-			toastr.error(error.request);
-		} else {
-			toastr.error('Error', error.message);
-		}
-		toastr.error(error.config);
 		throw error
 	}
 
