@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import makeStyles from '@mui/styles/makeStyles';
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -11,44 +11,15 @@ import componentStyles from "assets/theme/views/auth/login.js";
 import { StyledFirebaseAuth } from "react-firebaseui";
 import uiConfig from "firebase-config/firebase-ui";
 import { auth } from "firebase-config/firebase";
-import useAuthActions from "hooks/useAuthActions";
-import { ROLES } from "settings/setting";
-import BackDropLoader from "components/Loading/BackDropLoader";
 
 const useStyles = makeStyles(componentStyles);
 
 function Login() {
     const classes = useStyles();
     const theme = useTheme();
-    const actions = useAuthActions();
-    
-    const [isLoading, setIsLoading] = useState(false);
-
-    useEffect(() => {
-        const unregisterAuthObserver = auth().onAuthStateChanged(async (currentUser) => {
-            if (!currentUser) {
-                actions.unsubscribeUser();
-                return;
-            }
-
-            const token = await currentUser.getIdToken();
-            console.log(token);
-
-            setIsLoading(true);
-            const response = await actions.asyncLoginUser({ token, role: ROLES.ADMIN });
-
-            console.log(response);
-            setIsLoading(false);
-        });
-
-        return () => {
-            unregisterAuthObserver();
-        }
-    }, [actions]);
 
     return (
         <>
-            <BackDropLoader open={isLoading} />
             <Grid item xs={12} lg={5} md={7}>
                 <Card classes={{ root: classes.cardRoot }}>
                     <CardHeader

@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import * as types from "./types";
 
 import asyncThunks from "./asyncThunk";
+import { toast } from 'react-toastify';
 
 
 const INITIAL_STATE = {
@@ -27,6 +28,9 @@ const slice = createSlice({
         builder.addCase(asyncThunks.loginUser.fulfilled, (state, action) => {
             console.log(action.payload);
             if (action.payload) {
+                if (state.isSignedIn !== true) {
+                    toast.success("Logged in successfully.");
+                }
                 state.isSignedIn = true;
                 state.user = {
                     role: action.payload.role,

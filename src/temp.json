@@ -1,0 +1,41 @@
+{
+    "data": [
+        {
+            "id": "1",
+            "status": 0,
+            "student": {
+                "id": "1",
+                "address": "140 Binh Tri Dong A, Tan Phu, Ho Chi Minh",
+                "avatarURL": "avatart.zxc.com",
+                "birthday": "05-04-2000 00:00:00",
+                "createdDate": "06-04-2000 00:00:00",
+                "email": "h@gmail.com",
+                "gender": 1,
+                "grade": 11,
+                "name": "Nguyen Van A",
+                "phone": "093182828",
+                "status": 0,
+                "updatedDate": "10-06-2022 03:05:07"
+            },
+            "syllabus": {
+                "id": "1",
+                "createdDate": "05-04-2022 00:00:00",
+                "description": "strixzcxzng",
+                "name": "a",
+                "price": 2,
+                "status": 1,
+                "subjectId": "23",
+                "totalLessons": 150,
+                "updatedDate": "10-06-2022 04:49:22"
+            },
+            "createdDate": "04-05-2022 00:00:00",
+            "updatedDate": "15-06-2022 00:07:44"
+        }
+    ],
+    "pagination": {
+        "items": 1,
+        "pageNumber": 0,
+        "totalPages": 1,
+        "totalItems": 1
+    }
+}

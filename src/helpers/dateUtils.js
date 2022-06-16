@@ -37,9 +37,6 @@ export const formatDate = (date, format = dateFormat) => date ? moment(date).for
 export const formatLocalDate = (date, format = dateFormat) => date ? moment(date).local().format(format) : 'N/A';
 
 export const formatDateTime = (date, format = datetimeFormat, invalidStr = 'N/A') => {
-    console.log(date)
-    console.log(validDate(date))
-
     return validDate(date) ? moment(new Date()).format(format) : invalidStr;
 }
 

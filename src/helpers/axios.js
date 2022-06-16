@@ -1,35 +1,7 @@
 import axios from 'axios';
+import { getFirebaseToken } from 'firebase-config/firebase';
 import queryString from 'query-string';
-import { auth } from 'firebase-config/firebase';
 import { ENV_DOMAIN } from './api';
-
-const getFirebaseToken = async () => {
-	const currentUser = auth().currentUser;
-	if (currentUser) return currentUser.getIdToken();
-
-	const hasRememberedAccount = localStorage.getItem('firebaseui::rememberedAccounts');
-	if (!hasRememberedAccount) return null;
-
-	return new Promise((resolve, reject) => {
-		const waitTimer = setTimeout(() => {
-			reject(null);
-			console.log('Reject timeout');
-		}, 2000);
-
-		const unregisterAuthObserver = auth().onAuthStateChanged(async (user) => {
-			if (!user) {
-				reject(null);
-			}
-
-			const token = await user.getIdToken();
-			console.log('[AXIOS] Logged in user token: ', token);
-			resolve(token);
-
-			unregisterAuthObserver();
-			clearTimeout(waitTimer);
-		});
-	});
-}
 
 const axiosClient = axios.create({
 	baseURL: ENV_DOMAIN,

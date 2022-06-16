@@ -10,7 +10,6 @@ function FullPageLoader() {
             </div>
             <div className="full-page-loader__content">LOADING...</div>
         </div>
-
     );
 }
 

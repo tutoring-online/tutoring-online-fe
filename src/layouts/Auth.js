@@ -16,6 +16,7 @@ import GeneralNavbar from "components/Navbars/GeneralNavbar";
 import { isAdmin } from "settings/setting";
 import { isTutor } from "settings/setting";
 import { isStudent } from "settings/setting";
+import WithAuthBackDropLoader from "./WithAuthBackDropLoader";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -67,7 +68,7 @@ const getRoutes = () => {
     });
 };
 
-const Auth = () => {
+const Auth = ({ authLoading }) => {
     const classes = useStyles();
     const mainContent = React.useRef(null);
     const location = useLocation();
@@ -85,7 +86,7 @@ const Auth = () => {
     }, [location]);
 
     return (
-        <>
+        <WithAuthBackDropLoader open={authLoading}>
             <div className="main-content" ref={mainContent}>
                 <GeneralNavbar />
                 <AuthHeader />
@@ -106,7 +107,7 @@ const Auth = () => {
                 </Container>
             </div>
             <AuthFooter />
-        </>
+        </WithAuthBackDropLoader>
     );
 };
 

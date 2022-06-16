@@ -1,5 +1,5 @@
 import { auth } from 'firebase-config/firebase';
-import useAuthActions from 'hooks/useAuthActions';
+import useAuthActions from 'hooks/auth/useAuthActions';
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from "react-router-dom";
