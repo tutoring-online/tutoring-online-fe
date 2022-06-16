@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { compose } from "redux";
 import asyncThunks from "redux/admin/asyncThunk";
 
-const useAuthActions = () => {
+const useAdminActions = () => {
     const dispatch = useDispatch();
     const [actions] = useState({
         fetchAdmins: compose(dispatch, asyncThunks.fetchAdmins)
@@ -12,4 +12,4 @@ const useAuthActions = () => {
     return actions;
 }
 
-export default useAuthActions;
+export default useAdminActions;

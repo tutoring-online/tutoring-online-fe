@@ -35,7 +35,7 @@ const Footer = () => {
                             rel="noopener noreferrer"
                             target="_blank"
                         >
-                            NTA Team
+                            TuOn Team
                         </a>
                     </div>
                 </Grid>

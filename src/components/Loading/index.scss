@@ -1,5 +1,5 @@
 .full-page-loader {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
@@ -10,6 +10,7 @@
     align-items: center;
     justify-content: center;
     background: #1e6fcc;
+    animation: slowShow 1s;
 
     &__content {
         color: #fff;
@@ -61,5 +62,14 @@
     }
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes slowShow {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }

@@ -14,6 +14,7 @@ import routes from "route/routes.js";
 import { LAYOUT_PATHS } from "route/routes";
 import { getFullPath } from "route/routes";
 import { ROUTES } from "route/routes";
+import WithAuthBackDropLoader from "./WithAuthBackDropLoader";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -29,7 +30,7 @@ const getRoutes = () => {
     ))
 };
 
-const Home = () => {
+const Home = ({ authLoading }) => {
     const classes = useStyles();
     const mainContent = React.useRef(null);
     const location = useLocation();
@@ -49,7 +50,7 @@ const Home = () => {
     }, [location]);
 
     return (
-        <>
+        <WithAuthBackDropLoader open={authLoading}>
             <div className="main-content" ref={mainContent}>
                 <GeneralNavbar />
                 <Container
@@ -69,7 +70,7 @@ const Home = () => {
                 </Container>
             </div>
             <AuthFooter />
-        </>
+        </WithAuthBackDropLoader>
     );
 };
 

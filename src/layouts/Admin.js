@@ -24,6 +24,7 @@ import routes from "route/routes.js";
 import { isAvailableArray } from "helpers/arrayUtils";
 import { ROUTE_PATHS } from "route/routes";
 import { isAdmin } from "settings/setting";
+import WithAuthBackDropLoader from "./WithAuthBackDropLoader";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -77,7 +78,7 @@ const getSidebarRoutes = () => {
     return sidebarRoutes;
 }
 
-const Admin = () => {
+const Admin = ({ authLoading }) => {
     const classes = useStyles();
     const location = useLocation();
 
@@ -96,53 +97,51 @@ const Admin = () => {
     };
 
     return (
-        <>
-            <>
-                <Sidebar
-                    routes={getSidebarRoutes()}
-                    logo={{
-                        innerLink: "/home/index",
-                        imgSrc: logoImg,
-                        imgAlt: "...",
-                    }}
-                    dropdown={<NavbarDropdown />}
-                    input={
-                        <FormControl variant="outlined" fullWidth>
-                            <InputLabel htmlFor="outlined-adornment-search-responsive">
-                                Search
-                            </InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-search-responsive"
-                                type="text"
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <Box
-                                            component={Search}
-                                            width="1.25rem!important"
-                                            height="1.25rem!important"
-                                        />
-                                    </InputAdornment>
-                                }
-                            />
-                        </FormControl>
-                    }
-                />
-                <Box position="relative" className={classes.mainContent}>
-                    <AdminNavbar brandText={getBrandText(location.pathname)} />
-                    <Switch>
-                        {getRoutes()}
-                        <Redirect from="*" to="/home/index" />
-                    </Switch>
-                    <Container
-                        maxWidth={false}
-                        component={Box}
-                        classes={{ root: classes.containerRoot }}
-                    >
-                        <AdminFooter />
-                    </Container>
-                </Box>
-            </>
-        </>
+        <WithAuthBackDropLoader open={authLoading}>
+            <Sidebar
+                routes={getSidebarRoutes()}
+                logo={{
+                    innerLink: "/home/index",
+                    imgSrc: logoImg,
+                    imgAlt: "...",
+                }}
+                dropdown={<NavbarDropdown />}
+                input={
+                    <FormControl variant="outlined" fullWidth>
+                        <InputLabel htmlFor="outlined-adornment-search-responsive">
+                            Search
+                        </InputLabel>
+                        <OutlinedInput
+                            id="outlined-adornment-search-responsive"
+                            type="text"
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <Box
+                                        component={Search}
+                                        width="1.25rem!important"
+                                        height="1.25rem!important"
+                                    />
+                                </InputAdornment>
+                            }
+                        />
+                    </FormControl>
+                }
+            />
+            <Box position="relative" className={classes.mainContent}>
+                <AdminNavbar brandText={getBrandText(location.pathname)} />
+                <Switch>
+                    {getRoutes()}
+                    <Redirect from="*" to="/home/index" />
+                </Switch>
+                <Container
+                    maxWidth={false}
+                    component={Box}
+                    classes={{ root: classes.containerRoot }}
+                >
+                    <AdminFooter />
+                </Container>
+            </Box>
+        </WithAuthBackDropLoader>
     );
 };
 

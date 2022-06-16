@@ -17,3 +17,30 @@ firebase.auth(app);
 
 export const auth = firebase.auth;
 export default app;
+
+export const getFirebaseToken = async () => {
+    const currentUser = auth().currentUser;
+    if (currentUser) return currentUser.getIdToken();
+
+    const hasRememberedAccount = localStorage.getItem('firebaseui::rememberedAccounts');
+    if (!hasRememberedAccount) return null;
+
+    return new Promise((resolve, reject) => {
+        const waitTimer = setTimeout(() => {
+            reject(null);
+        }, 2000);
+
+        const unregisterAuthObserver = auth().onAuthStateChanged(async (user) => {
+            if (!user) {
+                reject(null);
+            }
+
+            const token = await user.getIdToken();
+            console.log('[AXIOS] Logged in user token: ', token);
+            resolve(token);
+
+            unregisterAuthObserver();
+            clearTimeout(waitTimer);
+        });
+    });
+}

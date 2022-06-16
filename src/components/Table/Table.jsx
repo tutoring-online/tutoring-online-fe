@@ -22,7 +22,8 @@ const useStyles = makeStyles(componentStyles);
 const Tables = ({
     title,
     columns,
-    data
+    data,
+    panel
 }) => {
     const classes = useStyles();
 
@@ -62,7 +63,8 @@ const Tables = ({
                         marginBottom: "0!important",
                         variant: "h3",
                     }}
-                ></CardHeader>
+                    action={panel}
+                />
                 <TableContainer>
                     <Box
                         component={Table}
