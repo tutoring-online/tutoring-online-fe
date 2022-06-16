@@ -68,7 +68,6 @@ const Syllabus = () => {
 			},
 			{
 				key: "action",
-				align: "center",
 				label: "Actions",
 				render: () => (
 					<Box

@@ -1,6 +1,5 @@
 import React from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
-import makeStyles from '@mui/styles/makeStyles';
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -9,15 +8,12 @@ import Grid from "@mui/material/Grid";
 import AuthFooter from "components/Footers/AuthFooter.js";
 import GeneralNavbar from "components/Navbars/GeneralNavbar";
 
-import componentStyles from "assets/theme/layouts/auth.js";
 import routes from "route/routes.js";
 import { LAYOUT_PATHS } from "route/routes";
 import { getFullPath } from "route/routes";
 import { ROUTES } from "route/routes";
 import HomeHeader from "components/Headers/HomeHeader";
 import WithAuthBackDropLoader from "./WithAuthBackDropLoader";
-
-const useStyles = makeStyles(componentStyles);
 
 const getRoutes = () => {
     const homeRoutes = routes.filter(route => route.layout === LAYOUT_PATHS.home);
@@ -32,17 +28,8 @@ const getRoutes = () => {
 };
 
 const Home = ({ authLoading }) => {
-    const classes = useStyles();
     const mainContent = React.useRef(null);
     const location = useLocation();
-
-    React.useEffect(() => {
-        document.body.classList.add(classes.bgDefault);
-        return () => {
-            document.body.classList.remove(classes.bgDefault);
-        };
-    });
-
 
     React.useEffect(() => {
         document.documentElement.scrollTop = 0;

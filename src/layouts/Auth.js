@@ -9,7 +9,6 @@ import Grid from "@mui/material/Grid";
 import AuthHeader from "components/Headers/AuthHeader.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
-import componentStyles from "assets/theme/layouts/auth.js";
 import routes, { getFullPath, ROUTES } from "route/routes";
 import { useSelector } from "react-redux";
 import GeneralNavbar from "components/Navbars/GeneralNavbar";
@@ -18,6 +17,7 @@ import { isTutor } from "settings/setting";
 import { isStudent } from "settings/setting";
 import WithAuthBackDropLoader from "./WithAuthBackDropLoader";
 
+import componentStyles from "assets/theme/layouts/auth.js";
 const useStyles = makeStyles(componentStyles);
 
 const AuthRoute = (props) => {
@@ -79,6 +79,7 @@ const Auth = ({ authLoading }) => {
             document.body.classList.remove(classes.bgDefault);
         };
     });
+
     React.useEffect(() => {
         document.documentElement.scrollTop = 0;
         document.scrollingElement.scrollTop = 0;

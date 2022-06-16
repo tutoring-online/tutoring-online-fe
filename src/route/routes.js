@@ -19,7 +19,15 @@ import SchoolIcon from '@mui/icons-material/School';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import TopicIcon from '@mui/icons-material/Topic';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-import DirectionsRun from "@mui/icons-material/DirectionsRun";
+import LogoutIcon from '@mui/icons-material/Logout';
+
+//Admin
+import Admin from "views/admin/Admin.js";
+import Tutor from "views/admin/Tutor.js";
+import Student from "views/admin/Student.js";
+import Subject from "views/admin/Subject.js";
+import Syllabus from "views/admin/Syllabus.js";
+import Payment from "views/admin/Payment.js";
 
 // core components
 const Home = React.lazy(() => import('views/home/Home.jsx'));
@@ -29,12 +37,6 @@ const Logout = React.lazy(() => import('views/auth/Logout.js'));
 const Profile = React.lazy(() => import('views/profile/index.js'));
 const PageNotFound = React.lazy(() => import('views/auth/PageNotFound.jsx'));
 
-const Admin = React.lazy(() => import("views/admin/Admin.js"));
-const Tutor = React.lazy(() => import("views/admin/Tutor.js"));
-const Student = React.lazy(() => import("views/admin/Student.js"));
-const Subject = React.lazy(() => import("views/admin/Subject.js"));
-const Syllabus = React.lazy(() => import("views/admin/Syllabus.js"));
-const Payment = React.lazy(() => import("views/admin/Payment.js"));
 
 export const ICON_COLORS = {
 	Primary: "Primary",
@@ -170,7 +172,7 @@ export const ROUTES = {
 	logout: {
 		key: "logout",
 		name: "Logout",
-		icon: DirectionsRun,
+		icon: LogoutIcon,
 		iconColor: "Primary",
 		component: Logout,
 		path: ROUTE_PATHS.logout,

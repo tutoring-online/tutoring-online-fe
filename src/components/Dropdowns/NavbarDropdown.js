@@ -11,7 +11,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 // @mui/icons-material components
-import DirectionsRun from "@mui/icons-material/DirectionsRun";
+import LogoutIcon from '@mui/icons-material/Logout';
 import EventNote from "@mui/icons-material/EventNote";
 import LiveHelp from "@mui/icons-material/LiveHelp";
 import Person from "@mui/icons-material/Person";
@@ -54,7 +54,7 @@ const menuList = [
     },
     {
         key: "logout",
-        icon: DirectionsRun,
+        icon: LogoutIcon,
         label: "Logout",
         path: getFullPath(ROUTES.logout)
     }

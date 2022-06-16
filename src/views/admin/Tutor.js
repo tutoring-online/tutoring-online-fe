@@ -55,7 +55,6 @@ const Tutor = () => {
 			},
 			{
 				key: "totalLessons",
-				align: "center",
 				label: (
 					<BootstrapTooltip title="Total lessons">
 						<div>Lessons</div>
@@ -80,7 +79,6 @@ const Tutor = () => {
 			},
 			{
 				key: "action",
-				align: "center",
 				label: "Actions",
 				render: () => (
 					<Box
