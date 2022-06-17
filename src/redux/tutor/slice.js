@@ -12,7 +12,7 @@ import * as types from "./types";
 
 const INITIAL_STATE = {
     tutorProfile: {
-        email: "linhse1111@fu.vn",
+        email: "linhse22222@fu.vn",
         name: "Linh",
         description: "Lorem Ipsum is simply dummy text of tpsum has been the industr"
     }
