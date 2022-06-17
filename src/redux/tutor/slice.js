@@ -10,7 +10,6 @@ const INITIAL_STATE = {
 import { createSlice } from '@reduxjs/toolkit'
 import * as types from "./types";
 
-
 const INITIAL_STATE = {
     tutorProfile: {
         email: "linhse1111@fu.vn",
@@ -40,7 +39,7 @@ const slice = createSlice({
     }
 =======
         [types.SET_TUTOR_PROFILE]: (state, action) => {
-            state.tutorProfile = [ ...action.payload ]
+            state.tutorProfile = { ...action.payload }
         },
     },
 >>>>>>> 06abff4 (redux tutor profile)

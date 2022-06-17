@@ -6,7 +6,7 @@ import { SET_TUTOR_PROFILE } from "redux/tutor/types";
 
 const useTutorActions = () => {
     const dispatch = useDispatch();
-    const [TutorActions] = useState({
+    const [tutorActions] = useState({
         setTutorProfile: compose(dispatch, actions[SET_TUTOR_PROFILE]),
     })
 
