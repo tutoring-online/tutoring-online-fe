@@ -74,6 +74,9 @@ export const LAYOUT_PATHS = {
 }
 
 const ADMIN_ROUTES = {
+	adminManagement: {
+		title: "Management"
+	},
 	dashboard: {
 		key: "dashboard",
 		name: "Dashboard",
@@ -177,6 +180,7 @@ export const ROUTES = {
 		component: Logout,
 		path: ROUTE_PATHS.logout,
 		layout: LAYOUT_PATHS.auth,
+		upgradeToPro: true
 	},
 	pageNotFound: {
 		key: "pageNotFound",

@@ -19,8 +19,7 @@ const slice = createSlice({
             state.admins = isAvailableArray(action.payload) ? [...action.payload] : [];
         })
 
-        builder.addCase(asyncThunks.fetchAdmins.rejected, (state, action) => {
-            console.log(action.payload);
+        builder.addCase(asyncThunks.fetchAdmins.rejected, (state) => {
             state.admins = [];
         })
     }
