@@ -23,6 +23,9 @@ const slice = createSlice({
             state.isSignedIn = false;
             state.user = null
         },
+        [types.EDIT_USER]: (state, action) => {
+            state.user = {  role: "TUTOR", ...action.payload };
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.loginUser.fulfilled, (state, action) => {
@@ -32,8 +35,8 @@ const slice = createSlice({
                     toast.success("Logged in successfully.");
                 }
                 state.isSignedIn = true;
-                state.user = {
-                    role: action.payload.role,
+                state.user = {                    
+                    role: "TUTOR",
                     ...(action.payload.data[0] || {})
                 }
                 return;

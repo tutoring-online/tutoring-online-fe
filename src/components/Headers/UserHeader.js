@@ -52,7 +52,7 @@ const UserHeader = () => {
                                 variant="h1"
                                 classes={{ root: classes.typographyRootH1 }}
                             >
-                                {`Hello ${user?.displayName || "N/A"}`}
+                                {`Hello ${user?.name || "N/A"}`}
                             </Typography>
                             <Box
                                 component="p"
