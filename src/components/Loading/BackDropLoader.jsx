@@ -13,20 +13,20 @@ export default function BackDropLoader({
             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={open}
         >
+            <CircularProgress color="inherit" />
             {text &&
                 <Box
                     component="h1"
                     fontSize="2rem"
                     color="#fff"
                     fontWeight="500"
-                    marginRight="8px"
+                    marginLeft="8px"
                     textAlign="center"
 
                 >
                     {text}
                 </Box>
             }
-            <CircularProgress color="inherit" />
         </Backdrop>
     );
 }

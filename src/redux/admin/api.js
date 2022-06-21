@@ -21,12 +21,12 @@ export const fetchAdminDetail = (id) => {
     return axiosRequest(url, options);
 }
 
-export const createAdmin = (newProduct) => {
-    if (!newProduct) return;
+export const createAdmin = (data) => {
+    if (!data) return;
     const url = ADMIN_API;
     const options = {
         method: METHOD.POST,
-        data: { ...newProduct }
+        data: { ...data }
     }
 
     return axiosRequest(url, options);

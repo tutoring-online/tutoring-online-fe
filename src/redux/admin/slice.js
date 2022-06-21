@@ -8,16 +8,26 @@ const INITIAL_STATE = {
 }
 
 const reducers = {
-    fetchAdminsSuccessful: (state, action) => state.admins = action.payload,
-    fetchAdminsFailed: (state) => state.admins = [],
+    fetchAdminsSuccessful: (state, action) => {
+        state.admins = action.payload;
+    },
+    fetchAdminsFailed: (state) => {
+        state.admins = [];
+    },
 
-    fetchAdminDetailSuccessful: (state, action) => state.adminDetail = action.payload || null,
-    fetchAdminDetailFailed: (state) => state.adminDetail = null,
+    fetchAdminDetailSuccessful: (state, action) => {
+        state.adminDetail = action.payload || null
+    },
+    fetchAdminDetailFailed: (state) => {
+        state.adminDetail = null
+    },
 
     createAdminSuccessful: () => {},
     createAdminFailed: () => {},
 
-    updateAdminSuccessful: (state, action) => state.adminDetail = action.payload,
+    updateAdminSuccessful: (state, action) => {
+        state.adminDetail = action.payload
+    },
     updateAdminFailed: () => {},
 
     deleteAdminSuccessful: () => {},

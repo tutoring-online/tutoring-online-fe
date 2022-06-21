@@ -2,6 +2,7 @@ import FullPageLoader from "components/Loading/FullPageLoader";
 import useAuthentication from "hooks/auth/useAuthentication";
 import React, { memo, Suspense } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import RedirectHomeWithUserRole from "views/home/RedirectHomeWithUserRole";
 import { LAYOUT_PATHS } from "./routes";
 
 const AuthLayout = React.lazy(() => import('layouts/Auth.js'));
@@ -20,7 +21,7 @@ const Router = () => {
                     <Route path={LAYOUT_PATHS.auth} render={(props) => <AuthLayout authLoading={loading} {...props} />} />
                     <Route path={LAYOUT_PATHS.home} render={(props) => <HomeLayout authLoading={loading} {...props} />} />
                     <Route path={LAYOUT_PATHS.detail} render={(props) => <DetailLayout authLoading={loading} {...props} />} />
-                    <Redirect from="/" to="/home/index" />
+                    <Route path="/" exact component={RedirectHomeWithUserRole} />
                     <Redirect to="/auth/page-not-found" />
                 </Switch>
             </Suspense>

@@ -38,6 +38,70 @@ const getLogoObject = (logo, classes) => (
     ) : null
 )
 
+function renderTextContent(route, classes) {
+    return (
+        <>
+            <Box minWidth="2.25rem" display="flex" alignItems="center">
+                {typeof route.icon === "string" ? (
+                    <Box
+                        component="i"
+                        className={route.icon + " " + classes["text" + route.iconColor]}
+                    />
+                ) : null}
+                {typeof route.icon === "object" ? (
+                    <Box
+                        component={route.icon}
+                        width="1.25rem!important"
+                        height="1.25rem!important"
+                        className={classes["text" + route.iconColor]}
+                    />
+                ) : null}
+            </Box>
+            {route.name}
+        </>
+    );
+}
+
+const HrefListItem = ({ route, onClick, classes, selected }) => (
+    <ListItem
+        component={"a"}
+        href={route.href}
+        onClick={onClick}
+        classes={{
+            root:
+                classes.listItemRoot +
+                (route.upgradeToPro
+                    ? " " + classes.listItemRootUpgradeToPro
+                    : ""),
+            selected: classes.listItemSelected,
+        }}
+        target="_blank"
+        selected={selected}
+    >
+        {renderTextContent(route, classes)};
+    </ListItem>
+);
+
+const LinkListItem = ({ route, onClick, classes, selected }) => (
+    <ListItem
+        component={Link}
+        onClick={onClick}
+        to={route.layout + route.path}
+        classes={{
+            root:
+                classes.listItemRoot +
+                (route.upgradeToPro
+                    ? " " + classes.listItemRootUpgradeToPro
+                    : ""),
+            selected: classes.listItemSelected,
+        }}
+        selected={selected}
+    >
+        {renderTextContent(route, classes)}
+    </ListItem>
+);
+
+const menuId = "responsive-menu-id";
 
 export default function Sidebar({ routes, logo, dropdown, input }) {
     const classes = useStyles();
@@ -55,90 +119,45 @@ export default function Sidebar({ routes, logo, dropdown, input }) {
         setAnchorEl(null);
     };
 
-    const menuId = "responsive-menu-id";
-    // creates the links that appear in the left menu / Sidebar
     const createLinks = (routes) => {
-        return routes.map((prop, key) => {
-            if (prop.divider) {
-                return <Divider key={key} classes={{ root: classes.divider }} />;
-            } else if (prop.title) {
+        return routes.map((route, index) => {
+            if (route.divider) {
+                return <Divider key={route.key || index} classes={{ root: classes.divider }} />;
+            }
+
+            if (route.title) {
                 return (
                     <Typography
-                        key={key}
+                        key={route.key || index}
                         variant="h6"
                         component="h6"
                         classes={{ root: classes.title }}
                     >
-                        {prop.title}
+                        {route.title}
                     </Typography>
                 );
             }
-            let textContent = (
-                <>
-                    <Box minWidth="2.25rem" display="flex" alignItems="center">
-                        {typeof prop.icon === "string" ? (
-                            <Box
-                                component="i"
-                                className={prop.icon + " " + classes["text" + prop.iconColor]}
-                            />
-                        ) : null}
-                        {typeof prop.icon === "object" ? (
-                            <Box
-                                component={prop.icon}
-                                width="1.25rem!important"
-                                height="1.25rem!important"
-                                className={classes["text" + prop.iconColor]}
-                            />
-                        ) : null}
-                    </Box>
-                    {prop.name}
-                </>
-            );
-            if (prop.href) {
-                return (
-                    <ListItem
-                        key={key}
-                        component={"a"}
-                        href={prop.href}
-                        onClick={handleMenuClose}
-                        classes={{
-                            root:
-                                classes.listItemRoot +
-                                (prop.upgradeToPro
-                                    ? " " + classes.listItemRootUpgradeToPro
-                                    : ""),
-                            selected: classes.listItemSelected,
-                        }}
-                        target="_blank"
-                        selected={prop.upgradeToPro === true}
-                    >
-                        {textContent}
-                    </ListItem>
-                );
-            } else {
-                return (
-                    <ListItem
-                        key={key}
-                        component={Link}
-                        onClick={handleMenuClose}
-                        to={prop.layout + prop.path}
-                        classes={{
-                            root:
-                                classes.listItemRoot +
-                                (prop.upgradeToPro
-                                    ? " " + classes.listItemRootUpgradeToPro
-                                    : ""),
-                            selected: classes.listItemSelected,
-                        }}
-                        selected={
-                            location.pathname === prop.layout + prop.path ||
-                            prop.upgradeToPro === true
-                        }
-                    >
-                        {textContent}
-                    </ListItem>
-                );
+
+            const item = {
+                key: route.key || index,
+                Component: route.href ? HrefListItem : LinkListItem,
+                props: {
+                    route: route,
+                    classes: classes,
+                    onClick: handleMenuClose,
+                    selected: (
+                        location.pathname === route.layout + route.path ||
+                        route.upgradeToPro === true
+                    )
+                }
             }
+
+            return (
+                <item.Component
+                    key={item.key}
+                    {...item.props}
+                />
+            )
         });
     };
 

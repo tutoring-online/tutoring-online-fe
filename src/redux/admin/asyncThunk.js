@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as types from "./types.js";
 import * as api from "./api.js";
+import { toast } from "react-toastify";
+import { ROLES } from "settings/setting.js";
 
 const fetchAdmins = async (params) => {
     const { setLoading = () => { } } = params;
@@ -29,15 +31,22 @@ const fetchAdminDetail = async (params) => {
 }
 
 const createAdmin = async (params) => {
-    const { data, setLoading = () => { } } = params;
-    setLoading(true);
+    const { data, loading = () => { }, callback = () => { } } = params;
+    loading(true);
     try {
-        const response = await api.createAdmin(data);
-        setLoading(false);
+        const createAdminData = { ...data, role: ROLES.admin };
+        const response = await api.createAdmin(createAdminData);
+
+        console.log(response)
+        callback(true, response);
+        toast.success("Create admin successful.");
         return response;
     } catch (error) {
-        setLoading(false);
+        callback(false);
+        toast.error("Create admin failed.");
         throw error;
+    } finally {
+        loading(false);
     }
 }
 

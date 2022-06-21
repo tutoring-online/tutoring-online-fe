@@ -20,8 +20,8 @@ import { Avatar, Button, IconButton } from "@mui/material";
 import NoInformation from "components/Text/NoInformation";
 import { renderAdminStatus } from "settings/adminSetting";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
-import { LoadingButton } from "@mui/lab";
-
+import NTALoading from "nta-team/nta-loading/Loading";
+import { CreateAdmin } from "crud/admin";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -34,69 +34,96 @@ const Admin = () => {
 	} = useAdminList();
 
 	const [columns, setColumns] = useState([]);
+	const [openCreate, setOpenCreate] = useState(false);
 
-	useEffect(() => {
-		setColumns([
-			{
-				key: "name",
-				label: "Name",
-				render: (admin) => (
-					<Box
-						display="flex"
-						alignItems="center"
-					>
+	const [loadingDetail, setLoadingDetail] = useState({
+		loading: false,
+		text: ""
+	});
+
+	useEffect(
+		function listenLoadingAdminList() {
+			setLoadingDetail({
+				loading: loading,
+				text: "Loading list..."
+			})
+		},
+		[loading]
+	)
+
+	useEffect(
+		function configColumns() {
+			setColumns([
+				{
+					key: "name",
+					label: "Name",
+					render: (admin) => (
 						<Box
-							component={Avatar}
-							marginRight="1rem"
-							alt="avatar"
-							src={admin.avatarURL}
-							sx={{ width: 32, height: 32 }}
-						/>
-						{admin.name || <NoInformation />}
-					</Box>
-				)
-			},
-			{
-				key: "email",
-				label: "Email",
-				render: (admin) => admin.email || <NoInformation />
-			},
-			{
-				key: "phone",
-				label: "Phone",
-				render: (admin) => admin.phone || <NoInformation />
-			},
-			{
-				key: "status",
-				label: "Status",
-				render: (admin) => renderAdminStatus(admin.status)
-			},
-			{
-				key: "action",
-				label: "Actions",
-				render: () => (
-					<Box
-						component="div"
-						display="flex"
-						alignItems="center"
-						columnGap="8px"
-						fontSize="13px"
-					>
-						<BootstrapTooltip title="Detail">
-							<IconButton style={{ padding: 5 }}>
-								<SettingsIcon sx={{ width: 18, height: 18 }} />
-							</IconButton>
-						</BootstrapTooltip>
-						<BootstrapTooltip title="Delete">
-							<IconButton style={{ padding: 5 }}>
-								<DeleteForeverIcon sx={{ width: 18, height: 18 }} />
-							</IconButton>
-						</BootstrapTooltip>
-					</Box>
-				)
-			},
-		])
-	}, [])
+							display="flex"
+							alignItems="center"
+						>
+							<Box
+								component={Avatar}
+								marginRight="1rem"
+								alt="avatar"
+								src={admin.avatarURL}
+								sx={{ width: 32, height: 32 }}
+							/>
+							{admin.name || <NoInformation />}
+						</Box>
+					)
+				},
+				{
+					key: "email",
+					label: "Email",
+					render: (admin) => admin.email || <NoInformation />
+				},
+				{
+					key: "phone",
+					label: "Phone",
+					render: (admin) => admin.phone || <NoInformation />
+				},
+				{
+					key: "status",
+					label: "Status",
+					render: (admin) => renderAdminStatus(admin.status)
+				},
+				{
+					key: "action",
+					label: "Actions",
+					render: () => (
+						<Box
+							component="div"
+							display="flex"
+							alignItems="center"
+							columnGap="8px"
+							fontSize="13px"
+						>
+							<BootstrapTooltip title="Detail">
+								<IconButton style={{ padding: 5 }}>
+									<SettingsIcon sx={{ width: 18, height: 18 }} />
+								</IconButton>
+							</BootstrapTooltip>
+							<BootstrapTooltip title="Delete">
+								<IconButton style={{ padding: 5 }}>
+									<DeleteForeverIcon sx={{ width: 18, height: 18 }} />
+								</IconButton>
+							</BootstrapTooltip>
+						</Box>
+					)
+				},
+			])
+		},
+		[]
+	)
+
+	const handleOpenCreate = () => {
+		setOpenCreate(true);
+	}
+
+	const handleCloseCreate = () => {
+		setOpenCreate(false);
+	}
 
 	const renderPanel = () => (
 		<Box
@@ -105,24 +132,27 @@ const Admin = () => {
 			alignItems="center"
 			columnGap="0.5rem"
 		>
-			<LoadingButton
-				loading={loading}
-				loadingPosition="start"
-				variant="contained"
-				color="primary"
-				size="small"
-				onClick={() => refresh && refresh()}
-				startIcon={<RefreshIcon fontSize="medium" />}
-			>
-				{loading ? "Loading data" : "Refresh"}
-			</LoadingButton>
+			<NTALoading
+				loading={loadingDetail.loading}
+				text={loadingDetail.text}
+			/>
 			<Button
 				variant="contained"
 				color="primary"
-				size="small"
+				size="medium"
+				onClick={() => refresh && refresh()}
+				startIcon={<RefreshIcon fontSize="medium" />}
+			>
+				Refresh
+			</Button>
+			<Button
+				variant="contained"
+				color="primary"
+				size="medium"
+				onClick={handleOpenCreate}
 				startIcon={<AddBoxIcon fontSize="medium" />}
 			>
-				Add
+				Create
 			</Button>
 		</Box>
 	)
@@ -143,6 +173,13 @@ const Admin = () => {
 					panel={renderPanel()}
 				/>
 			</Container>
+
+			{openCreate &&
+				<CreateAdmin
+					open={openCreate}
+					handleClose={handleCloseCreate}
+				/>
+			}
 		</>
 	)
 }

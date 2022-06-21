@@ -22,17 +22,15 @@ const useAuthentication = () => {
                 console.log(token);
 
                 setLoading(true);
-                const response = await actions.asyncLoginUser({ token });
-
-                console.log(response);
-                setLoading(false);
+                await actions.asyncLoginUser({ token });
             } catch (error) {
-                setLoading(false);
                 if (equalIgnoreCase(error?.code, FIREBASE_NETWORK_ERROR)) {
                     toast.error("Network error!")
-                } else {
-                    console.log(error);
+                    return;
                 }
+                console.log(error);
+            } finally {
+                setLoading(false);
             }
         });
 

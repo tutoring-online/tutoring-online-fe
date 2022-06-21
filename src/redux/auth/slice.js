@@ -16,7 +16,6 @@ const slice = createSlice({
     reducers: {
         [types.SUBSCRIBE_USER]: (state, action) => {
             state.isSignedIn = true;
-            console.log(action.payload);
             state.user = { ...action.payload }
         },
         [types.UNSUBSCRIBE_USER]: (state) => {
@@ -26,7 +25,6 @@ const slice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.loginUser.fulfilled, (state, action) => {
-            console.log(action.payload);
             if (action.payload) {
                 if (state.isSignedIn !== true) {
                     toast.success("Logged in successfully.");
