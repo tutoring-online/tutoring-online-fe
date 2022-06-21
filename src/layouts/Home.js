@@ -15,6 +15,7 @@ import { ROUTES } from "route/routes";
 import HomeHeader from "components/Headers/HomeHeader";
 import WithAuthBackDropLoader from "./WithAuthBackDropLoader";
 
+
 const getRoutes = () => {
     const homeRoutes = routes.filter(route => route.layout === LAYOUT_PATHS.home);
 

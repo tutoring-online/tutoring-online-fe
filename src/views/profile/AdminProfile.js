@@ -22,6 +22,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
 
+import { useSelector } from "react-redux";
+
 import componentStyles from "assets/theme/views/admin/profile.js";
 
 // {
@@ -53,6 +55,9 @@ const useStyles = makeStyles(componentStyles);
 export default function AdminProfile() {
     const classes = useStyles();
     const theme = useTheme();
+
+    const user = useSelector(state => state.auth.user);
+    
     return (
         <>
             <UserHeader />
@@ -137,7 +142,7 @@ export default function AdminProfile() {
                                                             component={FilledInput}
                                                             autoComplete="off"
                                                             type="email"
-                                                            defaultValue="linhse111111@fu.vn"
+                                                            value={`${user?.email || "N/A"}`}
                                                             disabled={true}
                                                         />
                                                     </FormControl>
@@ -158,7 +163,7 @@ export default function AdminProfile() {
                                                             component={FilledInput}
                                                             autoComplete="off"
                                                             type="text"
-                                                            defaultValue="Linh"
+                                                            defaultValue={`${user?.name || "N/A"}`}
                                                         />
                                                     </FormControl>
                                                 </FormGroup>
