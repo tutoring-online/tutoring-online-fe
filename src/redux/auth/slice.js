@@ -24,7 +24,7 @@ const slice = createSlice({
             state.user = null
         },
         [types.EDIT_USER]: (state, action) => {
-            state.user = {  role: "TUTOR", ...action.payload };
+            state.user = {  role: "ADMIN", ...action.payload };
         },
     },
     extraReducers: (builder) => {
@@ -36,7 +36,7 @@ const slice = createSlice({
                 }
                 state.isSignedIn = true;
                 state.user = {                    
-                    role: "TUTOR",
+                    role: "ADMIN",
                     ...(action.payload.data[0] || {})
                 }
                 return;

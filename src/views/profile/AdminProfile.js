@@ -190,15 +190,17 @@ export default function AdminProfile() {
                                                 >
                                                     <RadioGroup row>
                                                         <FormControlLabel
-                                                            value="male"
+                                                            value="0"
                                                             control={<Radio />}
                                                             label="Male"
                                                             defaultChecked="true"
+                                                            checked={ `${user?.gender}` === "0"}
                                                         />
                                                         <FormControlLabel
-                                                            value="female"
+                                                            value="1"
                                                             control={<Radio />}
                                                             label="Female"
+                                                            checked={ `${user?.gender}` === "1"}
                                                         />
                                                     </RadioGroup>
                                                 </FormControl>
@@ -221,7 +223,7 @@ export default function AdminProfile() {
                                                         component={FilledInput}
                                                         autoComplete="off"
                                                         type="date"
-                                                        defaultValue="2003-02-01"
+                                                        defaultValue= {`${user?.birthday || "N/A"}`}
                                                     />
                                                 </FormControl>
                                             </FormGroup>
@@ -241,7 +243,7 @@ export default function AdminProfile() {
                                                         component={FilledInput}
                                                         autoComplete="off"
                                                         type="text"
-                                                        defaultValue="0123456789"
+                                                        defaultValue={`${user?.phone || "N/A"}`}
                                                     />
                                                 </FormControl>
                                             </FormGroup>
@@ -265,7 +267,7 @@ export default function AdminProfile() {
                                                         component={FilledInput}
                                                         autoComplete="off"
                                                         type="text"
-                                                        defaultValue="12 Duong D1, Phuong TT, Quan 9, TP.HCM"
+                                                        defaultValue={`${user?.address || "N/A"}`}
                                                     />
                                                 </FormControl>
                                             </FormGroup>
@@ -287,7 +289,7 @@ export default function AdminProfile() {
                                                         component={FilledInput}
                                                         autoComplete="off"
                                                         type="text"
-                                                        defaultValue="Image/Axxx"
+                                                        defaultValue={`${user?.avatarURL || "N/A"}`}
                                                     />
                                                 </FormControl>
                                             </FormGroup>
@@ -340,8 +342,8 @@ export default function AdminProfile() {
                                                         paddingRight="0.75rem"
                                                         component={FilledInput}
                                                         autoComplete="off"
-                                                        type="date"
-                                                        defaultValue="2021-02-01"
+                                                        type="datetime"
+                                                        defaultValue={`${user?.createdDate || "N/A"}`}
                                                         disabled={true}
                                                     />
                                                 </FormControl>
@@ -361,8 +363,8 @@ export default function AdminProfile() {
                                                         paddingRight="0.75rem"
                                                         component={FilledInput}
                                                         autoComplete="off"
-                                                        type="date"
-                                                        defaultValue="2022-05-30"
+                                                        type="datetime"
+                                                        defaultValue={`${user?.updatedDate || "N/A"}`}
                                                         disabled={true}
                                                     />
                                                 </FormControl>
