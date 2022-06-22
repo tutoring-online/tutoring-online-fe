@@ -12,8 +12,8 @@ export default function CreateAdmin({
 }) {
     const actions = useAdminActions();
 
-    const handleSubmit = (id, data) => {
-        if (!id || !data) {
+    const handleSubmit = (data) => {
+        if (!admin?.id || !data) {
             toast.warning("Something went wrong.");
             return;
         }
@@ -32,7 +32,7 @@ export default function CreateAdmin({
             }
         }
 
-        actions.updateAdmin({ id, data, loading, callback });
+        actions.updateAdmin({ id: admin?.id, data, loading, callback });
     }
 
     return (

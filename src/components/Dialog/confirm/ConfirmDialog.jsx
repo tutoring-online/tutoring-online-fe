@@ -64,7 +64,7 @@ const ConfirmDialog = ({
         <Dialog
             open={open}
             onClose={onCancel}
-            maxWidth="md"
+            maxWidth="xs"
             className="confirm-dialog"
         >
             <DialogContent style={{ padding: 1 }}>

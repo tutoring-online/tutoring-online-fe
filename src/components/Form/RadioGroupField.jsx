@@ -31,6 +31,7 @@ export default function RadioGroupField({
                         <RadioGroup
                             row={Boolean(row)}
                             {...field}
+                            value={field.value || null}
                         >
                             {isAvailableArray(options) && options.map((item) =>
                                 <FormControlLabel

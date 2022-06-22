@@ -1,6 +1,7 @@
 import React from 'react'
 import useAdminActions from 'hooks/admin/useAdminActions';
 import ConfirmDialog from 'components/Dialog/confirm/ConfirmDialog';
+import { toast } from 'react-toastify';
 
 export default function CreateAdmin({
     open,
@@ -16,8 +17,11 @@ export default function CreateAdmin({
     }
 
     const handleOnConfirmDelete = () => {
-        if (!admin) return;
-        if (!admin.id) return;
+        handleClose && handleClose();
+        if (!admin?.id) {
+            toast.warn("Something went wrong");
+            return;
+        }
 
         const loading = (isLoading) => {
             setLoadingInfo && setLoadingInfo({
@@ -28,7 +32,6 @@ export default function CreateAdmin({
 
         const callback = (deleteStatue) => {
             if (deleteStatue === true) {
-                handleClose && handleClose();
                 refresh && refresh();
             }
         }

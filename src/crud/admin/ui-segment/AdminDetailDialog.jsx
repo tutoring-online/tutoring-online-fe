@@ -89,7 +89,7 @@ export default function AdminDetailDialog({
             ...data,
             gender: convertGenderToNumber(data.gender)
         }
-        onSubmit && onSubmit(preparedData.id, preparedData);
+        onSubmit && onSubmit(preparedData);
     }
 
     return (
@@ -204,7 +204,7 @@ export default function AdminDetailDialog({
                         color="primary"
                         size="medium"
                         onClick={() => setIsEdit(true)}
-                        disabled={admin.status === ADMIN_STATUSES.DELETED}
+                        disabled={admin?.status === ADMIN_STATUSES.DELETED}
                     >
                         Enable Update
                     </Button>
