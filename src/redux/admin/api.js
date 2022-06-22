@@ -22,10 +22,9 @@ export const fetchAdminDetail = (id) => {
 }
 
 export const createAdmin = (data) => {
-    if (!data) return;
     const url = ADMIN_API;
     const options = {
-        method: METHOD.POST,
+        method: METHOD.post,
         data: { ...data }
     }
 

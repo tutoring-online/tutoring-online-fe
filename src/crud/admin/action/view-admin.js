@@ -1,34 +1,38 @@
 import React from 'react'
 import AdminDetailDialog from 'crud/admin/ui-segment/AdminDetailDialog';
 import useAdminActions from 'hooks/admin/useAdminActions';
+import { toast } from 'react-toastify';
 
-export default function CreateAdmin({
+export default function ViewAdmin({
     open,
     handleClose,
     setLoadingInfo,
+    admin,
     refresh
 }) {
     const actions = useAdminActions();
 
-    const handleSubmit = (data) => {
-        if (!data) return;
-        console.log(data);
+    const handleSubmit = (id, data) => {
+        if (!id || !data) {
+            toast.warning("Something went wrong.");
+            return;
+        }
 
         const loading = (isLoading) => {
             setLoadingInfo && setLoadingInfo({
                 loading: Boolean(isLoading),
-                text: isLoading ? "Creating..." : ""
+                text: isLoading ? "Updating..." : ""
             })
         }
 
-        const callback = (createStatus) => {
-            if (createStatus === true) {
+        const callback = (updateStatus) => {
+            if (updateStatus === true) {
                 handleClose && handleClose();
                 refresh && refresh();
             }
         }
 
-        actions.createAdmin({ data, loading, callback });
+        actions.updateAdmin({ id, data, loading, callback });
     }
 
     return (
@@ -37,10 +41,10 @@ export default function CreateAdmin({
             open={open}
             onClose={handleClose}
             onSubmit={handleSubmit}
-            mode="create"
-            title="Create Admin"
+            admin={admin}
+            mode="view"
             submitButton={{
-                text: "Create"
+                text: "Update"
             }}
         />
     )

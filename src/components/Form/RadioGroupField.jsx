@@ -1,38 +1,55 @@
-import { Box, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup } from '@mui/material'
+import { Box, FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel, Radio, RadioGroup } from '@mui/material'
+import RequiredLabel from 'components/Text/RequiredLabel'
 import { isAvailableArray } from 'helpers/arrayUtils'
 import React from 'react'
+import { Controller } from "react-hook-form";
 
 export default function RadioGroupField({
     label,
+    name,
     row,
     disabled,
     options,
-    inputProps
+    required,
+    error,
+    control
 }) {
     return (
         <FormGroup>
-            <FormLabel>{label}</FormLabel>
+            <FormLabel>
+                {required ? <RequiredLabel label={label} /> : label}
+            </FormLabel>
             <FormControl
+                error={Boolean(error)}
                 variant="filled"
                 component={Box}
                 width="100%"
                 marginBottom="1rem!important"
             >
-                <RadioGroup
-                    row={Boolean(row)}
-                    defaultChecked={false}
-                    {...(inputProps || {})}
-                >
-                    {isAvailableArray(options) && options.map((item) =>
-                        <FormControlLabel
-                            key={item.value}
-                            value={item.value}
-                            label={item.label}
-                            control={<Radio />}
-                            disabled={Boolean(disabled)}
-                        />
+                <Controller
+                    render={({ field }) => (
+                        <RadioGroup
+                            row={Boolean(row)}
+                            {...field}
+                        >
+                            {isAvailableArray(options) && options.map((item) =>
+                                <FormControlLabel
+                                    key={item.value}
+                                    value={item.value}
+                                    label={item.label}
+                                    control={<Radio />}
+                                    disabled={Boolean(disabled)}
+                                />
+                            )}
+                        </RadioGroup>
+
                     )}
-                </RadioGroup>
+                    name={name}
+                    control={control}
+                />
+                {error &&
+                    <FormHelperText>{error}</FormHelperText>
+                }
             </FormControl>
         </FormGroup>
     )

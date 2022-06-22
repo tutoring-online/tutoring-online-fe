@@ -9,7 +9,7 @@ export const ENV_DOMAIN = PRODUCTION_API_DOMAIN;
 export const METHOD = {
     get: "GET",
     post: "POST",
-    put: "PUSH",
+    put: "PUT",
     patch: "PATCH",
     delete: "DELETE"
 }

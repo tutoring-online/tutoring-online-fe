@@ -39,11 +39,11 @@ const createAdmin = async (params) => {
 
         console.log(response)
         callback(true, response);
-        toast.success("Create admin successful.");
+        toast.success("Created admin successfully.");
         return response;
     } catch (error) {
         callback(false);
-        toast.error("Create admin failed.");
+        toast.error("Failed to create admin.");
         throw error;
     } finally {
         loading(false);
@@ -51,28 +51,38 @@ const createAdmin = async (params) => {
 }
 
 const updateAdmin = async (params) => {
-    const { id, data, setLoading = () => { } } = params;
-    setLoading(true);
+    const { id, data, loading = () => { }, callback = () => { } } = params;
+    loading(true);
     try {
         const response = await api.updateAdmin(id, data);
-        setLoading(false);
+
+        callback(true, response);
+        toast.success("Updated admin successfully.");
         return response;
     } catch (error) {
-        setLoading(false);
+        callback(false);
+        toast.error("Failed to update the admin.");
         throw error;
+    } finally {
+        loading(false);
     }
 }
 
 const deleteAdmin = async (params) => {
-    const { id, setLoading = () => { } } = params;
-    setLoading(true);
+    const { id, loading = () => { }, callback = () => { } } = params;
+    loading(true);
     try {
-        const response = await api.deleteAdmin(id);
-        setLoading(false);
-        return response;
+        await api.deleteAdmin(id);
+
+        callback(true);
+        toast.success("Deleted admin successfully.");
+        return null;
     } catch (error) {
-        setLoading(false);
+        callback(false);
+        toast.error("Failed to delete the admin.");
         throw error;
+    } finally {
+        loading(false);
     }
 }
 
