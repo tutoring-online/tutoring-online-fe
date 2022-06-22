@@ -1,6 +1,7 @@
 import React from 'react'
 import AdminDetailDialog from 'crud/admin/ui-segment/AdminDetailDialog';
 import useAdminActions from 'hooks/admin/useAdminActions';
+import { CRUD_MODE } from 'settings/setting';
 
 export default function CreateAdmin({
     open,
@@ -37,7 +38,7 @@ export default function CreateAdmin({
             open={open}
             onClose={handleClose}
             onSubmit={handleSubmit}
-            mode="create"
+            mode={CRUD_MODE.create}
             title="Create Admin"
             submitButton={{
                 text: "Create"

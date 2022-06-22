@@ -2,29 +2,22 @@
 import {
     Button,
     Dialog,
-    DialogActions,
     DialogContent,
-    DialogTitle,
-    Grid
+    Grid,
 } from "@mui/material";
+
 import { useForm } from "react-hook-form";
-import React, { useState } from "react"
+import React from "react";
 import TextField from "components/Form/TextField";
 import RadioGroupField from "components/Form/RadioGroupField";
 
 import yup from "helpers/yupGlobal";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect } from "react";
-import { ADMIN_STATUSES } from "settings/adminSetting";
-
-const GENDERS = {
-    male: "male",
-    female: "female"
-}
-const genderOptions = [
-    { label: "Male", value: GENDERS.male },
-    { label: "Female", value: GENDERS.female }
-]
+import { convertNumberToGender } from "settings/setting";
+import { convertGenderToNumber } from "settings/setting";
+import { genderOptions } from "settings/setting";
+import CustomDialogTitle from "components/Dialog/custom/DialogTitle";
+import CustomDialogActions from "components/Dialog/custom/DialogActions";
 
 const schema = yup.object().shape({
     name: yup.string()
@@ -33,18 +26,6 @@ const schema = yup.object().shape({
         .required("Email is required")
         .email("Email is invalid"),
 });
-
-const convertNumberToGender = (genderNumber) => {
-    if (genderNumber === 1 || genderNumber === "1") return GENDERS.male;
-    if (genderNumber === 0 || genderNumber === "0") return GENDERS.female;
-    return null;
-}
-
-const convertGenderToNumber = (gender) => {
-    if (gender === GENDERS.male) return 1;
-    if (gender === GENDERS.female) return 0;
-    return null;
-}
 
 const getDefaultValues = (admin) => ({
     ...(admin ?
@@ -59,30 +40,18 @@ export default function AdminDetailDialog({
     onClose,
     onSubmit,
     admin,
-    mode = "view",
     title = "Admin Detail",
     submitButton = {
         text: "Confirm"
     }
 }) {
 
-    const { register, handleSubmit, reset, formState: { errors }, control } = useForm({
+    const { register, handleSubmit, formState: { errors }, control } = useForm({
         mode: "onSubmit",
         reValidateMode: "onBlur",
         defaultValues: getDefaultValues(admin),
         resolver: yupResolver(schema)
     })
-
-    const [isEdit, setIsEdit] = useState(false);
-
-    useEffect(() => {
-        setIsEdit(() => {
-            if (mode === "view") return false;
-            if (mode === "edit") return true;
-            if (mode === "create") return true;
-            return false;
-        })
-    }, [mode]);
 
     const preparedBeforeSubmit = (data) => {
         const preparedData = {
@@ -97,9 +66,10 @@ export default function AdminDetailDialog({
             open={open}
             onClose={onClose}
         >
-            <DialogTitle>
-                {title}
-            </DialogTitle>
+            <CustomDialogTitle
+                title={title}
+                onClose={onClose}
+            />
             <DialogContent>
                 <form onSubmit={handleSubmit(preparedBeforeSubmit)}>
                     <Grid container>
@@ -112,7 +82,6 @@ export default function AdminDetailDialog({
                                     autoFocus: true
                                 }}
                                 error={errors.email?.message}
-                                disabled={!Boolean(isEdit)}
                             />
                             <TextField
                                 label="Name"
@@ -121,21 +90,18 @@ export default function AdminDetailDialog({
                                     ...register("name")
                                 }}
                                 error={errors.name?.message}
-                                disabled={!Boolean(isEdit)}
                             />
                             <TextField
                                 label="Phone"
                                 inputProps={{
                                     ...register("phone")
                                 }}
-                                disabled={!Boolean(isEdit)}
                             />
                             <RadioGroupField
                                 label="Gender"
                                 name="gender"
                                 options={genderOptions}
                                 control={control}
-                                disabled={!Boolean(isEdit)}
                             />
                             <TextField
                                 label="Birthday"
@@ -143,73 +109,45 @@ export default function AdminDetailDialog({
                                     type: "date",
                                     ...register("birthday")
                                 }}
-                                disabled={!Boolean(isEdit)}
                             />
                             <TextField
                                 label="Address"
                                 inputProps={{
                                     ...register("address")
                                 }}
-                                disabled={!Boolean(isEdit)}
                             />
                             <TextField
                                 label="Avatar Url"
                                 inputProps={{
                                     ...register("avatarURL")
                                 }}
-                                disabled={!Boolean(isEdit)}
                             />
                         </Grid>
                     </Grid>
                 </form>
             </DialogContent>
-            <DialogActions>
+            <CustomDialogActions>
                 <Button
                     variant=""
                     color="info"
                     size="medium"
                     onClick={onClose}
+                    sx={{ background: "#fff", "&:hover": { background: "#f3f3f3" } }}
                 >
                     Close
                 </Button>
 
-                {isEdit ?
-                    <>
-                        {mode !== "create" &&
-                            <Button
-                                variant=""
-                                color="info"
-                                size="medium"
-                                onClick={() => {
-                                    setIsEdit(false);
-                                    reset();
-                                }}
-                            >
-                                Cancel
-                            </Button>
-                        }
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="medium"
-                            type="submit"
-                            onClick={handleSubmit(preparedBeforeSubmit)}
-                        >
-                            {submitButton?.text}
-                        </Button>
-                    </>
-                    :
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        size="medium"
-                        onClick={() => setIsEdit(true)}
-                        disabled={admin?.status === ADMIN_STATUSES.DELETED}
-                    >
-                        Enable Update
-                    </Button>
-                }
-            </DialogActions>
+
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="medium"
+                    type="submit"
+                    onClick={handleSubmit(preparedBeforeSubmit)}
+                >
+                    {submitButton?.text}
+                </Button>
+            </CustomDialogActions>
         </Dialog>
     )
 }

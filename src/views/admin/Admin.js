@@ -15,7 +15,7 @@ import Table from "components/Table/Table.jsx";
 import NoInformation from "components/Text/NoInformation";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
 import NTALoading from "nta-team/nta-loading/Loading";
-import { CreateAdmin, ViewAdmin, DeleteAdmin } from "crud/admin";
+import { CreateAdmin, EditAdmin, DeleteAdmin } from "crud/admin";
 
 //Hooks
 import useAdminList from "hooks/admin/useAdminList";
@@ -222,7 +222,7 @@ const Admin = () => {
 			}
 
 			{openEdit &&
-				<ViewAdmin
+				<EditAdmin
 					open={openEdit}
 					handleClose={handleCloseEdit}
 					setLoadingInfo={setLoadingDetail}

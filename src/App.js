@@ -1,18 +1,19 @@
-import React from 'react'
+import React from "react"
 
 import Router from "./route/index";
 import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
-import { Provider } from 'react-redux';
-import { store, persistor } from './redux/store'
-import { PersistGate } from 'redux-persist/integration/react'
-import { ToastContainer } from 'react-toastify';
+import { Provider } from "react-redux";
+import { store, persistor } from "./redux/store"
+import { PersistGate } from "redux-persist/integration/react"
+import { ToastContainer } from "react-toastify";
 
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "assets/theme/theme.js";
 import "assets/plugins/nucleo/css/nucleo.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/scss/argon-dashboard-react.scss";
-import 'react-toastify/dist/ReactToastify.min.css';
+import "react-toastify/dist/ReactToastify.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import BackDropLoader from "components/Loading/BackDropLoader";
 
 
 export default function App() {
@@ -20,8 +21,8 @@ export default function App() {
         <>
             <ToastContainer />
             <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <StyledEngineProvider injectFirst>
+                <PersistGate loading={<BackDropLoader/>} persistor={persistor}>
+                    <StyledEngineProvider>
                         <ThemeProvider theme={theme}>
                             <CssBaseline />
 

@@ -2,6 +2,7 @@ import React from 'react'
 import AdminDetailDialog from 'crud/admin/ui-segment/AdminDetailDialog';
 import useAdminActions from 'hooks/admin/useAdminActions';
 import { toast } from 'react-toastify';
+import { CRUD_MODE } from 'settings/setting';
 
 export default function CreateAdmin({
     open,
@@ -42,7 +43,7 @@ export default function CreateAdmin({
             onClose={handleClose}
             onSubmit={handleSubmit}
             admin={admin}
-            mode="edit"
+            mode={CRUD_MODE.edit}
             title="Edit Admin"
             submitButton={{
                 text: "Update"
