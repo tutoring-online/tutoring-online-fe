@@ -7,17 +7,16 @@ import {
 } from "@mui/material";
 
 import { useForm } from "react-hook-form";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "components/Form/TextField";
 import RadioGroupField from "components/Form/RadioGroupField";
+import CustomDialogTitle from "components/Dialog/custom/CustomDialogTitle";
+import CustomDialogActions from "components/Dialog/custom/CustomDialogActions";
 
 import yup from "helpers/yupGlobal";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { convertNumberToGender } from "settings/setting";
-import { convertGenderToNumber } from "settings/setting";
-import { genderOptions } from "settings/setting";
-import CustomDialogTitle from "components/Dialog/custom/DialogTitle";
-import CustomDialogActions from "components/Dialog/custom/DialogActions";
+import { CRUD_MODE, genderOptions, convertNumberToGender, convertGenderToNumber } from "settings/setting";
+import { validDate, dateFormat2, formatDate } from "helpers/dateUtils";
 
 const schema = yup.object().shape({
     name: yup.string()
@@ -27,31 +26,45 @@ const schema = yup.object().shape({
         .email("Email is invalid"),
 });
 
-const getDefaultValues = (admin) => ({
-    ...(admin ?
-        { ...admin, gender: convertNumberToGender(admin.gender) }
-        :
-        {}
-    ),
-})
+const getDefaultValues = (admin) => {
+    if (!admin) return {};
+    return {
+        ...admin,
+        birthday: validDate(admin.birthday) ? formatDate(admin.birthday, dateFormat2) : null,
+        gender: convertNumberToGender(admin.gender)
+    }
+}
 
 export default function AdminDetailDialog({
     open,
     onClose,
     onSubmit,
     admin,
+    mode,
     title = "Admin Detail",
     submitButton = {
         text: "Confirm"
     }
 }) {
 
-    const { register, handleSubmit, formState: { errors }, control } = useForm({
+    const { register, handleSubmit, reset, formState: { errors }, control } = useForm({
         mode: "onSubmit",
         reValidateMode: "onBlur",
         defaultValues: getDefaultValues(admin),
         resolver: yupResolver(schema)
     })
+
+    const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        setIsEditing(() => {
+            if (mode === CRUD_MODE.create) return true;
+            if (mode === CRUD_MODE.edit) return true;
+            return false;
+        })
+    }, [mode])
+
+    const isDisabled = !isEditing;
 
     const preparedBeforeSubmit = (data) => {
         const preparedData = {
@@ -61,17 +74,29 @@ export default function AdminDetailDialog({
         onSubmit && onSubmit(preparedData);
     }
 
+    const enableEdit = () => {
+        setIsEditing(true);
+    }
+
+    const cancelEdit = () => {
+        setIsEditing(false);
+        reset();
+    }
+
     return (
         <Dialog
             open={open}
             onClose={onClose}
+            maxWidth="md"
         >
             <CustomDialogTitle
                 title={title}
                 onClose={onClose}
             />
             <DialogContent>
-                <form onSubmit={handleSubmit(preparedBeforeSubmit)}>
+                <form
+                    onSubmit={handleSubmit(preparedBeforeSubmit)}
+                >
                     <Grid container>
                         <Grid item xs={12} lg={6}>
                             <TextField
@@ -82,7 +107,10 @@ export default function AdminDetailDialog({
                                     autoFocus: true
                                 }}
                                 error={errors.email?.message}
+                                disabled={isDisabled}
                             />
+                        </Grid>
+                        <Grid item xs={12} lg={6}>
                             <TextField
                                 label="Name"
                                 required={true}
@@ -90,63 +118,95 @@ export default function AdminDetailDialog({
                                     ...register("name")
                                 }}
                                 error={errors.name?.message}
+                                disabled={isDisabled}
                             />
+                        </Grid>
+                        <Grid item xs={12} lg={6}>
                             <TextField
                                 label="Phone"
                                 inputProps={{
                                     ...register("phone")
                                 }}
+                                disabled={isDisabled}
                             />
-                            <RadioGroupField
-                                label="Gender"
-                                name="gender"
-                                options={genderOptions}
-                                control={control}
-                            />
+                        </Grid>
+                        <Grid item xs={12} lg={6}>
                             <TextField
                                 label="Birthday"
                                 inputProps={{
                                     type: "date",
                                     ...register("birthday")
                                 }}
+                                disabled={isDisabled}
                             />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <RadioGroupField
+                                label="Gender"
+                                name="gender"
+                                row={true}
+                                options={genderOptions}
+                                control={control}
+                                disabled={isDisabled}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+
                             <TextField
                                 label="Address"
                                 inputProps={{
                                     ...register("address")
                                 }}
+                                disabled={isDisabled}
                             />
+                        </Grid>
+                        <Grid item xs={12}>
                             <TextField
                                 label="Avatar Url"
                                 inputProps={{
                                     ...register("avatarURL")
                                 }}
+                                disabled={isDisabled}
                             />
                         </Grid>
                     </Grid>
                 </form>
             </DialogContent>
             <CustomDialogActions>
-                <Button
-                    variant=""
-                    color="info"
-                    size="medium"
-                    onClick={onClose}
-                    sx={{ background: "#fff", "&:hover": { background: "#f3f3f3" } }}
-                >
-                    Close
-                </Button>
+                {isEditing ?
+                    <>
+                        <Button
+                            variant=""
+                            color="info"
+                            size="medium"
+                            onClick={cancelEdit}
+                            sx={{ background: "#fff", "&:hover": { background: "#f3f3f3" } }}
+                        >
+                            Cancel
+                        </Button>
 
 
-                <Button
-                    variant="contained"
-                    color="primary"
-                    size="medium"
-                    type="submit"
-                    onClick={handleSubmit(preparedBeforeSubmit)}
-                >
-                    {submitButton?.text}
-                </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="medium"
+                            type="submit"
+                            onClick={handleSubmit(preparedBeforeSubmit)}
+                        >
+                            {submitButton?.text}
+                        </Button>
+                    </>
+
+                    :
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="medium"
+                        onClick={enableEdit}
+                    >
+                        Enable Edit
+                    </Button>
+                }
             </CustomDialogActions>
         </Dialog>
     )

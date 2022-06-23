@@ -4,7 +4,7 @@ import useAdminActions from 'hooks/admin/useAdminActions';
 import { toast } from 'react-toastify';
 import { CRUD_MODE } from 'settings/setting';
 
-export default function EditAdmin({
+export default function ViewAdmin({
     open,
     handleClose,
     setLoadingInfo,
@@ -43,7 +43,7 @@ export default function EditAdmin({
             onClose={handleClose}
             onSubmit={handleSubmit}
             admin={admin}
-            mode={CRUD_MODE.edit}
+            mode={CRUD_MODE.view}
             title="Admin Detail"
             submitButton={{
                 text: "Update"

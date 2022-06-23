@@ -143,7 +143,7 @@ const theme = createTheme(adaptV4Theme({
         },
         MuiFormGroup: {
             root: {
-                marginBottom: "1.5rem",
+                marginBottom: "1rem",
             },
         },
         MuiInputBase: {

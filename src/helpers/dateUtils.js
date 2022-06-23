@@ -1,6 +1,7 @@
 import moment from 'moment';
 
 export const dateFormat = 'DD/MM/YYYY';
+export const dateFormat2 = 'yyyy-MM-DD';
 export const iso8601Format = 'YYYY-MM-DDTHH:mm:ss.SSSZZ';
 export const datetimeFormat = 'DD/MM/YYYY HH:mm:ss';
 export const datetimeFormatV2 = 'DD-MM-YYYY HH:mm:ss';
@@ -17,6 +18,7 @@ export const validDate = (date) => {
     if (typeof date === "string") {
         return notMillisecond(date) && (
             moment(date, dateFormat, true).isValid() ||
+            moment(date, dateFormat2, true).isValid() ||
             moment(date, datetimeFormat, true).isValid() ||
             moment(date, datetimeFormatV2, true).isValid() ||
             moment(date, datetimeFormatReverseDate, true).isValid() ||
@@ -32,7 +34,7 @@ export const validDate = (date) => {
     return false;
 }
 
-export const formatDate = (date, format = dateFormat) => date ? moment(date).format(format) : 'N/A';
+export const formatDate = (date, format = dateFormat) => validDate(date) ? moment(new Date(date)).format(format) : 'N/A';
 
 export const formatLocalDate = (date, format = dateFormat) => date ? moment(date).local().format(format) : 'N/A';
 

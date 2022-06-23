@@ -21,7 +21,7 @@ export default function App() {
         <>
             <ToastContainer />
             <Provider store={store}>
-                <PersistGate loading={<BackDropLoader/>} persistor={persistor}>
+                <PersistGate loading={<BackDropLoader open={true} />} persistor={persistor}>
                     <StyledEngineProvider>
                         <ThemeProvider theme={theme}>
                             <CssBaseline />

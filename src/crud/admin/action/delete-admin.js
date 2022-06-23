@@ -3,7 +3,7 @@ import useAdminActions from 'hooks/admin/useAdminActions';
 import ConfirmDialog from 'components/Dialog/confirm/ConfirmDialog';
 import { toast } from 'react-toastify';
 
-export default function CreateAdmin({
+export default function DeleteAdmin({
     open,
     handleClose,
     setLoadingInfo,

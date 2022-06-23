@@ -13,7 +13,7 @@ export default function CustomDialogTitle({
             display="flex"
             alignItems="center"
             justifyContent="space-between"
-            fontSize="1.2rem"
+            fontSize="1.5rem"
         >
             {title}
             <BootstrapTooltip title="Close">
