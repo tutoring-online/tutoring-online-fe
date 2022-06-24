@@ -1,9 +1,9 @@
-import { METHOD, SUBJECT_API } from "helpers/api";
+import { METHOD, CATEGORY_API } from "helpers/api";
 import { axiosRequest } from "helpers/axios";
 
-const baseUrl = SUBJECT_API;
+const baseUrl = CATEGORY_API;
 
-export const fetchSubjects = () => {
+export const fetchCategories = () => {
     const url = baseUrl;
     const options = {
         method: METHOD.get,
@@ -12,7 +12,7 @@ export const fetchSubjects = () => {
     return axiosRequest(url, options);
 }
 
-export const fetchSubjectDetail = (id) => {
+export const fetchCategoryDetail = (id) => {
     const url = baseUrl + `/${id}`;
     const options = {
         method: METHOD.get
@@ -21,7 +21,7 @@ export const fetchSubjectDetail = (id) => {
     return axiosRequest(url, options);
 }
 
-export const createSubject = (data) => {
+export const createCategory = (data) => {
     const url = baseUrl;
     const options = {
         method: METHOD.post,
@@ -31,7 +31,7 @@ export const createSubject = (data) => {
     return axiosRequest(url, options);
 }
 
-export const updateSubject = (id, data) => {
+export const updateCategory = (id, data) => {
     if (!data) return;
     const url = baseUrl + `/${id}`;
     const options = {
@@ -42,7 +42,7 @@ export const updateSubject = (id, data) => {
     return axiosRequest(url, options);
 }
 
-export const deleteSubject = (id) => {
+export const deleteCategory = (id) => {
     const url = baseUrl + `/${id}`;
     const options = {
         method: METHOD.delete

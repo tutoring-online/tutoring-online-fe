@@ -16,7 +16,6 @@ export default function TextField({
             </FormLabel>
             <FormControl
                 error={Boolean(error)}
-                variant="filled"
                 component={Box}
                 width="100%"
                 marginBottom="1rem!important"

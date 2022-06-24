@@ -31,14 +31,16 @@ const useStyles = makeStyles(componentStyles);
 const PrivateRoute = (props) => {
     const isSignedIn = useSelector(state => state.auth.isSignedIn);
     const user = useSelector(state => state.auth.user);
-
+    
     if (isSignedIn && isAdmin(user?.role)) {
         return <Route {...props} />
     }
 
-    return (
-        <Redirect from="*" to="/auth/login" />
-    );
+    return <Route {...props} />
+
+    // return (
+    //     <Redirect from="*" to="/auth/login" />
+    // );
 }
 
 const getAdminRoutes = () => {

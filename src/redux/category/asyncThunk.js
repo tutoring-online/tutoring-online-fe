@@ -3,11 +3,11 @@ import * as types from "./types.js";
 import * as api from "./api.js";
 import { toast } from "react-toastify";
 
-const fetchSubjects = async (params) => {
+const fetchCategories = async (params) => {
     const { setLoading = () => { } } = params;
     setLoading(true);
     try {
-        const response = await api.fetchSubjects();
+        const response = await api.fetchCategories();
         return response;
     } catch (error) {
         throw error;
@@ -16,11 +16,11 @@ const fetchSubjects = async (params) => {
     }
 }
 
-const fetchSubjectDetail = async (params) => {
+const fetchCategoryDetail = async (params) => {
     const { id, setLoading = () => { } } = params;
     setLoading(true);
     try {
-        const response = await api.fetchSubjectDetail(id);
+        const response = await api.fetchCategoryDetail(id);
         return response;
     } catch (error) {
         throw error;
@@ -29,55 +29,55 @@ const fetchSubjectDetail = async (params) => {
     }
 }
 
-const createSubject = async (params) => {
+const createCategory = async (params) => {
     const { data, loading = () => { }, callback = () => { } } = params;
     loading(true);
     try {
-        const response = await api.createSubject(data);
+        const response = await api.createCategory(data);
 
         console.log(response)
         callback(true, response);
-        toast.success("Created subject successfully.");
+        toast.success("Created category successfully.");
         return response;
     } catch (error) {
         callback(false);
-        toast.error("Failed to create subject.");
+        toast.error("Failed to create category.");
         throw error;
     } finally {
         loading(false);
     }
 }
 
-const updateSubject = async (params) => {
+const updateCategory = async (params) => {
     const { id, data, loading = () => { }, callback = () => { } } = params;
     loading(true);
     try {
-        const response = await api.updateSubject(id, data);
+        const response = await api.updateCategory(id, data);
 
         callback(true, response);
-        toast.success("Updated subject successfully.");
+        toast.success("Updated category successfully.");
         return response;
     } catch (error) {
         callback(false);
-        toast.error("Failed to update the subject.");
+        toast.error("Failed to update the category.");
         throw error;
     } finally {
         loading(false);
     }
 }
 
-const deleteSubject = async (params) => {
+const deleteCategory = async (params) => {
     const { id, loading = () => { }, callback = () => { } } = params;
     loading(true);
     try {
-        await api.deleteSubject(id);
+        await api.deleteCategory(id);
 
         callback(true);
-        toast.success("Deleted subject successfully.");
+        toast.success("Deleted category successfully.");
         return null;
     } catch (error) {
         callback(false);
-        toast.error("Failed to delete the subject.");
+        toast.error("Failed to delete the category.");
         throw error;
     } finally {
         loading(false);
@@ -85,11 +85,11 @@ const deleteSubject = async (params) => {
 }
 
 const asyncThunks = {
-    fetchSubjects: createAsyncThunk(types.FETCH_SUBJECTS, fetchSubjects),
-    fetchSubjectDetail: createAsyncThunk(types.FETCH_SUBJECT_DETAIL, fetchSubjectDetail),
-    createSubject: createAsyncThunk(types.CREATE_SUBJECT, createSubject),
-    updateSubject: createAsyncThunk(types.UPDATE_SUBJECT, updateSubject),
-    deleteSubject: createAsyncThunk(types.DELETE_SUBJECT, deleteSubject),
+    fetchCategories: createAsyncThunk(types.FETCH_CATEGORIES, fetchCategories),
+    fetchCategoryDetail: createAsyncThunk(types.FETCH_CATEGORY_DETAIL, fetchCategoryDetail),
+    createCategory: createAsyncThunk(types.CREATE_CATEGORY, createCategory),
+    updateCategory: createAsyncThunk(types.UPDATE_CATEGORY, updateCategory),
+    deleteCategory: createAsyncThunk(types.DELETE_CATEGORY, deleteCategory),
 }
 
 export default asyncThunks;

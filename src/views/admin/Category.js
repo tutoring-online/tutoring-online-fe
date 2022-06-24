@@ -15,35 +15,33 @@ import Header from "components/Headers/Header.js";
 import Table from "components/Table/Table.jsx";
 
 //Hooks
-import useSubjectList from "hooks/subject/useSubjectList";
+import useCategoryList from "hooks/category/useCategoryList";
 
 import NoInformation from "components/Text/NoInformation";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
-import { renderSubjectStatus, SUBJECT_STATUSES } from "settings/subject-setting";
+import { renderCategoryStatus } from "settings/category-setting";
 
 import componentStyles from "assets/theme/views/admin/tables.js";
 import NTALoading from "nta-team/nta-loading/Loading";
-import { CreateSubject } from "crud/subject";
-import { ViewSubject } from "crud/subject";
-import { DeleteSubject } from "crud/subject";
+import { CATEGORY_STATUSES } from "settings/category-setting";
+import { ViewCategory, CreateCategory, DeleteCategory } from "crud/category";
 
 const useStyles = makeStyles(componentStyles);
 
-const Subject = () => {
+const Category = () => {
 	const classes = useStyles();
 	const {
-		subjectList,
+		categoryList,
 		loading,
 		refresh
-	} = useSubjectList();
-
+	} = useCategoryList();
 
 	const [columns, setColumns] = useState([]);
 
-	const [openCreate, setOpenCreate] = useState(false);
+    const [openCreate, setOpenCreate] = useState(false);
 	const [openEdit, setOpenEdit] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
-	const [selectedSubject, setSelectedSubject] = useState(null);
+	const [selectedCategory, setSelectedCategory] = useState(null);
 
 	const [loadingDetail, setLoadingDetail] = useState({
 		loading: false,
@@ -61,22 +59,17 @@ const Subject = () => {
 	)
 
 	useEffect(() => {
-		const handleOpenEdit = (category) => {
-            setSelectedSubject(category);
+        const handleOpenEdit = (category) => {
+            setSelectedCategory(category);
             setOpenEdit(true);
         }
 
         const handleOpenDelete = (category) => {
-            setSelectedSubject(category);
+            setSelectedCategory(category);
             setOpenDelete(true);
         }
 
 		setColumns([
-			{
-				key: "code",
-				label: "Code",
-				render: (row) => row.code
-			},
 			{
 				key: "name",
 				label: "Name",
@@ -90,7 +83,7 @@ const Subject = () => {
 			{
 				key: "status",
 				label: "Status",
-				render: (row) => renderSubjectStatus(row.status) || <NoInformation />
+				render: (row) => renderCategoryStatus(row.status) || <NoInformation />
 			},
 			{
                 key: "action",
@@ -118,7 +111,7 @@ const Subject = () => {
                                 <IconButton
                                     style={{ padding: 5 }}
                                     onClick={() => handleOpenDelete(row)}
-                                    disabled={row.status === SUBJECT_STATUSES.DELETED}
+                                    disabled={row.status === CATEGORY_STATUSES.DELETED}
                                 >
                                     <DeleteForeverIcon sx={{ width: 18, height: 18 }} />
                                 </IconButton>
@@ -130,7 +123,7 @@ const Subject = () => {
 		])
 	}, [])
 
-	const handleOpenCreate = () => {
+    const handleOpenCreate = () => {
 		setOpenCreate(true);
 	}
 
@@ -140,12 +133,12 @@ const Subject = () => {
 
 	const handleCloseEdit = () => {
 		setOpenEdit(false);
-		setSelectedSubject(null);
+		setSelectedCategory(null);
 	}
 
 	const handleCloseDelete = () => {
 		setOpenDelete(false);
-		setSelectedSubject(null);
+		setSelectedCategory(null);
 	}
 
 	const renderPanel = () => (
@@ -192,13 +185,13 @@ const Subject = () => {
 				<Table
 					title={"List Subjects"}
 					columns={columns}
-					data={subjectList}
-					panel={renderPanel()}
+					data={categoryList}
+                    panel={renderPanel()}
 				/>
 			</Container>
 
-			{openCreate &&
-				<CreateSubject
+            {openCreate &&
+				<CreateCategory
 					open={openCreate}
 					handleClose={handleCloseCreate}
 					setLoadingInfo={setLoadingDetail}
@@ -207,21 +200,21 @@ const Subject = () => {
 			}
 
 			{openEdit &&
-				<ViewSubject
+				<ViewCategory
 					open={openEdit}
 					handleClose={handleCloseEdit}
 					setLoadingInfo={setLoadingDetail}
-					subject={selectedSubject}
+					category={selectedCategory}
 					refresh={refresh}
 				/>
 			}
 
 			{openDelete &&
-				<DeleteSubject
+				<DeleteCategory
 					open={openDelete}
 					handleClose={handleCloseDelete}
 					setLoadingInfo={setLoadingDetail}
-					subject={selectedSubject}
+					category={selectedCategory}
 					refresh={refresh}
 				/>
 			}
@@ -229,4 +222,4 @@ const Subject = () => {
 	)
 }
 
-export default Subject;
+export default Category;

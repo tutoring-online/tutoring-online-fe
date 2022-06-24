@@ -22,6 +22,7 @@ export const ENV_API = `/api/${ENV_API_VERSION}`
 export const AUTHENTICATION_API = `${ENV_API}/authentication`;
 export const PAYMENT_API = `${ENV_API}/payments`;
 export const SUBJECT_API = `${ENV_API}/subjects`;
+export const CATEGORY_API = `${ENV_API}/categories`;
 export const SYLLABUS_API = `${ENV_API}/syllabuses`;
 export const LESSON_API = `${ENV_API}/lessons`;
 

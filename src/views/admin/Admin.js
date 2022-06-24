@@ -5,8 +5,8 @@ import Box from "@mui/material/Box";
 import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import makeStyles from '@mui/styles/makeStyles';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import makeStyles from '@mui/styles/makeStyles';
 import { Avatar, Button, IconButton } from "@mui/material";
 
 //Core component

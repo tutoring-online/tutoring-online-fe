@@ -10,48 +10,43 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import TextField from "components/Form/TextField";
-import RadioGroupField from "components/Form/RadioGroupField";
 import CustomDialogTitle from "components/Dialog/custom/CustomDialogTitle";
 import CustomDialogActions from "components/Dialog/custom/CustomDialogActions";
 
 import yup from "helpers/yupGlobal";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { CRUD_MODE, genderOptions, convertNumberToGender, convertGenderToNumber } from "settings/setting";
-import { validDate, dateFormat2, formatDate } from "helpers/dateUtils";
+import { CRUD_MODE } from "settings/setting";
 
 const schema = yup.object().shape({
     name: yup.string()
-        .required("Name is required"),
-    email: yup.string()
-        .required("Email is required")
-        .email("Email is invalid"),
+        .required("Name is required."),
+    description: yup.string()
+        .test("len", "Maximum 1000 characters.", (input) => input.length > 1000)
 });
 
-const getDefaultValues = (admin) => {
-    if (!admin) return {};
+const getDefaultValues = (category) => {
+    if (!category) return {};
     return {
-        ...admin,
-        birthday: validDate(admin.birthday) ? formatDate(admin.birthday, dateFormat2) : null,
-        gender: convertNumberToGender(admin.gender)
+        ...category,
     }
 }
 
-export default function AdminDetailDialog({
+export default function TutorDetailDialog({
     open,
     onClose,
     onSubmit,
-    admin,
+    category,
     mode,
-    title = "Admin Detail",
+    title = "Tutor Detail",
     submitButton = {
         text: "Confirm"
     }
 }) {
 
-    const { register, handleSubmit, reset, formState: { errors }, control } = useForm({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
         mode: "onSubmit",
         reValidateMode: "onBlur",
-        defaultValues: getDefaultValues(admin),
+        defaultValues: getDefaultValues(category),
         resolver: yupResolver(schema)
     })
 
@@ -70,7 +65,6 @@ export default function AdminDetailDialog({
     const preparedBeforeSubmit = (data) => {
         const preparedData = {
             ...data,
-            gender: convertGenderToNumber(data.gender)
         }
         onSubmit && onSubmit(preparedData);
     }
@@ -84,12 +78,6 @@ export default function AdminDetailDialog({
         reset();
     }
 
-    function renderDisplayContent () {
-        return (
-            <div>Display content</div>
-        )
-    }
-
     return (
         <Dialog
             open={open}
@@ -101,24 +89,11 @@ export default function AdminDetailDialog({
                 onClose={onClose}
             />
             <DialogContent>
-            {isEditing ?            
                 <form
                     onSubmit={handleSubmit(preparedBeforeSubmit)}
                 >
                     <Grid container>
-                        <Grid item xs={12} lg={6}>
-                            <TextField
-                                label="Email"
-                                required={true}
-                                inputProps={{
-                                    ...register("email"),
-                                    autoFocus: true
-                                }}
-                                error={errors.email?.message}
-                                disabled={isDisabled}
-                            />
-                        </Grid>
-                        <Grid item xs={12} lg={6}>
+                        <Grid item xs={12}>
                             <TextField
                                 label="Name"
                                 required={true}
@@ -129,59 +104,20 @@ export default function AdminDetailDialog({
                                 disabled={isDisabled}
                             />
                         </Grid>
-                        <Grid item xs={12} lg={6}>
-                            <TextField
-                                label="Phone"
-                                inputProps={{
-                                    ...register("phone")
-                                }}
-                                disabled={isDisabled}
-                            />
-                        </Grid>
-                        <Grid item xs={12} lg={6}>
-                            <TextField
-                                label="Birthday"
-                                inputProps={{
-                                    type: "date",
-                                    ...register("birthday")
-                                }}
-                                disabled={isDisabled}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <RadioGroupField
-                                label="Gender"
-                                name="gender"
-                                row={true}
-                                options={genderOptions}
-                                control={control}
-                                disabled={isDisabled}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-
-                            <TextField
-                                label="Address"
-                                inputProps={{
-                                    ...register("address")
-                                }}
-                                disabled={isDisabled}
-                            />
-                        </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label="Avatar Url"
+                                label="Description"
                                 inputProps={{
-                                    ...register("avatarURL")
+                                    ...register("description"),
+                                    multiline: true,
+                                    rows: 4,
                                 }}
+                                error={errors.description?.message}
                                 disabled={isDisabled}
                             />
                         </Grid>
                     </Grid>
                 </form>
-                :
-                renderDisplayContent()
-            }
             </DialogContent>
             <CustomDialogActions>
                 {isEditing ?
@@ -207,6 +143,7 @@ export default function AdminDetailDialog({
                             {submitButton?.text}
                         </Button>
                     </>
+
                     :
                     <Button
                         variant="contained"

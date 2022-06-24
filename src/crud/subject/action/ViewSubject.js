@@ -1,20 +1,20 @@
 import React from 'react'
-import StudentDetailDialog from 'crud/student/ui-segment/StudentDetailDialog';
-import useStudentActions from 'hooks/student/useStudentActions';
+import SubjectDetailDialog from 'crud/subject/ui-segment/SubjectDetailDialog';
+import useSubjectActions from 'hooks/subject/useSubjectActions';
 import { toast } from 'react-toastify';
 import { CRUD_MODE } from 'settings/setting';
 
-export default function ViewStudent({
+export default function ViewSubject({
     open,
     handleClose,
     setLoadingInfo,
-    student,
+    subject,
     refresh
 }) {
-    const actions = useStudentActions();
+    const actions = useSubjectActions();
 
     const handleSubmit = (data) => {
-        if (!student?.id || !data) {
+        if (!subject?.id || !data) {
             toast.warning("Something went wrong.");
             return;
         }
@@ -33,18 +33,18 @@ export default function ViewStudent({
             }
         }
 
-        actions.updateStudent({ id: student.id, data, loading, callback });
+        actions.updateSubject({ id: subject.id, data, loading, callback });
     }
 
     return (
         open &&
-        <StudentDetailDialog
+        <SubjectDetailDialog
             open={open}
             onClose={handleClose}
             onSubmit={handleSubmit}
-            student={student}
+            subject={subject}
             mode={CRUD_MODE.view}
-            title="Student Detail"
+            title="Subject Detail"
             submitButton={{
                 text: "Update"
             }}

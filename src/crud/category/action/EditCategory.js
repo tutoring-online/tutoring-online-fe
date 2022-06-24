@@ -1,20 +1,20 @@
 import React from 'react'
-import StudentDetailDialog from 'crud/student/ui-segment/StudentDetailDialog';
-import useStudentActions from 'hooks/student/useStudentActions';
+import CategoryDetailDialog from 'crud/category/ui-segment/CategoryDetailDialog';
+import useCategoryActions from 'hooks/category/useCategoryActions';
 import { toast } from 'react-toastify';
 import { CRUD_MODE } from 'settings/setting';
 
-export default function ViewStudent({
+export default function EditCategory({
     open,
     handleClose,
     setLoadingInfo,
-    student,
+    category,
     refresh
 }) {
-    const actions = useStudentActions();
+    const actions = useCategoryActions();
 
     const handleSubmit = (data) => {
-        if (!student?.id || !data) {
+        if (!category?.id || !data) {
             toast.warning("Something went wrong.");
             return;
         }
@@ -33,18 +33,18 @@ export default function ViewStudent({
             }
         }
 
-        actions.updateStudent({ id: student.id, data, loading, callback });
+        actions.updateCategory({ id: category.id, data, loading, callback });
     }
 
     return (
         open &&
-        <StudentDetailDialog
+        <CategoryDetailDialog
             open={open}
             onClose={handleClose}
             onSubmit={handleSubmit}
-            student={student}
-            mode={CRUD_MODE.view}
-            title="Student Detail"
+            category={category}
+            mode={CRUD_MODE.edit}
+            title="Category Detail"
             submitButton={{
                 text: "Update"
             }}

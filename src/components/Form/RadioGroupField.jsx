@@ -1,7 +1,7 @@
-import { Box, FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel, Radio, RadioGroup } from '@mui/material'
-import RequiredLabel from 'components/Text/RequiredLabel'
-import { isAvailableArray } from 'helpers/arrayUtils'
-import React from 'react'
+import { Box, FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel, Radio, RadioGroup } from "@mui/material"
+import RequiredLabel from "components/Text/RequiredLabel"
+import { isAvailableArray } from "helpers/arrayUtils"
+import React from "react"
 import { Controller } from "react-hook-form";
 
 export default function RadioGroupField({
@@ -25,6 +25,7 @@ export default function RadioGroupField({
                 component={Box}
                 width="100%"
                 marginBottom="1rem!important"
+                style={{ "*": { fontSize: "14px !important" } }}
             >
                 <Controller
                     render={({ field }) => (
@@ -38,7 +39,8 @@ export default function RadioGroupField({
                                     key={item.value}
                                     value={item.value}
                                     label={item.label}
-                                    control={<Radio size='small' />}
+                                    checked={field.value === options.item}
+                                    control={<Radio size="small" />}
                                     disabled={Boolean(disabled)}
                                 />
                             )}

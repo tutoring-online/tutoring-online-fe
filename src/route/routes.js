@@ -20,11 +20,13 @@ import PaymentsIcon from '@mui/icons-material/Payments';
 import TopicIcon from '@mui/icons-material/Topic';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import LogoutIcon from '@mui/icons-material/Logout';
+import CategoryIcon from '@mui/icons-material/Category';
 
 //Admin
 import Admin from "views/admin/Admin.js";
 import Tutor from "views/admin/Tutor.js";
 import Student from "views/admin/Student.js";
+import Category from "views/admin/Category.js";
 import Subject from "views/admin/Subject.js";
 import Syllabus from "views/admin/Syllabus.js";
 import Payment from "views/admin/Payment.js";
@@ -62,6 +64,7 @@ export const ROUTE_PATHS = {
 	tutor: "/tutors",
 	student: "/students",
 	payment: "/payments",
+	category: "/category",
 	subject: "/subjects",
 	syllabus: "/syllabuses",
 }
@@ -109,11 +112,20 @@ const ADMIN_ROUTES = {
 		path: ROUTE_PATHS.student,
 		layout: LAYOUT_PATHS.admin
 	},
+	category: {
+		key: "category",
+		name: "Category",
+		icon: CategoryIcon,
+		iconColor: ICON_COLORS.InfoLight,
+		component: Category,
+		path: ROUTE_PATHS.category,
+		layout: LAYOUT_PATHS.admin
+	},
 	subject: {
 		key: "subject",
 		name: "Subject",
 		icon: TopicIcon,
-		iconColor: ICON_COLORS.InfoLight,
+		iconColor: ICON_COLORS.Info,
 		component: Subject,
 		path: ROUTE_PATHS.subject,
 		layout: LAYOUT_PATHS.admin
@@ -122,7 +134,7 @@ const ADMIN_ROUTES = {
 		key: "syllabus",
 		name: "Syllabus",
 		icon: ReceiptLongIcon,
-		iconColor: ICON_COLORS.Info,
+		iconColor: ICON_COLORS.Warning,
 		component: Syllabus,
 		path: ROUTE_PATHS.syllabus,
 		layout: LAYOUT_PATHS.admin
@@ -131,7 +143,7 @@ const ADMIN_ROUTES = {
 		key: "payment",
 		name: "Payment",
 		icon: PaymentsIcon,
-		iconColor: ICON_COLORS.Warning,
+		iconColor: ICON_COLORS.Error,
 		component: Payment,
 		path: ROUTE_PATHS.payment,
 		layout: LAYOUT_PATHS.admin

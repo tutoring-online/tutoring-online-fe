@@ -10,39 +10,45 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import TextField from "components/Form/TextField";
-import RadioGroupField from "components/Form/RadioGroupField";
 import CustomDialogTitle from "components/Dialog/custom/CustomDialogTitle";
 import CustomDialogActions from "components/Dialog/custom/CustomDialogActions";
 
 import yup from "helpers/yupGlobal";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { CRUD_MODE, genderOptions, convertNumberToGender, convertGenderToNumber } from "settings/setting";
-import { validDate, dateFormat2, formatDate } from "helpers/dateUtils";
+import { CRUD_MODE } from "settings/setting";
+import RadioGroupField from "components/Form/RadioGroupField";
+import { LIST_SUBJECT_STATUS } from "settings/subject-setting";
+import { renderSubjectStatus } from "settings/subject-setting";
+import { SUBJECT_STATUSES } from "settings/subject-setting";
+import SelectField from "components/Form/SelectField";
+import useCategoryList from "hooks/category/useCategoryList";
 
 const schema = yup.object().shape({
+    code: yup.string()
+        .required("Code is required"),
     name: yup.string()
         .required("Name is required"),
-    email: yup.string()
-        .required("Email is required")
-        .email("Email is invalid"),
+    categoryId: yup.string().nullable()
+        .required("Category is required"),
 });
 
-const getDefaultValues = (admin) => {
-    if (!admin) return {};
+const getDefaultValues = (subject) => {
+    if (!subject) return {
+        status: SUBJECT_STATUSES.ACTIVE
+    };
+
     return {
-        ...admin,
-        birthday: validDate(admin.birthday) ? formatDate(admin.birthday, dateFormat2) : null,
-        gender: convertNumberToGender(admin.gender)
+        ...subject,
     }
 }
 
-export default function AdminDetailDialog({
+export default function SubjectDetailDialog({
     open,
     onClose,
     onSubmit,
-    admin,
+    subject,
     mode,
-    title = "Admin Detail",
+    title = "Tutor Detail",
     submitButton = {
         text: "Confirm"
     }
@@ -51,9 +57,11 @@ export default function AdminDetailDialog({
     const { register, handleSubmit, reset, formState: { errors }, control } = useForm({
         mode: "onSubmit",
         reValidateMode: "onBlur",
-        defaultValues: getDefaultValues(admin),
+        defaultValues: getDefaultValues(subject),
         resolver: yupResolver(schema)
     })
+
+    const { categoryList } = useCategoryList();
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -70,7 +78,6 @@ export default function AdminDetailDialog({
     const preparedBeforeSubmit = (data) => {
         const preparedData = {
             ...data,
-            gender: convertGenderToNumber(data.gender)
         }
         onSubmit && onSubmit(preparedData);
     }
@@ -84,12 +91,6 @@ export default function AdminDetailDialog({
         reset();
     }
 
-    function renderDisplayContent () {
-        return (
-            <div>Display content</div>
-        )
-    }
-
     return (
         <Dialog
             open={open}
@@ -101,20 +102,18 @@ export default function AdminDetailDialog({
                 onClose={onClose}
             />
             <DialogContent>
-            {isEditing ?            
                 <form
                     onSubmit={handleSubmit(preparedBeforeSubmit)}
                 >
                     <Grid container>
                         <Grid item xs={12} lg={6}>
                             <TextField
-                                label="Email"
+                                label="Code"
                                 required={true}
                                 inputProps={{
-                                    ...register("email"),
-                                    autoFocus: true
+                                    ...register("code")
                                 }}
-                                error={errors.email?.message}
+                                error={errors.code?.message}
                                 disabled={isDisabled}
                             />
                         </Grid>
@@ -130,58 +129,49 @@ export default function AdminDetailDialog({
                             />
                         </Grid>
                         <Grid item xs={12} lg={6}>
-                            <TextField
-                                label="Phone"
-                                inputProps={{
-                                    ...register("phone")
-                                }}
+                            <SelectField
+                                label="Category"
+                                name="categoryId"
+                                control={control}
+                                required={true}
+                                options={categoryList.map(item => ({
+                                    label: item.name,
+                                    value: item.id
+                                }))}
+                                error={errors.categoryId?.message}
                                 disabled={isDisabled}
                             />
                         </Grid>
-                        <Grid item xs={12} lg={6}>
+
+                        <Grid item xs={12}>
                             <TextField
-                                label="Birthday"
+                                label="Description"
                                 inputProps={{
-                                    type: "date",
-                                    ...register("birthday")
+                                    ...register("description"),
+                                    multiline: true,
+                                    rows: 4,
+                                    type: "date"
                                 }}
+                                error={errors.description?.message}
                                 disabled={isDisabled}
                             />
                         </Grid>
+
                         <Grid item xs={12}>
                             <RadioGroupField
-                                label="Gender"
-                                name="gender"
+                                label="Status"
+                                name="status"
                                 row={true}
-                                options={genderOptions}
+                                options={LIST_SUBJECT_STATUS.map(item => ({
+                                    ...item,
+                                    label: renderSubjectStatus(item.value),
+                                }))}
                                 control={control}
-                                disabled={isDisabled}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-
-                            <TextField
-                                label="Address"
-                                inputProps={{
-                                    ...register("address")
-                                }}
-                                disabled={isDisabled}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                label="Avatar Url"
-                                inputProps={{
-                                    ...register("avatarURL")
-                                }}
                                 disabled={isDisabled}
                             />
                         </Grid>
                     </Grid>
                 </form>
-                :
-                renderDisplayContent()
-            }
             </DialogContent>
             <CustomDialogActions>
                 {isEditing ?
@@ -207,6 +197,7 @@ export default function AdminDetailDialog({
                             {submitButton?.text}
                         </Button>
                     </>
+
                     :
                     <Button
                         variant="contained"

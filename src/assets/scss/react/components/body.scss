@@ -1,0 +1,21 @@
+body {
+    font-size: 14px;
+}
+
+.MuiFormControlLabel-label {
+    font-size: 14px;
+}
+
+.MuiRadio-root {
+    .MuiSvgIcon-root.MuiSvgIcon-fontSizeSmall {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+}
+
+.select-field-filledInput {
+    * {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+}

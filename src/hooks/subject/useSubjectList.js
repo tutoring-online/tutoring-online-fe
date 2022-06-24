@@ -1,16 +1,26 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import useSubjectActions from "./useSubjectActions.js";
+import useSubjectActions from "./useSubjectActions";
 
 const useSubjectList = () => {
-    const subjectList = useSelector(state => state.subject.subjects);
     const actions = useSubjectActions();
 
+    const subjectList = useSelector(state => state.subject.subjects);
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
-        actions.fetchSubjects();
+        actions.fetchSubjects({ setLoading });
     }, [actions])
-    
-    return subjectList;
+
+    const refresh = useCallback(() => {
+        actions.fetchSubjects({ setLoading });
+    }, [actions])
+
+    return {
+        subjectList,
+        loading,
+        refresh
+    };
 }
 
 export default useSubjectList;
