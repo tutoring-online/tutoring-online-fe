@@ -8,7 +8,6 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Avatar, Button, IconButton } from "@mui/material";
 import makeStyles from '@mui/styles/makeStyles';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import AddBoxIcon from '@mui/icons-material/AddBox';
 
 //Core component
 import Header from "components/Headers/Header.js";
@@ -22,17 +21,53 @@ import NoInformation from "components/Text/NoInformation";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
 
 import componentStyles from "assets/theme/views/admin/tables.js";
+import { TUTOR_STATUSES } from "settings/tutorSetting";
+import NTALoading from "nta-team/nta-loading/Loading";
+import { ViewTutor } from "crud/tutor";
+import { DeleteTutor } from "crud/tutor";
 
 const useStyles = makeStyles(componentStyles);
 
 const Tutor = () => {
 	const classes = useStyles();
-	const tutorList = useTutorList();
-	console.log(tutorList);
+	const {
+		tutorList,
+		loading,
+		refresh
+	} = useTutorList();
 
 	const [columns, setColumns] = useState([]);
 
+	const [openEdit, setOpenEdit] = useState(false);
+	const [openDelete, setOpenDelete] = useState(false);
+	const [selectedTutor, setSelectedTutor] = useState(null);
+
+	const [loadingDetail, setLoadingDetail] = useState({
+		loading: false,
+		text: ""
+	});
+
+	useEffect(
+		function listenLoadingList() {
+			setLoadingDetail({
+				loading: loading,
+				text: "Loading list..."
+			})
+		},
+		[loading]
+	)
+
 	useEffect(() => {
+		const handleOpenEdit = (admin) => {
+			setSelectedTutor(admin);
+			setOpenEdit(true);
+		}
+
+		const handleOpenDelete = (admin) => {
+			setSelectedTutor(admin);
+			setOpenDelete(true);
+		}
+
 		setColumns([
 			{
 				key: "name",
@@ -80,7 +115,7 @@ const Tutor = () => {
 			{
 				key: "action",
 				label: "Actions",
-				render: () => (
+				render: (row) => (
 					<Box
 						component="div"
 						display="flex"
@@ -89,20 +124,41 @@ const Tutor = () => {
 						fontSize="13px"
 					>
 						<BootstrapTooltip title="Detail">
-							<IconButton style={{ padding: 5 }}>
-								<SettingsIcon sx={{ width: 18, height: 18 }} />
-							</IconButton>
+							<span>
+								<IconButton
+									style={{ padding: 5 }}
+									onClick={() => handleOpenEdit(row)}
+								>
+									<SettingsIcon sx={{ width: 18, height: 18 }} />
+								</IconButton>
+							</span>
 						</BootstrapTooltip>
 						<BootstrapTooltip title="Delete">
-							<IconButton style={{ padding: 5 }}>
-								<DeleteForeverIcon sx={{ width: 18, height: 18 }} />
-							</IconButton>
+							<span>
+								<IconButton
+									style={{ padding: 5 }}
+									onClick={() => handleOpenDelete(row)}
+									disabled={row.status === TUTOR_STATUSES.DELETED}
+								>
+									<DeleteForeverIcon sx={{ width: 18, height: 18 }} />
+								</IconButton>
+							</span>
 						</BootstrapTooltip>
 					</Box>
 				)
 			},
 		])
 	}, [])
+
+	const handleCloseEdit = () => {
+		setOpenEdit(false);
+		setSelectedTutor(null);
+	}
+
+	const handleCloseDelete = () => {
+		setOpenDelete(false);
+		setSelectedTutor(null);
+	}
 
 	const renderPanel = () => (
 		<Box
@@ -111,21 +167,18 @@ const Tutor = () => {
 			alignItems="center"
 			columnGap="0.5rem"
 		>
+			<NTALoading
+				loading={loadingDetail.loading}
+				text={loadingDetail.text}
+			/>
 			<Button
 				variant="contained"
 				color="primary"
-				size="small"
+				size="medium"
+				onClick={() => refresh && refresh()}
 				startIcon={<RefreshIcon fontSize="medium" />}
 			>
 				Refresh
-			</Button>
-			<Button
-				variant="contained"
-				color="primary"
-				size="small"
-				startIcon={<AddBoxIcon fontSize="medium" />}
-			>
-				Add
 			</Button>
 		</Box>
 	)
@@ -146,6 +199,26 @@ const Tutor = () => {
 					panel={renderPanel()}
 				/>
 			</Container>
+
+			{openEdit &&
+				<ViewTutor
+					open={openEdit}
+					handleClose={handleCloseEdit}
+					setLoadingInfo={setLoadingDetail}
+					tutor={selectedTutor}
+					refresh={refresh}
+				/>
+			}
+
+			{openDelete &&
+				<DeleteTutor
+					open={openDelete}
+					handleClose={handleCloseDelete}
+					setLoadingInfo={setLoadingDetail}
+					tutor={selectedTutor}
+					refresh={refresh}
+				/>
+			}
 		</>
 	)
 }

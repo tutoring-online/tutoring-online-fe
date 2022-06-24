@@ -27,22 +27,22 @@ const schema = yup.object().shape({
         .email("Email is invalid"),
 });
 
-const getDefaultValues = (admin) => {
-    if (!admin) return {};
+const getDefaultValues = (tutor) => {
+    if (!tutor) return {};
     return {
-        ...admin,
-        birthday: validDate(admin.birthday) ? formatDate(admin.birthday, dateFormat2) : null,
-        gender: convertNumberToGender(admin.gender)
+        ...tutor,
+        birthday: validDate(tutor.birthday) ? formatDate(tutor.birthday, dateFormat2) : null,
+        gender: convertNumberToGender(tutor.gender)
     }
 }
 
-export default function AdminDetailDialog({
+export default function TutorDetailDialog({
     open,
     onClose,
     onSubmit,
-    admin,
+    tutor,
     mode,
-    title = "Admin Detail",
+    title = "Tutor Detail",
     submitButton = {
         text: "Confirm"
     }
@@ -51,7 +51,7 @@ export default function AdminDetailDialog({
     const { register, handleSubmit, reset, formState: { errors }, control } = useForm({
         mode: "onSubmit",
         reValidateMode: "onBlur",
-        defaultValues: getDefaultValues(admin),
+        defaultValues: getDefaultValues(tutor),
         resolver: yupResolver(schema)
     })
 

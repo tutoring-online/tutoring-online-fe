@@ -1,2 +1,5 @@
 //Type
-export const FETCH_TUTORS = "admin/FETCH_TUTORS";
+export const FETCH_TUTORS = "TUTOR/FETCH_TUTORS";
+export const FETCH_TUTOR_DETAIL = "TUTOR/FETCH_TUTOR_DETAIL";
+export const UPDATE_TUTOR = "TUTOR/UPDATE_TUTOR";
+export const DELETE_TUTOR = "TUTOR/DELETE_TUTOR";
