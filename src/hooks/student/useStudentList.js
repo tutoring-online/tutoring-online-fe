@@ -1,16 +1,26 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import useStudentActions from "./useStudentActions.js";
+import useStudentActions from "./useStudentActions";
 
 const useStudentList = () => {
-    const studentList = useSelector(state => state.student.students);
     const actions = useStudentActions();
 
+    const studentList = useSelector(state => state.student.students);
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
-        actions.fetchStudents();
+        actions.fetchStudents({ setLoading });
     }, [actions])
-    
-    return studentList;
+
+    const refresh = useCallback(() => {
+        actions.fetchStudents({ setLoading });
+    }, [actions])
+
+    return {
+        studentList,
+        loading,
+        refresh
+    };
 }
 
 export default useStudentList;

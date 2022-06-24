@@ -1,7 +1,8 @@
 import { renderStatus, STATUS_COLORS } from "./setting"
 
 export const STUDENT_STATUSES = {
-    DISABLED: 0,
+    DISABLED: -1,
+    DELETED: 0,
     ACTIVE: 1,
 }
 
@@ -11,6 +12,12 @@ export const LIST_STUDENT_STATUS = [
         value: STUDENT_STATUSES.DISABLED,
         textColor: STATUS_COLORS.DISABLED.textColor,
         bgColor: STATUS_COLORS.DISABLED.bgColor
+    },
+    {
+        label: "Deleted",
+        value: STUDENT_STATUSES.DELETED,
+        textColor: STATUS_COLORS.CANCELED.textColor,
+        bgColor: STATUS_COLORS.CANCELED.bgColor
     },
     {
         label: "Active",
@@ -28,4 +35,3 @@ export const renderStudentStatus = (value) => {
     const statusObject = findStatus(value);
     return renderStatus(statusObject);
 }
-

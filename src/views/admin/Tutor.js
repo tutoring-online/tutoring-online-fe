@@ -16,12 +16,11 @@ import Table from "components/Table/Table.jsx";
 //Hooks
 import useTutorList from "hooks/tutor/useTutorList";
 
-import { renderTutorStatus } from "settings/tutorSetting";
+import { renderTutorStatus, TUTOR_STATUSES } from "settings/tutor-setting";
 import NoInformation from "components/Text/NoInformation";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
 
 import componentStyles from "assets/theme/views/admin/tables.js";
-import { TUTOR_STATUSES } from "settings/tutorSetting";
 import NTALoading from "nta-team/nta-loading/Loading";
 import { ViewTutor } from "crud/tutor";
 import { DeleteTutor } from "crud/tutor";

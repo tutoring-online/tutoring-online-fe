@@ -5,8 +5,9 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { Avatar, IconButton } from "@mui/material";
+import { Avatar, Button, IconButton } from "@mui/material";
 import makeStyles from '@mui/styles/makeStyles';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 //Core component
 import Header from "components/Headers/Header.js";
@@ -16,21 +17,55 @@ import Table from "components/Table/Table.jsx";
 import useStudentList from "hooks/student/useStudentList";
 
 import NoInformation from "components/Text/NoInformation";
-
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
 
 import componentStyles from "assets/theme/views/admin/tables.js";
-import { renderStudentStatus } from "settings/studentSetting";
+import { renderStudentStatus, STUDENT_STATUSES } from "settings/student-setting";
+import NTALoading from "nta-team/nta-loading/Loading";
+import { ViewStudent } from "crud/student";
+import { DeleteStudent } from "crud/student";
 const useStyles = makeStyles(componentStyles);
 
 const Student = () => {
 	const classes = useStyles();
-	const studentList = useStudentList();
-	console.log(studentList);
+	const {
+		studentList,
+		loading,
+		refresh
+	} = useStudentList();
 
 	const [columns, setColumns] = useState([]);
 
+	const [openEdit, setOpenEdit] = useState(false);
+	const [openDelete, setOpenDelete] = useState(false);
+	const [selectedStudent, setSelectedStudent] = useState(null);
+
+	const [loadingDetail, setLoadingDetail] = useState({
+		loading: false,
+		text: ""
+	});
+
+	useEffect(
+		function listenLoadingList() {
+			setLoadingDetail({
+				loading: loading,
+				text: "Loading list..."
+			})
+		},
+		[loading]
+	)
+
 	useEffect(() => {
+		const handleOpenEdit = (admin) => {
+			setSelectedStudent(admin);
+			setOpenEdit(true);
+		}
+
+		const handleOpenDelete = (admin) => {
+			setSelectedStudent(admin);
+			setOpenDelete(true);
+		}
+
 		setColumns([
 			{
 				key: "name",
@@ -83,7 +118,7 @@ const Student = () => {
 			{
 				key: "action",
 				label: "Actions",
-				render: () => (
+				render: (row) => (
 					<Box
 						component="div"
 						display="flex"
@@ -92,20 +127,64 @@ const Student = () => {
 						fontSize="13px"
 					>
 						<BootstrapTooltip title="Detail">
-							<IconButton style={{ padding: 5 }}>
-								<SettingsIcon sx={{ width: 18, height: 18 }} />
-							</IconButton>
+							<span>
+								<IconButton
+									style={{ padding: 5 }}
+									onClick={() => handleOpenEdit(row)}
+								>
+									<SettingsIcon sx={{ width: 18, height: 18 }} />
+								</IconButton>
+							</span>
 						</BootstrapTooltip>
 						<BootstrapTooltip title="Delete">
-							<IconButton style={{ padding: 5 }}>
-								<DeleteForeverIcon sx={{ width: 18, height: 18 }} />
-							</IconButton>
+							<span>
+								<IconButton
+									style={{ padding: 5 }}
+									onClick={() => handleOpenDelete(row)}
+									disabled={row.status === STUDENT_STATUSES.DELETED}
+								>
+									<DeleteForeverIcon sx={{ width: 18, height: 18 }} />
+								</IconButton>
+							</span>
 						</BootstrapTooltip>
 					</Box>
 				)
 			},
 		])
 	}, [])
+
+	const handleCloseEdit = () => {
+		setOpenEdit(false);
+		setSelectedStudent(null);
+	}
+
+	const handleCloseDelete = () => {
+		setOpenDelete(false);
+		setSelectedStudent(null);
+	}
+
+	const renderPanel = () => (
+		<Box
+			display="flex"
+			flexFlow="row nowrap"
+			alignItems="center"
+			columnGap="0.5rem"
+		>
+			<NTALoading
+				loading={loadingDetail.loading}
+				text={loadingDetail.text}
+			/>
+			<Button
+				variant="contained"
+				color="primary"
+				size="medium"
+				onClick={() => refresh && refresh()}
+				startIcon={<RefreshIcon fontSize="medium" />}
+			>
+				Refresh
+			</Button>
+		</Box>
+	)
 
 	return (
 		<>
@@ -120,8 +199,29 @@ const Student = () => {
 					title={"List Student Users"}
 					columns={columns}
 					data={studentList}
+					panel={renderPanel()}
 				/>
 			</Container>
+
+			{openEdit &&
+				<ViewStudent
+					open={openEdit}
+					handleClose={handleCloseEdit}
+					setLoadingInfo={setLoadingDetail}
+					student={selectedStudent}
+					refresh={refresh}
+				/>
+			}
+
+			{openDelete &&
+				<DeleteStudent
+					open={openDelete}
+					handleClose={handleCloseDelete}
+					setLoadingInfo={setLoadingDetail}
+					student={selectedStudent}
+					refresh={refresh}
+				/>
+			}
 		</>
 	)
 }

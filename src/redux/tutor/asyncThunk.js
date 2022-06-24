@@ -8,11 +8,11 @@ const fetchTutors = async (params) => {
     setLoading(true);
     try {
         const response = await api.fetchTutors();
-        setLoading(false);
         return response;
     } catch (error) {
-        setLoading(false);
         throw error;
+    } finally {
+        setLoading(false);
     }
 }
 
@@ -21,11 +21,11 @@ const fetchTutorDetail = async (params) => {
     setLoading(true);
     try {
         const response = await api.fetchTutorDetail(id);
-        setLoading(false);
         return response;
     } catch (error) {
-        setLoading(false);
         throw error;
+    } finally {
+        setLoading(false);
     }
 }
 

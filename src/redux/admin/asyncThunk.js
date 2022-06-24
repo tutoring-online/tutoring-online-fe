@@ -9,11 +9,11 @@ const fetchAdmins = async (params) => {
     setLoading(true);
     try {
         const response = await api.fetchAdmins();
-        setLoading(false);
         return response;
     } catch (error) {
-        setLoading(false);
         throw error;
+    } finally {
+        setLoading(false);
     }
 }
 
@@ -22,11 +22,11 @@ const fetchAdminDetail = async (params) => {
     setLoading(true);
     try {
         const response = await api.fetchAdminDetail(id);
-        setLoading(false);
         return response;
     } catch (error) {
-        setLoading(false);
         throw error;
+    } finally {
+        setLoading(false);
     }
 }
 
