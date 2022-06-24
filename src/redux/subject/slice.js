@@ -9,10 +9,10 @@ const INITIAL_STATE = {
 
 const reducers = {
     fetchSubjectsSuccessful: (state, action) => {
-        state.Subjects = action.payload;
+        state.subjects = action.payload;
     },
     fetchSubjectsFailed: (state) => {
-        state.Subjects = [];
+        state.subjects = [];
     },
 
     fetchSubjectDetailSuccessful: (state, action) => {

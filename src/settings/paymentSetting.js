@@ -1,10 +1,10 @@
 import { renderStatus, STATUS_COLORS } from "./setting"
 
 export const PAYMENT_STATUSES = {
-    PENDING: 0,
-    PAID: 1,
-    ERROR: 2,
-    CANCELED: 3,
+    PENDING: 1,
+    PAID: 2,
+    ERROR: 3,
+    CANCELED: 0,
 }
 
 export const LIST_PAYMENT_STATUS = [
