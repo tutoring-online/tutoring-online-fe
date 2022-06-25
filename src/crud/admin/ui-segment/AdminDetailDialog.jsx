@@ -83,49 +83,56 @@ export default function AdminDetailDialog({
   };
 
   const cancelEdit = () => {
-    setIsEditing(false);
+    setIsEditing(false);    
     reset();
+    console.log(admin);
   };
 
   function renderDisplayContent() {
     return (
       <div className="profile-view">
         <Grid container paddingLeft="4rem">
-          <Grid item xs={12} lg={6}>
+          <Grid item xs={12} lg={6} marginBottom="20px">
             <Typography fontSize={18} fontWeight="bold">
               Name:
             </Typography>
             <Typography>Name Example</Typography>
+            {/* {admin.xxxx} */}
           </Grid>          
-          <Grid item xs={12} lg={6}>
+          <Grid item xs={12} lg={6} marginBottom="20px">
             <Typography fontSize={18} fontWeight="bold">
               Email:
             </Typography>
             <Typography>Example@gmail.com</Typography>
+            {/* {admin.xxxx} */}
           </Grid>
-          <Grid item xs={12} lg={6}>
+          <Grid item xs={12} lg={6} marginBottom="20px">
             <Typography fontSize={18} fontWeight="bold">
               Birthday:
             </Typography>
             <Typography>2/2/2222</Typography>
+            {/* {admin.xxxx} */}
           </Grid>
-          <Grid item xs={12} lg={6}>
+          <Grid item xs={12} lg={6} marginBottom="20px"v>
             <Typography fontSize={18} fontWeight="bold">
               Phone:
             </Typography>
             <Typography>0123456789</Typography>
+            {/* {admin.xxxx} */}
           </Grid>
-          <Grid item xs={12} lg={6}>
+          <Grid item xs={12} lg={6} marginBottom="20px">
             <Typography fontSize={18} fontWeight="bold" on>
               Address
             </Typography>
             <Typography>Address Example</Typography>
+            {/* {admin.xxxx} */}
           </Grid>
-          <Grid item xs={12} lg={6}>
+          <Grid item xs={12} lg={6} marginBottom="20px">
             <Typography fontSize={18} fontWeight="bold">
               AvatarURL:
             </Typography>
-            <Typography label="sdf"/>
+            <Typography>;lfkj;dflk;dflk</Typography>
+            {/* {admin.xxxx} */}
           </Grid>
         </Grid>
       </div>
