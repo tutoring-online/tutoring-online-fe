@@ -9,14 +9,14 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
+import TextField from "components/Form/TextField";
 import CustomDialogTitle from "components/Dialog/custom/CustomDialogTitle";
 import CustomDialogActions from "components/Dialog/custom/CustomDialogActions";
 
 import yup from "helpers/yupGlobal";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CRUD_MODE } from "settings/setting";
-import RadioGroupField from "components/Form/RadioGroupField";
-import { LIST_PAYMENT_STATUS, PAYMENT_STATUSES, renderPaymentStatus } from "settings/payment-setting";
+import { SYLLABUS_STATUSES } from "settings/syllabus-setting";
 
 const schema = yup.object().shape({
     code: yup.string()
@@ -27,21 +27,21 @@ const schema = yup.object().shape({
         .required("Category is required"),
 });
 
-const getDefaultValues = (subject) => {
-    if (!subject) return {
-        status: PAYMENT_STATUSES.ACTIVE
+const getDefaultValues = (syllabus) => {
+    if (!syllabus) return {
+        status: SYLLABUS_STATUSES.ACTIVE
     };
 
     return {
-        ...subject,
+        ...syllabus,
     }
 }
 
-export default function PaymentDetailDialog({
+export default function SyllabusDetailDialog({
     open,
     onClose,
     onSubmit,
-    subject,
+    syllabus,
     mode,
     title = "Tutor Detail",
     submitButton = {
@@ -49,16 +49,10 @@ export default function PaymentDetailDialog({
     }
 }) {
 
-    const {
-        // register,
-        handleSubmit,
-        reset,
-        // formState: { errors },
-        control
-    } = useForm({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
         mode: "onSubmit",
         reValidateMode: "onBlur",
-        defaultValues: getDefaultValues(subject),
+        defaultValues: getDefaultValues(syllabus),
         resolver: yupResolver(schema)
     })
 
@@ -90,12 +84,6 @@ export default function PaymentDetailDialog({
         reset();
     }
 
-    function renderDisplayContent() {
-        return (
-            <div>Display content</div>
-        )
-    }
-
     return (
         <Dialog
             open={open}
@@ -107,29 +95,23 @@ export default function PaymentDetailDialog({
                 onClose={onClose}
             />
             <DialogContent>
-                {isEditing ?
-                    <form
-                        onSubmit={handleSubmit(preparedBeforeSubmit)}
-                    >
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <RadioGroupField
-                                    label="Status"
-                                    name="status"
-                                    row={true}
-                                    options={LIST_PAYMENT_STATUS.map(item => ({
-                                        ...item,
-                                        label: renderPaymentStatus(item.value),
-                                    }))}
-                                    control={control}
-                                    disabled={isDisabled}
-                                />
-                            </Grid>
+                <form
+                    onSubmit={handleSubmit(preparedBeforeSubmit)}
+                >
+                    <Grid container>
+                        <Grid item xs={12} lg={6}>
+                            <TextField
+                                label="Name"
+                                required={true}
+                                inputProps={{
+                                    ...register("name")
+                                }}
+                                error={errors.name?.message}
+                                disabled={isDisabled}
+                            />
                         </Grid>
-                    </form>
-                    :
-                    renderDisplayContent()
-                }
+                    </Grid>
+                </form>
             </DialogContent>
             <CustomDialogActions>
                 {isEditing ?

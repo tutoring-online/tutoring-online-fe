@@ -1,15 +1,15 @@
 import React from 'react'
-import SubjectDetailDialog from 'crud/subject/ui-segment/SubjectDetailDialog';
-import useSubjectActions from 'hooks/subject/useSubjectActions';
+import SyllabusDetailDialog from 'crud/syllabus/ui-segment/SyllabusDetailDialog';
+import useSyllabusActions from 'hooks/syllabus/useSyllabusActions';
 import { CRUD_MODE } from 'settings/setting';
 
-export default function CreateSubject({
+export default function CreateSyllabus({
     open,
     handleClose,
     setLoadingInfo,
     refresh
 }) {
-    const actions = useSubjectActions();
+    const actions = useSyllabusActions();
 
     const handleSubmit = (data) => {
         if (!data) return;
@@ -29,17 +29,17 @@ export default function CreateSubject({
             }
         }
 
-        actions.createSubject({ data, loading, callback });
+        actions.createSyllabus({ data, loading, callback });
     }
 
     return (
         open &&
-        <SubjectDetailDialog
+        <SyllabusDetailDialog
             open={open}
             onClose={handleClose}
             onSubmit={handleSubmit}
             mode={CRUD_MODE.create}
-            title="Create Subject"
+            title="Create Syllabus"
             submitButton={{
                 text: "Create"
             }}
