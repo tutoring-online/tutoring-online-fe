@@ -3,11 +3,60 @@ import * as types from "./types";
 
 import asyncThunks from "./asyncThunk";
 import { toast } from 'react-toastify';
+import { isAvailableArray } from 'helpers/arrayUtils';
+import { equalIgnoreCase } from 'helpers/stringUtils';
 
 
 const INITIAL_STATE = {
     user: {},
     isSignedIn: false,
+}
+
+const showAuthenticatedSuccessfulMessage = (type) => {
+    if (equalIgnoreCase(type, "login")) {
+        toast.success("Logged in successfully.");
+        return;
+    }
+    if (equalIgnoreCase(type, "signup")) {
+        toast.success("Welcome you joining us.");
+        return;
+    }
+    console.log(type);
+}
+
+const isNotSignedInYet = (isSignedIn) => isSignedIn !== true;
+
+const reducers = {
+    loginUserSuccessful: (state, action) => {
+        const type = action.payload?.type;
+        const role = action.payload?.role;
+        const user = isAvailableArray(action.payload?.data) ? action.payload.data[0] : null;
+
+        if (!type || !role || !user) {
+            const errMsg = action.payload?.resultMessage || "Unknown";
+            toast.error(`Authenticated failed with error: ${errMsg}`,);
+
+            state.isSignedIn = false;
+            state.user = {}
+            return;
+        }
+
+        if (isNotSignedInYet(state.isSignedIn)) {
+            showAuthenticatedSuccessfulMessage(type);
+        }
+
+        state.isSignedIn = true;
+        state.user = {
+            ...user,
+            role
+        }
+    },
+
+    loginUserFailed: (state, action) => {
+        console.log(action.error);
+        state.isSignedIn = false;
+        state.user = {}
+    }
 }
 
 const slice = createSlice({
@@ -24,29 +73,8 @@ const slice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(asyncThunks.loginUser.fulfilled, (state, action) => {
-            if (action.payload) {
-                if (state.isSignedIn !== true) {
-                    toast.success("Logged in successfully.");
-                }
-                state.isSignedIn = true;
-                state.user = {
-                    // role: action.payload.role,
-                    ...(action.payload.data[0] || {}),
-                    role: "admin",
-                }
-                return;
-            }
-
-            state.isSignedIn = false;
-            state.user = {}
-        })
-
-        builder.addCase(asyncThunks.loginUser.rejected, (state, action) => {
-            console.log(action.error);
-            state.isSignedIn = false;
-            state.user = {}
-        })
+        builder.addCase(asyncThunks.loginUser.fulfilled, reducers.loginUserSuccessful)
+        builder.addCase(asyncThunks.loginUser.rejected, reducers.loginUserFailed)
     }
 })
 
