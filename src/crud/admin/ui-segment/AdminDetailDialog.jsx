@@ -110,7 +110,6 @@ export default function AdminDetailDialog({
         return mode === CRUD_MODE.edit || mode === CRUD_MODE.view;
     }, [mode]);
 
-<<<<<<< HEAD
     const renderContent = () => isEditing ? (
         <EditingContent
             admin={admin}
@@ -123,16 +122,8 @@ export default function AdminDetailDialog({
     ) : (
         <ViewMode admin={admin} />
     )
-=======
-  const cancelEdit = () => {
-    setIsEditing(false);    
-    reset();
-    console.log(admin);
-  };
->>>>>>> 6d4e1a6 (rp)
 
     return (
-<<<<<<< HEAD
         <Dialog
             open={open}
             onClose={onClose}
@@ -157,53 +148,5 @@ export default function AdminDetailDialog({
                 )}
             </CustomDialogActions>
         </Dialog>
-=======
-      <div className="profile-view">
-        <Grid container paddingLeft="4rem">
-          <Grid item xs={12} lg={6} marginBottom="20px">
-            <Typography fontSize={18} fontWeight="bold">
-              Name:
-            </Typography>
-            <Typography>Name Example</Typography>
-            {/* {admin.xxxx} */}
-          </Grid>          
-          <Grid item xs={12} lg={6} marginBottom="20px">
-            <Typography fontSize={18} fontWeight="bold">
-              Email:
-            </Typography>
-            <Typography>Example@gmail.com</Typography>
-            {/* {admin.xxxx} */}
-          </Grid>
-          <Grid item xs={12} lg={6} marginBottom="20px">
-            <Typography fontSize={18} fontWeight="bold">
-              Birthday:
-            </Typography>
-            <Typography>2/2/2222</Typography>
-            {/* {admin.xxxx} */}
-          </Grid>
-          <Grid item xs={12} lg={6} marginBottom="20px"v>
-            <Typography fontSize={18} fontWeight="bold">
-              Phone:
-            </Typography>
-            <Typography>0123456789</Typography>
-            {/* {admin.xxxx} */}
-          </Grid>
-          <Grid item xs={12} lg={6} marginBottom="20px">
-            <Typography fontSize={18} fontWeight="bold" on>
-              Address
-            </Typography>
-            <Typography>Address Example</Typography>
-            {/* {admin.xxxx} */}
-          </Grid>
-          <Grid item xs={12} lg={6} marginBottom="20px">
-            <Typography fontSize={18} fontWeight="bold">
-              AvatarURL:
-            </Typography>
-            <Typography>;lfkj;dflk;dflk</Typography>
-            {/* {admin.xxxx} */}
-          </Grid>
-        </Grid>
-      </div>
->>>>>>> 6d4e1a6 (rp)
     );
 }
