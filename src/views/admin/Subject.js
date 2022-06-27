@@ -61,13 +61,13 @@ const Subject = () => {
 	)
 
 	useEffect(() => {
-		const handleOpenEdit = (category) => {
-            setSelectedSubject(category);
+		const handleOpenEdit = (subject) => {
+            setSelectedSubject(subject);
             setOpenEdit(true);
         }
 
-        const handleOpenDelete = (category) => {
-            setSelectedSubject(category);
+        const handleOpenDelete = (subject) => {
+            setSelectedSubject(subject);
             setOpenDelete(true);
         }
 
