@@ -34,9 +34,8 @@ const slice = createSlice({
                 }
                 state.isSignedIn = true;
                 state.user = {
-                    // role: action.payload.role,
                     ...(action.payload.data[0] || {}),
-                    role: "admin",
+                    role: action.payload.role,
                 }
                 return;
             }
