@@ -10,6 +10,7 @@ import {
 export default function DisplayField({
     label,
     value,
+    valueBackgroundColor = "#f7f7f7",
     error
 }) {
     return (
@@ -28,10 +29,12 @@ export default function DisplayField({
                     paddingLeft="0.75rem"
                     paddingRight="0.75rem"
                     borderRadius="6px"
+                    backgroundColor={valueBackgroundColor}
                     boxShadow="0 1px 3px rgb(50, 50, 93,0.15), 0 1px 0 rgb(0, 0, 0,0.02)"
                 >
                     <Box
                         padding="10px 12px"
+                        fontSize="14px"
                     >
                         {value}
                     </Box>

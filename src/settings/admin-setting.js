@@ -27,12 +27,12 @@ export const LIST_ADMIN_STATUS = [
     },
 ]
 
-const findStatus = (value) => {
+export const findAdminStatus = (value) => {
     return value != null && LIST_ADMIN_STATUS.find(item => item.value === value);
 }
 
 export const renderAdminStatus = (value) => {
-    const statusObject = findStatus(value);
+    const statusObject = findAdminStatus(value);
     return renderStatus(statusObject);
 }
 

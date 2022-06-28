@@ -12,6 +12,38 @@ const notMillisecond = (date) => {
     return !isNumberOnly(date);
 }
 
+export const convertBeDateToIso = (date) => {
+    if (!validDate(date)) return null;
+    if (!moment(date, datetimeFormatV2, true).isValid()) return null;
+
+    const array = date.split(" ");
+    const reverseDateYear = (date) => {
+        const temp = date.split("-");
+        temp.reverse();
+        return temp.join("-");
+    }
+
+    const newArray = [];
+    newArray.push(reverseDateYear(array[0]));
+    newArray.push("T");
+    newArray.push(array[1]);
+    newArray.push("Z");
+    return newArray.join("");
+}
+
+export const getLocaleDateTimeString = (updatedDate) => {
+    // const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour12: true };
+    const date = new Date(convertBeDateToIso(updatedDate));
+    return date.toLocaleString();
+}
+
+export const getLocaleDateString = (updatedDate) => {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour12: true };
+    const date = new Date(convertBeDateToIso(updatedDate));
+    return date.toLocaleString(undefined, options);
+}
+
+
 export const validDate = (date) => {
     if (date == null) return false;
 
@@ -42,7 +74,7 @@ export const formatDateTime = (date, format = datetimeFormat, invalidStr = 'N/A'
     return validDate(date) ? moment(new Date()).format(format) : invalidStr;
 }
 
-export const formatLocalDateTime = (date, format = datetimeFormat, invalidStr = 'N/A') => date ? moment(date).local().format(format) : invalidStr;
+export const formatLocalDateTime = (date, format = datetimeFormat, invalidStr = 'N/A') => validDate(date) ? moment(date).local().format(format) : invalidStr;
 
 export const toISO = (date) => moment(date).utc().format(iso8601Format);
 

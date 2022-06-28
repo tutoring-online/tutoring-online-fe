@@ -1,49 +1,56 @@
-import { Avatar, Button, Dialog, DialogContent, Grid } from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+//Mui
+import { Button, Dialog, DialogContent } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
-import { useForm } from "react-hook-form";
-import React, { useEffect, useState } from "react";
-import TextField from "components/Form/TextField";
-import RadioGroupField from "components/Form/RadioGroupField";
-import DisplayField from "components/Form/DisplayField";
-import CustomDialogTitle from "components/Dialog/custom/CustomDialogTitle";
-import CustomDialogActions from "components/Dialog/custom/CustomDialogActions";
-import NoInformation from "components/Text/NoInformation";
-
+//Helpers
 import yup from "helpers/yupGlobal";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { validDate, dateFormat2, formatDate } from "helpers/dateUtils";
 import {
     CRUD_MODE,
-    genderOptions,
     convertNumberToGender,
     convertGenderToNumber,
 } from "settings/setting";
-import { validDate, dateFormat2, formatDate } from "helpers/dateUtils";
-import { Box } from "@mui/system";
+
+//Core components
+import CustomDialogTitle from "components/Dialog/custom/CustomDialogTitle";
+import CustomDialogActions from "components/Dialog/custom/CustomDialogActions";
+import ViewModeSkeleton from "./ViewModeSkeleton";
+import ViewMode from "./ViewMode";
+import EditingContent from "./EditingContent";
 
 const schema = yup.object().shape({
     name: yup.string().required("Name is required"),
     email: yup.string().required("Email is required").email("Email is invalid"),
 });
 
+const preparedBirthday = (birthday) => {
+    if (!validDate(birthday)) {
+        return null;
+    }
+    return formatDate(birthday, dateFormat2)
+}
+
 const getDefaultValues = (admin) => {
     if (!admin) return {};
     return {
         ...admin,
-        birthday: validDate(admin.birthday)
-            ? formatDate(admin.birthday, dateFormat2)
-            : null,
+        birthday: preparedBirthday(admin.birthday),
         gender: convertNumberToGender(admin.gender),
     };
 };
 
 export default function AdminDetailDialog({
     open,
+    mode,
+    admin,
+    title = "Admin Detail",
     onClose,
     onSubmit,
-    admin,
-    mode,
-    title = "Admin Detail",
+    loadingDetail,
     submitButton = {
         text: "Confirm",
     },
@@ -71,8 +78,6 @@ export default function AdminDetailDialog({
         });
     }, [mode]);
 
-    const isDisabled = !isEditing;
-
     const preparedBeforeSubmit = (data) => {
         const preparedData = {
             ...data,
@@ -88,166 +93,35 @@ export default function AdminDetailDialog({
     const cancelEdit = () => {
         setIsEditing(false);
         reset();
-        console.log(admin);
     };
 
-    function renderDisplayContent() {
-        return (
-            <Box component="div">
-                <Grid container xs={12}>
-                    <Grid item xs={12}>
-                        <Box
-                            display="flex"
-                            flexDirection="column"
-                            flexWrap="nowrap"
-                            alignItems="center"
-                            justifyContent="center"
-                            marginBottom="1rem"
-                        >
-                            <Avatar
-                                src={admin?.avatarURL}
-                                alt="avatar"
-                                sx={{ width: 80, height: 80 }}
-                            />
-                            <Box
-                                component="p"
-                                fontWeight="600"
-                                fontSize="1rem"
-                            >
-                                {admin?.name}
-                            </Box>
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} lg={6}>
-                        <DisplayField
-                            label="Email"
-                            value={admin?.email || <NoInformation />}
-                        />
-                    </Grid>
-                    <Grid item xs={12} lg={6}>
-                        <DisplayField
-                            label="Birthday"
-                            value={admin?.birthday || <NoInformation />}
-                        />
-                    </Grid>
-                    <Grid item xs={12} lg={6}>
-                        <DisplayField
-                            label="Gender"
-                            value={convertNumberToGender(admin?.gender) || <NoInformation />}
-                        />
-                    </Grid>
-                    <Grid item xs={12} lg={6}>
-                        <DisplayField
-                            label="Phone"
-                            value={admin?.phone || <NoInformation />}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <DisplayField
-                            label="Address"
-                            value={admin?.address || <NoInformation />}
-                        />
-                    </Grid>
-                </Grid>
-            </Box>
-        );
-    }
+    const isUpdateMode = useCallback(() => {
+        return mode === CRUD_MODE.edit || mode === CRUD_MODE.view;
+    }, [mode]);
+
+    const renderEditingContent = () => (
+        <form onSubmit={handleSubmit(preparedBeforeSubmit)}>
+            <EditingContent
+                admin={admin}
+                control={control}
+                register={register}
+                errors={errors}
+                isUpdateMode={isUpdateMode()}
+            />
+        </form>
+    )
+
+    const renderContent = () => isEditing ? renderEditingContent() : <ViewMode admin={admin} />;
 
     return (
-        <Dialog open={open} onClose={onClose} maxWidth="md">
+        <Dialog
+            open={open}
+            onClose={onClose}
+            maxWidth="md"
+        >
             <CustomDialogTitle title={title} onClose={onClose} />
             <DialogContent>
-                {isEditing ? (
-                    <form onSubmit={handleSubmit(preparedBeforeSubmit)}>
-                        <Grid container>
-                            <Grid item xs={12} lg={6}>
-                                <TextField
-                                    label="Email"
-                                    required={true}
-                                    inputProps={{
-                                        ...register("email"),
-                                        autoFocus: true,
-                                    }}
-                                    error={errors.email?.message}
-                                    disabled={isDisabled}
-                                />
-                            </Grid>
-                            <Grid item xs={12} lg={6}>
-                                <TextField
-                                    label="Name"
-                                    required={true}
-                                    inputProps={{
-                                        ...register("name"),
-                                    }}
-                                    error={errors.name?.message}
-                                    disabled={isDisabled}
-                                />
-                            </Grid>
-                            <Grid item xs={12} lg={6}>
-                                <TextField
-                                    label="Phone"
-                                    inputProps={{
-                                        ...register("phone"),
-                                    }}
-                                    disabled={isDisabled}
-                                />
-                            </Grid>
-                            <Grid item xs={12} lg={6}>
-                                <TextField
-                                    label="Birthday"
-                                    inputProps={{
-                                        type: "date",
-                                        ...register("birthday"),
-                                    }}
-                                    disabled={isDisabled}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <RadioGroupField
-                                    label="Gender"
-                                    name="gender"
-                                    row={true}
-                                    options={genderOptions}
-                                    control={control}
-                                    disabled={isDisabled}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    label="Address"
-                                    inputProps={{
-                                        ...register("address"),
-                                    }}
-                                    disabled={isDisabled}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    label={
-                                        <Box
-                                            display="flex"
-                                            flexWrap="nowrap"
-                                            alignItems="flex-end"
-                                        >
-                                            Avatar
-                                            <Avatar
-                                                src={admin?.avatarURL}
-                                                alt="avatar"
-                                                sx={{ width: 24, height: 24, marginLeft: "0.5rem" }}
-                                            />
-                                        </Box>
-                                    }
-                                    inputProps={{
-                                        ...register("avatarURL"),
-                                    }}
-                                    disabled={isDisabled}
-                                />
-                            </Grid>
-                        </Grid>
-                    </form>
-                ) : (
-                    renderDisplayContent()
-                )}
+                {loadingDetail ? <ViewModeSkeleton /> : renderContent()}
             </DialogContent>
             <CustomDialogActions>
                 {isEditing ? (
