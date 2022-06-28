@@ -54,7 +54,7 @@ export const renderStatus = (statusObject) => {
         <Box
             component="div"
             display="inline-block"
-            padding="4px 8px"
+            padding="2px 8px"
             borderRadius={1}
 
             fontSize="inherit"

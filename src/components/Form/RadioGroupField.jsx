@@ -39,7 +39,6 @@ export default function RadioGroupField({
                                     key={item.value}
                                     value={item.value}
                                     label={item.label}
-                                    checked={field.value === options.item}
                                     control={<Radio size="small" />}
                                     disabled={Boolean(disabled)}
                                 />

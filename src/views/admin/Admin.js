@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import AddBoxIcon from '@mui/icons-material/AddBox';
 import makeStyles from '@mui/styles/makeStyles';
 import { Avatar, Button, IconButton } from "@mui/material";
 
@@ -15,15 +14,14 @@ import Table from "components/Table/Table.jsx";
 import NoInformation from "components/Text/NoInformation";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
 import NTALoading from "nta-team/nta-loading/Loading";
-import { CreateAdmin, ViewAdmin, DeleteAdmin } from "crud/admin";
+import { ViewAdmin, DeleteAdmin } from "crud/admin";
 
 //Hooks
 import useAdminList from "hooks/admin/useAdminList";
 import { useEffect, useState } from "react";
 
 import componentStyles from "assets/theme/views/admin/tables.js";
-import { renderAdminStatus } from "settings/adminSetting";
-import { ADMIN_STATUSES } from "settings/adminSetting";
+import { renderAdminStatus, ADMIN_STATUSES } from "settings/admin-setting";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -36,7 +34,6 @@ const Admin = () => {
 	} = useAdminList();
 
 	const [columns, setColumns] = useState([]);
-	const [openCreate, setOpenCreate] = useState(false);
 
 	const [openEdit, setOpenEdit] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
@@ -145,14 +142,6 @@ const Admin = () => {
 		[]
 	)
 
-	const handleOpenCreate = () => {
-		setOpenCreate(true);
-	}
-
-	const handleCloseCreate = () => {
-		setOpenCreate(false);
-	}
-
 	const handleCloseEdit = () => {
 		setOpenEdit(false);
 		setSelectedAdmin(null);
@@ -183,15 +172,6 @@ const Admin = () => {
 			>
 				Refresh
 			</Button>
-			<Button
-				variant="contained"
-				color="primary"
-				size="medium"
-				onClick={handleOpenCreate}
-				startIcon={<AddBoxIcon fontSize="medium" />}
-			>
-				Create
-			</Button>
 		</Box>
 	)
 
@@ -211,15 +191,6 @@ const Admin = () => {
 					panel={renderPanel()}
 				/>
 			</Container>
-
-			{openCreate &&
-				<CreateAdmin
-					open={openCreate}
-					handleClose={handleCloseCreate}
-					setLoadingInfo={setLoadingDetail}
-					refresh={refresh}
-				/>
-			}
 
 			{openEdit &&
 				<ViewAdmin

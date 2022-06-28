@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { isAvailableArray } from "helpers/arrayUtils";
 import asyncThunks from "./asyncThunk";
 
 
@@ -16,22 +17,32 @@ const reducers = {
     },
 
     fetchAdminDetailSuccessful: (state, action) => {
-        state.adminDetail = action.payload || null
+        state.adminDetail = isAvailableArray(action.payload) ? action.payload[0] : null;
     },
     fetchAdminDetailFailed: (state) => {
         state.adminDetail = null
     },
 
-    createAdminSuccessful: () => {},
-    createAdminFailed: () => {},
+    createAdminSuccessful: (state, action) => {
+        console.log(state, action);
+    },
+    createAdminFailed: (state, action) => {
+        console.log(state, action);
+    },
 
     updateAdminSuccessful: (state, action) => {
-        state.adminDetail = action.payload
+        console.log(state, action);
     },
-    updateAdminFailed: () => {},
+    updateAdminFailed: (state, action) => {
+        console.log(state, action);
+    },
 
-    deleteAdminSuccessful: () => {},
-    deleteAdminFailed: () => {},
+    deleteAdminSuccessful: (state, action) => {
+        console.log(state, action);
+    },
+    deleteAdminFailed: (state, action) => {
+        console.log(state, action);
+    },
 }
 
 const slice = createSlice({

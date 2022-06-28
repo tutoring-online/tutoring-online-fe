@@ -3,6 +3,7 @@ import AdminDetailDialog from 'crud/admin/ui-segment/AdminDetailDialog';
 import useAdminActions from 'hooks/admin/useAdminActions';
 import { toast } from 'react-toastify';
 import { CRUD_MODE } from 'settings/setting';
+import useAdminDetail from 'hooks/admin/useAdminDetail';
 
 export default function EditAdmin({
     open,
@@ -12,6 +13,7 @@ export default function EditAdmin({
     refresh
 }) {
     const actions = useAdminActions();
+    const { adminDetail, loading: loadingDetail } = useAdminDetail(admin?.id);
 
     const handleSubmit = (data) => {
         if (!admin?.id || !data) {
@@ -42,8 +44,9 @@ export default function EditAdmin({
             open={open}
             onClose={handleClose}
             onSubmit={handleSubmit}
-            admin={admin}
+            admin={adminDetail || admin}
             mode={CRUD_MODE.edit}
+            loadingDetail={loadingDetail}
             title="Admin Detail"
             submitButton={{
                 text: "Update"
