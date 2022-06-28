@@ -16,7 +16,7 @@ const getDisplayDate = (updatedDate) => {
     return validDate(updatedDate) ? getLocaleDateString(updatedDate) : "N/A";
 }
 
-const HeaderImage = ({ avatarURL }) => {
+const HeaderImage = ({ avatarURL }) => (
     <Box
         display="flex"
         alignItems="center"
@@ -30,7 +30,7 @@ const HeaderImage = ({ avatarURL }) => {
             sx={{ width: 60, height: 60 }}
         />
     </Box>
-}
+)
 
 const PublishDate = ({ createdDate }) => (
     <Box
@@ -58,6 +58,12 @@ const StatusBar = ({ status }) => (
     </Box>
 )
 
+const UpdatedDate = ({ updatedDate }) => (
+    <Box fontSize="14px">
+        {`Last updated on ${getDisplayDateTime(updatedDate)}`}
+    </Box>
+)
+
 const Header = ({ admin }) => (
     <Box
         marginBottom="1rem"
@@ -69,7 +75,7 @@ const Header = ({ admin }) => (
             display="grid"
             gridTemplateRows="1fr 1fr"
             gridTemplateColumns="1fr"
-            
+
             flexGrow="1"
             padding="0 1rem"
             minHeight="80px"
@@ -90,9 +96,7 @@ const Header = ({ admin }) => (
                 display="flex"
                 alignItems="center"
             >
-                <Box fontSize="14px">
-                    {`Last updated on ${getDisplayDateTime(admin?.updatedDate)}`}
-                </Box>
+                <UpdatedDate updatedDate={admin?.updatedDate} />
             </Box>
         </Box>
     </Box>

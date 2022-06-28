@@ -9,7 +9,7 @@ import Grid from "@mui/material/Grid";
 import AuthHeader from "components/Headers/AuthHeader.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
-import routes, { getFullPath, ROUTES } from "route/routes";
+import routes from "route/routes";
 import { useSelector } from "react-redux";
 import GeneralNavbar from "components/Navbars/GeneralNavbar";
 import WithAuthBackDropLoader from "./WithAuthBackDropLoader";
@@ -21,7 +21,7 @@ const AuthRoute = (props) => {
     const isSignedIn = useSelector(state => state.auth.isSignedIn);
 
     if (isSignedIn) {
-        return <Redirect from="*" to={getFullPath(ROUTES.redirectHome)} />
+        return <Redirect from="*" to="/" />
     }
 
     return (

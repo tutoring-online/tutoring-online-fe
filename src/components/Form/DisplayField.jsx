@@ -30,7 +30,7 @@ export default function DisplayField({
                     paddingRight="0.75rem"
                     borderRadius="6px"
                     backgroundColor={valueBackgroundColor}
-                    boxShadow="0 1px 3px rgb(50, 50, 93,0.15), 0 1px 0 rgb(0, 0, 0,0.02)"
+                    boxShadow="0 1px 2px #c6cfd8"
                 >
                     <Box
                         padding="10px 12px"

@@ -36,8 +36,8 @@ const reducers = {
             const errMsg = action.payload?.resultMessage || "Unknown";
             toast.error(`Authenticated failed with error: ${errMsg}`,);
 
-            state.isSignedIn = true;
-            state.user = { role: "ADMIN" }
+            state.isSignedIn = false;
+            state.user = null
             return;
         }
 
@@ -54,8 +54,8 @@ const reducers = {
 
     loginUserFailed: (state, action) => {
         console.log(action.error);
-        state.isSignedIn = true;
-        state.user = { role: "ADMIN" }
+        state.isSignedIn = false;
+        state.user = null
     }
 }
 

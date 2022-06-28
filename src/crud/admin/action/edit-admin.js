@@ -13,7 +13,7 @@ export default function EditAdmin({
     refresh
 }) {
     const actions = useAdminActions();
-    const { adminDetail, loading: loadingDetail } = useAdminDetail(admin?.id);
+    const { adminDetail, loading } = useAdminDetail(admin?.id);
 
     const handleSubmit = (data) => {
         if (!admin?.id || !data) {
@@ -44,9 +44,9 @@ export default function EditAdmin({
             open={open}
             onClose={handleClose}
             onSubmit={handleSubmit}
-            admin={adminDetail || admin}
+            admin={adminDetail}
             mode={CRUD_MODE.edit}
-            loadingDetail={loadingDetail}
+            loadingDetail={loading}
             title="Admin Detail"
             submitButton={{
                 text: "Update"

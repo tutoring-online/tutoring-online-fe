@@ -9,6 +9,8 @@ import { isAdmin, isTutor } from 'settings/setting';
 export default function RedirectHomeWithUserRole() {
     const user = useSelector(state => state.auth.user);
 
+    console.log(user);
+
     if (isAdmin(user?.role)) {
         return <Redirect to={getFullPath(ROUTES.dashboard)} />
     }

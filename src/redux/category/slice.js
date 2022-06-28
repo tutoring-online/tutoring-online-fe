@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import asyncThunks from "./asyncThunk";
-
+import * as types from "./types";
 
 const INITIAL_STATE = {
     categories: [],
@@ -22,23 +22,25 @@ const reducers = {
         state.categoryDetail = null
     },
 
-    createCategorySuccessful: () => {},
-    createCategoryFailed: () => {},
+    createCategorySuccessful: () => { },
+    createCategoryFailed: () => { },
 
     updateCategorySuccessful: (state, action) => {
         state.categoryDetail = action.payload
     },
-    updateCategoryFailed: () => {},
+    updateCategoryFailed: () => { },
 
-    deleteCategorySuccessful: () => {},
-    deleteCategoryFailed: () => {},
+    deleteCategorySuccessful: () => { },
+    deleteCategoryFailed: () => { },
 }
 
 const slice = createSlice({
     name: "categoryReducer",
     initialState: INITIAL_STATE,
     reducers: {
-
+        [types.CLEAR_CATEGORY_DETAIL]: (state) => {
+            state.categoryDetail = null;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.fetchCategories.fulfilled, reducers.fetchCategoriesSuccessful);

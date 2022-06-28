@@ -15,100 +15,103 @@ export default function EditingContent({
     control,
     register,
     errors,
+    onSubmit,
     isUpdateMode,
 }) {
 
     return (
-        <Grid container>
-            <Grid item xs={12} lg={6}>
-                {isUpdateMode ?
-                    <DisplayField
-                        label="Email"
-                        value={admin?.email || <NoInformation />}
-                    />
-                    :
+        <form onSubmit={onSubmit}>
+            <Grid container>
+                <Grid item xs={12} lg={6}>
+                    {isUpdateMode ?
+                        <DisplayField
+                            label="Email"
+                            value={admin?.email || <NoInformation />}
+                        />
+                        :
+                        <TextField
+                            label="Email"
+                            required={true}
+                            inputProps={{
+                                ...register("email"),
+                                autoFocus: true,
+                            }}
+                            error={errors.email?.message}
+                        />
+                    }
+                </Grid>
+
+                <Grid item xs={12} lg={6}>
                     <TextField
-                        label="Email"
+                        label="Name"
                         required={true}
                         inputProps={{
-                            ...register("email"),
-                            autoFocus: true,
+                            ...register("name"),
                         }}
-                        error={errors.email?.message}
+                        error={errors.name?.message}
                     />
-                }
-            </Grid>
+                </Grid>
 
-            <Grid item xs={12} lg={6}>
-                <TextField
-                    label="Name"
-                    required={true}
-                    inputProps={{
-                        ...register("name"),
-                    }}
-                    error={errors.name?.message}
-                />
-            </Grid>
+                <Grid item xs={12} lg={6}>
+                    <TextField
+                        label="Phone"
+                        inputProps={{
+                            ...register("phone"),
+                        }}
+                    />
+                </Grid>
 
-            <Grid item xs={12} lg={6}>
-                <TextField
-                    label="Phone"
-                    inputProps={{
-                        ...register("phone"),
-                    }}
-                />
-            </Grid>
+                <Grid item xs={12} lg={6}>
+                    <TextField
+                        label="Birthday"
+                        inputProps={{
+                            type: "date",
+                            ...register("birthday"),
+                        }}
+                    />
+                </Grid>
 
-            <Grid item xs={12} lg={6}>
-                <TextField
-                    label="Birthday"
-                    inputProps={{
-                        type: "date",
-                        ...register("birthday"),
-                    }}
-                />
-            </Grid>
+                <Grid item xs={12}>
+                    <RadioGroupField
+                        label="Gender"
+                        name="gender"
+                        row={true}
+                        options={genderOptions}
+                        control={control}
+                    />
+                </Grid>
 
-            <Grid item xs={12}>
-                <RadioGroupField
-                    label="Gender"
-                    name="gender"
-                    row={true}
-                    options={genderOptions}
-                    control={control}
-                />
-            </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        label="Address"
+                        inputProps={{
+                            ...register("address"),
+                        }}
+                    />
+                </Grid>
 
-            <Grid item xs={12}>
-                <TextField
-                    label="Address"
-                    inputProps={{
-                        ...register("address"),
-                    }}
-                />
+                <Grid item xs={12}>
+                    <TextField
+                        label={
+                            <Box
+                                display="flex"
+                                flexWrap="nowrap"
+                                alignItems="flex-end"
+                            >
+                                Avatar
+                                <Avatar
+                                    src={admin?.avatarURL}
+                                    alt="avatar"
+                                    sx={{ width: 24, height: 24, marginLeft: "0.5rem" }}
+                                />
+                            </Box>
+                        }
+                        inputProps={{
+                            ...register("avatarURL"),
+                        }}
+                    />
+                </Grid>
             </Grid>
-
-            <Grid item xs={12}>
-                <TextField
-                    label={
-                        <Box
-                            display="flex"
-                            flexWrap="nowrap"
-                            alignItems="flex-end"
-                        >
-                            Avatar
-                            <Avatar
-                                src={admin?.avatarURL}
-                                alt="avatar"
-                                sx={{ width: 24, height: 24, marginLeft: "0.5rem" }}
-                            />
-                        </Box>
-                    }
-                    inputProps={{
-                        ...register("avatarURL"),
-                    }}
-                />
-            </Grid>
-        </Grid>
+        </form>
     )
 }

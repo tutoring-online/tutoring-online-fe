@@ -31,16 +31,22 @@ export const convertBeDateToIso = (date) => {
     return newArray.join("");
 }
 
-export const getLocaleDateTimeString = (updatedDate) => {
-    // const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour12: true };
-    const date = new Date(convertBeDateToIso(updatedDate));
-    return date.toLocaleString();
+function toLocaleUTCDateString(date, locales, options) {
+    const timeDiff = date.getTimezoneOffset() * 60000;
+    const adjustedDate = new Date(date.getTime() + timeDiff);
+    return adjustedDate.toLocaleString(locales, options);
 }
 
-export const getLocaleDateString = (updatedDate) => {
+export const getLocaleDateTimeString = (date) => {
+    const options = { hour12: false };
+    const theDate = new Date(convertBeDateToIso(date));
+    return toLocaleUTCDateString(theDate, undefined, options);
+}
+
+export const getLocaleDateString = (date) => {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour12: true };
-    const date = new Date(convertBeDateToIso(updatedDate));
-    return date.toLocaleString(undefined, options);
+    const theDate = new Date(convertBeDateToIso(date));
+    return toLocaleUTCDateString(theDate, undefined, options);
 }
 
 

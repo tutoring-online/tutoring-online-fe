@@ -55,6 +55,8 @@ export default function AdminDetailDialog({
         text: "Confirm",
     },
 }) {
+    console.log(admin);
+
     const {
         register,
         handleSubmit,
@@ -69,6 +71,10 @@ export default function AdminDetailDialog({
     });
 
     const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        reset(getDefaultValues(admin));
+    }, [admin, reset]);
 
     useEffect(() => {
         setIsEditing(() => {
@@ -99,19 +105,18 @@ export default function AdminDetailDialog({
         return mode === CRUD_MODE.edit || mode === CRUD_MODE.view;
     }, [mode]);
 
-    const renderEditingContent = () => (
-        <form onSubmit={handleSubmit(preparedBeforeSubmit)}>
-            <EditingContent
-                admin={admin}
-                control={control}
-                register={register}
-                errors={errors}
-                isUpdateMode={isUpdateMode()}
-            />
-        </form>
+    const renderContent = () => isEditing ? (
+        <EditingContent
+            admin={admin}
+            control={control}
+            register={register}
+            errors={errors}
+            onSubmit={handleSubmit(preparedBeforeSubmit)}
+            isUpdateMode={isUpdateMode()}
+        />
+    ) : (
+        <ViewMode admin={admin} />
     )
-
-    const renderContent = () => isEditing ? renderEditingContent() : <ViewMode admin={admin} />;
 
     return (
         <Dialog
