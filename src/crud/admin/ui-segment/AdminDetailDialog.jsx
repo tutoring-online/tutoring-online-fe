@@ -3,8 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 //Mui
-import { Button, Dialog, DialogContent } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import { Dialog, DialogContent } from "@mui/material";
 
 //Helpers
 import yup from "helpers/yupGlobal";
@@ -21,6 +20,9 @@ import CustomDialogActions from "components/Dialog/custom/CustomDialogActions";
 import ViewModeSkeleton from "./ViewModeSkeleton";
 import ViewMode from "./ViewMode";
 import EditingContent from "./EditingContent";
+import EditButton from "components/Buttons/EditButton";
+import CancelButton from "components/Buttons/CancelButton";
+import SubmitButton from "components/Buttons/SubmitButton";
 
 const schema = yup.object().shape({
     name: yup.string().required("Name is required"),
@@ -45,17 +47,18 @@ const getDefaultValues = (admin) => {
 
 export default function AdminDetailDialog({
     open,
+    onClose,
+    onSubmit,
+    loadingSubmit,
+    loadingDetail,
+
     mode,
     admin,
     title = "Admin Detail",
-    onClose,
-    onSubmit,
-    loadingDetail,
     submitButton = {
         text: "Confirm",
     },
 }) {
-    console.log(admin);
 
     const {
         register,
@@ -89,7 +92,9 @@ export default function AdminDetailDialog({
             ...data,
             gender: convertGenderToNumber(data.gender),
         };
-        onSubmit && onSubmit(preparedData);
+        const onSuccess = () => setIsEditing(false);
+        
+        onSubmit && onSubmit(preparedData, onSuccess);
     };
 
     const enableEdit = () => {
@@ -131,36 +136,15 @@ export default function AdminDetailDialog({
             <CustomDialogActions>
                 {isEditing ? (
                     <>
-                        <Button
-                            variant=""
-                            color="info"
-                            size="medium"
-                            onClick={cancelEdit}
-                            sx={{ background: "#fff", "&:hover": { background: "#f3f3f3" } }}
-                        >
-                            Cancel
-                        </Button>
-
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="medium"
-                            type="submit"
+                        <CancelButton onClick={cancelEdit} />
+                        <SubmitButton
                             onClick={handleSubmit(preparedBeforeSubmit)}
-                        >
-                            {submitButton?.text}
-                        </Button>
+                            text={submitButton.text}
+                            loading={loadingSubmit}
+                        />
                     </>
                 ) : (
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        size="medium"
-                        onClick={enableEdit}
-                        startIcon={<EditIcon />}
-                    >
-                        Enable Edit
-                    </Button>
+                    <EditButton onClick={enableEdit} />
                 )}
             </CustomDialogActions>
         </Dialog>

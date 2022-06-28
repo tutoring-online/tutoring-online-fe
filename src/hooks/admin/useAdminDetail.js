@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useAdminActions from "./useAdminActions";
 
@@ -14,9 +14,16 @@ const useAdminDetail = (id) => {
         actions.fetchAdminDetail({ id, setLoading });
     }, [actions, id]);
 
+    const refresh = useCallback(() => {
+        if (!id) return;
+        actions.clearAdminDetail();
+        actions.fetchAdminDetail({ id, setLoading });
+    }, [actions, id])
+
     return {
         adminDetail,
-        loading
+        loading,
+        refresh
     };
 }
 

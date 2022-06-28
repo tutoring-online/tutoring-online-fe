@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AdminDetailDialog from 'crud/admin/ui-segment/AdminDetailDialog';
 import useAdminActions from 'hooks/admin/useAdminActions';
 import { toast } from 'react-toastify';
@@ -8,34 +8,32 @@ import useAdminDetail from 'hooks/admin/useAdminDetail';
 export default function EditAdmin({
     open,
     handleClose,
-    setLoadingInfo,
     admin,
     refresh
 }) {
     const actions = useAdminActions();
-    const { adminDetail, loading } = useAdminDetail(admin?.id);
+    const [loadingUpdate, setLoadingUpdate] = useState(false);
+    const { adminDetail, loading, refresh : refreshDetail } = useAdminDetail(admin?.id);
 
-    const handleSubmit = (data) => {
+    const handleSubmit = (data, onSuccess) => {
         if (!admin?.id || !data) {
             toast.warning("Something went wrong.");
             return;
         }
 
         const loading = (isLoading) => {
-            setLoadingInfo && setLoadingInfo({
-                loading: Boolean(isLoading),
-                text: isLoading ? "Updating..." : ""
-            })
+            setLoadingUpdate(Boolean(isLoading));
         }
 
-        const callback = (updateStatus) => {
+        const listenUpdateStatus = (updateStatus) => {
             if (updateStatus === true) {
-                handleClose && handleClose();
                 refresh && refresh();
+                onSuccess && onSuccess();
+                refreshDetail && refreshDetail();
             }
         }
 
-        actions.updateAdmin({ id: admin?.id, data, loading, callback });
+        actions.updateAdmin({ id: admin?.id, data, loading, callback: listenUpdateStatus });
     }
 
     return (
@@ -44,9 +42,11 @@ export default function EditAdmin({
             open={open}
             onClose={handleClose}
             onSubmit={handleSubmit}
+            loadingSubmit={loadingUpdate}
+            loadingDetail={loading}
+
             admin={adminDetail}
             mode={CRUD_MODE.edit}
-            loadingDetail={loading}
             title="Admin Detail"
             submitButton={{
                 text: "Update"

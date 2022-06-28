@@ -1,17 +1,23 @@
-import { Button, Dialog, DialogContent } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-
-import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+//Mui
+import { Dialog, DialogContent } from "@mui/material";
+
+//Core component
 import CustomDialogTitle from "components/Dialog/custom/CustomDialogTitle";
 import CustomDialogActions from "components/Dialog/custom/CustomDialogActions";
-
-import yup from "helpers/yupGlobal";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { CRUD_MODE } from "settings/setting";
 import EditingContent from "./EditingContent";
 import ViewMode from "./ViewMode";
 import ViewModeSkeleton from "./ViewModeSkeleton";
+import CancelButton from "components/Buttons/CancelButton";
+import SubmitButton from "components/Buttons/SubmitButton";
+import EditButton from "components/Buttons/EditButton";
+
+//Helper
+import yup from "helpers/yupGlobal";
+import { CRUD_MODE } from "settings/setting";
 
 const schema = yup.object().shape({
     name: yup.string().required("Name is required."),
@@ -81,16 +87,16 @@ export default function TutorDetailDialog({
         reset();
     };
 
-    const renderEditingContent = () => (
-        <form onSubmit={handleSubmit(preparedBeforeSubmit)}>
-            <EditingContent
-                register={register}
-                errors={errors}
-            />
-        </form>
-    )
 
-    const renderContent = () => isEditing ? renderEditingContent() : <ViewMode category={category} />
+    const renderContent = () => isEditing ? (
+        <EditingContent
+            register={register}
+            errors={errors}
+            onSubmit={handleSubmit(preparedBeforeSubmit)}
+        />
+    ) : (
+        <ViewMode category={category} />
+    )
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="md">
@@ -101,36 +107,14 @@ export default function TutorDetailDialog({
             <CustomDialogActions>
                 {isEditing ? (
                     <>
-                        <Button
-                            variant=""
-                            color="info"
-                            size="medium"
-                            onClick={cancelEdit}
-                            sx={{ background: "#fff", "&:hover": { background: "#f3f3f3" } }}
-                        >
-                            Cancel
-                        </Button>
-
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="medium"
-                            type="submit"
+                        <CancelButton onClick={cancelEdit} />
+                        <SubmitButton
                             onClick={handleSubmit(preparedBeforeSubmit)}
-                        >
-                            {submitButton?.text}
-                        </Button>
+                            text={submitButton.text}
+                        />
                     </>
                 ) : (
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        size="medium"
-                        onClick={enableEdit}
-                        startIcon={<EditIcon />}
-                    >
-                        Enable Edit
-                    </Button>
+                    <EditButton onClick={enableEdit} />
                 )}
             </CustomDialogActions>
         </Dialog>

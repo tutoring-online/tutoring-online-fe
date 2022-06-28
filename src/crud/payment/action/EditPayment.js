@@ -3,6 +3,7 @@ import PaymentDetailDialog from 'crud/payment/ui-segment/PaymentDetailDialog';
 import usePaymentActions from 'hooks/payment/usePaymentActions';
 import { toast } from 'react-toastify';
 import { CRUD_MODE } from 'settings/setting';
+import usePaymentDetail from 'hooks/payment/usePaymentDetail';
 
 export default function EditPayment({
     open,
@@ -12,6 +13,7 @@ export default function EditPayment({
     refresh
 }) {
     const actions = usePaymentActions();
+    const { paymentDetail, loading } = usePaymentDetail(payment?.id);
 
     const handleSubmit = (data) => {
         if (!payment?.id || !data) {
@@ -42,7 +44,8 @@ export default function EditPayment({
             open={open}
             onClose={handleClose}
             onSubmit={handleSubmit}
-            payment={payment}
+            payment={paymentDetail || payment}
+            loadingDetail={loading}
             mode={CRUD_MODE.edit}
             title="Payment Detail"
             submitButton={{

@@ -21,8 +21,8 @@ export default function RadioGroupField({
             </FormLabel>
             <FormControl
                 error={Boolean(error)}
-                variant="filled"
                 component={Box}
+                variant="filled"
                 width="100%"
             >
                 <Controller
