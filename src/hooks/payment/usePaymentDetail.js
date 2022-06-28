@@ -10,6 +10,7 @@ const usePaymentDetail = (id) => {
 
     useEffect(() => {
         if (!id) return;
+        actions.clearPaymentDetail();
         actions.fetchPaymentDetail({ id, setLoading });
     }, [actions, id]);
 

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { isAvailableArray } from "helpers/arrayUtils";
 import asyncThunks from "./asyncThunk";
-
+import * as types from "./types";
 
 const INITIAL_STATE = {
     students: [],
@@ -16,7 +17,7 @@ const reducers = {
     },
 
     fetchStudentDetailSuccessful: (state, action) => {
-        state.studentDetail = action.payload || null
+        state.studentDetail = isAvailableArray(action.payload) ? action.payload[0] : null;
     },
     fetchStudentDetailFailed: (state) => {
         state.studentDetail = null
@@ -35,7 +36,9 @@ const slice = createSlice({
     name: "studentReducer",
     initialState: INITIAL_STATE,
     reducers: {
-
+        [types.CLEAR_STUDENT_DETAIL]: (state) => {
+            state.studentDetail = null;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.fetchStudents.fulfilled, reducers.fetchStudentsSuccessful);

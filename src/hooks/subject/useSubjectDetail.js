@@ -10,6 +10,7 @@ const useSubjectDetail = (id) => {
 
     useEffect(() => {
         if (!id) return;
+        actions.clearSubjectDetail();
         actions.fetchSubjectDetail({ id, setLoading });
     }, [actions, id]);
 

@@ -10,6 +10,7 @@ const useSyllabusDetail = (id) => {
 
     useEffect(() => {
         if (!id) return;
+        actions.clearSyllabusDetail();
         actions.fetchSyllabusDetail({ id, setLoading });
     }, [actions, id]);
 

@@ -2,12 +2,15 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { compose } from "redux";
 import asyncThunks from "redux/payment/asyncThunk";
+import * as types from "redux/payment/types";
+import { actions as reduxActions } from "redux/payment/slice";
 
 const usePaymentActions = () => {
     const dispatch = useDispatch();
     const [actions] = useState({
-        fetchPayments: compose(dispatch, asyncThunks.fetchPayments),
         fetchPaymentDetail: compose(dispatch, asyncThunks.fetchPaymentDetail),
+        clearPaymentDetail: compose(dispatch, reduxActions[types.CLEAR_PAYMENT_DETAIL]),
+        fetchPayments: compose(dispatch, asyncThunks.fetchPayments),
         createPayment: compose(dispatch, asyncThunks.createPayment),
         updatePayment: compose(dispatch, asyncThunks.updatePayment),
         deletePayment: compose(dispatch, asyncThunks.deletePayment),

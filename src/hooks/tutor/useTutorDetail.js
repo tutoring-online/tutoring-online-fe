@@ -10,6 +10,7 @@ const useTutorDetail = (id) => {
 
     useEffect(() => {
         if (!id) return;
+        actions.clearTutorDetail();
         actions.fetchTutorDetail({ id, setLoading });
     }, [actions, id]);
 

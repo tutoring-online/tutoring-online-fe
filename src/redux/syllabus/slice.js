@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { isAvailableArray } from "helpers/arrayUtils";
 import asyncThunks from "./asyncThunk";
-
+import * as types from "./types";
 
 const INITIAL_STATE = {
     syllabuses: [],
@@ -16,29 +17,31 @@ const reducers = {
     },
 
     fetchSyllabusDetailSuccessful: (state, action) => {
-        state.syllabusDetail = action.payload || null
+        state.syllabusDetail = isAvailableArray(action.payload) ? action.payload[0] : null;
     },
     fetchSyllabusDetailFailed: (state) => {
         state.syllabusDetail = null
     },
 
-    createSyllabusSuccessful: () => {},
-    createSyllabusFailed: () => {},
+    createSyllabusSuccessful: () => { },
+    createSyllabusFailed: () => { },
 
     updateSyllabusSuccessful: (state, action) => {
         state.syllabusDetail = action.payload
     },
-    updateSyllabusFailed: () => {},
+    updateSyllabusFailed: () => { },
 
-    deleteSyllabusSuccessful: () => {},
-    deleteSyllabusFailed: () => {},
+    deleteSyllabusSuccessful: () => { },
+    deleteSyllabusFailed: () => { },
 }
 
 const slice = createSlice({
     name: "syllabusReducer",
     initialState: INITIAL_STATE,
     reducers: {
-
+        [types.CLEAR_SYLLABUS_DETAIL]: (state) => {
+            state.subjectDetail = null;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.fetchSyllabuses.fulfilled, reducers.fetchSyllabusesSuccessful);

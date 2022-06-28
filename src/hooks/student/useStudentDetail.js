@@ -10,6 +10,7 @@ const useStudentDetail = (id) => {
 
     useEffect(() => {
         if (!id) return;
+        actions.clearStudentDetail();
         actions.fetchStudentDetail({ id, setLoading });
     }, [actions, id]);
 

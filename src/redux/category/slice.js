@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { isAvailableArray } from "helpers/arrayUtils";
 import asyncThunks from "./asyncThunk";
 import * as types from "./types";
 
@@ -16,7 +17,7 @@ const reducers = {
     },
 
     fetchCategoryDetailSuccessful: (state, action) => {
-        state.categoryDetail = action.payload || null
+        state.categoryDetail = isAvailableArray(action.payload) ? action.payload[0] : null;
     },
     fetchCategoryDetailFailed: (state) => {
         state.categoryDetail = null

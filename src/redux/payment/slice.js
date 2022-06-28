@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { isAvailableArray } from "helpers/arrayUtils";
 import asyncThunks from "./asyncThunk";
-
+import * as types from "./types";
 
 const INITIAL_STATE = {
     payments: [],
@@ -16,7 +17,7 @@ const reducers = {
     },
 
     fetchPaymentDetailSuccessful: (state, action) => {
-        state.paymentDetail = action.payload || null
+        state.paymentDetail = isAvailableArray(action.payload) ? action.payload[0] : null;
     },
     fetchPaymentDetailFailed: (state) => {
         state.paymentDetail = null
@@ -39,7 +40,9 @@ const slice = createSlice({
     name: "paymentReducer",
     initialState: INITIAL_STATE,
     reducers: {
-
+        [types.CLEAR_PAYMENT_DETAIL]: (state) => {
+            state.paymentDetail = null;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.fetchPayments.fulfilled, reducers.fetchPaymentsSuccessful);
