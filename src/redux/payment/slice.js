@@ -26,11 +26,6 @@ const reducers = {
     createPaymentSuccessful: () => {},
     createPaymentFailed: () => {},
 
-    updatePaymentSuccessful: (state, action) => {
-        state.paymentDetail = action.payload
-    },
-    updatePaymentFailed: () => {},
-
     deletePaymentSuccessful: () => {},
     deletePaymentFailed: () => {},
 }
@@ -53,9 +48,6 @@ const slice = createSlice({
 
         builder.addCase(asyncThunks.createPayment.fulfilled, reducers.createPaymentSuccessful);
         builder.addCase(asyncThunks.createPayment.rejected, reducers.createPaymentFailed);
-
-        builder.addCase(asyncThunks.updatePayment.fulfilled, reducers.updatePaymentSuccessful);
-        builder.addCase(asyncThunks.updatePayment.rejected, reducers.updatePaymentFailed);
 
         builder.addCase(asyncThunks.deletePayment.fulfilled, reducers.deletePaymentSuccessful);
         builder.addCase(asyncThunks.deletePayment.rejected, reducers.deletePaymentFailed);

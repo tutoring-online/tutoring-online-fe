@@ -56,7 +56,6 @@ const updatePayment = async (params) => {
 
         callback(true, response);
         toast.success("Updated payment successfully.");
-        return response;
     } catch (error) {
         callback(false);
         toast.error("Failed to update the payment.");

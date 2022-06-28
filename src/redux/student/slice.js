@@ -23,11 +23,6 @@ const reducers = {
         state.studentDetail = null
     },
 
-    updateStudentSuccessful: (state, action) => {
-        state.studentDetail = action.payload
-    },
-    updateStudentFailed: () => {},
-
     deleteStudentSuccessful: () => {},
     deleteStudentFailed: () => {},
 }
@@ -46,9 +41,6 @@ const slice = createSlice({
 
         builder.addCase(asyncThunks.fetchStudentDetail.fulfilled, reducers.fetchStudentDetailSuccessful);
         builder.addCase(asyncThunks.fetchStudentDetail.rejected, reducers.fetchStudentDetailFailed);
-
-        builder.addCase(asyncThunks.updateStudent.fulfilled, reducers.updateStudentSuccessful);
-        builder.addCase(asyncThunks.updateStudent.rejected, reducers.updateStudentFailed);
 
         builder.addCase(asyncThunks.deleteStudent.fulfilled, reducers.deleteStudentSuccessful);
         builder.addCase(asyncThunks.deleteStudent.rejected, reducers.deleteStudentFailed);

@@ -26,11 +26,6 @@ const reducers = {
     createCategorySuccessful: () => { },
     createCategoryFailed: () => { },
 
-    updateCategorySuccessful: (state, action) => {
-        state.categoryDetail = action.payload
-    },
-    updateCategoryFailed: () => { },
-
     deleteCategorySuccessful: () => { },
     deleteCategoryFailed: () => { },
 }
@@ -52,9 +47,6 @@ const slice = createSlice({
 
         builder.addCase(asyncThunks.createCategory.fulfilled, reducers.createCategorySuccessful);
         builder.addCase(asyncThunks.createCategory.rejected, reducers.createCategoryFailed);
-
-        builder.addCase(asyncThunks.updateCategory.fulfilled, reducers.updateCategorySuccessful);
-        builder.addCase(asyncThunks.updateCategory.rejected, reducers.updateCategoryFailed);
 
         builder.addCase(asyncThunks.deleteCategory.fulfilled, reducers.deleteCategorySuccessful);
         builder.addCase(asyncThunks.deleteCategory.rejected, reducers.deleteCategoryFailed);

@@ -56,7 +56,6 @@ const updateCategory = async (params) => {
 
         callback(true, response);
         toast.success("Updated category successfully.");
-        return response;
     } catch (error) {
         callback(false);
         toast.error("Failed to update the category.");

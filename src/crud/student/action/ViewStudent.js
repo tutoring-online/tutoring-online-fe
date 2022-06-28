@@ -1,39 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 import StudentDetailDialog from 'crud/student/ui-segment/StudentDetailDialog';
 import useStudentActions from 'hooks/student/useStudentActions';
+import useStudentDetail from 'hooks/student/useStudentDetail';
 import { toast } from 'react-toastify';
 import { CRUD_MODE } from 'settings/setting';
 
 export default function ViewStudent({
     open,
     handleClose,
-    setLoadingInfo,
     student,
     refresh
 }) {
     const actions = useStudentActions();
+    const { studentDetail, loading, refresh: refreshDetail } = useStudentDetail(student?.id);
+    const [loadingUpdate, setLoadingUpdate] = useState(false);
 
-    const handleSubmit = (data) => {
+    const handleSubmit = (data, onSuccess) => {
         if (!student?.id || !data) {
             toast.warning("Something went wrong.");
             return;
         }
 
         const loading = (isLoading) => {
-            setLoadingInfo && setLoadingInfo({
-                loading: Boolean(isLoading),
-                text: isLoading ? "Updating..." : ""
-            })
+            setLoadingUpdate(Boolean(isLoading));
         }
 
-        const callback = (updateStatus) => {
+        const listenUpdateStatus = (updateStatus) => {
             if (updateStatus === true) {
-                handleClose && handleClose();
                 refresh && refresh();
+                onSuccess && onSuccess();
+                refreshDetail && refreshDetail();
             }
         }
 
-        actions.updateStudent({ id: student.id, data, loading, callback });
+        actions.updateStudent({ id: student.id, data, loading, callback: listenUpdateStatus });
     }
 
     return (
@@ -42,8 +42,11 @@ export default function ViewStudent({
             open={open}
             onClose={handleClose}
             onSubmit={handleSubmit}
-            student={student}
+            loadingSubmit={loadingUpdate}
+            loadingDetail={loading}
+
             mode={CRUD_MODE.view}
+            student={studentDetail || student}
             title="Student Detail"
             submitButton={{
                 text: "Update"

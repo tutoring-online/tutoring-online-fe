@@ -37,7 +37,6 @@ const updateStudent = async (params) => {
 
         callback(true, response);
         toast.success("Updated student successfully.");
-        return response;
     } catch (error) {
         callback(false);
         toast.error("Failed to update the student.");

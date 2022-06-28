@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useCategoryActions from "./useCategoryActions";
 
@@ -14,9 +14,16 @@ const useCategoryDetail = (id) => {
         actions.fetchCategoryDetail({ id, setLoading });
     }, [actions, id]);
 
+    const refresh = useCallback(() => {
+        if (!id) return;
+        actions.clearCategoryDetail();
+        actions.fetchCategoryDetail({ id, setLoading });
+    }, [actions, id])
+
     return {
         categoryDetail,
-        loading
+        loading,
+        refresh
     };
 }
 

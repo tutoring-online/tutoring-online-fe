@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import usePaymentActions from "./usePaymentActions";
 
@@ -14,9 +14,16 @@ const usePaymentDetail = (id) => {
         actions.fetchPaymentDetail({ id, setLoading });
     }, [actions, id]);
 
+    const refresh = useCallback(() => {
+        if (!id) return;
+        actions.clearPaymentDetail();
+        actions.fetchPaymentDetail({ id, setLoading });
+    }, [actions, id])
+
     return {
         paymentDetail,
-        loading
+        loading,
+        refresh
     };
 }
 

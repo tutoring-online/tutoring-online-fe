@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useSyllabusActions from "./useSyllabusActions";
 
@@ -14,9 +14,16 @@ const useSyllabusDetail = (id) => {
         actions.fetchSyllabusDetail({ id, setLoading });
     }, [actions, id]);
 
+    const refresh = useCallback(() => {
+        if (!id) return;
+        actions.clearSyllabusDetail();
+        actions.fetchSyllabusDetail({ id, setLoading });
+    }, [actions, id])
+
     return {
         syllabusDetail,
-        loading
+        loading,
+        refresh
     };
 }
 

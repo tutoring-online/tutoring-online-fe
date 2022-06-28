@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useSubjectActions from "./useSubjectActions";
 
@@ -14,9 +14,16 @@ const useSubjectDetail = (id) => {
         actions.fetchSubjectDetail({ id, setLoading });
     }, [actions, id]);
 
+    const refresh = useCallback(() => {
+        if (!id) return;
+        actions.clearSubjectDetail();
+        actions.fetchSubjectDetail({ id, setLoading });
+    }, [actions, id])
+
     return {
         subjectDetail,
-        loading
+        loading,
+        refresh
     };
 }
 

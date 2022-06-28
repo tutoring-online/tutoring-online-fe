@@ -1,39 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SyllabusDetailDialog from 'crud/syllabus/ui-segment/SyllabusDetailDialog';
 import useSyllabusActions from 'hooks/syllabus/useSyllabusActions';
+import useSyllabusDetail from 'hooks/syllabus/useSyllabusDetail';
 import { toast } from 'react-toastify';
 import { CRUD_MODE } from 'settings/setting';
 
 export default function ViewSyllabus({
     open,
     handleClose,
-    setLoadingInfo,
     syllabus,
     refresh
 }) {
     const actions = useSyllabusActions();
+    const { syllabusDetail, loading, refresh: refreshDetail } = useSyllabusDetail(syllabus?.id);
+    const [loadingUpdate, setLoadingUpdate] = useState(false);
 
-    const handleSubmit = (data) => {
+
+    const handleSubmit = (data, onSuccess) => {
         if (!syllabus?.id || !data) {
             toast.warning("Something went wrong.");
             return;
         }
 
         const loading = (isLoading) => {
-            setLoadingInfo && setLoadingInfo({
-                loading: Boolean(isLoading),
-                text: isLoading ? "Updating..." : ""
-            })
+            setLoadingUpdate(Boolean(isLoading));
         }
 
-        const callback = (updateStatus) => {
+        const listenUpdateStatus = (updateStatus) => {
             if (updateStatus === true) {
-                handleClose && handleClose();
                 refresh && refresh();
+                onSuccess && onSuccess();
+                refreshDetail && refreshDetail();
             }
         }
 
-        actions.updateSyllabus({ id: syllabus.id, data, loading, callback });
+        actions.updateSyllabus({ id: syllabus.id, data, loading, callback: listenUpdateStatus });
     }
 
     return (
@@ -42,8 +43,11 @@ export default function ViewSyllabus({
             open={open}
             onClose={handleClose}
             onSubmit={handleSubmit}
-            syllabus={syllabus}
+            loadingSubmit={loadingUpdate}
+            loadingDetail={loading}
+
             mode={CRUD_MODE.view}
+            syllabus={syllabusDetail || syllabus}
             title="Syllabus Detail"
             submitButton={{
                 text: "Update"

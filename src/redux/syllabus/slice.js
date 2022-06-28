@@ -26,11 +26,6 @@ const reducers = {
     createSyllabusSuccessful: () => { },
     createSyllabusFailed: () => { },
 
-    updateSyllabusSuccessful: (state, action) => {
-        state.syllabusDetail = action.payload
-    },
-    updateSyllabusFailed: () => { },
-
     deleteSyllabusSuccessful: () => { },
     deleteSyllabusFailed: () => { },
 }
@@ -52,10 +47,7 @@ const slice = createSlice({
 
         builder.addCase(asyncThunks.createSyllabus.fulfilled, reducers.createSyllabusSuccessful);
         builder.addCase(asyncThunks.createSyllabus.rejected, reducers.createSyllabusFailed);
-
-        builder.addCase(asyncThunks.updateSyllabus.fulfilled, reducers.updateSyllabusSuccessful);
-        builder.addCase(asyncThunks.updateSyllabus.rejected, reducers.updateSyllabusFailed);
-
+        
         builder.addCase(asyncThunks.deleteSyllabus.fulfilled, reducers.deleteSyllabusSuccessful);
         builder.addCase(asyncThunks.deleteSyllabus.rejected, reducers.deleteSyllabusFailed);
     }

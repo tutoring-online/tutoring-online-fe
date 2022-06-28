@@ -37,7 +37,6 @@ const updateTutor = async (params) => {
 
         callback(true, response);
         toast.success("Updated tutor successfully.");
-        return response;
     } catch (error) {
         callback(false);
         toast.error("Failed to update the tutor.");

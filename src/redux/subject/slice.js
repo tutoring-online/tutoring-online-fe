@@ -26,11 +26,6 @@ const reducers = {
     createSubjectSuccessful: () => { },
     createSubjectFailed: () => { },
 
-    updateSubjectSuccessful: (state, action) => {
-        state.subjectDetail = action.payload
-    },
-    updateSubjectFailed: () => { },
-
     deleteSubjectSuccessful: () => { },
     deleteSubjectFailed: () => { },
 }
@@ -52,9 +47,6 @@ const slice = createSlice({
 
         builder.addCase(asyncThunks.createSubject.fulfilled, reducers.createSubjectSuccessful);
         builder.addCase(asyncThunks.createSubject.rejected, reducers.createSubjectFailed);
-
-        builder.addCase(asyncThunks.updateSubject.fulfilled, reducers.updateSubjectSuccessful);
-        builder.addCase(asyncThunks.updateSubject.rejected, reducers.updateSubjectFailed);
 
         builder.addCase(asyncThunks.deleteSubject.fulfilled, reducers.deleteSubjectSuccessful);
         builder.addCase(asyncThunks.deleteSubject.rejected, reducers.deleteSubjectFailed);
