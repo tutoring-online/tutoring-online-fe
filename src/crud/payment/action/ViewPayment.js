@@ -45,7 +45,7 @@ export default function ViewPayment({
             loadingSubmit={loadingUpdate}
             loadingDetail={loading}
 
-            mode={CRUD_MODE.edit}
+            mode={CRUD_MODE.view}
             payment={paymentDetail || payment}
             title="Payment Detail"
             submitButton={{

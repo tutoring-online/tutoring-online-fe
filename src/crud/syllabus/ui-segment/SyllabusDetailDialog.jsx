@@ -1,36 +1,31 @@
-
-import {
-    Button,
-    Dialog,
-    DialogContent,
-    Grid,
-} from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
-
-import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
-import TextField from "components/Form/TextField";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+//Mui
+import { Dialog, DialogContent } from "@mui/material";
+
+//Core components
 import CustomDialogTitle from "components/Dialog/custom/CustomDialogTitle";
 import CustomDialogActions from "components/Dialog/custom/CustomDialogActions";
 
+import EditingContent from "./EditingContent";
+import ViewMode from "./ViewMode";
+import ViewModeSkeleton from "./ViewModeSkeleton";
+
+import CancelButton from "components/Buttons/CancelButton";
+import SubmitButton from "components/Buttons/SubmitButton";
+import EditButton from "components/Buttons/EditButton";
+
+//Helpers
 import yup from "helpers/yupGlobal";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { CRUD_MODE } from "settings/setting";
-import { SYLLABUS_STATUSES } from "settings/syllabus-setting";
 
 const schema = yup.object().shape({
-    code: yup.string()
-        .required("Code is required"),
-    name: yup.string()
-        .required("Name is required"),
-    categoryId: yup.string().nullable()
-        .required("Category is required"),
 });
 
 const getDefaultValues = (syllabus) => {
-    if (!syllabus) return {
-        status: SYLLABUS_STATUSES.ACTIVE
-    };
+    if (!syllabus) return {};
 
     return {
         ...syllabus,
@@ -41,9 +36,12 @@ export default function SyllabusDetailDialog({
     open,
     onClose,
     onSubmit,
-    syllabus,
+    loadingSubmit,
+    loadingDetail,
+
     mode,
-    title = "Tutor Detail",
+    syllabus,
+    title = "Syllabus Detail",
     submitButton = {
         text: "Confirm"
     }
@@ -59,6 +57,10 @@ export default function SyllabusDetailDialog({
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
+        reset(getDefaultValues(syllabus));
+    }, [syllabus, reset]);
+
+    useEffect(() => {
         setIsEditing(() => {
             if (mode === CRUD_MODE.create) return true;
             if (mode === CRUD_MODE.edit) return true;
@@ -66,13 +68,13 @@ export default function SyllabusDetailDialog({
         })
     }, [mode])
 
-    const isDisabled = !isEditing;
-
     const preparedBeforeSubmit = (data) => {
         const preparedData = {
             ...data,
         }
-        onSubmit && onSubmit(preparedData);
+        const onSuccess = () => setIsEditing(false);
+
+        onSubmit && onSubmit(preparedData, onSuccess);
     }
 
     const enableEdit = () => {
@@ -83,6 +85,16 @@ export default function SyllabusDetailDialog({
         setIsEditing(false);
         reset();
     }
+
+    const renderContent = () => isEditing ? (
+        <EditingContent
+            register={register}
+            errors={errors}
+            onSubmit={handleSubmit(preparedBeforeSubmit)}
+        />
+    ) : (
+        <ViewMode syllabus={syllabus} />
+    )
 
     return (
         <Dialog
@@ -95,60 +107,21 @@ export default function SyllabusDetailDialog({
                 onClose={onClose}
             />
             <DialogContent>
-                <form
-                    onSubmit={handleSubmit(preparedBeforeSubmit)}
-                >
-                    <Grid container>
-                        <Grid item xs={12} lg={6}>
-                            <TextField
-                                label="Name"
-                                required={true}
-                                inputProps={{
-                                    ...register("name")
-                                }}
-                                error={errors.name?.message}
-                                disabled={isDisabled}
-                            />
-                        </Grid>
-                    </Grid>
-                </form>
+                {loadingDetail ? <ViewModeSkeleton /> : renderContent()}
             </DialogContent>
             <CustomDialogActions>
-                {isEditing ?
+                {isEditing ? (
                     <>
-                        <Button
-                            variant=""
-                            color="info"
-                            size="medium"
-                            onClick={cancelEdit}
-                            sx={{ background: "#fff", "&:hover": { background: "#f3f3f3" } }}
-                        >
-                            Cancel
-                        </Button>
-
-
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="medium"
-                            type="submit"
+                        <CancelButton onClick={cancelEdit} />
+                        <SubmitButton
                             onClick={handleSubmit(preparedBeforeSubmit)}
-                        >
-                            {submitButton?.text}
-                        </Button>
+                            text={submitButton.text}
+                            loading={loadingSubmit}
+                        />
                     </>
-
-                    :
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        size="medium"
-                        onClick={enableEdit}
-                        startIcon={<EditIcon />}
-                    >
-                        Enable Edit
-                    </Button>
-                }
+                ) : (
+                    <EditButton onClick={enableEdit} />
+                )}
             </CustomDialogActions>
         </Dialog>
     )

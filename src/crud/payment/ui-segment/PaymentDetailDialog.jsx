@@ -20,10 +20,6 @@ import yup from "helpers/yupGlobal";
 import { CRUD_MODE } from "settings/setting";
 
 const schema = yup.object().shape({
-    code: yup.string()
-        .required("Code is required"),
-    name: yup.string()
-        .required("Name is required"),
 });
 
 const getDefaultValues = (payment) => {
@@ -38,9 +34,11 @@ export default function PaymentDetailDialog({
     open,
     onClose,
     onSubmit,
-    payment,
-    mode,
+    loadingSubmit,
     loadingDetail,
+
+    mode,
+    payment,
     title = "Payment Detail",
     submitButton = {
         text: "Confirm"
@@ -78,7 +76,9 @@ export default function PaymentDetailDialog({
         const preparedData = {
             ...data,
         }
-        onSubmit && onSubmit(preparedData);
+        const onSuccess = () => setIsEditing(false);
+
+        onSubmit && onSubmit(preparedData, onSuccess);
     }
 
     const enableEdit = () => {
@@ -119,6 +119,7 @@ export default function PaymentDetailDialog({
                         <SubmitButton
                             onClick={handleSubmit(preparedBeforeSubmit)}
                             text={submitButton.text}
+                            loading={loadingSubmit}
                         />
                     </>
                 ) : (

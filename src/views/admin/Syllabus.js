@@ -16,7 +16,7 @@ import Table from "components/Table/Table.jsx";
 import NTALoading from "nta-team/nta-loading/Loading";
 
 //Hooks
-import useSubjectList from "hooks/subject/useSubjectList";
+import useSyllabusList from "hooks/syllabus/useSyllabusList";
 
 import NoInformation from "components/Text/NoInformation";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
@@ -43,7 +43,7 @@ const Syllabus = () => {
 		syllabusList,
 		loading,
 		refresh
-	} = useSubjectList();
+	} = useSyllabusList();
 
 
 	const [columns, setColumns] = useState([]);
@@ -100,7 +100,23 @@ const Syllabus = () => {
 			{
 				key: "description",
 				label: "Description",
-				render: (row) => row.description || <NoInformation />
+				render: (row) => (
+					<Box
+						display="inline-block"
+						width="10px"
+						minWidth="300px"
+						overflow="hidden"
+						whiteSpace="nowrap"
+						textOverflow="ellipsis"
+					>
+						{row.description || <NoInformation />}
+					</Box>
+				)
+			},
+			{
+				key: "numberOfPurchases",
+				label: "N. Purchases",
+				render: (row) => row.numberOfPurchases || 0
 			},
 			{
 				key: "status",

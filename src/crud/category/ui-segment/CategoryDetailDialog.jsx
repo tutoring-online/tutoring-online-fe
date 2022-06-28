@@ -23,7 +23,7 @@ const schema = yup.object().shape({
     name: yup.string().required("Name is required."),
     description: yup
         .string()
-        .test("len", "Maximum 1000 characters.", (input) => input.length > 1000),
+        .test("len", "Maximum 1000 characters.", (input) => input.length <= 1000),
 });
 
 const getDefaultValues = (category) => {
@@ -33,14 +33,16 @@ const getDefaultValues = (category) => {
     };
 };
 
-export default function TutorDetailDialog({
+export default function CategoryDetailDialog({
     open,
     onClose,
     onSubmit,
-    category,
+    loadingSubmit,
     loadingDetail,
+
+    category,
     mode,
-    title = "Tutor Detail",
+    title = "Category Detail",
     submitButton = {
         text: "Confirm",
     },
@@ -75,7 +77,9 @@ export default function TutorDetailDialog({
         const preparedData = {
             ...data,
         };
-        onSubmit && onSubmit(preparedData);
+        const onSuccess = () => setIsEditing(false);
+
+        onSubmit && onSubmit(preparedData, onSuccess);
     };
 
     const enableEdit = () => {
@@ -86,7 +90,6 @@ export default function TutorDetailDialog({
         setIsEditing(false);
         reset();
     };
-
 
     const renderContent = () => isEditing ? (
         <EditingContent
@@ -111,6 +114,7 @@ export default function TutorDetailDialog({
                         <SubmitButton
                             onClick={handleSubmit(preparedBeforeSubmit)}
                             text={submitButton.text}
+                            loading={loadingSubmit}
                         />
                     </>
                 ) : (

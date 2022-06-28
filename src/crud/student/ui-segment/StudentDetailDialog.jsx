@@ -1,23 +1,25 @@
 
-import {
-    Button,
-    Dialog,
-    DialogContent,
-    Grid,
-} from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
-
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import React, { useEffect, useState } from "react";
-import TextField from "components/Form/TextField";
-import RadioGroupField from "components/Form/RadioGroupField";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+//MUI
+import { Dialog, DialogContent } from "@mui/material";
+
+//Core components
 import CustomDialogTitle from "components/Dialog/custom/CustomDialogTitle";
 import CustomDialogActions from "components/Dialog/custom/CustomDialogActions";
+import CancelButton from "components/Buttons/CancelButton";
+import SubmitButton from "components/Buttons/SubmitButton";
+import EditButton from "components/Buttons/EditButton";
+import ViewModeSkeleton from "./ViewModeSkeleton";
+import EditingContent from "./EditingContent";
+import ViewMode from "./ViewMode";
 
+//Helper
 import yup from "helpers/yupGlobal";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { CRUD_MODE, genderOptions, convertNumberToGender, convertGenderToNumber } from "settings/setting";
 import { validDate, dateFormat2, formatDate } from "helpers/dateUtils";
+import { CRUD_MODE, convertNumberToGender, convertGenderToNumber } from "settings/setting";
 
 const schema = yup.object().shape({
     name: yup.string()
@@ -40,9 +42,12 @@ export default function StudentDetailDialog({
     open,
     onClose,
     onSubmit,
-    student,
+    loadingSubmit,
+    loadingDetail,
+
     mode,
-    title = "Tutor Detail",
+    student,
+    title = "Student Detail",
     submitButton = {
         text: "Confirm"
     }
@@ -55,6 +60,10 @@ export default function StudentDetailDialog({
         resolver: yupResolver(schema)
     })
 
+    useEffect(() => {
+        reset(getDefaultValues(student));
+    }, [student, reset]);
+
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
@@ -65,14 +74,14 @@ export default function StudentDetailDialog({
         })
     }, [mode])
 
-    const isDisabled = !isEditing;
-
     const preparedBeforeSubmit = (data) => {
         const preparedData = {
             ...data,
             gender: convertGenderToNumber(data.gender)
         }
-        onSubmit && onSubmit(preparedData);
+        const onSuccess = () => setIsEditing(false);
+
+        onSubmit && onSubmit(preparedData, onSuccess);
     }
 
     const enableEdit = () => {
@@ -83,6 +92,23 @@ export default function StudentDetailDialog({
         setIsEditing(false);
         reset();
     }
+
+    const isUpdateMode = useCallback(() => {
+        return mode === CRUD_MODE.edit || mode === CRUD_MODE.view;
+    }, [mode]);
+
+    const renderContent = () => isEditing ? (
+        <EditingContent
+            student={student}
+            control={control}
+            register={register}
+            errors={errors}
+            onSubmit={handleSubmit(preparedBeforeSubmit)}
+            isUpdateMode={isUpdateMode()}
+        />
+    ) : (
+        <ViewMode student={student} />
+    )
 
     return (
         <Dialog
@@ -95,120 +121,21 @@ export default function StudentDetailDialog({
                 onClose={onClose}
             />
             <DialogContent>
-                <form
-                    onSubmit={handleSubmit(preparedBeforeSubmit)}
-                >
-                    <Grid container>
-                        <Grid item xs={12} lg={6}>
-                            <TextField
-                                label="Email"
-                                required={true}
-                                inputProps={{
-                                    ...register("email"),
-                                    autoFocus: true
-                                }}
-                                error={errors.email?.message}
-                                disabled={isDisabled}
-                            />
-                        </Grid>
-                        <Grid item xs={12} lg={6}>
-                            <TextField
-                                label="Name"
-                                required={true}
-                                inputProps={{
-                                    ...register("name")
-                                }}
-                                error={errors.name?.message}
-                                disabled={isDisabled}
-                            />
-                        </Grid>
-                        <Grid item xs={12} lg={6}>
-                            <TextField
-                                label="Phone"
-                                inputProps={{
-                                    ...register("phone")
-                                }}
-                                disabled={isDisabled}
-                            />
-                        </Grid>
-                        <Grid item xs={12} lg={6}>
-                            <TextField
-                                label="Birthday"
-                                inputProps={{
-                                    type: "date",
-                                    ...register("birthday")
-                                }}
-                                disabled={isDisabled}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <RadioGroupField
-                                label="Gender"
-                                name="gender"
-                                row={true}
-                                options={genderOptions}
-                                control={control}
-                                disabled={isDisabled}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-
-                            <TextField
-                                label="Address"
-                                inputProps={{
-                                    ...register("address")
-                                }}
-                                disabled={isDisabled}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                label="Avatar Url"
-                                inputProps={{
-                                    ...register("avatarURL")
-                                }}
-                                disabled={isDisabled}
-                            />
-                        </Grid>
-                    </Grid>
-                </form>
+                {loadingDetail ? <ViewModeSkeleton /> : renderContent()}
             </DialogContent>
             <CustomDialogActions>
-                {isEditing ?
+                {isEditing ? (
                     <>
-                        <Button
-                            variant=""
-                            color="info"
-                            size="medium"
-                            onClick={cancelEdit}
-                            sx={{ background: "#fff", "&:hover": { background: "#f3f3f3" } }}
-                        >
-                            Cancel
-                        </Button>
-
-
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="medium"
-                            type="submit"
+                        <CancelButton onClick={cancelEdit} />
+                        <SubmitButton
                             onClick={handleSubmit(preparedBeforeSubmit)}
-                        >
-                            {submitButton?.text}
-                        </Button>
+                            text={submitButton.text}
+                            loading={loadingSubmit}
+                        />
                     </>
-
-                    :
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        size="medium"
-                        onClick={enableEdit}
-                        startIcon={<EditIcon />}
-                    >
-                        Enable Edit
-                    </Button>
-                }
+                ) : (
+                    <EditButton onClick={enableEdit} />
+                )}
             </CustomDialogActions>
         </Dialog>
     )

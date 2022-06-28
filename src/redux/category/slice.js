@@ -17,6 +17,7 @@ const reducers = {
     },
 
     fetchCategoryDetailSuccessful: (state, action) => {
+        console.log(action);
         state.categoryDetail = isAvailableArray(action.payload) ? action.payload[0] : null;
     },
     fetchCategoryDetailFailed: (state) => {

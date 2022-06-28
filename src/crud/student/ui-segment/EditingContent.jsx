@@ -12,7 +12,7 @@ import TextField from 'components/Form/TextField';
 import GroupBox from 'components/Form/GroupBox';
 
 const BasicInfo = ({
-    admin,
+    student,
     control,
     register,
     errors,
@@ -33,6 +33,16 @@ const BasicInfo = ({
                         ...register("name"),
                     }}
                     error={errors.name?.message}
+                />
+            </Grid>
+
+            <Grid item xs={12} lg={6}>
+                <TextField
+                    label="Grade"
+                    inputProps={{
+                        ...register("grade"),
+                    }}
+                    error={errors.grade?.message}
                 />
             </Grid>
 
@@ -66,7 +76,7 @@ const BasicInfo = ({
                         >
                             Avatar
                             <Avatar
-                                src={admin?.avatarURL}
+                                src={student?.avatarURL}
                                 alt="avatar"
                                 sx={{ width: 24, height: 24, marginLeft: "0.5rem" }}
                             />
@@ -83,7 +93,7 @@ const BasicInfo = ({
 )
 
 const Contact = ({
-    admin,
+    student,
     register,
     errors,
     isUpdateMode,
@@ -100,7 +110,7 @@ const Contact = ({
                 {isUpdateMode ?
                     <DisplayField
                         label="Email"
-                        value={admin?.email || <NoInformation />}
+                        value={student?.email || <NoInformation />}
                     />
                     :
                     <TextField
@@ -135,7 +145,7 @@ const Contact = ({
 )
 
 export default function EditingContent({
-    admin,
+    student,
     control,
     register,
     errors,
@@ -148,7 +158,7 @@ export default function EditingContent({
             <Grid container>
                 <Grid item xs={12}>
                     <BasicInfo
-                        admin={admin}
+                        student={student}
                         control={control}
                         register={register}
                         errors={errors}
@@ -157,7 +167,7 @@ export default function EditingContent({
 
                 <Grid item xs={12}>
                     <Contact
-                        admin={admin}
+                        student={student}
                         register={register}
                         errors={errors}
                         isUpdateMode={isUpdateMode}

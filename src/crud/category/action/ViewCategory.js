@@ -12,7 +12,7 @@ export default function ViewCategory({
     refresh
 }) {
     const actions = useCategoryActions();
-    const { categoryDetail, loading, refreshDetail } = useCategoryDetail(category?.id);
+    const { categoryDetail, loading, refresh: refreshDetail } = useCategoryDetail(category?.id);
     const [loadingUpdate, setLoadingUpdate] = useState(false);
 
     const handleSubmit = (data, onSuccess) => {

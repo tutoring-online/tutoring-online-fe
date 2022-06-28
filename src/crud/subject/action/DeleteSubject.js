@@ -36,7 +36,7 @@ export default function DeleteSubject({
             }
         }
 
-        actions.deleteCategory({ id: subject.id, loading, callback });
+        actions.deleteSubject({ id: subject.id, loading, callback });
     }
 
     const getDescription = () => (

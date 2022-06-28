@@ -6,7 +6,7 @@ import { getLocaleDateString } from 'helpers/dateUtils';
 import { getLocaleDateTimeString } from 'helpers/dateUtils';
 import { validDate } from 'helpers/dateUtils';
 import React from 'react'
-import { renderAdminStatus } from 'settings/admin-setting';
+import { renderStudentStatus } from 'settings/student-setting';
 import { convertNumberToGender } from 'settings/setting';
 
 const getDisplayDateTime = (date) => {
@@ -53,7 +53,7 @@ const StatusBar = ({ status }) => (
         fontSize="13px"
         marginLeft="8px"
     >
-        {renderAdminStatus(status)}
+        {renderStudentStatus(status)}
     </Box>
 )
 
@@ -74,12 +74,12 @@ const UpdatedDate = ({ updatedDate }) => (
     </Box>
 )
 
-const Header = ({ admin }) => (
+const Header = ({ student }) => (
     <Box
         marginBottom="1rem"
         className="detail-header"
     >
-        <HeaderImage avatarURL={admin?.avatarURL} />
+        <HeaderImage avatarURL={student?.avatarURL} />
 
         <Box
             display="grid"
@@ -96,23 +96,23 @@ const Header = ({ admin }) => (
                 height="100%"
             >
                 <Box fontWeight="600" fontSize="17px">
-                    {admin?.name}
+                    {student?.name}
                 </Box>
-                <StatusBar status={admin?.status} />
+                <StatusBar status={student?.status} />
             </Box>
 
             <Box
                 display="flex"
                 alignItems="center"
             >
-                <PublishDate createdDate={admin?.createdDate} />
-                <UpdatedDate updatedDate={admin?.updatedDate} />
+                <PublishDate createdDate={student?.createdDate} />
+                <UpdatedDate updatedDate={student?.updatedDate} />
             </Box>
         </Box>
     </Box>
 )
 
-const BasicInfo = ({ admin }) => (
+const BasicInfo = ({ student }) => (
     <GroupBox>
         <Grid container>
             <Grid item xs={12}>
@@ -124,28 +124,35 @@ const BasicInfo = ({ admin }) => (
             <Grid item xs={12} lg={6}>
                 <DisplayField
                     label="Name"
-                    value={admin?.name || <NoInformation />}
+                    value={student?.name || <NoInformation />}
+                />
+            </Grid>
+
+            <Grid item xs={12} lg={6}>
+                <DisplayField
+                    label="Grade"
+                    value={student?.grade || <NoInformation />}
                 />
             </Grid>
 
             <Grid item xs={12} lg={6}>
                 <DisplayField
                     label="Birthday"
-                    value={admin?.birthday || <NoInformation />}
+                    value={student?.birthday || <NoInformation />}
                 />
             </Grid>
 
             <Grid item xs={12} lg={6}>
                 <DisplayField
                     label="Gender"
-                    value={convertNumberToGender(admin?.gender) || <NoInformation />}
+                    value={convertNumberToGender(student?.gender) || <NoInformation />}
                 />
             </Grid>
         </Grid>
     </GroupBox>
 )
 
-const Contact = ({ admin }) => (
+const Contact = ({ student }) => (
     <GroupBox>
         <Grid container>
             <Grid item xs={12}>
@@ -156,21 +163,21 @@ const Contact = ({ admin }) => (
             <Grid item xs={12} lg={6}>
                 <DisplayField
                     label="Email"
-                    value={admin?.email || <NoInformation />}
+                    value={student?.email || <NoInformation />}
                 />
             </Grid>
 
             <Grid item xs={12} lg={6}>
                 <DisplayField
                     label="Phone"
-                    value={admin?.phone || <NoInformation />}
+                    value={student?.phone || <NoInformation />}
                 />
             </Grid>
 
             <Grid item xs={12}>
                 <DisplayField
                     label="Address"
-                    value={admin?.address || <NoInformation />}
+                    value={student?.address || <NoInformation />}
                 />
             </Grid>
         </Grid>
@@ -178,20 +185,20 @@ const Contact = ({ admin }) => (
 )
 
 
-export default function ViewMode({ admin }) {
+export default function ViewMode({ student }) {
     return (
         <Box component="div">
             <Grid container >
                 <Grid item xs={12}>
-                    <Header admin={admin} />
+                    <Header student={student} />
                 </Grid>
 
                 <Grid item xs={12}>
-                    <BasicInfo admin={admin} />
+                    <BasicInfo student={student} />
                 </Grid>
 
                 <Grid item xs={12}>
-                    <Contact admin={admin} />
+                    <Contact student={student} />
                 </Grid>
             </Grid>
         </Box>

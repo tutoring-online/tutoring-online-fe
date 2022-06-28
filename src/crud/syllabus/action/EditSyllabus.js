@@ -17,6 +17,7 @@ export default function EditSyllabus({
 
 
     const handleSubmit = (data, onSuccess) => {
+        console.log({data, id: syllabus?.id});
         if (!syllabus?.id || !data) {
             toast.warning("Something went wrong.");
             return;

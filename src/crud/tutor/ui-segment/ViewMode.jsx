@@ -6,8 +6,9 @@ import { getLocaleDateString } from 'helpers/dateUtils';
 import { getLocaleDateTimeString } from 'helpers/dateUtils';
 import { validDate } from 'helpers/dateUtils';
 import React from 'react'
-import { renderAdminStatus } from 'settings/admin-setting';
+import { renderTutorStatus } from 'settings/tutor-setting';
 import { convertNumberToGender } from 'settings/setting';
+import CopyToClipboardWrapper from 'components/common/CopyToClipboardWrapper';
 
 const getDisplayDateTime = (date) => {
     return validDate(date) ? getLocaleDateTimeString(date) : "N/A";
@@ -53,7 +54,7 @@ const StatusBar = ({ status }) => (
         fontSize="13px"
         marginLeft="8px"
     >
-        {renderAdminStatus(status)}
+        {renderTutorStatus(status)}
     </Box>
 )
 
@@ -74,12 +75,12 @@ const UpdatedDate = ({ updatedDate }) => (
     </Box>
 )
 
-const Header = ({ admin }) => (
+const Header = ({ tutor }) => (
     <Box
         marginBottom="1rem"
         className="detail-header"
     >
-        <HeaderImage avatarURL={admin?.avatarURL} />
+        <HeaderImage avatarURL={tutor?.avatarURL} />
 
         <Box
             display="grid"
@@ -96,23 +97,23 @@ const Header = ({ admin }) => (
                 height="100%"
             >
                 <Box fontWeight="600" fontSize="17px">
-                    {admin?.name}
+                    {tutor?.name}
                 </Box>
-                <StatusBar status={admin?.status} />
+                <StatusBar status={tutor?.status} />
             </Box>
 
             <Box
                 display="flex"
                 alignItems="center"
             >
-                <PublishDate createdDate={admin?.createdDate} />
-                <UpdatedDate updatedDate={admin?.updatedDate} />
+                <PublishDate createdDate={tutor?.createdDate} />
+                <UpdatedDate updatedDate={tutor?.updatedDate} />
             </Box>
         </Box>
     </Box>
 )
 
-const BasicInfo = ({ admin }) => (
+const BasicInfo = ({ tutor }) => (
     <GroupBox>
         <Grid container>
             <Grid item xs={12}>
@@ -124,28 +125,28 @@ const BasicInfo = ({ admin }) => (
             <Grid item xs={12} lg={6}>
                 <DisplayField
                     label="Name"
-                    value={admin?.name || <NoInformation />}
+                    value={tutor?.name || <NoInformation />}
                 />
             </Grid>
 
             <Grid item xs={12} lg={6}>
                 <DisplayField
                     label="Birthday"
-                    value={admin?.birthday || <NoInformation />}
+                    value={tutor?.birthday || <NoInformation />}
                 />
             </Grid>
 
             <Grid item xs={12} lg={6}>
                 <DisplayField
                     label="Gender"
-                    value={convertNumberToGender(admin?.gender) || <NoInformation />}
+                    value={convertNumberToGender(tutor?.gender) || <NoInformation />}
                 />
             </Grid>
         </Grid>
     </GroupBox>
 )
 
-const Contact = ({ admin }) => (
+const Contact = ({ tutor }) => (
     <GroupBox>
         <Grid container>
             <Grid item xs={12}>
@@ -156,21 +157,34 @@ const Contact = ({ admin }) => (
             <Grid item xs={12} lg={6}>
                 <DisplayField
                     label="Email"
-                    value={admin?.email || <NoInformation />}
+                    value={tutor?.email || <NoInformation />}
                 />
             </Grid>
 
             <Grid item xs={12} lg={6}>
                 <DisplayField
                     label="Phone"
-                    value={admin?.phone || <NoInformation />}
+                    value={tutor?.phone || <NoInformation />}
+                />
+            </Grid>
+
+            <Grid item xs={12}>
+                <DisplayField
+                    label="Link meeting"
+                    value={
+                        <CopyToClipboardWrapper
+                            text={tutor?.meetingUrl}
+                        >
+                            {tutor?.meetingUrl || <NoInformation />}
+                        </CopyToClipboardWrapper>
+                    }
                 />
             </Grid>
 
             <Grid item xs={12}>
                 <DisplayField
                     label="Address"
-                    value={admin?.address || <NoInformation />}
+                    value={tutor?.address || <NoInformation />}
                 />
             </Grid>
         </Grid>
@@ -178,20 +192,20 @@ const Contact = ({ admin }) => (
 )
 
 
-export default function ViewMode({ admin }) {
+export default function ViewMode({ tutor }) {
     return (
         <Box component="div">
             <Grid container >
                 <Grid item xs={12}>
-                    <Header admin={admin} />
+                    <Header tutor={tutor} />
                 </Grid>
 
                 <Grid item xs={12}>
-                    <BasicInfo admin={admin} />
+                    <BasicInfo tutor={tutor} />
                 </Grid>
 
                 <Grid item xs={12}>
-                    <Contact admin={admin} />
+                    <Contact tutor={tutor} />
                 </Grid>
             </Grid>
         </Box>
