@@ -56,7 +56,6 @@ const updateSubject = async (params) => {
 
         callback(true, response);
         toast.success("Updated subject successfully.");
-        return response;
     } catch (error) {
         callback(false);
         toast.error("Failed to update the subject.");

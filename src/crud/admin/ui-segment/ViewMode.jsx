@@ -1,5 +1,6 @@
 import { Avatar, Box, FormLabel, Grid } from '@mui/material';
 import DisplayField from 'components/Form/DisplayField';
+import GroupBox from 'components/Form/GroupBox';
 import NoInformation from 'components/Text/NoInformation';
 import { getLocaleDateString } from 'helpers/dateUtils';
 import { getLocaleDateTimeString } from 'helpers/dateUtils';
@@ -8,12 +9,12 @@ import React from 'react'
 import { renderAdminStatus } from 'settings/admin-setting';
 import { convertNumberToGender } from 'settings/setting';
 
-const getDisplayDateTime = (updatedDate) => {
-    return validDate(updatedDate) ? getLocaleDateTimeString(updatedDate) : "N/A";
+const getDisplayDateTime = (date) => {
+    return validDate(date) ? getLocaleDateTimeString(date) : "N/A";
 }
 
-const getDisplayDate = (updatedDate) => {
-    return validDate(updatedDate) ? getLocaleDateString(updatedDate) : "N/A";
+const getDisplayDate = (date) => {
+    return validDate(date) ? getLocaleDateString(date) : "N/A";
 }
 
 const HeaderImage = ({ avatarURL }) => (
@@ -21,8 +22,7 @@ const HeaderImage = ({ avatarURL }) => (
         display="flex"
         alignItems="center"
         justifyContent="center"
-        height="80px"
-        width="80px"
+        padding="0.5rem 1rem"
     >
         <Avatar
             src={avatarURL}
@@ -34,7 +34,6 @@ const HeaderImage = ({ avatarURL }) => (
 
 const PublishDate = ({ createdDate }) => (
     <Box
-        marginLeft="auto"
         fontSize="14px"
     >
         <Box display="flex">
@@ -59,8 +58,19 @@ const StatusBar = ({ status }) => (
 )
 
 const UpdatedDate = ({ updatedDate }) => (
-    <Box fontSize="14px">
-        {`Last updated on ${getDisplayDateTime(updatedDate)}`}
+    <Box
+        marginLeft="auto"
+        fontSize="14px"
+    >
+        <Box display="flex">
+            <FormLabel sx={{ margin: 0 }}>Last updated on</FormLabel>
+            <Box
+                marginLeft="4px"
+                fontSize="14px"
+            >
+                {getDisplayDateTime(updatedDate)}
+            </Box>
+        </Box>
     </Box>
 )
 
@@ -89,60 +99,99 @@ const Header = ({ admin }) => (
                     {admin?.name}
                 </Box>
                 <StatusBar status={admin?.status} />
-                <PublishDate createdDate={admin?.createdDate} />
             </Box>
 
             <Box
                 display="flex"
                 alignItems="center"
             >
+                <PublishDate createdDate={admin?.createdDate} />
                 <UpdatedDate updatedDate={admin?.updatedDate} />
             </Box>
         </Box>
     </Box>
 )
 
+const BasicInfo = ({ admin }) => (
+    <GroupBox>
+        <Grid container>
+            <Grid item xs={12}>
+                <FormLabel sx={{ fontSize: "18px" }}>
+                    Basic info
+                </FormLabel>
+            </Grid>
+
+            <Grid item xs={12} lg={6}>
+                <DisplayField
+                    label="Name"
+                    value={admin?.name || <NoInformation />}
+                />
+            </Grid>
+
+            <Grid item xs={12} lg={6}>
+                <DisplayField
+                    label="Birthday"
+                    value={admin?.birthday || <NoInformation />}
+                />
+            </Grid>
+
+            <Grid item xs={12} lg={6}>
+                <DisplayField
+                    label="Gender"
+                    value={convertNumberToGender(admin?.gender) || <NoInformation />}
+                />
+            </Grid>
+        </Grid>
+    </GroupBox>
+)
+
+const Contact = ({ admin }) => (
+    <GroupBox>
+        <Grid container>
+            <Grid item xs={12}>
+                <FormLabel sx={{ fontSize: "18px" }}>
+                    Contact
+                </FormLabel>
+            </Grid>
+            <Grid item xs={12} lg={6}>
+                <DisplayField
+                    label="Email"
+                    value={admin?.email || <NoInformation />}
+                />
+            </Grid>
+
+            <Grid item xs={12} lg={6}>
+                <DisplayField
+                    label="Phone"
+                    value={admin?.phone || <NoInformation />}
+                />
+            </Grid>
+
+            <Grid item xs={12}>
+                <DisplayField
+                    label="Address"
+                    value={admin?.address || <NoInformation />}
+                />
+            </Grid>
+        </Grid>
+    </GroupBox>
+)
+
+
 export default function ViewMode({ admin }) {
     return (
         <Box component="div">
-            <Grid container>
+            <Grid container >
                 <Grid item xs={12}>
                     <Header admin={admin} />
                 </Grid>
 
-                <Grid item xs={12} lg={6}>
-                    <DisplayField
-                        label="Email"
-                        value={admin?.email || <NoInformation />}
-                    />
-                </Grid>
-
-                <Grid item xs={12} lg={6}>
-                    <DisplayField
-                        label="Birthday"
-                        value={admin?.birthday || <NoInformation />}
-                    />
-                </Grid>
-
-                <Grid item xs={12} lg={6}>
-                    <DisplayField
-                        label="Gender"
-                        value={convertNumberToGender(admin?.gender) || <NoInformation />}
-                    />
-                </Grid>
-
-                <Grid item xs={12} lg={6}>
-                    <DisplayField
-                        label="Phone"
-                        value={admin?.phone || <NoInformation />}
-                    />
+                <Grid item xs={12}>
+                    <BasicInfo admin={admin} />
                 </Grid>
 
                 <Grid item xs={12}>
-                    <DisplayField
-                        label="Address"
-                        value={admin?.address || <NoInformation />}
-                    />
+                    <Contact admin={admin} />
                 </Grid>
             </Grid>
         </Box>

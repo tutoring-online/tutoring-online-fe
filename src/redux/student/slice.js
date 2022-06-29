@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { isAvailableArray } from "helpers/arrayUtils";
 import asyncThunks from "./asyncThunk";
-
+import * as types from "./types";
 
 const INITIAL_STATE = {
     students: [],
@@ -16,16 +17,11 @@ const reducers = {
     },
 
     fetchStudentDetailSuccessful: (state, action) => {
-        state.studentDetail = action.payload || null
+        state.studentDetail = isAvailableArray(action.payload) ? action.payload[0] : null;
     },
     fetchStudentDetailFailed: (state) => {
         state.studentDetail = null
     },
-
-    updateStudentSuccessful: (state, action) => {
-        state.studentDetail = action.payload
-    },
-    updateStudentFailed: () => {},
 
     deleteStudentSuccessful: () => {},
     deleteStudentFailed: () => {},
@@ -35,7 +31,9 @@ const slice = createSlice({
     name: "studentReducer",
     initialState: INITIAL_STATE,
     reducers: {
-
+        [types.CLEAR_STUDENT_DETAIL]: (state) => {
+            state.studentDetail = null;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.fetchStudents.fulfilled, reducers.fetchStudentsSuccessful);
@@ -43,9 +41,6 @@ const slice = createSlice({
 
         builder.addCase(asyncThunks.fetchStudentDetail.fulfilled, reducers.fetchStudentDetailSuccessful);
         builder.addCase(asyncThunks.fetchStudentDetail.rejected, reducers.fetchStudentDetailFailed);
-
-        builder.addCase(asyncThunks.updateStudent.fulfilled, reducers.updateStudentSuccessful);
-        builder.addCase(asyncThunks.updateStudent.rejected, reducers.updateStudentFailed);
 
         builder.addCase(asyncThunks.deleteStudent.fulfilled, reducers.deleteStudentSuccessful);
         builder.addCase(asyncThunks.deleteStudent.rejected, reducers.deleteStudentFailed);

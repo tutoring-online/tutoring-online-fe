@@ -85,7 +85,23 @@ const Subject = () => {
 			{
 				key: "description",
 				label: "Description",
-				render: (row) => row.description || <NoInformation />
+				render: (row) => (
+					<Box
+						display="inline-block"
+						width="10px"
+						minWidth="300px"
+						overflow="hidden"
+						whiteSpace="nowrap"
+						textOverflow="ellipsis"
+					>
+						{row.description || <NoInformation />}
+					</Box>
+				)
+			},
+			{
+				key: "totalSyllabus",
+				label: "Total Syllabuses",
+				render: (row) => row.totalSyllabus || 0
 			},
 			{
 				key: "status",

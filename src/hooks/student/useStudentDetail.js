@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useStudentActions from "./useStudentActions";
 
@@ -10,12 +10,20 @@ const useStudentDetail = (id) => {
 
     useEffect(() => {
         if (!id) return;
+        actions.clearStudentDetail();
         actions.fetchStudentDetail({ id, setLoading });
     }, [actions, id]);
 
+    const refresh = useCallback(() => {
+        if (!id) return;
+        actions.clearStudentDetail();
+        actions.fetchStudentDetail({ id, setLoading });
+    }, [actions, id])
+
     return {
         studentDetail,
-        loading
+        loading,
+        refresh
     };
 }
 

@@ -1,39 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import TutorDetailDialog from 'crud/tutor/ui-segment/TutorDetailDialog';
 import useTutorActions from 'hooks/tutor/useTutorActions';
+import useTutorDetail from 'hooks/tutor/useTutorDetail';
 import { toast } from 'react-toastify';
 import { CRUD_MODE } from 'settings/setting';
 
 export default function ViewTutor({
     open,
     handleClose,
-    setLoadingInfo,
     tutor,
     refresh
 }) {
     const actions = useTutorActions();
+    const { tutorDetail, loading, refresh: refreshDetail } = useTutorDetail(tutor?.id);
+    const [loadingUpdate, setLoadingUpdate] = useState(false);
 
-    const handleSubmit = (data) => {
+
+    const handleSubmit = (data, onSuccess) => {
         if (!tutor?.id || !data) {
             toast.warning("Something went wrong.");
             return;
         }
 
         const loading = (isLoading) => {
-            setLoadingInfo && setLoadingInfo({
-                loading: Boolean(isLoading),
-                text: isLoading ? "Updating..." : ""
-            })
+            setLoadingUpdate(Boolean(isLoading));
         }
 
-        const callback = (updateStatus) => {
+        const listenUpdateStatus = (updateStatus) => {
             if (updateStatus === true) {
-                handleClose && handleClose();
                 refresh && refresh();
+                onSuccess && onSuccess();
+                refreshDetail && refreshDetail();
             }
         }
 
-        actions.updateTutor({ id: tutor.id, data, loading, callback });
+        actions.updateTutor({ id: tutor.id, data, loading, callback: listenUpdateStatus });
     }
 
     return (
@@ -42,8 +43,11 @@ export default function ViewTutor({
             open={open}
             onClose={handleClose}
             onSubmit={handleSubmit}
-            tutor={tutor}
+            loadingSubmit={loadingUpdate}
+            loadingDetail={loading}
+
             mode={CRUD_MODE.view}
+            tutor={tutorDetail || tutor}
             title="Tutor Detail"
             submitButton={{
                 text: "Update"

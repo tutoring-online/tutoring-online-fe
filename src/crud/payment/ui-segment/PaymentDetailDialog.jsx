@@ -1,39 +1,32 @@
-
-import {
-    Button,
-    Dialog,
-    DialogContent,
-    Grid,
-} from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
-
-import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+//Mui
+import { Dialog, DialogContent } from "@mui/material";
+
+//Core components
 import CustomDialogTitle from "components/Dialog/custom/CustomDialogTitle";
 import CustomDialogActions from "components/Dialog/custom/CustomDialogActions";
+import EditingContent from "./EditingContent";
+import ViewMode from "./ViewMode";
+import ViewModeSkeleton from "./ViewModeSkeleton";
+import CancelButton from "components/Buttons/CancelButton";
+import SubmitButton from "components/Buttons/SubmitButton";
+import EditButton from "components/Buttons/EditButton";
 
+//Helpers
 import yup from "helpers/yupGlobal";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { CRUD_MODE } from "settings/setting";
-import RadioGroupField from "components/Form/RadioGroupField";
-import { LIST_PAYMENT_STATUS, PAYMENT_STATUSES, renderPaymentStatus } from "settings/payment-setting";
 
 const schema = yup.object().shape({
-    code: yup.string()
-        .required("Code is required"),
-    name: yup.string()
-        .required("Name is required"),
-    categoryId: yup.string().nullable()
-        .required("Category is required"),
 });
 
-const getDefaultValues = (subject) => {
-    if (!subject) return {
-        status: PAYMENT_STATUSES.ACTIVE
-    };
+const getDefaultValues = (payment) => {
+    if (!payment) return {};
 
     return {
-        ...subject,
+        ...payment,
     }
 }
 
@@ -41,9 +34,12 @@ export default function PaymentDetailDialog({
     open,
     onClose,
     onSubmit,
-    subject,
+    loadingSubmit,
+    loadingDetail,
+
     mode,
-    title = "Tutor Detail",
+    payment,
+    title = "Payment Detail",
     submitButton = {
         text: "Confirm"
     }
@@ -54,13 +50,17 @@ export default function PaymentDetailDialog({
         handleSubmit,
         reset,
         // formState: { errors },
-        control
+        // control
     } = useForm({
         mode: "onSubmit",
         reValidateMode: "onBlur",
-        defaultValues: getDefaultValues(subject),
+        defaultValues: getDefaultValues(payment),
         resolver: yupResolver(schema)
     })
+
+    useEffect(() => {
+        reset(getDefaultValues(payment));
+    }, [payment, reset]);
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -72,13 +72,13 @@ export default function PaymentDetailDialog({
         })
     }, [mode])
 
-    const isDisabled = !isEditing;
-
     const preparedBeforeSubmit = (data) => {
         const preparedData = {
             ...data,
         }
-        onSubmit && onSubmit(preparedData);
+        const onSuccess = () => setIsEditing(false);
+
+        onSubmit && onSubmit(preparedData, onSuccess);
     }
 
     const enableEdit = () => {
@@ -90,11 +90,14 @@ export default function PaymentDetailDialog({
         reset();
     }
 
-    function renderDisplayContent() {
-        return (
-            <div>Display content</div>
-        )
-    }
+    const renderContent = () => isEditing ? (
+        <EditingContent
+            payment={payment}
+            onSubmit={handleSubmit(preparedBeforeSubmit)}
+        />
+    ) : (
+        <ViewMode payment={payment} />
+    )
 
     return (
         <Dialog
@@ -107,66 +110,21 @@ export default function PaymentDetailDialog({
                 onClose={onClose}
             />
             <DialogContent>
-                {isEditing ?
-                    <form
-                        onSubmit={handleSubmit(preparedBeforeSubmit)}
-                    >
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <RadioGroupField
-                                    label="Status"
-                                    name="status"
-                                    row={true}
-                                    options={LIST_PAYMENT_STATUS.map(item => ({
-                                        ...item,
-                                        label: renderPaymentStatus(item.value),
-                                    }))}
-                                    control={control}
-                                    disabled={isDisabled}
-                                />
-                            </Grid>
-                        </Grid>
-                    </form>
-                    :
-                    renderDisplayContent()
-                }
+                {loadingDetail ? <ViewModeSkeleton /> : renderContent()}
             </DialogContent>
             <CustomDialogActions>
-                {isEditing ?
+                {isEditing ? (
                     <>
-                        <Button
-                            variant=""
-                            color="info"
-                            size="medium"
-                            onClick={cancelEdit}
-                            sx={{ background: "#fff", "&:hover": { background: "#f3f3f3" } }}
-                        >
-                            Cancel
-                        </Button>
-
-
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="medium"
-                            type="submit"
+                        <CancelButton onClick={cancelEdit} />
+                        <SubmitButton
                             onClick={handleSubmit(preparedBeforeSubmit)}
-                        >
-                            {submitButton?.text}
-                        </Button>
+                            text={submitButton.text}
+                            loading={loadingSubmit}
+                        />
                     </>
-
-                    :
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        size="medium"
-                        onClick={enableEdit}
-                        startIcon={<EditIcon />}
-                    >
-                        Enable Edit
-                    </Button>
-                }
+                ) : (
+                    <EditButton onClick={enableEdit} />
+                )}
             </CustomDialogActions>
         </Dialog>
     )

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CategoryDetailDialog from 'crud/category/ui-segment/CategoryDetailDialog';
 import useCategoryActions from 'hooks/category/useCategoryActions';
 import { toast } from 'react-toastify';
@@ -8,34 +8,32 @@ import useCategoryDetail from 'hooks/category/useCategoryDetail';
 export default function ViewCategory({
     open,
     handleClose,
-    setLoadingInfo,
     category,
     refresh
 }) {
     const actions = useCategoryActions();
-    const { categoryDetail, loading } = useCategoryDetail(category?.id);
+    const { categoryDetail, loading, refresh: refreshDetail } = useCategoryDetail(category?.id);
+    const [loadingUpdate, setLoadingUpdate] = useState(false);
 
-    const handleSubmit = (data) => {
+    const handleSubmit = (data, onSuccess) => {
         if (!category?.id || !data) {
             toast.warning("Something went wrong.");
             return;
         }
 
         const loading = (isLoading) => {
-            setLoadingInfo && setLoadingInfo({
-                loading: Boolean(isLoading),
-                text: isLoading ? "Updating..." : ""
-            })
+            setLoadingUpdate(Boolean(isLoading));
         }
 
-        const callback = (updateStatus) => {
+        const listenUpdateStatus = (updateStatus) => {
             if (updateStatus === true) {
-                handleClose && handleClose();
                 refresh && refresh();
+                onSuccess && onSuccess();
+                refreshDetail && refreshDetail();
             }
         }
 
-        actions.updateCategory({ id: category.id, data, loading, callback });
+        actions.updateCategory({ id: category.id, data, loading, callback: listenUpdateStatus });
     }
 
     return (
@@ -44,9 +42,11 @@ export default function ViewCategory({
             open={open}
             onClose={handleClose}
             onSubmit={handleSubmit}
-            category={categoryDetail || category}
+            loadingSubmit={loadingUpdate}
             loadingDetail={loading}
+
             mode={CRUD_MODE.view}
+            category={categoryDetail || category}
             title="Category Detail"
             submitButton={{
                 text: "Update"

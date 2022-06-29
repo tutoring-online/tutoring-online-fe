@@ -30,13 +30,6 @@ const reducers = {
         console.log(state, action);
     },
 
-    updateAdminSuccessful: (state, action) => {
-        console.log(state, action);
-    },
-    updateAdminFailed: (state, action) => {
-        console.log(state, action);
-    },
-
     deleteAdminSuccessful: (state, action) => {
         console.log(state, action);
     },
@@ -62,9 +55,6 @@ const slice = createSlice({
 
         builder.addCase(asyncThunks.createAdmin.fulfilled, reducers.createAdminSuccessful);
         builder.addCase(asyncThunks.createAdmin.rejected, reducers.createAdminFailed);
-
-        builder.addCase(asyncThunks.updateAdmin.fulfilled, reducers.updateAdminSuccessful);
-        builder.addCase(asyncThunks.updateAdmin.rejected, reducers.updateAdminFailed);
 
         builder.addCase(asyncThunks.deleteAdmin.fulfilled, reducers.deleteAdminSuccessful);
         builder.addCase(asyncThunks.deleteAdmin.rejected, reducers.deleteAdminFailed);

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { isAvailableArray } from "helpers/arrayUtils";
 import asyncThunks from "./asyncThunk";
-
+import * as types from "./types";
 
 const INITIAL_STATE = {
     subjects: [],
@@ -16,29 +17,26 @@ const reducers = {
     },
 
     fetchSubjectDetailSuccessful: (state, action) => {
-        state.subjectDetail = action.payload || null
+        state.subjectDetail = isAvailableArray(action.payload) ? action.payload[0] : null;
     },
     fetchSubjectDetailFailed: (state) => {
         state.subjectDetail = null
     },
 
-    createSubjectSuccessful: () => {},
-    createSubjectFailed: () => {},
+    createSubjectSuccessful: () => { },
+    createSubjectFailed: () => { },
 
-    updateSubjectSuccessful: (state, action) => {
-        state.subjectDetail = action.payload
-    },
-    updateSubjectFailed: () => {},
-
-    deleteSubjectSuccessful: () => {},
-    deleteSubjectFailed: () => {},
+    deleteSubjectSuccessful: () => { },
+    deleteSubjectFailed: () => { },
 }
 
 const slice = createSlice({
     name: "subjectReducer",
     initialState: INITIAL_STATE,
     reducers: {
-
+        [types.CLEAR_SUBJECT_DETAIL]: (state) => {
+            state.subjectDetail = null;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.fetchSubjects.fulfilled, reducers.fetchSubjectsSuccessful);
@@ -49,9 +47,6 @@ const slice = createSlice({
 
         builder.addCase(asyncThunks.createSubject.fulfilled, reducers.createSubjectSuccessful);
         builder.addCase(asyncThunks.createSubject.rejected, reducers.createSubjectFailed);
-
-        builder.addCase(asyncThunks.updateSubject.fulfilled, reducers.updateSubjectSuccessful);
-        builder.addCase(asyncThunks.updateSubject.rejected, reducers.updateSubjectFailed);
 
         builder.addCase(asyncThunks.deleteSubject.fulfilled, reducers.deleteSubjectSuccessful);
         builder.addCase(asyncThunks.deleteSubject.rejected, reducers.deleteSubjectFailed);

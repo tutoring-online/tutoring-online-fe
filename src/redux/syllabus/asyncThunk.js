@@ -56,7 +56,6 @@ const updateSyllabus = async (params) => {
 
         callback(true, response);
         toast.success("Updated syllabus successfully.");
-        return response;
     } catch (error) {
         callback(false);
         toast.error("Failed to update the syllabus.");

@@ -78,7 +78,23 @@ const Category = () => {
 			{
 				key: "description",
 				label: "Description",
-				render: (row) => row.description || <NoInformation />
+				render: (row) => (
+					<Box
+						display="inline-block"
+						width="10px"
+						minWidth="400px"
+						overflow="hidden"
+						whiteSpace="nowrap"
+						textOverflow="ellipsis"
+					>
+						{row.description || <NoInformation />}
+					</Box>
+				)
+			},
+			{
+				key: "totalSubject",
+				label: "Total Subjects",
+				render: (row) => row.totalSubject || 0
 			},
 			{
 				key: "status",
@@ -183,7 +199,7 @@ const Category = () => {
 				classes={{ root: classes.containerRoot }}
 			>
 				<Table
-					title={"List Subjects"}
+					title={"List Categories"}
 					columns={columns}
 					data={categoryList}
                     panel={renderPanel()}

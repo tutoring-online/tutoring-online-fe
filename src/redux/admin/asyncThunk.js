@@ -58,7 +58,6 @@ const updateAdmin = async (params) => {
 
         callback(true, response);
         toast.success("Updated admin successfully.");
-        return response;
     } catch (error) {
         callback(false);
         toast.error("Failed to update the admin.");

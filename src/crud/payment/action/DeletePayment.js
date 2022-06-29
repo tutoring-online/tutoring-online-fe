@@ -36,7 +36,7 @@ export default function DeletePayment({
             }
         }
 
-        actions.deleteCategory({ id: payment.id, loading, callback });
+        actions.deletePayment({ id: payment.id, loading, callback });
     }
 
     const getDescription = () => (

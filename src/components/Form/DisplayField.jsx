@@ -35,6 +35,7 @@ export default function DisplayField({
                     <Box
                         padding="10px 12px"
                         fontSize="14px"
+                        width="100%"
                     >
                         {value}
                     </Box>
