@@ -7,6 +7,7 @@ import { ROLES } from "settings/setting";
 import { useHistory } from "react-router-dom";
 
 const FIREBASE_NETWORK_ERROR = "auth/network-request-failed";
+const NETWORK_ERROR = "Network Error";
 
 const useAuthentication = () => {
     const actions = useAuthActions();
@@ -15,26 +16,38 @@ const useAuthentication = () => {
 
     useEffect(() => {
         const unregisterAuthObserver = auth().onAuthStateChanged(async (currentUser) => {
+            if (!currentUser) {
+                actions.unsubscribeUser();
+                return;
+            }
+
+            const token = await currentUser.getIdToken();
+            console.log(token);
+
+            let hasError = false;
+
             try {
-                if (!currentUser) {
-                    actions.unsubscribeUser();
-                    return;
-                }
-
-                const token = await currentUser.getIdToken();
-                console.log(token);
-
                 setLoading(true);
                 await actions.asyncLoginUser({ token, role: ROLES.ADMIN });
             } catch (error) {
+                hasError = true;
+                actions.unsubscribeUser();
+
                 if (equalIgnoreCase(error?.code, FIREBASE_NETWORK_ERROR)) {
                     toast.error("Network error!")
                     return;
                 }
-                console.log(error);
+                
+                if (equalIgnoreCase(error?.message, NETWORK_ERROR)) {
+                    toast.error("Network error!")
+                    return;
+                }
+                
+                toast.error("Login failed.");
+                await auth().signOut();
             } finally {
                 setLoading(false);
-                history?.push("auth/login");
+                hasError && history.push("auth/login");
             }
         });
 

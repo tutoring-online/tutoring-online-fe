@@ -33,12 +33,13 @@ const reducers = {
         const user = isAvailableArray(action.payload?.data) ? action.payload.data[0] : null;
 
         if (!type || !role || !user) {
-            const errMsg = action.payload?.resultMessage || "Unknown";
-            toast.error(`Authenticated failed with error: ${errMsg}`,);
-
             state.isSignedIn = false;
-            state.user = null
-            return;
+            state.user = null;
+
+            const err = action.payload?.resultMessage || "Unknown";
+            const message = `Authenticated failed with error: ${err}`;
+            toast.error(message);
+            throw new Error(message);
         }
 
         if (isNotSignedInYet(state.isSignedIn)) {
@@ -46,16 +47,11 @@ const reducers = {
         }
 
         state.isSignedIn = true;
-        state.user = {
-            ...user,
-            role
-        }
+        state.user = { ...user, role }
     },
 
     loginUserFailed: (state, action) => {
-        console.log(action.error);
-        state.isSignedIn = false;
-        state.user = null
+        throw action.error;
     }
 }
 

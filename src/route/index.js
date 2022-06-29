@@ -10,19 +10,33 @@ const AdminLayout = React.lazy(() => import('layouts/Admin.js'));
 const HomeLayout = React.lazy(() => import('layouts/Home.js'));
 const DetailLayout = React.lazy(() => import('layouts/Detail'));
 
-const Router = () => {
+const isFunction = (func) => {
+    return func != null && typeof func === "function";
+}
+
+const AuthenticationWrapper = ({ children }) => {
     const loading = useAuthentication();
+    return isFunction(children) ? children(loading) : children;
+}
+
+const Router = () => {
 
     return (
-        <BrowserRouter basename="/">
+        <BrowserRouter>
             <Suspense fallback={<FullPageLoader />}>
                 <Switch>
-                    <Route path={LAYOUT_PATHS.admin} render={(props) => <AdminLayout authLoading={loading} {...props} />} />
-                    <Route path={LAYOUT_PATHS.auth} render={(props) => <AuthLayout authLoading={loading} {...props} />} />
-                    <Route path={LAYOUT_PATHS.home} render={(props) => <HomeLayout authLoading={loading} {...props} />} />
-                    <Route path={LAYOUT_PATHS.detail} render={(props) => <DetailLayout authLoading={loading} {...props} />} />
-                    <Route path="/" exact component={RedirectHomeWithUserRole} />
-                    <Redirect to="/auth/page-not-found" />
+                    <AuthenticationWrapper>
+                        {(loading) => (
+                            <>
+                                <Route path={LAYOUT_PATHS.admin} render={(props) => <AdminLayout authLoading={loading} {...props} />} />
+                                <Route path={LAYOUT_PATHS.auth} render={(props) => <AuthLayout authLoading={loading} {...props} />} />
+                                <Route path={LAYOUT_PATHS.home} render={(props) => <HomeLayout authLoading={loading} {...props} />} />
+                                <Route path={LAYOUT_PATHS.detail} render={(props) => <DetailLayout authLoading={loading} {...props} />} />
+                                <Route path="/" exact render={() => <RedirectHomeWithUserRole />} />
+                            </>
+                        )}
+                    </AuthenticationWrapper>
+                    <Redirect from="*" to="/auth/page-not-found" />
                 </Switch>
             </Suspense>
         </BrowserRouter>
