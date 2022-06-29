@@ -24,8 +24,6 @@ export default function RadioGroupField({
                 variant="filled"
                 component={Box}
                 width="100%"
-                marginBottom="1rem!important"
-                style={{ "*": { fontSize: "14px !important" } }}
             >
                 <Controller
                     render={({ field }) => (

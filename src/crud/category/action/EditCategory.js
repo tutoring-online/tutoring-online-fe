@@ -3,6 +3,7 @@ import CategoryDetailDialog from 'crud/category/ui-segment/CategoryDetailDialog'
 import useCategoryActions from 'hooks/category/useCategoryActions';
 import { toast } from 'react-toastify';
 import { CRUD_MODE } from 'settings/setting';
+import useCategoryDetail from 'hooks/category/useCategoryDetail';
 
 export default function EditCategory({
     open,
@@ -12,6 +13,7 @@ export default function EditCategory({
     refresh
 }) {
     const actions = useCategoryActions();
+    const { categoryDetail, loading } = useCategoryDetail(category?.id);
 
     const handleSubmit = (data) => {
         if (!category?.id || !data) {
@@ -42,7 +44,8 @@ export default function EditCategory({
             open={open}
             onClose={handleClose}
             onSubmit={handleSubmit}
-            category={category}
+            category={categoryDetail || category}
+            loadingDetail={loading}
             mode={CRUD_MODE.edit}
             title="Category Detail"
             submitButton={{

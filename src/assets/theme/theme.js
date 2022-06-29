@@ -201,7 +201,7 @@ const theme = createTheme(adaptV4Theme({
                 padding: ".625rem .75rem",
             },
             root: {
-                boxShadow: boxShadows.inputBoxShadow,
+                boxShadow: "0 1px 2px #c6cfd8",
                 border: 0,
                 transition: "box-shadow .15s ease",
                 borderRadius: ".375rem",

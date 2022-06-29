@@ -10,6 +10,7 @@ const useAdminDetail = (id) => {
 
     useEffect(() => {
         if (!id) return;
+        actions.clearAdminDetail();
         actions.fetchAdminDetail({ id, setLoading });
     }, [actions, id]);
 

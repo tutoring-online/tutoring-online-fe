@@ -32,8 +32,6 @@ const PrivateRoute = (props) => {
     const isSignedIn = useSelector(state => state.auth.isSignedIn);
     const user = useSelector(state => state.auth.user);
 
-    console.log(user);
-
     if (isSignedIn && isAdmin(user?.role)) {
         return <Route {...props} />
     }

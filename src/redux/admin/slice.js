@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { isAvailableArray } from "helpers/arrayUtils";
 import asyncThunks from "./asyncThunk";
-
+import * as types from "./types";
 
 const INITIAL_STATE = {
     admins: [],
@@ -49,7 +49,9 @@ const slice = createSlice({
     name: "adminReducer",
     initialState: INITIAL_STATE,
     reducers: {
-
+        [types.CLEAR_ADMIN_DETAIL]: (state) => {
+            state.adminDetail = null;
+        } 
     },
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.fetchAdmins.fulfilled, reducers.fetchAdminsSuccessful);
