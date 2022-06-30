@@ -9,7 +9,6 @@ import makeStyles from '@mui/styles/makeStyles';
 import { Avatar, Button, IconButton } from "@mui/material";
 
 //Core component
-import Header from "components/Headers/Header.js";
 import Table from "components/Table/Table.jsx";
 import NoInformation from "components/Text/NoInformation";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
@@ -23,6 +22,8 @@ import { useEffect, useState } from "react";
 import componentStyles from "assets/theme/views/admin/tables.js";
 import { renderAdminStatus, ADMIN_STATUSES } from "settings/admin-setting";
 import { EditStatus } from "crud/admin";
+import useAdminStatistics from "hooks/admin/useAdminStatistics";
+import StatisticHeader from "components/Headers/StatisticHeader";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -33,6 +34,9 @@ const Admin = () => {
 		loading,
 		refresh
 	} = useAdminList();
+	const { statistics } = useAdminStatistics();
+
+
 
 	const [columns, setColumns] = useState([]);
 
@@ -189,7 +193,10 @@ const Admin = () => {
 
 	return (
 		<>
-			<Header />
+			<StatisticHeader
+				statistics={statistics}
+				loading={loading}
+			/>
 			<Container
 				maxWidth={false}
 				component={Box}
