@@ -1,22 +1,22 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify';
 
-import useAdminActions from 'hooks/admin/useAdminActions';
-import useAdminDetail from 'hooks/admin/useAdminDetail';
+import useCategoryActions from 'hooks/category/useCategoryActions';
+import useCategoryDetail from 'hooks/category/useCategoryDetail';
 
 import SwitchStatusDialog from 'components/Dialog/switch-status/SwitchStatusDialog';
-import { LIST_ADMIN_STATUS } from 'settings/admin-setting';
+import { LIST_CATEGORY_STATUS } from 'settings/category-setting';
 
 export default function EditStatus({
     open,
     handleClose,
-    admin,
+    category,
     refresh
 }) {
     const isMounted = useRef(true);
-    const actions = useAdminActions();
+    const actions = useCategoryActions();
     const [loadingUpdate, setLoadingUpdate] = useState(false);
-    const { adminDetail, loading, refresh: refreshDetail } = useAdminDetail(admin?.id);
+    const { categoryDetail, loading, refresh: refreshDetail } = useCategoryDetail(category?.id);
 
     useEffect(() => {
         return () => isMounted.current = false;
@@ -32,7 +32,7 @@ export default function EditStatus({
     }, [handleClose, refresh, refreshDetail]);
 
     const handleSubmit = (newStatus) => {
-        if (!admin?.id || newStatus == null) {
+        if (!category?.id || newStatus == null) {
             toast.warning("Something went wrong.");
             return;
         }
@@ -43,8 +43,8 @@ export default function EditStatus({
             }
         }
 
-        actions.updateAdmin({
-            id: admin?.id,
+        actions.updateCategory({
+            id: category?.id,
             data: { status: newStatus },
             loading,
             callback: listenUpdateStatus
@@ -61,8 +61,8 @@ export default function EditStatus({
             loadingDetail={loading}
 
             title="Status settings"
-            status={adminDetail?.status || admin?.status}
-            listStatus={LIST_ADMIN_STATUS}
+            status={categoryDetail?.status || category?.status}
+            listStatus={LIST_CATEGORY_STATUS}
         />
     )
 }

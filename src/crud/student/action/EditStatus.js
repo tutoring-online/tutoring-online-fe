@@ -1,22 +1,22 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify';
 
-import useAdminActions from 'hooks/admin/useAdminActions';
-import useAdminDetail from 'hooks/admin/useAdminDetail';
+import useStudentActions from 'hooks/student/useStudentActions';
+import useStudentDetail from 'hooks/student/useStudentDetail';
 
 import SwitchStatusDialog from 'components/Dialog/switch-status/SwitchStatusDialog';
-import { LIST_ADMIN_STATUS } from 'settings/admin-setting';
+import { LIST_STUDENT_STATUS } from 'settings/student-setting';
 
 export default function EditStatus({
     open,
     handleClose,
-    admin,
+    student,
     refresh
 }) {
     const isMounted = useRef(true);
-    const actions = useAdminActions();
+    const actions = useStudentActions();
     const [loadingUpdate, setLoadingUpdate] = useState(false);
-    const { adminDetail, loading, refresh: refreshDetail } = useAdminDetail(admin?.id);
+    const { studentDetail, loading, refresh: refreshDetail } = useStudentDetail(student?.id);
 
     useEffect(() => {
         return () => isMounted.current = false;
@@ -32,7 +32,7 @@ export default function EditStatus({
     }, [handleClose, refresh, refreshDetail]);
 
     const handleSubmit = (newStatus) => {
-        if (!admin?.id || newStatus == null) {
+        if (!student?.id || newStatus == null) {
             toast.warning("Something went wrong.");
             return;
         }
@@ -43,8 +43,8 @@ export default function EditStatus({
             }
         }
 
-        actions.updateAdmin({
-            id: admin?.id,
+        actions.updateStudent({
+            id: student?.id,
             data: { status: newStatus },
             loading,
             callback: listenUpdateStatus
@@ -61,8 +61,8 @@ export default function EditStatus({
             loadingDetail={loading}
 
             title="Status settings"
-            status={adminDetail?.status || admin?.status}
-            listStatus={LIST_ADMIN_STATUS}
+            status={studentDetail?.status || student?.status}
+            listStatus={LIST_STUDENT_STATUS}
         />
     )
 }

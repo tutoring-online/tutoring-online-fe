@@ -1,22 +1,22 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify';
 
-import useAdminActions from 'hooks/admin/useAdminActions';
-import useAdminDetail from 'hooks/admin/useAdminDetail';
+import useSubjectActions from 'hooks/subject/useSubjectActions';
+import useSubjectDetail from 'hooks/subject/useSubjectDetail';
 
 import SwitchStatusDialog from 'components/Dialog/switch-status/SwitchStatusDialog';
-import { LIST_ADMIN_STATUS } from 'settings/admin-setting';
+import { LIST_SUBJECT_STATUS } from 'settings/subject-setting';
 
 export default function EditStatus({
     open,
     handleClose,
-    admin,
+    subject,
     refresh
 }) {
     const isMounted = useRef(true);
-    const actions = useAdminActions();
+    const actions = useSubjectActions();
     const [loadingUpdate, setLoadingUpdate] = useState(false);
-    const { adminDetail, loading, refresh: refreshDetail } = useAdminDetail(admin?.id);
+    const { subjectDetail, loading, refresh: refreshDetail } = useSubjectDetail(subject?.id);
 
     useEffect(() => {
         return () => isMounted.current = false;
@@ -32,7 +32,7 @@ export default function EditStatus({
     }, [handleClose, refresh, refreshDetail]);
 
     const handleSubmit = (newStatus) => {
-        if (!admin?.id || newStatus == null) {
+        if (!subject?.id || newStatus == null) {
             toast.warning("Something went wrong.");
             return;
         }
@@ -43,8 +43,8 @@ export default function EditStatus({
             }
         }
 
-        actions.updateAdmin({
-            id: admin?.id,
+        actions.updateSubject({
+            id: subject?.id,
             data: { status: newStatus },
             loading,
             callback: listenUpdateStatus
@@ -61,8 +61,8 @@ export default function EditStatus({
             loadingDetail={loading}
 
             title="Status settings"
-            status={adminDetail?.status || admin?.status}
-            listStatus={LIST_ADMIN_STATUS}
+            status={subjectDetail?.status || subject?.status}
+            listStatus={LIST_SUBJECT_STATUS}
         />
     )
 }

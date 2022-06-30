@@ -24,6 +24,7 @@ import componentStyles from "assets/theme/views/admin/tables.js";
 import NTALoading from "nta-team/nta-loading/Loading";
 import { ViewTutor } from "crud/tutor";
 import { DeleteTutor } from "crud/tutor";
+import { EditStatus } from "crud/tutor";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -38,6 +39,7 @@ const Tutor = () => {
 	const [columns, setColumns] = useState([]);
 
 	const [openEdit, setOpenEdit] = useState(false);
+	const [openEditStatus, setOpenEditStatus] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
 	const [selectedTutor, setSelectedTutor] = useState(null);
 
@@ -61,6 +63,12 @@ const Tutor = () => {
 			setSelectedTutor(admin);
 			setOpenEdit(true);
 		}
+
+		const handleOpenEditStatus = (admin) => {
+				setSelectedTutor(admin);
+				setOpenEditStatus(true);
+			}
+
 
 		const handleOpenDelete = (admin) => {
 			setSelectedTutor(admin);
@@ -109,7 +117,7 @@ const Tutor = () => {
 			{
 				key: "status",
 				label: "Status",
-				render: (row) => renderTutorStatus(row.status)
+				render: (row) => renderTutorStatus(row.status, () => handleOpenEditStatus(row))
 			},
 			{
 				key: "action",
@@ -151,6 +159,11 @@ const Tutor = () => {
 
 	const handleCloseEdit = () => {
 		setOpenEdit(false);
+		setSelectedTutor(null);
+	}
+
+	const handleCloseEditStatus = () => {
+		setOpenEditStatus(false);
 		setSelectedTutor(null);
 	}
 
@@ -217,6 +230,16 @@ const Tutor = () => {
 					tutor={selectedTutor}
 					refresh={refresh}
 				/>
+			}
+
+			{openEditStatus &&
+				<EditStatus
+					open={openEditStatus}
+					handleClose={handleCloseEditStatus}
+					tutor={selectedTutor}
+					refresh={refresh}
+				/>
+
 			}
 		</>
 	)

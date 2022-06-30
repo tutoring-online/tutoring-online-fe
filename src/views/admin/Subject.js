@@ -26,6 +26,7 @@ import NTALoading from "nta-team/nta-loading/Loading";
 import { CreateSubject } from "crud/subject";
 import { ViewSubject } from "crud/subject";
 import { DeleteSubject } from "crud/subject";
+import { EditStatus } from "crud/subject";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -42,6 +43,7 @@ const Subject = () => {
 
 	const [openCreate, setOpenCreate] = useState(false);
 	const [openEdit, setOpenEdit] = useState(false);
+	const [openEditStatus, setOpenEditStatus] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
 	const [selectedSubject, setSelectedSubject] = useState(null);
 
@@ -65,6 +67,12 @@ const Subject = () => {
             setSelectedSubject(subject);
             setOpenEdit(true);
         }
+
+		const handleOpenEditStatus = (subject) => {
+				setSelectedSubject(subject);
+				setOpenEditStatus(true);
+			}
+
 
         const handleOpenDelete = (subject) => {
             setSelectedSubject(subject);
@@ -106,7 +114,7 @@ const Subject = () => {
 			{
 				key: "status",
 				label: "Status",
-				render: (row) => renderSubjectStatus(row.status) || <NoInformation />
+				render: (row) => renderSubjectStatus(row.status, () => handleOpenEditStatus(row))
 			},
 			{
                 key: "action",
@@ -156,6 +164,11 @@ const Subject = () => {
 
 	const handleCloseEdit = () => {
 		setOpenEdit(false);
+		setSelectedSubject(null);
+	}
+
+	const handleCloseEditStatus = () => {
+		setOpenEditStatus(false);
 		setSelectedSubject(null);
 	}
 
@@ -240,6 +253,16 @@ const Subject = () => {
 					subject={selectedSubject}
 					refresh={refresh}
 				/>
+			}
+
+			{openEditStatus &&
+				<EditStatus
+					open={openEditStatus}
+					handleClose={handleCloseEditStatus}
+					subject={selectedSubject}
+					refresh={refresh}
+				/>
+
 			}
 		</>
 	)

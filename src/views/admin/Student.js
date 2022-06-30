@@ -24,6 +24,7 @@ import { renderStudentStatus, STUDENT_STATUSES } from "settings/student-setting"
 import NTALoading from "nta-team/nta-loading/Loading";
 import { ViewStudent } from "crud/student";
 import { DeleteStudent } from "crud/student";
+import { EditStatus } from "crud/student";
 const useStyles = makeStyles(componentStyles);
 
 const Student = () => {
@@ -38,6 +39,7 @@ const Student = () => {
 
 	const [openEdit, setOpenEdit] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
+	const [openEditStatus, setOpenEditStatus] = useState(false);
 	const [selectedStudent, setSelectedStudent] = useState(null);
 
 	const [loadingDetail, setLoadingDetail] = useState({
@@ -56,13 +58,19 @@ const Student = () => {
 	)
 
 	useEffect(() => {
-		const handleOpenEdit = (admin) => {
-			setSelectedStudent(admin);
+		const handleOpenEdit = (student) => {
+			setSelectedStudent(student);
 			setOpenEdit(true);
 		}
 
-		const handleOpenDelete = (admin) => {
-			setSelectedStudent(admin);
+		const handleOpenEditStatus = (student) => {
+				setSelectedStudent(student);
+				setOpenEditStatus(true);
+			}
+
+
+		const handleOpenDelete = (student) => {
+			setSelectedStudent(student);
 			setOpenDelete(true);
 		}
 
@@ -113,7 +121,7 @@ const Student = () => {
 			{
 				key: "status",
 				label: "Status",
-				render: (row) => renderStudentStatus(row.status)
+				render: (row) => renderStudentStatus(row.status, () => handleOpenEditStatus(row))
 			},
 			{
 				key: "action",
@@ -155,6 +163,11 @@ const Student = () => {
 
 	const handleCloseEdit = () => {
 		setOpenEdit(false);
+		setSelectedStudent(null);
+	}
+
+	const handleCloseEditStatus = () => {
+		setOpenEditStatus(false);
 		setSelectedStudent(null);
 	}
 
@@ -221,6 +234,16 @@ const Student = () => {
 					student={selectedStudent}
 					refresh={refresh}
 				/>
+			}
+
+			{openEditStatus &&
+				<EditStatus
+					open={openEditStatus}
+					handleClose={handleCloseEditStatus}
+					student={selectedStudent}
+					refresh={refresh}
+				/>
+
 			}
 		</>
 	)

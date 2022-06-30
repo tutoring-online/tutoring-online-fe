@@ -25,6 +25,7 @@ import componentStyles from "assets/theme/views/admin/tables.js";
 import NTALoading from "nta-team/nta-loading/Loading";
 import { CATEGORY_STATUSES } from "settings/category-setting";
 import { ViewCategory, CreateCategory, DeleteCategory } from "crud/category";
+import { EditStatus } from "crud/category";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -40,6 +41,7 @@ const Category = () => {
 
     const [openCreate, setOpenCreate] = useState(false);
 	const [openEdit, setOpenEdit] = useState(false);
+	const [openEditStatus, setOpenEditStatus] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
 	const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -63,6 +65,12 @@ const Category = () => {
             setSelectedCategory(category);
             setOpenEdit(true);
         }
+
+		const handleOpenEditStatus = (admin) => {
+				setSelectedCategory(admin);
+				setOpenEditStatus(true);
+			}
+
 
         const handleOpenDelete = (category) => {
             setSelectedCategory(category);
@@ -99,7 +107,7 @@ const Category = () => {
 			{
 				key: "status",
 				label: "Status",
-				render: (row) => renderCategoryStatus(row.status) || <NoInformation />
+				render: (row) => renderCategoryStatus(row.status, () => handleOpenEditStatus(row))
 			},
 			{
                 key: "action",
@@ -141,6 +149,11 @@ const Category = () => {
 
     const handleOpenCreate = () => {
 		setOpenCreate(true);
+	}
+
+	const handleCloseEditStatus = () => {
+		setOpenEditStatus(false);
+		setSelectedCategory(null);
 	}
 
 	const handleCloseCreate = () => {
@@ -233,6 +246,16 @@ const Category = () => {
 					category={selectedCategory}
 					refresh={refresh}
 				/>
+			}
+
+			{openEditStatus &&
+				<EditStatus
+					open={openEditStatus}
+					handleClose={handleCloseEditStatus}
+					category={selectedCategory}
+					refresh={refresh}
+				/>
+
 			}
 		</>
 	)

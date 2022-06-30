@@ -24,8 +24,8 @@ const findStatus = (value) => {
     return value != null && LIST_SYLLABUS_STATUS.find(item => item.value === value);
 }
 
-export const renderSyllabusStatus = (value) => {
+export const renderSyllabusStatus = (value, onClick) => {
     const statusObject = findStatus(value);
-    return renderStatus(statusObject);
+    return renderStatus(statusObject, onClick);
 }
 
