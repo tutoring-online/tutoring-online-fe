@@ -27,6 +27,7 @@ import { SYLLABUS_STATUSES } from "settings/syllabus-setting";
 import { CreateSyllabus } from "crud/syllabus";
 import { ViewSyllabus } from "crud/syllabus";
 import { DeleteSyllabus } from "crud/syllabus";
+import { EditStatus } from "crud/syllabus";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -50,6 +51,7 @@ const Syllabus = () => {
 
 	const [openCreate, setOpenCreate] = useState(false);
 	const [openEdit, setOpenEdit] = useState(false);
+	const [openEditStatus, setOpenEditStatus] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
 	const [selectedSyllabus, setSelectedSyllabus] = useState(null);
 
@@ -73,6 +75,12 @@ const Syllabus = () => {
 			setSelectedSyllabus(syllabus);
 			setOpenEdit(true);
 		}
+
+		const handleOpenEditStatus = (syllabus) => {
+				setSelectedSyllabus(syllabus);
+				setOpenEditStatus(true);
+			}
+
 
 		const handleOpenDelete = (syllabus) => {
 			setSelectedSyllabus(syllabus);
@@ -121,7 +129,7 @@ const Syllabus = () => {
 			{
 				key: "status",
 				label: "Status",
-				render: (row) => renderSyllabusStatus(row.status) || <NoInformation />
+				render: (row) => renderSyllabusStatus(row.status, () => handleOpenEditStatus(row))
 			},
 			{
 				key: "action",
@@ -171,6 +179,11 @@ const Syllabus = () => {
 
 	const handleCloseEdit = () => {
 		setOpenEdit(false);
+		setSelectedSyllabus(null);
+	}
+
+	const handleCloseEditStatus = () => {
+		setOpenEditStatus(false);
 		setSelectedSyllabus(null);
 	}
 
@@ -255,6 +268,16 @@ const Syllabus = () => {
 					syllabus={selectedSyllabus}
 					refresh={refresh}
 				/>
+			}
+
+			{openEditStatus &&
+				<EditStatus
+					open={openEditStatus}
+					handleClose={handleCloseEditStatus}
+					syllabus={selectedSyllabus}
+					refresh={refresh}
+				/>
+
 			}
 		</>
 	)

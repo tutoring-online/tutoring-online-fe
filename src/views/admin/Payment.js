@@ -31,6 +31,7 @@ import componentStyles from "assets/theme/views/admin/tables.js";
 import NTALoading from "nta-team/nta-loading/Loading";
 import { ViewPayment } from "crud/payment";
 import { DeletePayment } from "crud/payment";
+import { EditStatus } from "crud/payment";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -53,6 +54,7 @@ const Payment = () => {
 
 	const [columns, setColumns] = useState([]);
 	const [openEdit, setOpenEdit] = useState(false);
+	const [openEditStatus, setOpenEditStatus] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
 	const [selectedPayment, setSelectedPayment] = useState(null);
 
@@ -84,13 +86,19 @@ const Payment = () => {
 			return syllabus || null;
 		}
 
-		const handleOpenEdit = (category) => {
-            setSelectedPayment(category);
+		const handleOpenEdit = (payment) => {
+            setSelectedPayment(payment);
             setOpenEdit(true);
         }
 
-        const handleOpenDelete = (category) => {
-            setSelectedPayment(category);
+		const handleOpenEditStatus = (payment) => {
+			setSelectedPayment(payment);
+				setOpenEditStatus(true);
+			}
+
+
+        const handleOpenDelete = (payment) => {
+            setSelectedPayment(payment);
             setOpenDelete(true);
         }
 
@@ -144,7 +152,7 @@ const Payment = () => {
 			{
 				key: "status",
 				label: "Status",
-				render: (row) => renderPaymentStatus(row.status) || <NoInformation />
+				render: (row) => renderPaymentStatus(row.status, () => handleOpenEditStatus(row))
 			},
 			{
 				key: "action",
@@ -186,6 +194,11 @@ const Payment = () => {
 
 	const handleCloseEdit = () => {
 		setOpenEdit(false);
+		setSelectedPayment(null);
+	}
+
+	const handleCloseEditStatus = () => {
+		setOpenEditStatus(false);
 		setSelectedPayment(null);
 	}
 
@@ -252,6 +265,16 @@ const Payment = () => {
 					payment={selectedPayment}
 					refresh={refresh}
 				/>
+			}
+
+			{openEditStatus &&
+				<EditStatus
+					open={openEditStatus}
+					handleClose={handleCloseEditStatus}
+					payment={selectedPayment}
+					refresh={refresh}
+				/>
+
 			}
 		</>
 	)

@@ -1,22 +1,22 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify';
 
-import useAdminActions from 'hooks/admin/useAdminActions';
-import useAdminDetail from 'hooks/admin/useAdminDetail';
+import useSyllabusActions from 'hooks/syllabus/useSyllabusActions';
+import useSyllabusDetail from 'hooks/syllabus/useSyllabusDetail';
 
 import SwitchStatusDialog from 'components/Dialog/switch-status/SwitchStatusDialog';
-import { LIST_ADMIN_STATUS } from 'settings/admin-setting';
+import { LIST_SYLLABUS_STATUS } from 'settings/syllabus-setting';
 
 export default function EditStatus({
     open,
     handleClose,
-    admin,
+    syllabus,
     refresh
 }) {
     const isMounted = useRef(true);
-    const actions = useAdminActions();
+    const actions = useSyllabusActions();
     const [loadingUpdate, setLoadingUpdate] = useState(false);
-    const { adminDetail, loading, refresh: refreshDetail } = useAdminDetail(admin?.id);
+    const { syllabusDetail, loading, refresh: refreshDetail } = useSyllabusDetail(syllabus?.id);
 
     useEffect(() => {
         return () => isMounted.current = false;
@@ -32,7 +32,7 @@ export default function EditStatus({
     }, [handleClose, refresh, refreshDetail]);
 
     const handleSubmit = (newStatus) => {
-        if (!admin?.id || newStatus == null) {
+        if (!syllabus?.id || newStatus == null) {
             toast.warning("Something went wrong.");
             return;
         }
@@ -43,8 +43,8 @@ export default function EditStatus({
             }
         }
 
-        actions.updateAdmin({
-            id: admin?.id,
+        actions.updateSyllabus({
+            id: syllabus?.id,
             data: { status: newStatus },
             loading,
             callback: listenUpdateStatus
@@ -61,8 +61,8 @@ export default function EditStatus({
             loadingDetail={loading}
 
             title="Status settings"
-            status={adminDetail?.status || admin?.status}
-            listStatus={LIST_ADMIN_STATUS}
+            status={syllabusDetail?.status || syllabus?.status}
+            listStatus={LIST_SYLLABUS_STATUS}
         />
     )
 }

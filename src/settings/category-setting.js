@@ -38,8 +38,8 @@ const findStatus = (value) => {
     return value != null && LIST_CATEGORY_STATUS.find(item => item.value === value);
 }
 
-export const renderCategoryStatus = (value) => {
+export const renderCategoryStatus = (value, onClick) => {
     const statusObject = findStatus(value);
-    return renderStatus(statusObject);
+    return renderStatus(statusObject, onClick);
 }
 

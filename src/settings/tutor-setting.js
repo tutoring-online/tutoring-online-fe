@@ -31,8 +31,8 @@ const findStatus = (value) => {
     return value != null && LIST_TUTOR_STATUS.find(item => item.value === value);
 }
 
-export const renderTutorStatus = (value) => {
+export const renderTutorStatus = (value, onClick) => {
     const statusObject = findStatus(value);
-    return renderStatus(statusObject);
+    return renderStatus(statusObject, onClick);
 }
 
