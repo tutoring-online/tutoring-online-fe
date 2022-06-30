@@ -1,6 +1,5 @@
 import React from "react";
 import { FormLabel, Grid } from "@mui/material";
-import DisplayField from "components/Form/DisplayField";
 import GroupBox from "components/Form/GroupBox";
 import NoInformation from "components/Text/NoInformation";
 import { Box } from "@mui/material";
@@ -72,22 +71,28 @@ const Header = ({ category }) => (
 
 const Description = ({ category }) => (
   <GroupBox>
-      <Grid container>
-          <Grid item xs={12}>
-              <FormLabel sx={{ fontSize: "18px" }}>
-                  Description
-              </FormLabel>
-          </Grid>
-
-          <Grid item xs={12}>
-              <DisplayField
-                  value={category?.address || <NoInformation
-                   />}                   
-              />
-          </Grid>
+    <Grid container>
+      <Grid item xs={12}>
+        <FormLabel sx={{ fontSize: "18px" }}>Description</FormLabel>
       </Grid>
+
+      <Grid item xs={12}>
+        <FormLabel sx={{ fontSize: "14px" }} style={{ fontWeight: "normal" }}>
+          {category?.address || <NoInformation />} 
+
+          EXAMPLE TEXT Lorem Ipsum has been the industry's standard dummy text
+          ever since the 1500s, when an unknown printer took a galley of type
+          and scrambled it to make a type specimen book. It has survived not
+          only five centuries, but also the leap into electronic typesetting,
+          remaining essentially unchanged. It was popularised in the 1960s with
+          the release of Letraset sheets containing Lorem Ipsum passages, and
+          more recently with desktop publishing software like Aldus PageMaker
+          including versions of Lorem Ipsum.
+        </FormLabel>
+      </Grid>
+    </Grid>
   </GroupBox>
-)
+);
 
 export default function ViewMode({ category }) {
   return (
