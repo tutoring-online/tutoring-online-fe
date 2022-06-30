@@ -38,8 +38,8 @@ const findStatus = (value) => {
     return value != null && LIST_PAYMENT_STATUS.find(item => item.value === value);
 }
 
-export const renderPaymentStatus = (value) => {
+export const renderPaymentStatus = (value, onClick) => {
     const statusObject = findStatus(value);
-    return renderStatus(statusObject);
+    return renderStatus(statusObject, onClick);
 }
 

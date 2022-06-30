@@ -5,6 +5,7 @@ export default function SubmitButton({
     onClick,
     text = "Submit",
     loading = false,
+    ...props
 }) {
     return (
         <LoadingButton
@@ -14,6 +15,7 @@ export default function SubmitButton({
             size="medium"
             type="submit"
             onClick={onClick}
+            {...props}
         >
             {text}
         </LoadingButton>

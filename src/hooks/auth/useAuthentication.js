@@ -37,17 +37,19 @@ const useAuthentication = () => {
                     toast.error("Network error!")
                     return;
                 }
-                
+
                 if (equalIgnoreCase(error?.message, NETWORK_ERROR)) {
                     toast.error("Network error!")
                     return;
                 }
-                
+
                 toast.error("Login failed.");
                 await auth().signOut();
             } finally {
                 setLoading(false);
-                hasError && history.push("auth/login");
+                if (hasError) {
+                    history.push("auth/login");
+                }
             }
         });
 

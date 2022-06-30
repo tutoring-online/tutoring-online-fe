@@ -31,8 +31,8 @@ export const findAdminStatus = (value) => {
     return value != null && LIST_ADMIN_STATUS.find(item => item.value === value);
 }
 
-export const renderAdminStatus = (value) => {
+export const renderAdminStatus = (value, onClick) => {
     const statusObject = findAdminStatus(value);
-    return renderStatus(statusObject);
+    return renderStatus(statusObject, onClick);
 }
 

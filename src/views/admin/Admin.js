@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 
 import componentStyles from "assets/theme/views/admin/tables.js";
 import { renderAdminStatus, ADMIN_STATUSES } from "settings/admin-setting";
+import { EditStatus } from "crud/admin";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -37,6 +38,7 @@ const Admin = () => {
 
 	const [openEdit, setOpenEdit] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
+	const [openEditStatus, setOpenEditStatus] = useState(false);
 	const [selectedAdmin, setSelectedAdmin] = useState(null);
 
 	const [loadingDetail, setLoadingDetail] = useState({
@@ -60,6 +62,11 @@ const Admin = () => {
 			const handleOpenEdit = (admin) => {
 				setSelectedAdmin(admin);
 				setOpenEdit(true);
+			}
+
+			const handleOpenEditStatus = (admin) => {
+				setSelectedAdmin(admin);
+				setOpenEditStatus(true);
 			}
 
 			const handleOpenDelete = (admin) => {
@@ -100,7 +107,7 @@ const Admin = () => {
 				{
 					key: "status",
 					label: "Status",
-					render: (row) => renderAdminStatus(row.status)
+					render: (row) => renderAdminStatus(row.status, () => handleOpenEditStatus(row))
 				},
 				{
 					key: "action",
@@ -144,6 +151,11 @@ const Admin = () => {
 
 	const handleCloseEdit = () => {
 		setOpenEdit(false);
+		setSelectedAdmin(null);
+	}
+
+	const handleCloseEditStatus = () => {
+		setOpenEditStatus(false);
 		setSelectedAdmin(null);
 	}
 
@@ -196,7 +208,6 @@ const Admin = () => {
 				<ViewAdmin
 					open={openEdit}
 					handleClose={handleCloseEdit}
-					setLoadingInfo={setLoadingDetail}
 					admin={selectedAdmin}
 					refresh={refresh}
 				/>
@@ -210,6 +221,16 @@ const Admin = () => {
 					admin={selectedAdmin}
 					refresh={refresh}
 				/>
+			}
+
+			{openEditStatus &&
+				<EditStatus
+					open={openEditStatus}
+					handleClose={handleCloseEditStatus}
+					admin={selectedAdmin}
+					refresh={refresh}
+				/>
+
 			}
 		</>
 	)

@@ -1,5 +1,7 @@
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { equalIgnoreCase } from "helpers/stringUtils";
+import { SquareRefreshingIcon } from "nta-team/nta-icon";
+import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
 
 export const ROLES = {
     ADMIN: "ADMIN",
@@ -22,11 +24,11 @@ export const isStudent = (role) => {
 export const STATUS_COLORS = {
     DISABLED: {
         textColor: "#3a3540",
-        bgColor: "#d7d9db"
+        bgColor: "#e0e0e0"
     },
     ACTIVE: {
-        textColor: "#3e5e30",
-        bgColor: "#d2edda"
+        textColor: "#229451",
+        bgColor: "#e9f4ee"
     },
     PENDING: {
         textColor: "#866416",
@@ -37,8 +39,8 @@ export const STATUS_COLORS = {
         bgColor: "#c8e6ff"
     },
     CANCELED: {
-        textColor: "#7c2f3d",
-        bgColor: "#f7c6cc"
+        textColor: "#f0565b",
+        bgColor: "#fcedea"
     },
     FINISHED: {
         textColor: "#c3b0e5",
@@ -48,21 +50,37 @@ export const STATUS_COLORS = {
 }
 
 
-export const renderStatus = (statusObject) => {
+export const renderStatus = (statusObject, onClick) => {
     if (!statusObject) return null;
     return (
         <Box
-            component="div"
-            display="inline-block"
-            padding="2px 8px"
-            borderRadius={1}
-
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            padding="4px 8px"
+            borderRadius="4px"
+            width="fit-content"
             fontSize="inherit"
             fontWeight={600}
             color={statusObject.textColor}
             bgcolor={statusObject.bgColor}
         >
             {statusObject.label}
+            {onClick &&
+                <Box marginLeft="8px">
+                    <BootstrapTooltip title="Edit">
+                        <IconButton
+                            sx={{
+                                borderRadius: "4px",
+                                padding: "2px 4px"
+                            }}
+                            onClick={onClick}
+                        >
+                            <SquareRefreshingIcon fill="#255784" />
+                        </IconButton>
+                    </BootstrapTooltip>
+                </Box>
+            }
         </Box>
     )
 }
