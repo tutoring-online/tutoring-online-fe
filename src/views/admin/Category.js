@@ -216,6 +216,7 @@ const Category = () => {
 					columns={columns}
 					data={categoryList}
                     panel={renderPanel()}
+					loadingData={loading}
 				/>
 			</Container>
 

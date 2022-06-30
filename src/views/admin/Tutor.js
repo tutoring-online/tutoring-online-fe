@@ -209,6 +209,7 @@ const Tutor = () => {
 					columns={columns}
 					data={tutorList}
 					panel={renderPanel()}
+					loadingData={loading}
 				/>
 			</Container>
 

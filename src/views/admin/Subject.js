@@ -223,6 +223,7 @@ const Subject = () => {
 					columns={columns}
 					data={subjectList}
 					panel={renderPanel()}
+					loadingData={loading}
 				/>
 			</Container>
 

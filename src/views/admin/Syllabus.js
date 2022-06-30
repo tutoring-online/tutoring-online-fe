@@ -238,6 +238,7 @@ const Syllabus = () => {
 					columns={columns}
 					data={syllabusList}
 					panel={renderPanel()}
+					loadingData={loading}
 				/>
 			</Container>
 
