@@ -201,6 +201,7 @@ const Admin = () => {
 					columns={columns}
 					data={adminList}
 					panel={renderPanel()}
+					loadingData={loading}
 				/>
 			</Container>
 

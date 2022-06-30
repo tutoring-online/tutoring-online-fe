@@ -23,7 +23,8 @@ const Tables = ({
     title,
     columns,
     data,
-    panel
+    panel,
+    loadingData
 }) => {
     const classes = useStyles();
 
@@ -78,6 +79,7 @@ const Tables = ({
                         <CustomTableBody
                             columns={columns}
                             data={paginationData}
+                            loadingData={loadingData}
                         />
                     </Box>
                 </TableContainer>

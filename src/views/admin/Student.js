@@ -213,6 +213,7 @@ const Student = () => {
 					columns={columns}
 					data={studentList}
 					panel={renderPanel()}
+					loadingData={loading}
 				/>
 			</Container>
 

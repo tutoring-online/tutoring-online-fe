@@ -244,6 +244,7 @@ const Payment = () => {
 					columns={columns}
 					data={paymentList}
 					panel={renderPanel()}
+					loadingData={loading}
 				/>
 			</Container>
 
