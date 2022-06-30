@@ -1,4 +1,4 @@
-import { Grid, Box, Skeleton } from "@mui/material";
+import { Grid } from "@mui/material";
 import LabelSkeleton from "components/Skeleton/LabelSkeleton";
 import ValueSkeleton from "components/Skeleton/ValueSkeleton";
 
