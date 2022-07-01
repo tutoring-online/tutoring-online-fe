@@ -42,11 +42,18 @@ export const STATUS_COLORS = {
         textColor: "#f0565b",
         bgColor: "#fcedea"
     },
+    DELETED: {
+        textColor: "#ff0000",
+        bgColor: "#ffe5e5"
+    },
     FINISHED: {
         textColor: "#c3b0e5",
         bgColor: "#573e7d"
     },
-
+    BANNED: {
+        textColor: "#ee7450",
+        bgColor: "#fdeeea"
+    }
 }
 
 

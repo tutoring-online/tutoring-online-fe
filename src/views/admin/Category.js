@@ -11,21 +11,22 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 
 //Core component
-import Header from "components/Headers/Header.js";
 import Table from "components/Table/Table.jsx";
+import NoInformation from "components/Text/NoInformation";
+import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
+import StatisticHeader from "components/Headers/StatisticHeader";
+import NTALoading from "nta-team/nta-loading/Loading";
+import { ViewCategory, CreateCategory, DeleteCategory, EditStatus } from "crud/category";
 
 //Hooks
 import useCategoryList from "hooks/category/useCategoryList";
+import useCategoryStatistics from "hooks/category/useCategoryStatistics";
 
-import NoInformation from "components/Text/NoInformation";
-import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
+//Helper
 import { renderCategoryStatus } from "settings/category-setting";
+import { CATEGORY_STATUSES } from "settings/category-setting";
 
 import componentStyles from "assets/theme/views/admin/tables.js";
-import NTALoading from "nta-team/nta-loading/Loading";
-import { CATEGORY_STATUSES } from "settings/category-setting";
-import { ViewCategory, CreateCategory, DeleteCategory } from "crud/category";
-import { EditStatus } from "crud/category";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -36,10 +37,11 @@ const Category = () => {
 		loading,
 		refresh
 	} = useCategoryList();
+	const { statistics } = useCategoryStatistics();
 
 	const [columns, setColumns] = useState([]);
 
-    const [openCreate, setOpenCreate] = useState(false);
+	const [openCreate, setOpenCreate] = useState(false);
 	const [openEdit, setOpenEdit] = useState(false);
 	const [openEditStatus, setOpenEditStatus] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
@@ -61,21 +63,21 @@ const Category = () => {
 	)
 
 	useEffect(() => {
-        const handleOpenEdit = (category) => {
-            setSelectedCategory(category);
-            setOpenEdit(true);
-        }
+		const handleOpenEdit = (category) => {
+			setSelectedCategory(category);
+			setOpenEdit(true);
+		}
 
 		const handleOpenEditStatus = (admin) => {
-				setSelectedCategory(admin);
-				setOpenEditStatus(true);
-			}
+			setSelectedCategory(admin);
+			setOpenEditStatus(true);
+		}
 
 
-        const handleOpenDelete = (category) => {
-            setSelectedCategory(category);
-            setOpenDelete(true);
-        }
+		const handleOpenDelete = (category) => {
+			setSelectedCategory(category);
+			setOpenDelete(true);
+		}
 
 		setColumns([
 			{
@@ -110,44 +112,44 @@ const Category = () => {
 				render: (row) => renderCategoryStatus(row.status, () => handleOpenEditStatus(row))
 			},
 			{
-                key: "action",
-                label: "Actions",
-                render: (row) => (
-                    <Box
-                        component="div"
-                        display="flex"
-                        alignItems="center"
-                        columnGap="8px"
-                        fontSize="13px"
-                    >
-                        <BootstrapTooltip title="Detail">
-                            <span>
-                                <IconButton
-                                    style={{ padding: 5 }}
-                                    onClick={() => handleOpenEdit(row)}
-                                >
-                                    <SettingsIcon sx={{ width: 18, height: 18 }} />
-                                </IconButton>
-                            </span>
-                        </BootstrapTooltip>
-                        <BootstrapTooltip title="Delete">
-                            <span>
-                                <IconButton
-                                    style={{ padding: 5 }}
-                                    onClick={() => handleOpenDelete(row)}
-                                    disabled={row.status === CATEGORY_STATUSES.DELETED}
-                                >
-                                    <DeleteForeverIcon sx={{ width: 18, height: 18 }} />
-                                </IconButton>
-                            </span>
-                        </BootstrapTooltip>
-                    </Box>
-                )
-            },
+				key: "action",
+				label: "Actions",
+				render: (row) => (
+					<Box
+						component="div"
+						display="flex"
+						alignItems="center"
+						columnGap="8px"
+						fontSize="13px"
+					>
+						<BootstrapTooltip title="Detail">
+							<span>
+								<IconButton
+									style={{ padding: 5 }}
+									onClick={() => handleOpenEdit(row)}
+								>
+									<SettingsIcon sx={{ width: 18, height: 18 }} />
+								</IconButton>
+							</span>
+						</BootstrapTooltip>
+						<BootstrapTooltip title="Delete">
+							<span>
+								<IconButton
+									style={{ padding: 5 }}
+									onClick={() => handleOpenDelete(row)}
+									disabled={row.status === CATEGORY_STATUSES.DELETED}
+								>
+									<DeleteForeverIcon sx={{ width: 18, height: 18 }} />
+								</IconButton>
+							</span>
+						</BootstrapTooltip>
+					</Box>
+				)
+			},
 		])
 	}, [])
 
-    const handleOpenCreate = () => {
+	const handleOpenCreate = () => {
 		setOpenCreate(true);
 	}
 
@@ -204,7 +206,10 @@ const Category = () => {
 
 	return (
 		<>
-			<Header />
+			<StatisticHeader
+				statistics={statistics}
+				loading={loading}
+			/>
 			<Container
 				maxWidth={false}
 				component={Box}
@@ -215,12 +220,12 @@ const Category = () => {
 					title={"List Categories"}
 					columns={columns}
 					data={categoryList}
-                    panel={renderPanel()}
+					panel={renderPanel()}
 					loadingData={loading}
 				/>
 			</Container>
 
-            {openCreate &&
+			{openCreate &&
 				<CreateCategory
 					open={openCreate}
 					handleClose={handleCloseCreate}

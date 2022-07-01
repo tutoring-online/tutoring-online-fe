@@ -10,8 +10,8 @@ export const LIST_ADMIN_STATUS = [
     {
         label: "Deleted",
         value: ADMIN_STATUSES.DELETED,
-        textColor: STATUS_COLORS.CANCELED.textColor,
-        bgColor: STATUS_COLORS.CANCELED.bgColor
+        textColor: STATUS_COLORS.DELETED.textColor,
+        bgColor: STATUS_COLORS.DELETED.bgColor
     },
     {
         label: "Disabled",

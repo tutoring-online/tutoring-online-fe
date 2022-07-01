@@ -29,8 +29,8 @@ export const LIST_SUBJECT_STATUS = [
     {
         label: "Deleted",
         value: SUBJECT_STATUSES.DELETED,
-        textColor: STATUS_COLORS.CANCELED.textColor,
-        bgColor: STATUS_COLORS.CANCELED.bgColor
+        textColor: STATUS_COLORS.DELETED.textColor,
+        bgColor: STATUS_COLORS.DELETED.bgColor
     },
 ]
 

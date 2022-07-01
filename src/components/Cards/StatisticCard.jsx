@@ -39,7 +39,7 @@ function StatisticCard({
                             <Box
                                 component={Typography}
                                 variant="h2"
-                                fontWeight="600!important"
+                                fontWeight="500!important"
                                 marginBottom="0!important"
                                 marginTop="0!important"
                             >

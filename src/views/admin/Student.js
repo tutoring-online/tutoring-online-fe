@@ -10,7 +10,6 @@ import makeStyles from '@mui/styles/makeStyles';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 //Core component
-import Header from "components/Headers/Header.js";
 import Table from "components/Table/Table.jsx";
 
 //Hooks
@@ -25,6 +24,8 @@ import NTALoading from "nta-team/nta-loading/Loading";
 import { ViewStudent } from "crud/student";
 import { DeleteStudent } from "crud/student";
 import { EditStatus } from "crud/student";
+import StatisticHeader from "components/Headers/StatisticHeader";
+import useStudentStatistics from "hooks/student/useStudentStatistics";
 const useStyles = makeStyles(componentStyles);
 
 const Student = () => {
@@ -34,6 +35,7 @@ const Student = () => {
 		loading,
 		refresh
 	} = useStudentList();
+	const { statistics } = useStudentStatistics();
 
 	const [columns, setColumns] = useState([]);
 
@@ -201,7 +203,10 @@ const Student = () => {
 
 	return (
 		<>
-			<Header />
+			<StatisticHeader
+				statistics={statistics}
+				loading={loading}
+			/>
 			<Container
 				maxWidth={false}
 				component={Box}

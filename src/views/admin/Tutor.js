@@ -10,21 +10,22 @@ import makeStyles from '@mui/styles/makeStyles';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 //Core component
-import Header from "components/Headers/Header.js";
 import Table from "components/Table/Table.jsx";
+import StatisticHeader from "components/Headers/StatisticHeader";
+import NTALoading from "nta-team/nta-loading/Loading";
+import { ViewTutor } from "crud/tutor";
+import { DeleteTutor } from "crud/tutor";
+import { EditStatus } from "crud/tutor";
 
 //Hooks
 import useTutorList from "hooks/tutor/useTutorList";
+import useTutorStatistics from "hooks/tutor/useTutorStatistics";
 
 import { renderTutorStatus, TUTOR_STATUSES } from "settings/tutor-setting";
 import NoInformation from "components/Text/NoInformation";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
 
 import componentStyles from "assets/theme/views/admin/tables.js";
-import NTALoading from "nta-team/nta-loading/Loading";
-import { ViewTutor } from "crud/tutor";
-import { DeleteTutor } from "crud/tutor";
-import { EditStatus } from "crud/tutor";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -35,6 +36,7 @@ const Tutor = () => {
 		loading,
 		refresh
 	} = useTutorList();
+	const { statistics } = useTutorStatistics();
 
 	const [columns, setColumns] = useState([]);
 
@@ -197,7 +199,10 @@ const Tutor = () => {
 
 	return (
 		<>
-			<Header />
+			<StatisticHeader
+				statistics={statistics}
+				loading={loading}
+			/>
 			<Container
 				maxWidth={false}
 				component={Box}

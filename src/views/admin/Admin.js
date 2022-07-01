@@ -36,8 +36,6 @@ const Admin = () => {
 	} = useAdminList();
 	const { statistics } = useAdminStatistics();
 
-
-
 	const [columns, setColumns] = useState([]);
 
 	const [openEdit, setOpenEdit] = useState(false);

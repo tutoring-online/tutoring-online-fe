@@ -11,7 +11,6 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 
 //Core component
-import Header from "components/Headers/Header.js";
 import Table from "components/Table/Table.jsx";
 
 //Hooks
@@ -27,6 +26,8 @@ import { CreateSubject } from "crud/subject";
 import { ViewSubject } from "crud/subject";
 import { DeleteSubject } from "crud/subject";
 import { EditStatus } from "crud/subject";
+import StatisticHeader from "components/Headers/StatisticHeader";
+import useSubjectStatistics from "hooks/subject/useSubjectStatistics";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -37,7 +38,7 @@ const Subject = () => {
 		loading,
 		refresh
 	} = useSubjectList();
-
+	const { statistics } = useSubjectStatistics();
 
 	const [columns, setColumns] = useState([]);
 
@@ -211,7 +212,10 @@ const Subject = () => {
 
 	return (
 		<>
-			<Header />
+			<StatisticHeader
+				statistics={statistics}
+				loading={loading}
+			/>
 			<Container
 				maxWidth={false}
 				component={Box}

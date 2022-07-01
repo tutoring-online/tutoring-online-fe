@@ -15,16 +15,16 @@ export const LIST_PAYMENT_STATUS = [
         bgColor: STATUS_COLORS.PENDING.bgColor
     },
     {
-        label: "Payment Completed",
+        label: "Completed",
         value: PAYMENT_STATUSES.PAID,
         textColor: STATUS_COLORS.ACTIVE.textColor,
         bgColor: STATUS_COLORS.ACTIVE.bgColor
     },
     {
         label: "Error",
-        value: PAYMENT_STATUSES,
-        textColor: STATUS_COLORS.CANCELED.textColor,
-        bgColor: STATUS_COLORS.CANCELED.bgColor
+        value: PAYMENT_STATUSES.ERROR,
+        textColor: STATUS_COLORS.DELETED.textColor,
+        bgColor: STATUS_COLORS.DELETED.bgColor
     },
     {
         label: "Canceled",

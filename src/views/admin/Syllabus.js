@@ -11,7 +11,6 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 
 //Core component
-import Header from "components/Headers/Header.js";
 import Table from "components/Table/Table.jsx";
 import NTALoading from "nta-team/nta-loading/Loading";
 
@@ -28,6 +27,8 @@ import { CreateSyllabus } from "crud/syllabus";
 import { ViewSyllabus } from "crud/syllabus";
 import { DeleteSyllabus } from "crud/syllabus";
 import { EditStatus } from "crud/syllabus";
+import StatisticHeader from "components/Headers/StatisticHeader";
+import useSyllabusStatistics from "hooks/syllabus/useSyllabusStatistics";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -45,7 +46,7 @@ const Syllabus = () => {
 		loading,
 		refresh
 	} = useSyllabusList();
-
+	const {statistics} = useSyllabusStatistics();
 
 	const [columns, setColumns] = useState([]);
 
@@ -226,7 +227,10 @@ const Syllabus = () => {
 
 	return (
 		<>
-			<Header />
+			<StatisticHeader
+				statistics={statistics}
+				loading={loading}
+			/>
 			<Container
 				maxWidth={false}
 				component={Box}

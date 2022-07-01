@@ -9,18 +9,6 @@ export const CATEGORY_STATUSES = {
 
 export const LIST_CATEGORY_STATUS = [
     {
-        label: "Disabled",
-        value: CATEGORY_STATUSES.DISABLED,
-        textColor: STATUS_COLORS.DISABLED.textColor,
-        bgColor: STATUS_COLORS.DISABLED.bgColor
-    },
-    {
-        label: "Deleted",
-        value: CATEGORY_STATUSES.DELETED,
-        textColor: STATUS_COLORS.CANCELED.textColor,
-        bgColor: STATUS_COLORS.CANCELED.bgColor
-    },
-    {
         label: "Active",
         value: CATEGORY_STATUSES.ACTIVE,
         textColor: STATUS_COLORS.ACTIVE.textColor,
@@ -31,6 +19,18 @@ export const LIST_CATEGORY_STATUS = [
         value: CATEGORY_STATUSES.INACTIVE,
         textColor: STATUS_COLORS.FINISHED.textColor,
         bgColor: STATUS_COLORS.FINISHED.bgColor
+    },
+    {
+        label: "Disabled",
+        value: CATEGORY_STATUSES.DISABLED,
+        textColor: STATUS_COLORS.DISABLED.textColor,
+        bgColor: STATUS_COLORS.DISABLED.bgColor
+    },
+    {
+        label: "Deleted",
+        value: CATEGORY_STATUSES.DELETED,
+        textColor: STATUS_COLORS.DELETED.textColor,
+        bgColor: STATUS_COLORS.DELETED.bgColor
     },
 ]
 

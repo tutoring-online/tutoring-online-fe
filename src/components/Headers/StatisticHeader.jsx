@@ -27,6 +27,12 @@ const StatisticHeader = ({
 
     const classes = useStyles();
 
+    const getXsSize = () => {
+        const MIN_SIZE = 4;
+        const size = (12 / statistics.length);
+        return size >= MIN_SIZE ? size : MIN_SIZE;
+    }
+
     return (
         isAvailableArray(statistics) &&
         <div className={classes.header}>
@@ -39,7 +45,7 @@ const StatisticHeader = ({
                     {statistics.map(item =>
                         <Grid
                             item
-                            xl={(12 / statistics.length)}
+                            xl={getXsSize()}
                             lg={6}
                             xs={12}
                             key={item.key}
@@ -80,7 +86,7 @@ const StatisticHeader = ({
                                         color="#525f7f"
                                     >
                                         {item.quantity}
-                                        {item.percent != null &&
+                                        {Boolean(item.percent) &&
                                             <Box
                                                 fontSize="inherit"
                                                 fontWeight="400"

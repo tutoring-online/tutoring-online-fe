@@ -10,7 +10,6 @@ import makeStyles from '@mui/styles/makeStyles';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 //Core component
-import Header from "components/Headers/Header.js";
 import Table from "components/Table/Table.jsx";
 import NoInformation from "components/Text/NoInformation";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
@@ -32,6 +31,8 @@ import NTALoading from "nta-team/nta-loading/Loading";
 import { ViewPayment } from "crud/payment";
 import { DeletePayment } from "crud/payment";
 import { EditStatus } from "crud/payment";
+import usePaymentStatistics from "hooks/payment/usePaymentStatistics";
+import StatisticHeader from "components/Headers/StatisticHeader";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -51,6 +52,7 @@ const Payment = () => {
         loading,
         refresh
     } = usePaymentList();
+	const { statistics } = usePaymentStatistics();
 
 	const [columns, setColumns] = useState([]);
 	const [openEdit, setOpenEdit] = useState(false);
@@ -232,7 +234,10 @@ const Payment = () => {
 
 	return (
 		<>
-			<Header />
+			<StatisticHeader
+				statistics={statistics}
+				loading={loading}
+			/>
 			<Container
 				maxWidth={false}
 				component={Box}
