@@ -16,6 +16,7 @@ import CustomTableBody from "./CustomTableBody";
 import CustomTablePagination from "./CusomTablePagination";
 import { isAvailableArray } from "helpers/arrayUtils";
 import { DEFAULT_PAGINATION } from "settings/table-setting";
+import TableFilter from "./TableFilter";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -24,6 +25,7 @@ const Tables = ({
     columns,
     data,
     panel,
+    filter,
     loadingData
 }) => {
     const classes = useStyles();
@@ -66,6 +68,9 @@ const Tables = ({
                     }}
                     action={panel}
                 />
+                <TableFilter>
+                    {filter}
+                </TableFilter>
                 <TableContainer>
                     <Box
                         component={Table}
