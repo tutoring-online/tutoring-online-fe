@@ -117,7 +117,7 @@ const BasicInfo = ({ admin }) => (
         <Grid container>
             <Grid item xs={12}>
                 <FormLabel sx={{ fontSize: "18px" }}>
-                    Basic info
+                    Basic Info
                 </FormLabel>
             </Grid>
 

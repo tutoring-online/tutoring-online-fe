@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Skeleton } from "@mui/material";
 import LabelSkeleton from "components/Skeleton/LabelSkeleton";
 import ValueSkeleton from "components/Skeleton/ValueSkeleton";
 
@@ -10,7 +10,12 @@ const ViewModeSkeleton = () => (
     </Grid>
     <Grid item xs={12} marginBottom="1rem">
       <LabelSkeleton />
-      <ValueSkeleton />
+      <Skeleton
+        variant="rectangular"
+        animation="wave"
+        height={70}
+        style={{ marginBottom: "1rem" }}
+      />
     </Grid>
   </Grid>
 );
