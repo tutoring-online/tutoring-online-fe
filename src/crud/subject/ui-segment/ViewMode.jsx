@@ -3,7 +3,7 @@ import { Box, Grid, FormLabel } from "@mui/material";
 import { validDate } from "helpers/dateUtils";
 import { getLocaleDateTimeString } from "helpers/dateUtils";
 import { getLocaleDateString } from "helpers/dateUtils";
-import { renderCategoryStatus } from "settings/category-setting";
+import { renderSubjectStatus } from "settings/subject-setting";
 import GroupBox from "components/Form/GroupBox";
 import NoInformation from "components/Text/NoInformation";
 import DisplayField from "components/Form/DisplayField";
@@ -29,7 +29,7 @@ const PublishDate = ({ createdDate }) => (
 
 const StatusBar = ({ status }) => (
   <Box fontSize="13px" marginLeft="8px">
-    {renderCategoryStatus(status)}
+    {renderSubjectStatus(status)}
   </Box>
 );
 
