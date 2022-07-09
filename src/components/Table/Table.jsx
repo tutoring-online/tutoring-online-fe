@@ -68,9 +68,11 @@ const Tables = ({
                     }}
                     action={panel}
                 />
-                <TableFilter>
-                    {filter}
-                </TableFilter>
+                {filter &&
+                    <TableFilter>
+                        {filter}
+                    </TableFilter>
+                }
                 <TableContainer>
                     <Box
                         component={Table}

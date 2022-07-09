@@ -25,3 +25,54 @@ body {
         padding-bottom: 0 !important;
     }
 }
+
+// .nta-select-field.divider {
+//     &::after {
+//         content: "";
+//         position: absolute;
+//         right: 1px;
+
+//         height: 32px;
+//         border-right: 1px solid #dadfe1;
+//     }
+// }
+
+.nta-select-field {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: #fff;
+
+    margin: 0;
+    cursor: pointer;
+    transition: box-shadow 100ms ease-out;
+    border-radius: 16px;
+
+    &:hover,
+    &:focus-within {
+        z-index: 1000;
+        box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+    }
+
+    &__autocomplete {
+        .MuiFilledInput-root {
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            height: 24px;
+            padding: 0 16px;
+            border-radius: 16px;
+            overflow: hidden;
+
+            &::after {
+                display: none;
+            }
+        }
+
+        .MuiFilledInput-input {
+            height: 24px;
+            padding-left: 0 !important;
+        }
+    }
+}

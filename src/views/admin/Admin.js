@@ -24,7 +24,6 @@ import { renderAdminStatus, ADMIN_STATUSES } from "settings/admin-setting";
 import { EditStatus } from "crud/admin";
 import useAdminStatistics from "hooks/admin/useAdminStatistics";
 import StatisticHeader from "components/Headers/StatisticHeader";
-import TextField from "components/Form/TextField";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -208,30 +207,6 @@ const Admin = () => {
 					columns={columns}
 					data={adminList}
 					panel={renderPanel()}
-					filter={
-						<>
-							<TextField
-								label="Demo"
-								value="demo"
-							/>
-							<TextField
-								label="Demo"
-								value="demo"
-							/>
-							<TextField
-								label="Demo"
-								value="demo"
-							/>
-							<TextField
-								label="Demo"
-								value="demo"
-							/>
-							<TextField
-								label="Demo"
-								value="demo"
-							/>
-						</>
-					}
 					loadingData={loading}
 				/>
 			</Container>
