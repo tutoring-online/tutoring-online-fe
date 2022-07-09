@@ -80,7 +80,7 @@ export default function AdminProfile() {
             <Grid container>
               <Grid xs={6} lg={2}>
                 <Box border="1px solid black" height={300}>
-                  Profile Nav
+                  Admin Profiles
                 </Box>
               </Grid>
               <Grid xs={12} lg={9} marginLeft="1rem">
