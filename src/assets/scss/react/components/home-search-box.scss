@@ -1,10 +1,15 @@
 .home-search-box {
+    position: sticky;
+    top: -220px;
+    z-index: 102;
+
     display: flex;
     flex-flow: column nowrap;
     gap: 1rem;
 
     width: calc(100% - 2rem);
     margin: 0 auto;
+    margin-top: calc(-400px - 12rem);
     padding: 3rem;
     max-width: 1200px;
     min-height: 360px;
@@ -15,11 +20,24 @@
         color: #fefefe;
         font-family: "Open Sans", sans-serif;
         font-size: 2rem;
+        max-height: 48px;
     }
-    
+
     &__description {
         margin: 0;
         color: #fefefe;
         font-size: 16px;
+        max-height: 48px;
+        overflow: hidden;
     }
+}
+
+.sticky-search-box {
+    background-image: none !important;
+    background: rgba(#202b4c, 0.6) !important;
+    padding-bottom: 1rem !important;
+    max-width: none;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
 }

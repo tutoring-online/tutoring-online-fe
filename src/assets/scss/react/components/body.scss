@@ -13,6 +13,18 @@ body {
     }
 }
 
+.MuiChip-root {
+    background: #fcfcfc;
+    &:hover,
+    &:focus {
+        background: #ececec;
+    }
+
+    .MuiChip-deleteIcon {
+        color: #525f7f;
+    }
+}
+
 .radio-selected {
     .MuiFormControlLabel-label {
         font-weight: 600 !important;

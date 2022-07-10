@@ -1,5 +1,3 @@
-// import TutorSearchField from "components/custom/TutorSearchField";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Divider } from "@mui/material"
 import NTARangeField from "components/Form/NTARangeField";
@@ -9,9 +7,11 @@ import yup from "helpers/yupGlobal";
 import useCategoryList from "hooks/category/useCategoryList";
 import useSubjectList from "hooks/subject/useSubjectList";
 import useSyllabusList from "hooks/syllabus/useSyllabusList";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
+import { useInView } from "react-intersection-observer";
 import ReactNumberFormat from 'react-number-format';
 import { DURATION_OPTIONS } from "settings/syllabus-setting";
+import NTAChipSelectField from "components/Form/NTAChipSelectField";
 
 const SearchBar = ({ children }) => (
     <Box
@@ -19,19 +19,23 @@ const SearchBar = ({ children }) => (
         alignItems="center"
         flexDirection="row"
         flexWrap="nowrap"
+        width="100%"
+        maxWidth="calc(1200px - 6rem)"
 
         backgroundColor="#fff"
         borderRadius="16px"
         overflow="visible"
         marginTop="1rem"
+
+        position="sticky"
+        top="1rem"
     >
         {children}
     </Box>
 )
 
 const schema = yup.object().shape({
-    // name: yup.string().required("Name is required"),
-    // email: yup.string().required("Email is required").email("Email is invalid"),
+
 });
 
 const getSubjectOptions = (subjectList) => {
@@ -106,6 +110,19 @@ const getDurationOptions = () => {
     return options;
 }
 
+const sortByOptions = [
+    { label: "Popularity", value: "" },
+    { label: "Price: highest first", value: "-price" },
+    { label: "Price: lowest first", value: "price" },
+    { label: "Duration: highest first", value: "-totalLessons" },
+    { label: "Duration: lowest first", value: "totalLessons" },
+]
+
+const getSortByLabel = (value) => {
+    const option = sortByOptions.find(item => item.value === value);
+    return option?.label || "";
+}
+
 export default function SearchBox() {
     const {
         control,
@@ -116,11 +133,16 @@ export default function SearchBox() {
             categoryId: "",
             subjectId: "",
             duration: "",
+            sortBy: '',
             price: [0, DEFAULT_MAX_PRICE],
-
         },
         resolver: yupResolver(schema),
     });
+
+    const sortBy = useWatch({
+        control,
+        name: "sortBy"
+    })
 
 
     const { subjectList } = useSubjectList();
@@ -129,11 +151,15 @@ export default function SearchBox() {
 
     const maxPrice = getMaxPrice(syllabusList);
 
+    const { ref, inView } = useInView({
+        threshold: 0,
+    });
+
     return (
         <>
             <Box
                 component="div"
-                className="home-search-box"
+                className={`home-search-box ${inView ? "" : "sticky-search-box"}`}
             >
                 <Box
                     component="h1"
@@ -142,6 +168,7 @@ export default function SearchBox() {
                     Find an online syllabus to help you study
                 </Box>
                 <Box
+                    ref={ref}
                     component="p"
                     className="home-search-box__description"
                 >
@@ -179,6 +206,22 @@ export default function SearchBox() {
                         renderDisplayRange={renderDisplayRange}
                     />
                 </SearchBar>
+                <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="flex-end"
+                    flexDirection="row"
+                    flexWrap="nowrap"
+                    width="100%"
+                    maxWidth="calc(1200px - 6rem)"
+                >
+                    <NTAChipSelectField
+                        label={`Sort by: ${getSortByLabel(sortBy)}`}
+                        name="sortBy"
+                        control={control}
+                        options={sortByOptions}
+                    />
+                </Box>
             </Box>
         </>
     )

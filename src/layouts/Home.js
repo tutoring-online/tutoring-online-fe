@@ -14,6 +14,7 @@ import { getFullPath } from "route/routes";
 import { ROUTES } from "route/routes";
 import HomeHeader from "views/home/HomeHeader";
 import WithAuthBackDropLoader from "./WithAuthBackDropLoader";
+import SearchBox from "views/home/SearchBox";
 
 const getRoutes = () => {
     const homeRoutes = routes.filter(route => route.layout === LAYOUT_PATHS.home);
@@ -42,10 +43,11 @@ const Home = ({ authLoading }) => {
             <div className="main-content" ref={mainContent}>
                 <GeneralNavbar />
                 <HomeHeader />
+                <SearchBox/>
                 <Container
                     component={Box}
                     maxWidth="xl"
-                    marginTop="-8rem"
+                    marginTop="4rem"
                     paddingBottom="3rem"
                     position="relative"
                     zIndex="101"

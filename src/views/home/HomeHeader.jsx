@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 // core components
 import componentStyles from "assets/theme/components/auth-header.js";
 import "./index.scss";
-import SearchBox from "./SearchBox";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -15,13 +14,14 @@ const HomeHeader = () => {
     return (
         <>
             <Box
-                className={`${classes.header} custom-home-header`}
-                position="relative"
+                className={classes.header}
                 paddingTop="8rem"
                 paddingBottom="8rem"
             >
-                <Box marginBottom="4rem">
-                    <SearchBox/>
+                <Box
+                    marginBottom="4rem"
+                    height="400px"
+                >
                 </Box>
             </Box>
         </>
