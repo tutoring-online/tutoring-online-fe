@@ -4,7 +4,7 @@ import { axiosRequest } from "helpers/axios";
 
 //Get
 export const loginUser = (token, role) => {
-    const url = AUTHENTICATION_API;
+    const url = AUTHENTICATION_API + "/login";
     const options = {
         method: "POST",
         data: {

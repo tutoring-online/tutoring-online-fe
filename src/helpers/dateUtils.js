@@ -14,7 +14,7 @@ const notMillisecond = (date) => {
 
 export const convertBeDateToIso = (date) => {
     if (!validDate(date)) return null;
-    if (!moment(date, datetimeFormatV2, true).isValid()) return null;
+    if (!moment(date, datetimeFormatReverseDate, true).isValid()) return null;
 
     const array = date.split(" ");
     const reverseDateYear = (date) => {

@@ -3,7 +3,6 @@ import * as types from "./types";
 
 import asyncThunks from "./asyncThunk";
 import { toast } from 'react-toastify';
-import { isAvailableArray } from 'helpers/arrayUtils';
 import { equalIgnoreCase } from 'helpers/stringUtils';
 
 
@@ -28,11 +27,10 @@ const isNotSignedInYet = (isSignedIn) => isSignedIn !== true;
 
 const reducers = {
     loginUserSuccessful: (state, action) => {
-        const type = action.payload?.type;
         const role = action.payload?.role;
-        const user = isAvailableArray(action.payload?.data) ? action.payload.data[0] : null;
+        const user = action.payload?.data;
 
-        if (!type || !role || !user) {
+        if (!role || !user) {
             state.isSignedIn = false;
             state.user = null;
 
@@ -43,7 +41,7 @@ const reducers = {
         }
 
         if (isNotSignedInYet(state.isSignedIn)) {
-            showAuthenticatedSuccessfulMessage(type);
+            showAuthenticatedSuccessfulMessage("login");
         }
 
         state.isSignedIn = true;
