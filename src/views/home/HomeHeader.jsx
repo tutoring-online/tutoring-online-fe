@@ -4,8 +4,8 @@ import Box from "@mui/material/Box";
 
 // core components
 import componentStyles from "assets/theme/components/auth-header.js";
-import TutorSearch from "components/Search/TutorSearch";
 import "./index.scss";
+import SearchBox from "./SearchBox";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -21,7 +21,7 @@ const HomeHeader = () => {
                 paddingBottom="8rem"
             >
                 <Box marginBottom="4rem">
-                    <TutorSearch />
+                    <SearchBox/>
                 </Box>
             </Box>
         </>

@@ -12,7 +12,7 @@ import routes from "route/routes.js";
 import { LAYOUT_PATHS } from "route/routes";
 import { getFullPath } from "route/routes";
 import { ROUTES } from "route/routes";
-import HomeHeader from "components/Headers/HomeHeader";
+import HomeHeader from "views/home/HomeHeader";
 import WithAuthBackDropLoader from "./WithAuthBackDropLoader";
 
 const getRoutes = () => {

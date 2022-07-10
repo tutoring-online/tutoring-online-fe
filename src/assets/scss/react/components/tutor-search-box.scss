@@ -1,4 +1,4 @@
-.tutor-search-box {
+.home-search-box {
     display: flex;
     flex-flow: column nowrap;
     gap: 1rem;
@@ -7,25 +7,19 @@
     margin: 0 auto;
     padding: 3rem;
     max-width: 1200px;
-    min-height: 400px;
+    min-height: 360px;
 
     background: url("../../../img/svg/tutor-search-bg.svg") no-repeat center !important;
 
-    > h1 {
+    &__title {
         color: #fefefe;
+        font-family: "Open Sans", sans-serif;
+        font-size: 2rem;
     }
-    > p {
+    
+    &__description {
         margin: 0;
         color: #fefefe;
-    }
-
-    &__search-bar {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        gap: 0.25rem;
-        height: 4rem;
-
-        background: #fff;
-        border-radius: 16px;
+        font-size: 16px;
     }
 }

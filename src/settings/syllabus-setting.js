@@ -43,3 +43,8 @@ export const renderSyllabusStatus = (value, onClick) => {
     return renderStatus(statusObject, onClick);
 }
 
+export const DURATION_OPTIONS = [
+    { label: "4 weeks", value: 12 },
+    { label: "8 weeks", value: 24 },
+    { label: "12 weeks", value: 36 },
+]

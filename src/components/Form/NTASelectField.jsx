@@ -58,6 +58,19 @@ function PopperComponent(props) {
     </StyledPopper>
 }
 
+const defaultRenderOption = (props, option) => {
+    if (typeof option === "string") {
+        return <li {...props} key={option}>
+            {option}
+        </li>
+    }
+    return (
+        <li {...props} key={option.value}>
+            {option.label}
+        </li>
+    );
+}
+
 export default function NTASelectField({
     label,
     required,
@@ -67,12 +80,13 @@ export default function NTASelectField({
     name,
     control,
     error,
+    renderOption = defaultRenderOption
 }) {
     const inputElm = useRef(null);
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        if(open !== true) return;
+        if (open !== true) return;
         inputElm.current && inputElm.current.focus();
     }, [open])
 
@@ -93,13 +107,15 @@ export default function NTASelectField({
             <FormLabel
                 sx={{
                     color: "#8898aa",
-                    fontWeight: 400,
                     fontSize: "11px",
+                    fontWeight: 400,
                     letterSpacing: "0.75px",
                     textTransform: "uppercase",
-                    marginBottom: "0.25px",
+
+                    cursor: "pointer",
                     padding: "0 16px",
-                    paddingTop: "12px"
+                    paddingTop: "12px",
+                    marginBottom: "0.25px",
                 }}
                 onClick={handleOnClickLabel}
             >
@@ -126,8 +142,9 @@ export default function NTASelectField({
 
                             blurOnSelect
                             handleHomeEndKeys={false}
-                            options={options}
                             PopperComponent={PopperComponent}
+
+                            options={options}
                             disabled={Boolean(disabled)}
                             renderInput={(params) => (
                                 <TextField
@@ -142,6 +159,8 @@ export default function NTASelectField({
                                     }}
                                 />
                             )}
+                            renderOption={renderOption}
+
                             {...field}
                             value={getValueOption(field.value)}
                             onChange={(e, selectedOption) => {
