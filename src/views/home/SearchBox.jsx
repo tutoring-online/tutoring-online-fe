@@ -178,7 +178,7 @@ export default function SearchBox() {
 
                 <SearchBar>
                     <NTASelectField
-                        label="Grade"
+                        label="Category"
                         name="categoryId"
                         options={getCategoryOptions(categoryList)}
                         control={control}

@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import { Chip, FormControl, FormHelperText } from '@mui/material';
 import { Controller } from 'react-hook-form';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { isAvailableArray } from 'helpers/arrayUtils';
 
 const StyledAutocompletePopper = styled('div')(({ theme }) => ({
     [`& .${autocompleteClasses.paper}`]: {
@@ -113,6 +114,12 @@ export default function NTAChipSelectField({
         setAnchorEl(event.currentTarget);
     };
 
+    const getValueOption = (value) => {
+        if (value == null) return null;
+        if (!isAvailableArray(options)) return { label: value, value };
+        return options.find(item => item.value === value) || { label: value, value };
+    }
+
     const handleClose = () => {
         if (anchorEl) {
             anchorEl.focus();
@@ -147,7 +154,6 @@ export default function NTAChipSelectField({
                         <Controller
                             render={({ field }) => (
                                 <Autocomplete
-                                    {...field}
                                     open
                                     onClose={handleClose}
 
@@ -156,7 +162,6 @@ export default function NTAChipSelectField({
                                     renderOption={renderOption}
                                     options={options}
                                     inputValue=""
-                                    isOptionEqualToValue={(option, value) => option.value === value}
                                     renderInput={(params) => (
                                         <StyledInput
                                             ref={params.InputProps.ref}
@@ -166,6 +171,8 @@ export default function NTAChipSelectField({
                                         />
                                     )}
 
+                                    {...field}
+                                    value={getValueOption(field.value)}
                                     onChange={(e, selectedOption) => {
                                         const newValue = selectedOption != null ? selectedOption.value : null;
                                         field.onChange({ target: { value: newValue } });

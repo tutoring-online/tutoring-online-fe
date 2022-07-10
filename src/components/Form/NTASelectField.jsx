@@ -161,8 +161,8 @@ export default function NTASelectField({
                             )}
                             renderOption={renderOption}
 
-                            value={getValueOption(field.value)}
                             {...field}
+                            value={getValueOption(field.value)}
                             onChange={(e, selectedOption) => {
                                 const newValue = selectedOption != null ? selectedOption.value : null;
                                 field.onChange({ target: { value: newValue } });
