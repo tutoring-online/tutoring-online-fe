@@ -68,8 +68,13 @@ export const SyllabusCard = ({
                 >
                     {`${syllabus.totalLessons} total lessons`}
                 </Typography>
-
-                <Button>Book the course</Button>
+                <Typography
+                    className={classes.lesson}
+                >
+                    {`${syllabus.totalLessons} students buy this course.`}
+                </Typography>
+                
+                <Button>Book</Button>
             </CardContent>
         </Card>
     );
