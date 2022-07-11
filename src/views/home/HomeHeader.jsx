@@ -20,7 +20,7 @@ const HomeHeader = () => {
             >
                 <Box
                     marginBottom="4rem"
-                    height="400px"
+                    height="380px"
                 >
                 </Box>
             </Box>

@@ -18,7 +18,8 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import NavbarDropdown from "components/Dropdowns/NavbarDropdown.js";
 import componentStyles from "assets/theme/layouts/admin.js";
-import logoImg from "assets/img/brand/argon-react.png";
+// import logoImg from "assets/img/brand/argon-react.png";
+import logoImg from "assets/img/brand/logo.png";
 
 import routes from "route/routes.js";
 import { isAvailableArray } from "helpers/arrayUtils";

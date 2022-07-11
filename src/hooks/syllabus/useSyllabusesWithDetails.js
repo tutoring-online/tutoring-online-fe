@@ -1,27 +1,36 @@
 import { isAvailableArray } from "helpers/arrayUtils";
 import usePaymentList from "hooks/payment/usePaymentList";
+import useTutorSubjectList from "hooks/tutor-subject/useTutorSubjectList";
 import { useCallback, useEffect, useState } from "react";
+import useSyllabusList from "./useSyllabusList";
 
-const useSyllabusList = () => {
+const useSyllabusesWithDetails = () => {
     const {
         syllabusList,
         loading: loadingSyllabusList,
         refresh: refreshSyllabusList,
     } = useSyllabusList();
+
     const {
         paymentList,
         loading: loadingPaymentList,
         refresh: refreshPaymentList,
     } = usePaymentList()
 
+    const {
+        tutorSubjectList,
+        loading: loadingTutorSubjectList,
+        refresh: refreshTutorSubjectList,
+    } = useTutorSubjectList()
+
     const [syllabusesWithDetails, setSyllabusesWithDetails] = useState([]);
     const [loading, setLoading] = useState(null);
 
     useEffect(() => {
         setLoading(() => {
-            return loadingSyllabusList && loadingPaymentList;
+            return loadingSyllabusList && loadingPaymentList && loadingTutorSubjectList;
         })
-    }, [loadingPaymentList, loadingSyllabusList])
+    }, [loadingPaymentList, loadingSyllabusList, loadingTutorSubjectList])
 
     useEffect(() => {
         if(!isAvailableArray(syllabusList) || !isAvailableArray(paymentList)) {
@@ -30,17 +39,35 @@ const useSyllabusList = () => {
         }
 
         const temp = [];
-        const count = 0;
         syllabusList.forEach(syllabus => {
+            let countStudents = 0;
+            let countTutors = 0;
 
+            paymentList.forEach(payment => {
+                if(payment.syllabusId === syllabus.id){
+                    countStudents++;
+                }
+            })
+
+            tutorSubjectList.forEach(tutorSubject => {
+                if(tutorSubject.subjectId === syllabus.subjectId) {
+                    countTutors++;
+                }
+            })
+
+            temp.push({
+                ...syllabus,
+                countStudents,
+                countTutors
+            })
         })
-    }, [])
-
+    }, [paymentList, syllabusList, tutorSubjectList])
 
     const refresh = useCallback(() => {
         refreshSyllabusList && refreshSyllabusList();
         refreshPaymentList && refreshPaymentList();
-    }, [refreshPaymentList, refreshSyllabusList])
+        refreshTutorSubjectList && refreshTutorSubjectList();
+    }, [refreshPaymentList, refreshSyllabusList, refreshTutorSubjectList])
 
     return {
         syllabusesWithDetails,
@@ -49,4 +76,4 @@ const useSyllabusList = () => {
     };
 }
 
-export default useSyllabusList;
+export default useSyllabusesWithDetails;
