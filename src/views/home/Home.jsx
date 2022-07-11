@@ -1,39 +1,64 @@
 import React from "react";
 
 import SyllabusCard from "components/Cards/SyllabusCard";
-import TutorSchedule from "components/Cards/TutorSchedule";
-import { Container } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 
+import { isAvailableArray } from "helpers/arrayUtils";
+import useSyllabusesWithDetails from "hooks/syllabus/useSyllabusesWithDetails";
 import "./index.scss";
 import useSyllabusList from "hooks/syllabus/useSyllabusList";
-import { isAvailableArray } from "helpers/arrayUtils";
+import Guide from "./Guide";
+import NoResultContent from "./NoResultContent";
 
-const Item = ({ children }) => (
-    <div className="home-view__item">
-        {children}
-    </div>
-)
-
-const RightItem = ({ children }) => (
-    <div className="home-view__right-item">
-        {children}
-    </div>
-)
+// const RightItem = ({ children }) => (
+//     <div className="home-view__right-item">
+//         {children}
+//     </div>
+// )
 
 function Home() {
+    const { syllabusesWithDetails } = useSyllabusesWithDetails();
     const { syllabusList } = useSyllabusList();
 
     return (
         <Container maxWidth="xl">
-            <div className="home-view">
-                {isAvailableArray(syllabusList) && syllabusList.map((syllabus, index) =>
-                    <Item key={syllabus.id || index}>
-                        <SyllabusCard
-                            syllabus={syllabus}
-                        />
-                    </Item>
+            <Grid container spacing={2}>
+                <Grid item xs={12}                >
+                    <Guide />
+                </Grid>
+                {isAvailableArray(syllabusesWithDetails) ? (
+                    syllabusesWithDetails.map((syllabus, index) =>
+                        <Grid
+                            item
+                            key={syllabus.id || index}
+                            xs={12}
+                            xl={9}
+                        >
+                            <SyllabusCard
+                                syllabus={syllabus}
+                            />
+                        </Grid>
+                    )
+                ) : (
+                    <>
+                        <Grid item xs={12}>
+                            <NoResultContent />
+                        </Grid>
+                        {isAvailableArray(syllabusList) && syllabusList.filter((syllabus, index) => index < 5).map(syllabus =>
+                            <Grid
+                                item
+                                key={syllabus.id}
+                                xs={12}
+                                xl={9}
+                            >
+                                <SyllabusCard
+                                    syllabus={syllabus}
+                                />
+                            </Grid>
+                        )}
+                    </>
                 )}
-            </div>
+            </Grid>
         </Container>
     );
 }

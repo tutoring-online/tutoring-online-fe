@@ -1,7 +1,7 @@
-import { METHOD, TUTOR_API } from "helpers/api";
+import { METHOD, TUTOR_SUBJECT_API } from "helpers/api";
 import { axiosRequest } from "helpers/axios";
 
-const baseUrl = TUTOR_API;
+const baseUrl = TUTOR_SUBJECT_API;
 
 export const fetchTutorSubjects = () => {
     const url = baseUrl;

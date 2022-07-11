@@ -6,7 +6,7 @@ const fetchTutorSubjects = async (params) => {
     const { setLoading = () => { } } = params;
     setLoading(true);
     try {
-        const response = await api.fetchTutors();
+        const response = await api.fetchTutorSubjects();
         return response;
     } catch (error) {
         throw error;

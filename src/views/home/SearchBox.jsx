@@ -165,7 +165,7 @@ export default function SearchBox() {
                     component="h1"
                     className="home-search-box__title"
                 >
-                    Find an online syllabus to help you study
+                    Find an online course to help you study
                 </Box>
                 <Box
                     ref={ref}

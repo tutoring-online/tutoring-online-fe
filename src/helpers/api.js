@@ -25,7 +25,7 @@ export const SUBJECT_API = `${ENV_API}/subjects`;
 export const CATEGORY_API = `${ENV_API}/categories`;
 export const SYLLABUS_API = `${ENV_API}/syllabuses`;
 export const LESSON_API = `${ENV_API}/lessons`;
-
+export const TUTOR_SUBJECT_API = `${ENV_API}/tutor-subjects`;
 export const ADMIN_API = `${ENV_API}/admins`;
 export const TUTOR_API = `${ENV_API}/tutors`;
 export const STUDENT_API = `${ENV_API}/students`;

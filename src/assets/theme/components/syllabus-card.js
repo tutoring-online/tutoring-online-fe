@@ -6,7 +6,6 @@ const componentStyles = ({ breakpoints, spacing }) => ({
         overflow: 'initial',
         
         maxWidth: 800,
-        marginLeft: 'auto',
         paddingBottom: spacing(2),
         borderRadius: spacing(2), // 16px
 
@@ -14,27 +13,27 @@ const componentStyles = ({ breakpoints, spacing }) => ({
         transition: '0.3s',
         background: '#f7fafc',
         boxShadow: '0px 14px 80px rgba(34, 35, 58, 0.2)',
-        [breakpoints.up('md')]: {
+        [breakpoints.up('sm')]: {
             flexDirection: 'row',
             paddingTop: spacing(2),
             alignItems: 'flex-start',
         },
     },
     media: {
-        width: '150px',
-        maxWidth: '150px',
+        width: '100%',
         height: 0,
-        marginLeft: 16,
         marginRight: 'auto',
-        paddingBottom: '150px',
+        paddingBottom: '200px',
 
         borderRadius: spacing(2),
         backgroundColor: '#fff',
         position: 'relative',
         transition: "transform 0.2s ease-in-out",
 
-        [breakpoints.up('md')]: {
-            width: '100%',
+        [breakpoints.up('sm')]: {
+            marginLeft: "16px",
+            maxWidth: '150px',
+            paddingBottom: '100px',
             marginTop: 0,
         },
         '&:hover': {
@@ -42,8 +41,16 @@ const componentStyles = ({ breakpoints, spacing }) => ({
         }
     },
     content: {
-        padding: "0 16px !important",
-        height: "100%"
+        padding: "16px",
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        
+        [breakpoints.up('sm')]: {
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            padding: "0 16px !important",
+        },
     },
     cta: {
         marginTop: 20,

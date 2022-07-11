@@ -47,7 +47,7 @@ const Home = ({ authLoading }) => {
                 <Container
                     component={Box}
                     maxWidth="xl"
-                    marginTop="6rem"
+                    marginTop="2rem"
                     paddingBottom="3rem"
                     position="relative"
                     zIndex="101"

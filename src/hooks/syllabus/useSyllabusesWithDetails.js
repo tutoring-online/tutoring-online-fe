@@ -32,8 +32,10 @@ const useSyllabusesWithDetails = () => {
         })
     }, [loadingPaymentList, loadingSyllabusList, loadingTutorSubjectList])
 
+    
+
     useEffect(() => {
-        if(!isAvailableArray(syllabusList) || !isAvailableArray(paymentList)) {
+        if(!isAvailableArray(syllabusList) || !isAvailableArray(paymentList) || !isAvailableArray(tutorSubjectList)) {
             setSyllabusesWithDetails([]);
             return;
         }
@@ -61,6 +63,8 @@ const useSyllabusesWithDetails = () => {
                 countTutors
             })
         })
+
+        setSyllabusesWithDetails(temp);
     }, [paymentList, syllabusList, tutorSubjectList])
 
     const refresh = useCallback(() => {

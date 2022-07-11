@@ -3,7 +3,6 @@ import useAuthActions from "./useAuthActions";
 import { auth } from "firebase-config/firebase";
 import { toast } from "react-toastify";
 import { equalIgnoreCase } from "helpers/stringUtils";
-import { ROLES } from "settings/setting";
 import { useHistory } from "react-router-dom";
 
 const FIREBASE_NETWORK_ERROR = "auth/network-request-failed";
@@ -28,7 +27,7 @@ const useAuthentication = () => {
 
             try {
                 setLoading(true);
-                await actions.asyncLoginUser({ token, role: ROLES.ADMIN });
+                await actions.asyncLoginUser({ token });
             } catch (error) {
                 hasError = true;
                 actions.unsubscribeUser();
