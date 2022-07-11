@@ -1,10 +1,12 @@
 import React from "react";
 
-import TutorCard from "components/Cards/TutorCard";
+import SyllabusCard from "components/Cards/SyllabusCard";
 import TutorSchedule from "components/Cards/TutorSchedule";
 import { Container } from "@mui/material";
 
 import "./index.scss";
+import useSyllabusList from "hooks/syllabus/useSyllabusList";
+import { isAvailableArray } from "helpers/arrayUtils";
 
 const Item = ({ children }) => (
     <div className="home-view__item">
@@ -19,29 +21,18 @@ const RightItem = ({ children }) => (
 )
 
 function Home() {
+    const { syllabusList } = useSyllabusList();
 
     return (
         <Container maxWidth="xl">
             <div className="home-view">
-                <Item>
-                    <TutorCard />
-                </Item>
-                <Item>
-                    <TutorCard />
-                </Item>
-                <Item>
-                    <TutorCard />
-                </Item>
-                <Item>
-                    <TutorCard />
-                </Item>
-                <Item>
-                    <TutorCard />
-                </Item>
-
-                <RightItem>
-                    <TutorSchedule />
-                </RightItem>
+                {isAvailableArray(syllabusList) && syllabusList.map((syllabus, index) =>
+                    <Item key={syllabus.id || index}>
+                        <SyllabusCard
+                            syllabus={syllabus}
+                        />
+                    </Item>
+                )}
             </div>
         </Container>
     );
