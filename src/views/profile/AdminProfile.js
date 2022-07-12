@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import makeStyles from "@mui/styles/makeStyles";
-import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
@@ -24,6 +22,9 @@ import NoInformation from "components/Text/NoInformation";
 
 import componentStyles from "assets/theme/views/admin/profile.js";
 import { useSelector } from "react-redux";
+import EditButton from "components/Buttons/EditButton";
+import CancelButton from "components/Buttons/CancelButton";
+import SubmitButton from "components/Buttons/SubmitButton";
 
 // {
 //     "type": "signup",
@@ -52,10 +53,209 @@ const useStyles = makeStyles(componentStyles);
 
 export default function AdminProfile() {
   const classes = useStyles();
-  const theme = useTheme();
 
   const authState = useSelector((state) => state.auth);
   const admin = authState.user;
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  const enableEdit = () => {
+    setIsEditing(true);
+  };
+
+  const cancelEdit = () => {
+    setIsEditing(false);
+    // reset();
+  };
+
+  const basicDisplay = () => (
+    <div className={classes.plLg4}>
+      <Grid container>
+        <Grid item xs={12} lg={12}>
+          <FormGroup>
+            <FormLabel>Name</FormLabel>
+            <FormControl
+              variant="filled"
+              component={Box}
+              width="100%"
+              marginBottom="1rem!important"
+            >
+              <Box display="flex" backgroundColor="#f7fafc" type="text">
+                <Box fontSize="14px" width="100%">
+                  {admin?.name || <NoInformation />}
+                </Box>
+              </Box>
+            </FormControl>
+          </FormGroup>
+        </Grid>
+      </Grid>
+      <Grid container>
+        <Grid item xs={12} lg={6} maxHeight="103px">
+          <FormGroup>
+            <FormLabel>Email</FormLabel>
+            <FormControl
+              variant="filled"
+              component={Box}
+              width="100%"
+              marginBottom="1rem!important"
+            >
+              <Box display="flex" backgroundColor="#f7fafc" type="text">
+                <Box fontSize="14px" width="100%">
+                  {admin?.email || <NoInformation />}
+                </Box>
+              </Box>
+            </FormControl>
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12} lg={6} maxHeight="103px">
+          <FormGroup>
+            <FormLabel>Gender</FormLabel>
+            <FormControl
+              variant="filled"
+              component={Box}
+              width="100%"
+              marginBottom="1rem!important"
+            >
+              <RadioGroup row>
+                <FormControlLabel
+                  value="male"
+                  control={<Radio />}
+                  label="Male"
+                  disabled="true"
+                />
+                <FormControlLabel
+                  value="female"
+                  control={<Radio />}
+                  label="Female"
+                  disabled="true"
+                />
+              </RadioGroup>
+            </FormControl>
+          </FormGroup>
+        </Grid>
+      </Grid>
+      <Grid container>
+        <Grid item xs={12} lg={6}>
+          <FormGroup>
+            <FormLabel>Birthday</FormLabel>
+            <FormControl
+              variant="filled"
+              component={Box}
+              width="100%"
+              marginBottom="1rem!important"
+            >
+              <Box display="flex" backgroundColor="#f7fafc" type="text">
+                <Box fontSize="14px" width="100%">
+                  {admin?.birthday || <NoInformation />}
+                </Box>
+              </Box>
+            </FormControl>
+          </FormGroup>
+        </Grid>
+      </Grid>
+    </div>
+  );
+
+  const contactDisplay = () => (
+    <div className={classes.plLg4}>
+      <Grid container>
+        <Grid item xs={12}>
+          <FormGroup>
+            <FormLabel>Address</FormLabel>
+            <FormControl
+              variant="filled"
+              component={Box}
+              width="100%"
+              marginBottom="1rem!important"
+            >
+              <Box display="flex" backgroundColor="#f7fafc" type="text">
+                <Box fontSize="14px" width="100%">
+                  {admin?.address || <NoInformation />}
+                </Box>
+              </Box>
+            </FormControl>
+          </FormGroup>
+        </Grid>
+      </Grid>
+      <Grid container>
+        <Grid item xs={12} lg={6}>
+          <FormGroup>
+            <FormLabel>Phone</FormLabel>
+            <FormControl
+              variant="filled"
+              component={Box}
+              width="100%"
+              marginBottom="1rem!important"
+            >
+              <Box display="flex" backgroundColor="#f7fafc" type="text">
+                <Box fontSize="14px" width="100%">
+                  {admin?.phone || <NoInformation />}
+                </Box>
+              </Box>
+            </FormControl>
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <FormGroup>
+            <FormLabel>AvatarURL</FormLabel>
+            <FormControl
+              variant="filled"
+              component={Box}
+              width="100%"
+              marginBottom="1rem!important"
+            >
+              <Box display="flex" backgroundColor="#f7fafc" type="text">
+                <Box fontSize="14px" width="100%">
+                  {admin?.avatarURL || <NoInformation />}
+                </Box>
+              </Box>
+            </FormControl>
+          </FormGroup>
+        </Grid>
+      </Grid>
+    </div>
+  );
+
+  const accInfoDisplay = () => (
+    <div className={classes.plLg4}>
+      <Grid container>
+        <Grid item xs={12} lg={6}>
+          <FormGroup>
+            <FormLabel>Created Date</FormLabel>
+            <FormControl
+              variant="filled"
+              component={Box}
+              width="100%"
+              marginBottom="1rem!important"
+            >
+              <Box display="flex" backgroundColor="#f7fafc" type="text">
+                <Box fontSize="14px" width="100%">
+                  {admin?.createdDate || <NoInformation />}
+                </Box>
+              </Box>
+            </FormControl>
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <FormGroup>
+            <FormLabel>Update Date</FormLabel>
+            <FormControl
+              variant="filled"
+              component={Box}
+              width="100%"
+              marginBottom="1rem!important"
+            >
+              <Box display="flex" backgroundColor="#f7fafc" type="text">
+                <Box fontSize="14px" width="100%">
+                  {admin?.updatedDate || <NoInformation />}
+                </Box>
+              </Box>
+            </FormControl>
+          </FormGroup>
+        </Grid>
+      </Grid>
+    </div>
+  );
 
   return (
     <>
@@ -81,6 +281,18 @@ export default function AdminProfile() {
               <Grid xs={6} lg={2}>
                 <Box border="1px solid black" height={300}>
                   Admin Profiles
+                  <Grid>
+                    {isEditing ? (
+                      <>
+                        <SubmitButton onClick={cancelEdit} />
+                      </>
+                    ) : (
+                      <>
+                        <EditButton onClick={enableEdit} />
+                        <CancelButton onClick={cancelEdit} />
+                      </>
+                    )}
+                  </Grid>
                 </Box>
               </Grid>
               <Grid xs={12} lg={9} marginLeft="1rem">
@@ -119,103 +331,111 @@ export default function AdminProfile() {
                     classes={{ root: classes.cardHeaderRoot }}
                   ></CardHeader>
                   <CardContent>
-                    <div className={classes.plLg4}>
-                      <Grid container>
-                        <Grid item xs={12} lg={12}>
-                          <FormGroup>
-                            <FormLabel>Name</FormLabel>
-                            <FormControl
-                              variant="filled"
-                              component={Box}
-                              width="100%"
-                              marginBottom="1rem!important"
-                            >
-                              <Box
-                                paddingLeft="0.75rem"
-                                paddingRight="0.75rem"
-                                component={FilledInput}
-                                autoComplete="off"
-                                type="text"
-                                defaultValue={admin?.name || <NoInformation />}
-                              />
-                            </FormControl>
-                          </FormGroup>
-                        </Grid>
-                      </Grid>
-                      <Grid container>
-                        <Grid item xs={12} lg={6}>
-                          <FormGroup>
-                            <FormLabel>Email</FormLabel>
-                            <FormControl
-                              variant="filled"
-                              component={Box}
-                              width="100%"
-                              marginBottom="1rem!important"
-                            >
-                              <Box
-                                paddingLeft="0.75rem"
-                                paddingRight="0.75rem"
-                                component={FilledInput}
-                                autoComplete="off"
-                                type="email"
-                                defaultValue={admin?.email || <NoInformation />}
-                                disabled={true}
-                              />
-                            </FormControl>
-                          </FormGroup>
-                        </Grid>
-                        <Grid item xs={12} lg={6}>
-                          <FormGroup>
-                            <FormLabel>Gender</FormLabel>
-                            <FormControl
-                              variant="filled"
-                              component={Box}
-                              width="100%"
-                              marginBottom="1rem!important"
-                            >
-                              <RadioGroup row>
-                                <FormControlLabel
-                                  value="male"
-                                  control={<Radio />}
-                                  label="Male"
-                                  defaultChecked="true"
+                    {isEditing ? (
+                      <div className={classes.plLg4}>
+                        <Grid container>
+                          <Grid item xs={12} lg={12}>
+                            <FormGroup>
+                              <FormLabel>Name</FormLabel>
+                              <FormControl
+                                variant="filled"
+                                component={Box}
+                                width="100%"
+                                marginBottom="1rem!important"
+                              >
+                                <Box
+                                  paddingLeft="0.75rem"
+                                  paddingRight="0.75rem"
+                                  component={FilledInput}
+                                  autoComplete="off"
+                                  type="text"
+                                  defaultValue={
+                                    admin?.name || <NoInformation />
+                                  }
                                 />
-                                <FormControlLabel
-                                  value="female"
-                                  control={<Radio />}
-                                  label="Female"
-                                />
-                              </RadioGroup>
-                            </FormControl>
-                          </FormGroup>
+                              </FormControl>
+                            </FormGroup>
+                          </Grid>
                         </Grid>
-                      </Grid>
+                        <Grid container>
+                          <Grid item xs={12} lg={6} maxHeight="103px">
+                            <FormGroup>
+                              <FormLabel>Email</FormLabel>
+                              <FormControl
+                                variant="filled"
+                                component={Box}
+                                width="100%"
+                                marginBottom="1rem!important"
+                              >
+                                <Box
+                                  paddingLeft="0.75rem"
+                                  paddingRight="0.75rem"
+                                  component={FilledInput}
+                                  autoComplete="off"
+                                  type="email"
+                                  defaultValue={
+                                    admin?.email || <NoInformation />
+                                  }
+                                  disabled={true}
+                                />
+                              </FormControl>
+                            </FormGroup>
+                          </Grid>
+                          <Grid item xs={12} lg={6} maxHeight="103px">
+                            <FormGroup>
+                              <FormLabel>Gender</FormLabel>
+                              <FormControl
+                                variant="filled"
+                                component={Box}
+                                width="100%"
+                                marginBottom="1rem!important"
+                              >
+                                <RadioGroup row>
+                                  <FormControlLabel
+                                    value="male"
+                                    control={<Radio />}
+                                    label="Male"
+                                    defaultChecked="true"
+                                  />
+                                  <FormControlLabel
+                                    value="female"
+                                    control={<Radio />}
+                                    label="Female"
+                                  />
+                                </RadioGroup>
+                              </FormControl>
+                            </FormGroup>
+                          </Grid>
+                        </Grid>
 
-                      <Grid container>
-                        <Grid item xs={12} lg={6}>
-                          <FormGroup>
-                            <FormLabel>Birthday</FormLabel>
-                            <FormControl
-                              variant="filled"
-                              component={Box}
-                              width="100%"
-                              marginBottom="1rem!important"
-                            >
-                              <Box
-                                paddingLeft="0.75rem"
-                                paddingRight="0.75rem"
-                                component={FilledInput}
-                                autoComplete="off"
-                                type="date"
-                                defaultValue={
-                                  admin?.birthday || <NoInformation />
-                                } //!!!
-                              />
-                            </FormControl>
-                          </FormGroup>
+                        <Grid container>
+                          <Grid item xs={12} lg={6}>
+                            <FormGroup>
+                              <FormLabel>Birthday</FormLabel>
+                              <FormControl
+                                variant="filled"
+                                component={Box}
+                                width="100%"
+                                marginBottom="1rem!important"
+                              >
+                                <Box
+                                  paddingLeft="0.75rem"
+                                  paddingRight="0.75rem"
+                                  component={FilledInput}
+                                  autoComplete="off"
+                                  type="date"
+                                  defaultValue={
+                                    admin?.birthday || <NoInformation />
+                                  } //!!!
+                                />
+                              </FormControl>
+                            </FormGroup>
+                          </Grid>
                         </Grid>
-                      </Grid>
-                    </div>
+                      </div>
+                    ) : (
+                      basicDisplay()
+                    )}
                   </CardContent>
                 </Card>
 
@@ -254,81 +474,84 @@ export default function AdminProfile() {
                     classes={{ root: classes.cardHeaderRoot }}
                   ></CardHeader>
                   <CardContent>
-                    <div className={classes.plLg4}>
-                      <Grid container>
-                        <Grid item xs={12}>
-                          <FormGroup>
-                            <FormLabel>Address</FormLabel>
-                            <FormControl
-                              variant="filled"
-                              component={Box}
-                              width="100%"
-                              marginBottom="1rem!important"
-                            >
-                              <Box
-                                paddingLeft="0.75rem"
-                                paddingRight="0.75rem"
-                                component={FilledInput}
-                                autoComplete="off"
-                                type="text"
-                                defaultValue={
-                                  admin?.address || <NoInformation />
-                                }
-                              />
-                            </FormControl>
-                          </FormGroup>
+                    {isEditing ? (
+                      <div className={classes.plLg4}>
+                        <Grid container>
+                          <Grid item xs={12}>
+                            <FormGroup>
+                              <FormLabel>Address</FormLabel>
+                              <FormControl
+                                variant="filled"
+                                component={Box}
+                                width="100%"
+                                marginBottom="1rem!important"
+                              >
+                                <Box
+                                  paddingLeft="0.75rem"
+                                  paddingRight="0.75rem"
+                                  component={FilledInput}
+                                  autoComplete="off"
+                                  type="text"
+                                  defaultValue={
+                                    admin?.address || <NoInformation />
+                                  }
+                                />
+                              </FormControl>
+                            </FormGroup>
+                          </Grid>
                         </Grid>
-                      </Grid>
-                      <Grid container>
-                        <Grid item xs={12} lg={6}>
-                          <FormGroup>
-                            <FormLabel>Phone</FormLabel>
-                            <FormControl
-                              variant="filled"
-                              component={Box}
-                              width="100%"
-                              marginBottom="1rem!important"
-                            >
-                              <Box
-                                paddingLeft="0.75rem"
-                                paddingRight="0.75rem"
-                                component={FilledInput}
-                                autoComplete="off"
-                                type="text"
-                                defaultValue={
-                                  admin?.phone || "<NoInformation />"
-                                }
-                              />
-                            </FormControl>
-                          </FormGroup>
+                        <Grid container>
+                          <Grid item xs={12} lg={6}>
+                            <FormGroup>
+                              <FormLabel>Phone</FormLabel>
+                              <FormControl
+                                variant="filled"
+                                component={Box}
+                                width="100%"
+                                marginBottom="1rem!important"
+                              >
+                                <Box
+                                  paddingLeft="0.75rem"
+                                  paddingRight="0.75rem"
+                                  component={FilledInput}
+                                  autoComplete="off"
+                                  type="text"
+                                  defaultValue={
+                                    admin?.phone || "<NoInformation />"
+                                  }
+                                />
+                              </FormControl>
+                            </FormGroup>
+                          </Grid>
+                          <Grid item xs={12} lg={6}>
+                            <FormGroup>
+                              <FormLabel>Avatar URL</FormLabel>
+                              <FormControl
+                                variant="filled"
+                                component={Box}
+                                width="100%"
+                                marginBottom="1rem!important"
+                              >
+                                <Box
+                                  paddingLeft="0.75rem"
+                                  paddingRight="0.75rem"
+                                  component={FilledInput}
+                                  autoComplete="off"
+                                  type="text"
+                                  defaultValue={
+                                    admin?.avatarURL || <NoInformation />
+                                  }
+                                />
+                              </FormControl>
+                            </FormGroup>
+                          </Grid>
                         </Grid>
-                        <Grid item xs={12} lg={6}>
-                          <FormGroup>
-                            <FormLabel>Avatar URL</FormLabel>
-                            <FormControl
-                              variant="filled"
-                              component={Box}
-                              width="100%"
-                              marginBottom="1rem!important"
-                            >
-                              <Box
-                                paddingLeft="0.75rem"
-                                paddingRight="0.75rem"
-                                component={FilledInput}
-                                autoComplete="off"
-                                type="text"
-                                defaultValue={
-                                  admin?.avatarURL || <NoInformation />
-                                }
-                              />
-                            </FormControl>
-                          </FormGroup>
-                        </Grid>
-                      </Grid>
-                    </div>
+                      </div>
+                    ) : (
+                      contactDisplay()
+                    )}
                   </CardContent>
                 </Card>
-
                 <Card
                   classes={{
                     root: classes.cardRoot + " " + classes.cardRootSecondary,
@@ -364,56 +587,60 @@ export default function AdminProfile() {
                     classes={{ root: classes.cardHeaderRoot }}
                   ></CardHeader>
                   <CardContent>
-                    <div className={classes.plLg4}>
-                      <Grid container>
-                        <Grid item xs={12} lg={6}>
-                          <FormGroup>
-                            <FormLabel>Create Date</FormLabel>
-                            <FormControl
-                              variant="filled"
-                              component={Box}
-                              width="100%"
-                              marginBottom="1rem!important"
-                            >
-                              <Box
-                                paddingLeft="0.75rem"
-                                paddingRight="0.75rem"
-                                component={FilledInput}
-                                autoComplete="off"
-                                type="date"
-                                defaultValue={
-                                  admin?.createdDate || <NoInformation />
-                                }
-                                disabled={true}
-                              />
-                            </FormControl>
-                          </FormGroup>
+                    {isEditing ? (
+                      <div className={classes.plLg4}>
+                        <Grid container>
+                          <Grid item xs={12} lg={6}>
+                            <FormGroup>
+                              <FormLabel>Create Date</FormLabel>
+                              <FormControl
+                                variant="filled"
+                                component={Box}
+                                width="100%"
+                                marginBottom="1rem!important"
+                              >
+                                <Box
+                                  paddingLeft="0.75rem"
+                                  paddingRight="0.75rem"
+                                  component={FilledInput}
+                                  autoComplete="off"
+                                  type="date"
+                                  defaultValue={
+                                    admin?.createdDate || <NoInformation />
+                                  }
+                                  disabled={true}
+                                />
+                              </FormControl>
+                            </FormGroup>
+                          </Grid>
+                          <Grid item xs={12} lg={6}>
+                            <FormGroup>
+                              <FormLabel>Update Date!!!</FormLabel>
+                              <FormControl
+                                variant="filled"
+                                component={Box}
+                                width="100%"
+                                marginBottom="1rem!important"
+                              >
+                                <Box
+                                  paddingLeft="0.75rem"
+                                  paddingRight="0.75rem"
+                                  component={FilledInput}
+                                  autoComplete="off"
+                                  type="date"
+                                  defaultValue={
+                                    admin?.updatedDate || <NoInformation />
+                                  }
+                                  disabled={true}
+                                />
+                              </FormControl>
+                            </FormGroup>
+                          </Grid>
                         </Grid>
-                        <Grid item xs={12} lg={6}>
-                          <FormGroup>
-                            <FormLabel>Update Date!!!</FormLabel>
-                            <FormControl
-                              variant="filled"
-                              component={Box}
-                              width="100%"
-                              marginBottom="1rem!important"
-                            >
-                              <Box
-                                paddingLeft="0.75rem"
-                                paddingRight="0.75rem"
-                                component={FilledInput}
-                                autoComplete="off"
-                                type="date"
-                                defaultValue={
-                                  admin?.updatedDate || <NoInformation />
-                                }
-                                disabled={true}
-                              />
-                            </FormControl>
-                          </FormGroup>
-                        </Grid>
-                      </Grid>
-                    </div>
+                      </div>
+                    ) : (
+                      accInfoDisplay()
+                    )}
                   </CardContent>
                 </Card>
               </Grid>
