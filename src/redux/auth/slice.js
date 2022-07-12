@@ -50,6 +50,32 @@ const reducers = {
 
     loginUserFailed: (state, action) => {
         throw action.error;
+    },
+
+    signupUserSuccessful: (state, action) => {
+        const role = action.payload?.role;
+        const user = action.payload?.data;
+
+        if (!role || !user) {
+            state.isSignedIn = false;
+            state.user = null;
+
+            const err = action.payload?.resultMessage || "Unknown";
+            const message = `Signup failed with error: ${err}`;
+            toast.error(message);
+            throw new Error(message);
+        }
+
+        if (isNotSignedInYet(state.isSignedIn)) {
+            showAuthenticatedSuccessfulMessage("signup");
+        }
+
+        state.isSignedIn = true;
+        state.user = { ...user, role }
+    },
+
+    signupUserFailed: (state, action) => {
+        throw action.error;
     }
 }
 
@@ -69,6 +95,8 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.loginUser.fulfilled, reducers.loginUserSuccessful)
         builder.addCase(asyncThunks.loginUser.rejected, reducers.loginUserFailed)
+        builder.addCase(asyncThunks.signupUser.fulfilled, reducers.signupUserSuccessful)
+        builder.addCase(asyncThunks.signupUser.rejected, reducers.signupUserFailed)
     }
 })
 

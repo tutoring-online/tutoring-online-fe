@@ -18,6 +18,7 @@ import Dashboard from "@mui/icons-material/Dashboard";
 import MenuIcon from "@mui/icons-material/Menu";
 import VpnKey from "@mui/icons-material/VpnKey";
 import HomeIcon from '@mui/icons-material/Home';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import DirectionsRun from "@mui/icons-material/DirectionsRun";
 import EventNote from "@mui/icons-material/EventNote";
@@ -40,7 +41,7 @@ import { isAvailableArray } from "helpers/arrayUtils";
 import { useSelector } from "react-redux";
 import { isAdmin } from "settings/setting";
 import NavbarDropdown from "components/Dropdowns/NavbarDropdown";
-import { Avatar } from "@mui/material";
+import { Avatar, ListItemIcon, ListItemText } from "@mui/material";
 
 const useStyles = makeStyles(componentStyles);
 const useDropdownStyles = makeStyles(dropdownComponentStyles);
@@ -123,9 +124,15 @@ export default function GeneralNavbar() {
                 icon: Dashboard
             },
             !isSignedIn && {
+                key: "signup",
+                to: getFullPath(ROUTES.signup),
+                label: "Sign up",
+                icon: AccountCircleIcon
+            },
+            !isSignedIn && {
                 key: "login",
                 to: getFullPath(ROUTES.login),
-                label: "Login",
+                label: "Sign in",
                 icon: VpnKey
             },
         ];
@@ -136,7 +143,6 @@ export default function GeneralNavbar() {
         <Box
             display="flex"
             alignItems="center"
-            width="auto"
             component={List}
             className={classes.flexDirectionColumn}
         >
@@ -150,14 +156,26 @@ export default function GeneralNavbar() {
                         root: classes.listItemRoot,
                     }}
                 >
-                    <Box
-                        component={item.icon}
-                        width="1.25rem!important"
-                        height="1.25rem!important"
-                        marginRight=".5rem!important"
+                    <ListItemIcon
+                        sx={{
+                            minWidth: "0",
+                            color: "#fff",
+                            marginRight: ".5rem!important"
+                        }}
+                    >
+                        <item.icon 
+                            sx={{
+                                width: "1.25rem!important",
+                            height: "1.25rem!important",
+                            }}
+                        />
+                    </ListItemIcon>
+                    <ListItemText
+                        primary={item.label || "N/A"}
+                        primaryTypographyProps={{
+                            style: { whiteSpace: "nowrap" }
+                        }}
                     />
-                    {item.label || "N/A"}
-
                 </ListItem>
             )}
         </Box>

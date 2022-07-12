@@ -1,3 +1,6 @@
+$shadow-left-up: #e3e5e7;
+$shadow-right-down: #bdc2ca;
+
 body {
     font-size: 14px;
 }
@@ -87,5 +90,60 @@ body {
             padding-left: 0 !important;
             color: #333;
         }
+    }
+}
+
+.google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    margin-bottom: 1.5rem;
+
+    &__button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-flow: row nowrap;
+
+        width: 100%;
+        height: 40px;
+        border-radius: 5px;
+        border: none;
+        outline: none !important;
+
+        background: transparent;
+        transition: box-shadow 200ms ease;
+        box-shadow: -1px -1px 2px $shadow-left-up, 1px 1px 2px $shadow-right-down;
+
+        &:hover {
+            cursor: pointer;
+            box-shadow: -3px -3px 6px $shadow-left-up, 3px 3px 6px $shadow-right-down;
+        }
+    }
+
+    &__icon {
+        height: 3rem;
+        width: 3rem;
+        margin-left: auto;
+        border: 1rem solid transparent;
+        background: url("../../../img/svg/icons8-google-24.svg") no-repeat center center;
+    }
+
+    &__text {
+        display: inline-block;
+        width: 180px;
+        margin-right: auto;
+        color: #525f7f;
+
+        font-family: Roboto,Helvetica,Arial,sans-serif;;
+        font-size: 14px;
+        font-weight: 500;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        background: transparent;
     }
 }

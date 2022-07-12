@@ -10,7 +10,8 @@ const useAuthActions = () => {
     const [authActions] = useState({
         subscribeUser: compose(dispatch, actions[types.SUBSCRIBE_USER]),
         unsubscribeUser: compose(dispatch, actions[types.UNSUBSCRIBE_USER]),
-        asyncLoginUser: compose(dispatch, asyncThunks.loginUser)
+        asyncLoginUser: compose(dispatch, asyncThunks.loginUser),
+        asyncSignupUser: compose(dispatch, asyncThunks.signupUser)
     })
 
     return authActions;

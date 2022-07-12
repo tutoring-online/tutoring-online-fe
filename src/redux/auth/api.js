@@ -15,3 +15,16 @@ export const loginUser = (token, role) => {
     
     return axiosRequest(url, options);
 }
+
+export const signupUser = (token, role) => {
+    const url = AUTHENTICATION_API + "/signup";
+    const options = {
+        method: "POST",
+        data: {
+            token,
+            role: role || null
+        }
+    }
+    
+    return axiosRequest(url, options);
+}

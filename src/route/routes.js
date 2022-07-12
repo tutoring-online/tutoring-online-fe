@@ -21,6 +21,7 @@ import TopicIcon from '@mui/icons-material/Topic';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import LogoutIcon from '@mui/icons-material/Logout';
 import CategoryIcon from '@mui/icons-material/Category';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 //Admin
 import Admin from "views/admin/Admin.js";
@@ -35,6 +36,7 @@ import Payment from "views/admin/Payment.js";
 const Home = React.lazy(() => import('views/home/Home.jsx'));
 const Dashboard = React.lazy(() => import('views/admin/Dashboard.js'));
 const Login = React.lazy(() => import('views/auth/Login.js'));
+const Signup = React.lazy(() => import('views/auth/Signup.js'));
 const Logout = React.lazy(() => import('views/auth/Logout.js'));
 const Profile = React.lazy(() => import('views/profile/index.js'));
 const PageNotFound = React.lazy(() => import('views/auth/PageNotFound.jsx'));
@@ -54,6 +56,7 @@ export const ICON_COLORS = {
 export const ROUTE_PATHS = {
 	login: "/login",
 	logout: "/logout",
+	signup: "/signup",
 	pageNotFound: "/page-not-found",
 
 	home: "/index",
@@ -174,6 +177,15 @@ export const ROUTES = {
 		component: Profile,
 		path: ROUTE_PATHS.profile,
 		layout: LAYOUT_PATHS.detail,
+	},
+	signup: {
+		icon: AccountCircleIcon,
+		component: Signup,
+		key: "signup",
+		name: "Sign Up",
+		iconColor: "Info",
+		path: ROUTE_PATHS.signup,
+		layout: LAYOUT_PATHS.auth,
 	},
 	login: {
 		icon: VpnKey,
