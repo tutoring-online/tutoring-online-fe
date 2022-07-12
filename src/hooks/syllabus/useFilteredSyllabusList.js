@@ -1,3 +1,4 @@
+import { isAvailableArray } from "helpers/arrayUtils";
 import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useSyllabusActions from "./useSyllabusActions";
@@ -5,18 +6,27 @@ import useSyllabusActions from "./useSyllabusActions";
 const useFilteredSyllabusList = (filter) => {
     const actions = useSyllabusActions();
 
-    const syllabusList = useSelector(state => state.syllabus.filteredSyllabuses);
+    const filteredSyllabuses = useSelector(state => state.syllabus.filteredSyllabuses);
+    const [syllabusList, setSyllabusList] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        if (!isAvailableArray(filteredSyllabuses.data)) {
+            setSyllabusList([]);
+            return;
+        }
+
+        setSyllabusList([...filteredSyllabuses.data]);
+    }, [filteredSyllabuses])
+
+
+    useEffect(() => {
         actions.fetchSyllabusesWithFilter({ filter, setLoading });
-    }, [actions, filter])
+    }, [actions, filter]);
 
     const refresh = useCallback(() => {
         actions.fetchSyllabusesWithFilter({ filter, setLoading });
-    }, [actions, filter])
-
-    console.log(syllabusList);
+    }, [actions, filter]);
 
     return {
         syllabusList,

@@ -44,7 +44,7 @@ export const renderSyllabusStatus = (value, onClick) => {
 }
 
 export const DURATION_OPTIONS = [
-    { label: "4 weeks", value: 12 },
-    { label: "8 weeks", value: 24 },
-    { label: "12 weeks", value: 36 },
+    { label: "4 weeks", value: 4 },
+    { label: "8 weeks", value: 8 },
+    { label: "12 weeks", value: 12 },
 ]

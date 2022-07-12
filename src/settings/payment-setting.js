@@ -53,3 +53,5 @@ export const DATE_SESSION_OPTIONS = [
     { label: "Afternoon", value: 2 },
     { label: "Evening", value: 3 },
 ]
+
+export const DEFAULT_MAX_PRICE = 2* 1000 * 1000;

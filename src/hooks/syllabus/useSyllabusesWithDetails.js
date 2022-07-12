@@ -2,14 +2,16 @@ import { isAvailableArray } from "helpers/arrayUtils";
 import usePaymentList from "hooks/payment/usePaymentList";
 import useTutorSubjectList from "hooks/tutor-subject/useTutorSubjectList";
 import { useCallback, useEffect, useState } from "react";
-import useSyllabusList from "./useSyllabusList";
+import useFilteredSyllabusList from "./useFilteredSyllabusList";
 
-const useSyllabusesWithDetails = () => {
+const useSyllabusesWithDetails = (filter) => {
     const {
         syllabusList,
         loading: loadingSyllabusList,
         refresh: refreshSyllabusList,
-    } = useSyllabusList();
+    } = useFilteredSyllabusList(filter);
+
+    console.log(syllabusList);
 
     const {
         paymentList,
@@ -28,7 +30,7 @@ const useSyllabusesWithDetails = () => {
 
     useEffect(() => {
         setLoading(() => {
-            return loadingSyllabusList && loadingPaymentList && loadingTutorSubjectList;
+            return loadingSyllabusList || loadingPaymentList || loadingTutorSubjectList;
         })
     }, [loadingPaymentList, loadingSyllabusList, loadingTutorSubjectList])
 

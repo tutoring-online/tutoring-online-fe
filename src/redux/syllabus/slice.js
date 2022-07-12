@@ -1,10 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { isAvailableArray } from "helpers/arrayUtils";
+import { DEFAULT_MAX_PRICE } from "settings/payment-setting";
 import asyncThunks from "./asyncThunk";
 import * as types from "./types";
 
 const INITIAL_STATE = {
     syllabuses: [],
+    filter: {
+        FromPrice: 0,
+        ToPrice: DEFAULT_MAX_PRICE
+    },
     filteredSyllabuses: [],
     syllabusDetail: null
 }
@@ -44,6 +49,9 @@ const slice = createSlice({
     reducers: {
         [types.CLEAR_SYLLABUS_DETAIL]: (state) => {
             state.subjectDetail = null;
+        },
+        [types.UPDATE_FILTER]: (state, action) => {
+            state.filter = { ...action.payload };
         }
     },
     extraReducers: (builder) => {
@@ -58,7 +66,7 @@ const slice = createSlice({
 
         builder.addCase(asyncThunks.createSyllabus.fulfilled, reducers.createSyllabusSuccessful);
         builder.addCase(asyncThunks.createSyllabus.rejected, reducers.createSyllabusFailed);
-        
+
         builder.addCase(asyncThunks.deleteSyllabus.fulfilled, reducers.deleteSyllabusSuccessful);
         builder.addCase(asyncThunks.deleteSyllabus.rejected, reducers.deleteSyllabusFailed);
     }

@@ -1,18 +1,23 @@
+import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Divider } from "@mui/material"
-import NTARangeField from "components/Form/NTARangeField";
-import NTASelectField from "components/Form/NTASelectField"
-import { isAvailableArray } from "helpers/arrayUtils";
-import yup from "helpers/yupGlobal";
-import useCategoryList from "hooks/category/useCategoryList";
-import useSubjectList from "hooks/subject/useSubjectList";
 import { useForm, useWatch } from "react-hook-form";
 import { useInView } from "react-intersection-observer";
 import ReactNumberFormat from 'react-number-format';
-import { DURATION_OPTIONS } from "settings/syllabus-setting";
+
+import { Box, Divider } from "@mui/material"
+
+import NTARangeField from "components/Form/NTARangeField";
+import NTASelectField from "components/Form/NTASelectField"
 import NTAChipSelectField from "components/Form/NTAChipSelectField";
-import useFilteredSyllabusList from "hooks/syllabus/useFilteredSyllabusList";
-import { useEffect, useState } from "react";
+
+import { isAvailableArray } from "helpers/arrayUtils";
+import { DURATION_OPTIONS } from "settings/syllabus-setting";
+import { DEFAULT_MAX_PRICE } from "settings/payment-setting";
+import yup from "helpers/yupGlobal";
+
+import useCategoryList from "hooks/category/useCategoryList";
+import useSubjectList from "hooks/subject/useSubjectList";
+import useSyllabusActions from "hooks/syllabus/useSyllabusActions";
 
 const SearchBar = ({ children }) => (
     <Box
@@ -48,9 +53,6 @@ const getCategoryOptions = (categoryList) => {
 
     return options;
 }
-
-const DEFAULT_MAX_PRICE = 10 * 1000 * 1000;
-
 
 const getMaxPrice = () => {
     return DEFAULT_MAX_PRICE;
@@ -96,9 +98,9 @@ const getDurationOptions = () => {
 const sortByOptions = [
     { label: "Popularity", value: "" },
     { label: "Price: highest first", value: "-price" },
-    { label: "Price: lowest first", value: "price" },
+    { label: "Price: lowest first", value: "+price" },
     { label: "Duration: highest first", value: "-totalLessons" },
-    { label: "Duration: lowest first", value: "totalLessons" },
+    { label: "Duration: lowest first", value: "+totalLessons" },
 ]
 
 const getSortByLabel = (value) => {
@@ -110,6 +112,7 @@ export default function SearchBox() {
 
     const { subjectList } = useSubjectList();
     const { categoryList } = useCategoryList();
+    const actions = useSyllabusActions();
 
     const { control } = useForm({
         mode: "onSubmit",
@@ -129,30 +132,32 @@ export default function SearchBox() {
     const duration = useWatch({ control, name: "duration" });
     const sortBy = useWatch({ control, name: "sortBy" });
     const price = useWatch({ control, name: "price" });
-    const [filter, setFilter] = useState({});
 
-    useFilteredSyllabusList(filter);
 
     useEffect(() => {
         const filter = {
             FromPrice: price ? price[0] : 0,
             ToPrice: price ? price[1] : DEFAULT_MAX_PRICE,
         };
-        
-        if(duration) {
+
+        if (duration) {
             filter.FromTotalLessons = duration * 3;
             filter.ToTotalLessons = duration * 3;
         }
 
-        if(sortBy) {
+        if(subjectId) {
+            filter.SubjectId = subjectId;
+        }
+
+        if (sortBy) {
             filter["Sort"] = sortBy;
         }
 
-        setFilter(filter);
-    }, [subjectId, duration, sortBy, price])
-
+        actions.updateFilter(filter);
+    }, [subjectId, duration, sortBy, price, actions])
 
     const maxPrice = getMaxPrice();
+
     const { ref, inView } = useInView({
         threshold: 0,
     });

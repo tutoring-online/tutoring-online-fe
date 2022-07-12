@@ -47,12 +47,13 @@ export default function ProcessBooking({
 
         const fullData = {
             ...data,
+            status: 1,
             studentId: user.id,
             syllabusId: syllabus.id,
         }
 
         actions.createPayment({
-            data: fullData,
+            data: [fullData],
             loading,
             callback: listenCreateStatus
         });

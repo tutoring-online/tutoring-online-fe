@@ -15,6 +15,8 @@ const useSyllabusActions = () => {
         createSyllabus: compose(dispatch, asyncThunks.createSyllabus),
         updateSyllabus: compose(dispatch, asyncThunks.updateSyllabus),
         deleteSyllabus: compose(dispatch, asyncThunks.deleteSyllabus),
+
+        updateFilter: compose(dispatch, reduxActions[types.UPDATE_FILTER]),
     })
 
     return actions;

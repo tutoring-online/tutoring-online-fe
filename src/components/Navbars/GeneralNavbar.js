@@ -31,7 +31,7 @@ import Settings from "@mui/icons-material/Settings";
 import componentStyles from "assets/theme/components/auth-navbar.js";
 import dropdownComponentStyles from "assets/theme/components/navbar-dropdown.js";
 
-import LogoWhite from "assets/img/brand/logo.png";
+import LogoWhite from "assets/img/brand/logo_white.png";
 import Logo from "assets/img/brand/logo.png";
 // import LogoWhite from "assets/img/brand/argon-react-white.png";
 // import Logo from "assets/img/brand/argon-react.png";

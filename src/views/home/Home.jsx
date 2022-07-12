@@ -1,18 +1,41 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 import SyllabusCard from "components/Cards/SyllabusCard";
 import { Container, Grid } from "@mui/material";
 
 import { isAvailableArray } from "helpers/arrayUtils";
 import useSyllabusesWithDetails from "hooks/syllabus/useSyllabusesWithDetails";
-import "./index.scss";
-import useSyllabusList from "hooks/syllabus/useSyllabusList";
-import Guide from "./Guide";
-import NoResultContent from "./NoResultContent";
+
 import { ProcessBooking } from "crud/payment";
+import NoResultContent from "./NoResultContent";
+import Guide from "./Guide";
+import "./index.scss";
+import SyllabusCardSkeleton from "components/Cards/SyllabusCardSkeleton";
+
+const renderSkeleton = () => (
+    <>
+        <Grid item xs={12}>
+            <SyllabusCardSkeleton />
+        </Grid>
+        <Grid item xs={12}        >
+            <SyllabusCardSkeleton />
+        </Grid>
+        <Grid item xs={12}        >
+            <SyllabusCardSkeleton />
+        </Grid>
+        <Grid item xs={12}        >
+            <SyllabusCardSkeleton />
+        </Grid>
+        <Grid item xs={12}        >
+            <SyllabusCardSkeleton />
+        </Grid>
+    </>
+)
 
 function Home() {
-    const { syllabusesWithDetails } = useSyllabusesWithDetails();
+    const filter = useSelector(state => state.syllabus.filter);
+    const { syllabusesWithDetails, loading } = useSyllabusesWithDetails(filter);
 
     const [bookingSyllabus, setBookingSyllabus] = useState(null);
     const [openBooking, setOpenBooking] = useState(null);
@@ -29,6 +52,29 @@ function Home() {
         setOpenBooking(false);
     }
 
+    const renderLIstSyllabuses = () => (
+        isAvailableArray(syllabusesWithDetails) ? (
+            syllabusesWithDetails.map(syllabus =>
+                <Grid
+                    item
+                    key={syllabus.id}
+                    xs={12}
+                >
+                    <SyllabusCard
+                        syllabus={syllabus}
+                        onBooking={handleBooking}
+                    />
+                </Grid>
+            )
+        ) : (
+            <>
+                <Grid item xs={12}>
+                    <NoResultContent />
+                </Grid>
+            </>
+        )
+    )
+
     return (
         <>
             <Container maxWidth="xl">
@@ -36,38 +82,7 @@ function Home() {
                     <Grid item xs={12} marginBottom="2rem">
                         <Guide />
                     </Grid>
-                    {isAvailableArray(syllabusesWithDetails) ? (
-                        syllabusesWithDetails.map(syllabus =>
-                            <Grid
-                                item
-                                key={syllabus.id}
-                                xs={12}
-                            >
-                                <SyllabusCard
-                                    syllabus={syllabus}
-                                    onBooking={handleBooking}
-                                />
-                            </Grid>
-                        )
-                    ) : (
-                        <>
-                            <Grid item xs={12}>
-                                <NoResultContent />
-                            </Grid>
-                            {/* {isAvailableArray(syllabusList) && syllabusList.filter((syllabus, index) => index < 5).map(syllabus =>
-                                <Grid
-                                    item
-                                    key={syllabus.id}
-                                    xs={12}
-                                >
-                                    <SyllabusCard
-                                        syllabus={syllabus}
-                                        onBooking={handleBooking}
-                                    />
-                                </Grid>
-                            )} */}
-                        </>
-                    )}
+                    {loading ? renderSkeleton() : renderLIstSyllabuses()}
                 </Grid>
             </Container>
 
