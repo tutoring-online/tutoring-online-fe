@@ -11,9 +11,11 @@ export default function TextField({
 }) {
     return (
         <FormGroup>
-            <FormLabel>
-                {required ? <RequiredLabel label={label} /> : label}
-            </FormLabel>
+            {label &&
+                <FormLabel>
+                    {required ? <RequiredLabel label={label} /> : label}
+                </FormLabel>
+            }
             <FormControl
                 error={Boolean(error)}
                 component={Box}

@@ -3,8 +3,8 @@ import { renderStatus, STATUS_COLORS } from "./setting"
 export const PAYMENT_STATUSES = {
     PENDING: 1,
     PAID: 2,
-    ERROR: 3,
-    CANCELED: 0,
+    CANCELED: 3,
+    ERROR: 4,
 }
 
 export const LIST_PAYMENT_STATUS = [
@@ -15,7 +15,7 @@ export const LIST_PAYMENT_STATUS = [
         bgColor: STATUS_COLORS.PENDING.bgColor
     },
     {
-        label: "Completed",
+        label: "PAID",
         value: PAYMENT_STATUSES.PAID,
         textColor: STATUS_COLORS.ACTIVE.textColor,
         bgColor: STATUS_COLORS.ACTIVE.bgColor

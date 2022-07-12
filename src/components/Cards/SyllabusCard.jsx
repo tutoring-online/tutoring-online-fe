@@ -99,7 +99,7 @@ export const SyllabusCard = ({
                     <Typography
                         className={classes.multiLineEllipsis}
                     >
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus. Tquam beatae rerum inventore consectetur, neque doloribus. Quam beatae rerum inventore consectetur, neque doloribus.
+                        {syllabus.description}
                     </Typography>
 
                     <Typography

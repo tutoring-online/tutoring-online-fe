@@ -48,3 +48,10 @@ export const DURATION_OPTIONS = [
     { label: "8 weeks", value: 8 },
     { label: "12 weeks", value: 12 },
 ]
+
+export const getPrice = (syllabus) => {
+    const price = syllabus?.price;
+    if (!price) return 0;
+    if (isNaN(price)) return 0;
+    return parseInt(price);
+}

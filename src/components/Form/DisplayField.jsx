@@ -25,7 +25,6 @@ export default function DisplayField({
                 <Box
                     display="flex"
                     alignItems="center"
-                    borderRadius="6px"
                     backgroundColor={valueBackgroundColor}
                 >
                     <Box
