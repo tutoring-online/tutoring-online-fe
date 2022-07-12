@@ -20,6 +20,8 @@ import yup from "helpers/yupGlobal";
 import { CRUD_MODE } from "settings/setting";
 
 const schema = yup.object().shape({
+    combo: yup.string().required("Combo is required").nullable(),
+    dateSession: yup.string().required("Date session is required").nullable(),
 });
 
 const getDefaultValues = (payment) => {
@@ -91,7 +93,7 @@ export default function PaymentDetailDialog({
     }
 
     const cancelEdit = () => {
-        if(mode === CRUD_MODE.create) {
+        if (mode === CRUD_MODE.create) {
             onClose && onClose();
             return;
         }

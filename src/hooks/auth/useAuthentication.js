@@ -69,7 +69,7 @@ const useAuthentication = () => {
                         history.push("auth/signup");
                     }
                 } else {
-                    history.push("/auth/redirect-home");
+                    //...
                 }
 
             }

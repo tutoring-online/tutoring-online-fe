@@ -21,7 +21,7 @@ export default function ProcessBooking({
 
     const [loadingCreate, setLoadingCreate] = useState(false);
 
-    const handleSubmit = (data, onSuccess) => {
+    const handleSubmit = (data) => {
         console.log(data);
         const loading = (isLoading) => {
             setLoadingCreate(Boolean(isLoading));
@@ -30,8 +30,7 @@ export default function ProcessBooking({
         const listenCreateStatus = (updateStatus) => {
             if (updateStatus === true) {
                 refresh && refresh();
-                onSuccess && onSuccess();
-                // refreshDetail && refreshDetail();
+                handleClose();
             }
         }
 
@@ -42,7 +41,8 @@ export default function ProcessBooking({
         }
 
         if (!isStudent(user?.role)) {
-            toast.warn("You cannot do that. Only student could booking a course.");
+            toast.warn("You cannot do that. Only student can booking a course.");
+            return;
         }
 
         const fullData = {
@@ -50,9 +50,9 @@ export default function ProcessBooking({
             studentId: user.id,
             syllabusId: syllabus.id,
         }
-        console.log(fullData);
+
         actions.createPayment({
-            fullData,
+            data: fullData,
             loading,
             callback: listenCreateStatus
         });
@@ -68,7 +68,7 @@ export default function ProcessBooking({
 
             mode={CRUD_MODE.create}
             syllabus={syllabus}
-            title={"Booking process"}
+            title={"Booking"}
             submitButton={{
                 text: "Booking"
             }}

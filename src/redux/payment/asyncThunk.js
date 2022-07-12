@@ -31,6 +31,7 @@ const fetchPaymentDetail = async (params) => {
 
 const createPayment = async (params) => {
     const { data, loading = () => { }, callback = () => { } } = params;
+    console.log(data);
     loading(true);
     try {
         const response = await api.createPayment(data);

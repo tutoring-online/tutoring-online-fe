@@ -38,7 +38,7 @@ const BookingInfo = ({
                     row={true}
                     options={DATE_SESSION_OPTIONS}
                     control={control}
-                    error={errors.combo?.message}
+                    error={errors.dateSession?.message}
                 />
             </Grid>
 
