@@ -19,7 +19,8 @@ const useAuthentication = () => {
         const unregisterAuthObserver = auth().onAuthStateChanged(async (currentUser) => {
 
             const location = history.location?.pathname;
-
+            console.log(location)
+            console.log(getFullPath(ROUTES.signup));
             if (!currentUser) {
                 actions.unsubscribeUser();
                 return;
@@ -68,6 +69,7 @@ const useAuthentication = () => {
 
                     if (location === getFullPath(ROUTES.signup)) {
                         history.push("auth/signup");
+                        console.log("aaa");
                     }
                 }
             }

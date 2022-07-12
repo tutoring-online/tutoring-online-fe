@@ -55,18 +55,20 @@ const StatisticItem = ({ icon, content, classes }) => (
 )
 
 export const SyllabusCard = ({
-    syllabus
+    syllabus,
 }) => {
     const styles = useStyles();
     const classes = useStylesEllipsis();
-    
+
     return (
         <Card
             className={cx(styles.root)}
             style={{
                 boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px",
                 backgroundColor: "#fff",
+                width: "100%"
             }}
+            component="div"
         >
             <CardMedia
                 className={styles.media}

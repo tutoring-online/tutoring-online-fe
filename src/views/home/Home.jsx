@@ -10,12 +10,6 @@ import useSyllabusList from "hooks/syllabus/useSyllabusList";
 import Guide from "./Guide";
 import NoResultContent from "./NoResultContent";
 
-// const RightItem = ({ children }) => (
-//     <div className="home-view__right-item">
-//         {children}
-//     </div>
-// )
-
 function Home() {
     const { syllabusesWithDetails } = useSyllabusesWithDetails();
     const { syllabusList } = useSyllabusList();
@@ -23,16 +17,15 @@ function Home() {
     return (
         <Container maxWidth="xl">
             <Grid container spacing={2}>
-                <Grid item xs={12}                >
+                <Grid item xs={12} marginBottom="2rem">
                     <Guide />
                 </Grid>
                 {isAvailableArray(syllabusesWithDetails) ? (
-                    syllabusesWithDetails.map((syllabus, index) =>
+                    syllabusesWithDetails.map(syllabus =>
                         <Grid
                             item
-                            key={syllabus.id || index}
+                            key={syllabus.id}
                             xs={12}
-                            xl={9}
                         >
                             <SyllabusCard
                                 syllabus={syllabus}
@@ -49,7 +42,6 @@ function Home() {
                                 item
                                 key={syllabus.id}
                                 xs={12}
-                                xl={9}
                             >
                                 <SyllabusCard
                                     syllabus={syllabus}

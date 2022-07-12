@@ -5,7 +5,6 @@ const componentStyles = ({ breakpoints, spacing }) => ({
         alignItems: 'center',
         overflow: 'initial',
         
-        maxWidth: 800,
         paddingBottom: spacing(2),
         borderRadius: spacing(2), // 16px
 
