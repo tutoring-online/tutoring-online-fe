@@ -3,13 +3,12 @@ import { axiosRequest } from "helpers/axios";
 
 
 //Get
-export const loginUser = (token, role) => {
+export const loginUser = (token) => {
     const url = AUTHENTICATION_API + "/login";
     const options = {
         method: "POST",
         data: {
-            token,
-            role: role || null
+            token
         }
     }
     

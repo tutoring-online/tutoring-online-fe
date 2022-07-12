@@ -23,10 +23,14 @@ const schema = yup.object().shape({
 });
 
 const getDefaultValues = (payment) => {
-    if (!payment) return {};
+    if (!payment) return {
+        combo: null,
+        dateSession: null
+    };
 
     return {
         ...payment,
+
     }
 }
 
@@ -39,6 +43,7 @@ export default function PaymentDetailDialog({
 
     mode,
     payment,
+    syllabus,
     title = "Payment Detail",
     submitButton = {
         text: "Confirm"
@@ -49,8 +54,8 @@ export default function PaymentDetailDialog({
         // register,
         handleSubmit,
         reset,
-        // formState: { errors },
-        // control
+        formState: { errors },
+        control
     } = useForm({
         mode: "onSubmit",
         reValidateMode: "onBlur",
@@ -86,6 +91,10 @@ export default function PaymentDetailDialog({
     }
 
     const cancelEdit = () => {
+        if(mode === CRUD_MODE.create) {
+            onClose && onClose();
+            return;
+        }
         setIsEditing(false);
         reset();
     }
@@ -93,10 +102,28 @@ export default function PaymentDetailDialog({
     const renderContent = () => isEditing ? (
         <EditingContent
             payment={payment}
+            syllabus={syllabus}
+            control={control}
+            errors={errors}
             onSubmit={handleSubmit(preparedBeforeSubmit)}
         />
     ) : (
         <ViewMode payment={payment} />
+    )
+
+    const renderBottomPanel = () => (
+        isEditing ? (
+            <>
+                <CancelButton onClick={cancelEdit} />
+                <SubmitButton
+                    onClick={handleSubmit(preparedBeforeSubmit)}
+                    text={submitButton.text}
+                    loading={loadingSubmit}
+                />
+            </>
+        ) : (
+            <EditButton onClick={enableEdit} />
+        )
     )
 
     return (
@@ -113,18 +140,7 @@ export default function PaymentDetailDialog({
                 {loadingDetail ? <ViewModeSkeleton /> : renderContent()}
             </DialogContent>
             <CustomDialogActions>
-                {isEditing ? (
-                    <>
-                        <CancelButton onClick={cancelEdit} />
-                        <SubmitButton
-                            onClick={handleSubmit(preparedBeforeSubmit)}
-                            text={submitButton.text}
-                            loading={loadingSubmit}
-                        />
-                    </>
-                ) : (
-                    <EditButton onClick={enableEdit} />
-                )}
+                {renderBottomPanel()}
             </CustomDialogActions>
         </Dialog>
     )

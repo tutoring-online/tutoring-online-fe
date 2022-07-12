@@ -37,11 +37,11 @@ const createPayment = async (params) => {
 
         console.log(response)
         callback(true, response);
-        toast.success("Created payment successfully.");
+        toast.success("Booking successfully.");
         return response;
     } catch (error) {
         callback(false);
-        toast.error("Failed to create payment.");
+        toast.error("Booking failed.");
         throw error;
     } finally {
         loading(false);

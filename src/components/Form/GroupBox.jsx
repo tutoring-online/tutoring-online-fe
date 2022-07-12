@@ -11,7 +11,7 @@ export default function GroupBox({
             padding="0.5rem 1rem"
             borderRadius="6px"
             marginBottom="1rem"
-            bgcolor="#fcfcfc"
+            bgcolor="#fff"
             {...props}
         >
             {children}

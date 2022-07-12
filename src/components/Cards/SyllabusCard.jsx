@@ -10,6 +10,7 @@ import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/mat
 import { Box } from '@mui/system';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import ReactNumberFormat from 'react-number-format';
 
 const useStyles = makeStyles(componentStyles);
 const useStylesEllipsis = makeStyles({
@@ -31,6 +32,12 @@ const useStylesEllipsis = makeStyles({
 const syllabusImageUrl = "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://d15cw65ipctsrr.cloudfront.net/18/2aa16c328a457cb910aa933bf2cd87/Professional-Certificate-Cloud-App.jpg?auto=format%2Ccompress&dpr=3&w=330&h=330&fit=fill&q=25"
 // const syllabusVideoUrl = "https://www.youtube.com/watch?v=b9eMGE7QtTk&ab_channel=JavaScriptMastery";
 
+const getPrice = (syllabus) => {
+    const price = syllabus?.price;
+    if (!price) return 0;
+    if (isNaN(price)) return 0;
+    return parseInt(price);
+}
 
 const StatisticItem = ({ icon, content, classes }) => (
     <ListItem
@@ -56,6 +63,7 @@ const StatisticItem = ({ icon, content, classes }) => (
 
 export const SyllabusCard = ({
     syllabus,
+    onBooking,
 }) => {
     const styles = useStyles();
     const classes = useStylesEllipsis();
@@ -109,6 +117,18 @@ export const SyllabusCard = ({
                     marginLeft="1rem"
                     width="100%"
                 >
+                    <Box
+                        fontSize="1rem"
+                        fontWeight="600"
+                        margin="0 auto"
+                    >
+                        <ReactNumberFormat
+                            displayType="text"
+                            value={getPrice(syllabus) || 0}
+                            thousandSeparator={true}
+                            suffix=" ₫"
+                        />
+                    </Box>
                     <List>
                         <StatisticItem
                             icon={<ListAltIcon />}
@@ -125,7 +145,7 @@ export const SyllabusCard = ({
                         variant="contained"
                         color="primary"
                         size="medium"
-                        onClick={() => { }}
+                        onClick={() => onBooking && onBooking(syllabus)}
                     >
                         Book the course
                     </Button>

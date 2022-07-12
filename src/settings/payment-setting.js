@@ -43,3 +43,13 @@ export const renderPaymentStatus = (value, onClick) => {
     return renderStatus(statusObject, onClick);
 }
 
+export const COMBO_OPTIONS = [
+    { label: "Even days (Monday, Wednesday, Friday", value: 1 },
+    { label: "Odd days (Tuesday, Thursday, Saturday", value: 2 },
+]
+
+export const DATE_SESSION_OPTIONS = [
+    { label: "Morning", value: 1 },
+    { label: "Afternoon", value: 2 },
+    { label: "Evening", value: 3 },
+]

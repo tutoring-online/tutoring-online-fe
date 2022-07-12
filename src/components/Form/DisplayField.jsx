@@ -10,7 +10,7 @@ import {
 export default function DisplayField({
     label,
     value,
-    valueBackgroundColor = "#fcfcfc",
+    valueBackgroundColor = "#fff",
     error
 }) {
     return (
