@@ -13,7 +13,6 @@ import { ProcessBooking } from "crud/payment";
 
 function Home() {
     const { syllabusesWithDetails } = useSyllabusesWithDetails();
-    const { syllabusList } = useSyllabusList();
 
     const [bookingSyllabus, setBookingSyllabus] = useState(null);
     const [openBooking, setOpenBooking] = useState(null);
@@ -55,7 +54,7 @@ function Home() {
                             <Grid item xs={12}>
                                 <NoResultContent />
                             </Grid>
-                            {isAvailableArray(syllabusList) && syllabusList.filter((syllabus, index) => index < 5).map(syllabus =>
+                            {/* {isAvailableArray(syllabusList) && syllabusList.filter((syllabus, index) => index < 5).map(syllabus =>
                                 <Grid
                                     item
                                     key={syllabus.id}
@@ -66,7 +65,7 @@ function Home() {
                                         onBooking={handleBooking}
                                     />
                                 </Grid>
-                            )}
+                            )} */}
                         </>
                     )}
                 </Grid>

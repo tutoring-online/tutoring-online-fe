@@ -5,6 +5,7 @@ import * as types from "./types";
 
 const INITIAL_STATE = {
     syllabuses: [],
+    filteredSyllabuses: [],
     syllabusDetail: null
 }
 
@@ -14,6 +15,13 @@ const reducers = {
     },
     fetchSyllabusesFailed: (state) => {
         state.syllabuses = [];
+    },
+
+    fetchSyllabusesWithFilterSuccessful: (state, action) => {
+        state.filteredSyllabuses = action.payload;
+    },
+    fetchSyllabusesWithFilterFailed: (state) => {
+        state.filteredSyllabuses = [];
     },
 
     fetchSyllabusDetailSuccessful: (state, action) => {
@@ -41,6 +49,9 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.fetchSyllabuses.fulfilled, reducers.fetchSyllabusesSuccessful);
         builder.addCase(asyncThunks.fetchSyllabuses.rejected, reducers.fetchSyllabusesFailed);
+
+        builder.addCase(asyncThunks.fetchSyllabusesWithFilter.fulfilled, reducers.fetchSyllabusesWithFilterSuccessful);
+        builder.addCase(asyncThunks.fetchSyllabusesWithFilter.rejected, reducers.fetchSyllabusesWithFilterFailed);
 
         builder.addCase(asyncThunks.fetchSyllabusDetail.fulfilled, reducers.fetchSyllabusDetailSuccessful);
         builder.addCase(asyncThunks.fetchSyllabusDetail.rejected, reducers.fetchSyllabusDetailFailed);

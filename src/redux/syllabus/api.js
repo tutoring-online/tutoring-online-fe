@@ -3,13 +3,13 @@ import { axiosRequest } from "helpers/axios";
 
 const baseUrl = SYLLABUS_API;
 
-export const fetchSyllabuses = () => {
+export const fetchSyllabuses = (params) => {
     const url = baseUrl;
     const options = {
         method: METHOD.get,
     }
 
-    return axiosRequest(url, options);
+    return axiosRequest(url, options, params);
 }
 
 export const fetchSyllabusDetail = (id) => {

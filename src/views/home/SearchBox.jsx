@@ -6,12 +6,13 @@ import { isAvailableArray } from "helpers/arrayUtils";
 import yup from "helpers/yupGlobal";
 import useCategoryList from "hooks/category/useCategoryList";
 import useSubjectList from "hooks/subject/useSubjectList";
-import useSyllabusList from "hooks/syllabus/useSyllabusList";
 import { useForm, useWatch } from "react-hook-form";
 import { useInView } from "react-intersection-observer";
 import ReactNumberFormat from 'react-number-format';
 import { DURATION_OPTIONS } from "settings/syllabus-setting";
 import NTAChipSelectField from "components/Form/NTAChipSelectField";
+import useFilteredSyllabusList from "hooks/syllabus/useFilteredSyllabusList";
+import { useEffect, useState } from "react";
 
 const SearchBar = ({ children }) => (
     <Box
@@ -38,16 +39,6 @@ const schema = yup.object().shape({
 
 });
 
-const getSubjectOptions = (subjectList) => {
-    const options = isAvailableArray(subjectList) ? subjectList.map(item => ({
-        label: item.name,
-        value: item.id
-    })) : [];
-    options.push({ label: "All", value: "" })
-
-    return options;
-}
-
 const getCategoryOptions = (categoryList) => {
     const options = isAvailableArray(categoryList) ? categoryList.map(item => ({
         label: item.name,
@@ -58,19 +49,11 @@ const getCategoryOptions = (categoryList) => {
     return options;
 }
 
-const DEFAULT_MAX_PRICE = 1 * 1000 * 1000;
+const DEFAULT_MAX_PRICE = 10 * 1000 * 1000;
 
 
-const getMaxPrice = (syllabusList) => {
-    let maxPrice = DEFAULT_MAX_PRICE;
-
-    isAvailableArray(syllabusList) && syllabusList.forEach(syllabus => {
-        if (syllabus.price > maxPrice) {
-            maxPrice = syllabus.price;
-        }
-    })
-
-    return maxPrice
+const getMaxPrice = () => {
+    return DEFAULT_MAX_PRICE;
 }
 
 const renderDisplayRange = (value) => {
@@ -124,9 +107,11 @@ const getSortByLabel = (value) => {
 }
 
 export default function SearchBox() {
-    const {
-        control,
-    } = useForm({
+
+    const { subjectList } = useSubjectList();
+    const { categoryList } = useCategoryList();
+
+    const { control } = useForm({
         mode: "onSubmit",
         reValidateMode: "onBlur",
         defaultValues: {
@@ -139,90 +124,121 @@ export default function SearchBox() {
         resolver: yupResolver(schema),
     });
 
-    const sortBy = useWatch({
-        control,
-        name: "sortBy"
-    })
+    const categoryId = useWatch({ control, name: "categoryId" });
+    const subjectId = useWatch({ control, name: "subjectId" });
+    const duration = useWatch({ control, name: "duration" });
+    const sortBy = useWatch({ control, name: "sortBy" });
+    const price = useWatch({ control, name: "price" });
+    const [filter, setFilter] = useState({});
+
+    useFilteredSyllabusList(filter);
+
+    useEffect(() => {
+        const filter = {
+            FromPrice: price ? price[0] : 0,
+            ToPrice: price ? price[1] : DEFAULT_MAX_PRICE,
+        };
+        
+        if(duration) {
+            filter.FromTotalLessons = duration * 3;
+            filter.ToTotalLessons = duration * 3;
+        }
+
+        if(sortBy) {
+            filter["Sort"] = sortBy;
+        }
+
+        setFilter(filter);
+    }, [subjectId, duration, sortBy, price])
 
 
-    const { subjectList } = useSubjectList();
-    const { syllabusList } = useSyllabusList();
-    const { categoryList } = useCategoryList();
-
-    const maxPrice = getMaxPrice(syllabusList);
-
+    const maxPrice = getMaxPrice();
     const { ref, inView } = useInView({
         threshold: 0,
     });
 
-    return (
-        <>
-            <Box
-                component="div"
-                className={`home-search-box ${inView ? "" : "sticky-search-box"}`}
-            >
-                <Box
-                    component="h1"
-                    className="home-search-box__title"
-                >
-                    Find an online course to help you study
-                </Box>
-                <Box
-                    ref={ref}
-                    component="p"
-                    className="home-search-box__description"
-                >
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus.
-                </Box>
+    const getSubjectOptions = (subjectList) => {
+        const options = isAvailableArray(subjectList) ? subjectList
+            .filter(item => {
+                if (!categoryId) return true;
+                return item.categoryId === categoryId;
+            })
+            .map(item => ({
+                label: item.name,
+                value: item.id
+            })) : [];
+        options.push({ label: "All", value: "" })
 
-                <SearchBar>
-                    <NTASelectField
-                        label="Category"
-                        name="categoryId"
-                        options={getCategoryOptions(categoryList)}
-                        control={control}
-                    />
-                    <CustomDivider />
-                    <NTASelectField
-                        label="I want to learn"
-                        name="subjectId"
-                        options={getSubjectOptions(subjectList)}
-                        control={control}
-                    />
-                    <CustomDivider />
-                    <NTASelectField
-                        label="Duration"
-                        name="duration"
-                        options={getDurationOptions()}
-                        control={control}
-                    />
-                    <CustomDivider />
-                    <NTARangeField
-                        label="Price"
-                        name="price"
-                        max={maxPrice}
-                        control={control}
-                        renderDisplayRange={renderDisplayRange}
-                    />
-                </SearchBar>
-                <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="flex-end"
-                    flexDirection="row"
-                    flexWrap="nowrap"
-                    width="100%"
-                    maxWidth="calc(1200px - 6rem)"
-                >
-                    <NTAChipSelectField
-                        label={`Sort by: ${getSortByLabel(sortBy)}`}
-                        name="sortBy"
-                        control={control}
-                        options={sortByOptions}
-                    />
-                </Box>
+        return options;
+    }
+
+    return (
+        <Box
+            component="div"
+            key="home-search-box"
+            className={`home-search-box ${inView ? "" : "sticky-search-box"}`}
+        >
+            <Box
+                component="h1"
+                className="home-search-box__title"
+            >
+                Find an online course to help you study
             </Box>
-        </>
+            <Box
+                ref={ref}
+                component="p"
+                className="home-search-box__description"
+            >
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus.
+            </Box>
+
+            <SearchBar>
+                <NTASelectField
+                    label="Category"
+                    name="categoryId"
+                    options={getCategoryOptions(categoryList)}
+                    control={control}
+                />
+                <CustomDivider />
+                <NTASelectField
+                    label="I want to learn"
+                    name="subjectId"
+                    options={getSubjectOptions(subjectList)}
+                    control={control}
+                />
+                <CustomDivider />
+                <NTASelectField
+                    label="Duration"
+                    name="duration"
+                    options={getDurationOptions()}
+                    control={control}
+                />
+                <CustomDivider />
+                <NTARangeField
+                    label="Price"
+                    name="price"
+                    max={maxPrice}
+                    control={control}
+                    renderDisplayRange={renderDisplayRange}
+                />
+            </SearchBar>
+            <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="flex-end"
+                flexDirection="row"
+                flexWrap="nowrap"
+                width="100%"
+                maxWidth="calc(1200px - 6rem)"
+            >
+                <NTAChipSelectField
+                    label={`Sort by: ${getSortByLabel(sortBy)}`}
+                    name="sortBy"
+                    control={control}
+                    options={sortByOptions}
+                />
+            </Box>
+        </Box>
     )
 }

@@ -16,6 +16,19 @@ const fetchSyllabuses = async (params) => {
     }
 }
 
+const fetchSyllabusesWithFilter = async (params) => {
+    const { filter, setLoading = () => { } } = params;
+    setLoading(true);
+    try {
+        const response = await api.fetchSyllabuses(filter);
+        return response;
+    } catch (error) {
+        throw error;
+    } finally {
+        setLoading(false);
+    }
+}
+
 const fetchSyllabusDetail = async (params) => {
     const { id, setLoading = () => { } } = params;
     setLoading(true);
@@ -85,6 +98,7 @@ const deleteSyllabus = async (params) => {
 
 const asyncThunks = {
     fetchSyllabuses: createAsyncThunk(types.FETCH_SYLLABUSES, fetchSyllabuses),
+    fetchSyllabusesWithFilter: createAsyncThunk(types.FETCH_SYLLABUSES_WITH_FILTER, fetchSyllabusesWithFilter),
     fetchSyllabusDetail: createAsyncThunk(types.FETCH_SYLLABUS_DETAIL, fetchSyllabusDetail),
     createSyllabus: createAsyncThunk(types.CREATE_SYLLABUS, createSyllabus),
     updateSyllabus: createAsyncThunk(types.UPDATE_SYLLABUS, updateSyllabus),

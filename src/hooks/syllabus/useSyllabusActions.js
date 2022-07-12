@@ -11,6 +11,7 @@ const useSyllabusActions = () => {
         fetchSyllabusDetail: compose(dispatch, asyncThunks.fetchSyllabusDetail),
         clearSyllabusDetail: compose(dispatch, reduxActions[types.CLEAR_SYLLABUS_DETAIL]),
         fetchSyllabuses: compose(dispatch, asyncThunks.fetchSyllabuses),
+        fetchSyllabusesWithFilter: compose(dispatch, asyncThunks.fetchSyllabusesWithFilter),
         createSyllabus: compose(dispatch, asyncThunks.createSyllabus),
         updateSyllabus: compose(dispatch, asyncThunks.updateSyllabus),
         deleteSyllabus: compose(dispatch, asyncThunks.deleteSyllabus),
