@@ -16,6 +16,19 @@ const fetchPayments = async (params) => {
     }
 }
 
+const fetchPaymentsWithFilter = async (params) => {
+    const { filter, setLoading = () => { } } = params;
+    setLoading(true);
+    try {
+        const response = await api.fetchPayments(filter);
+        return response;
+    } catch (error) {
+        throw error;
+    } finally {
+        setLoading(false);
+    }
+}
+
 const fetchPaymentDetail = async (params) => {
     const { id, setLoading = () => { } } = params;
     setLoading(true);
@@ -86,6 +99,7 @@ const deletePayment = async (params) => {
 
 const asyncThunks = {
     fetchPayments: createAsyncThunk(types.FETCH_PAYMENTS, fetchPayments),
+    fetchPaymentsWithFilter: createAsyncThunk(types.FETCH_PAYMENT_WITH_FILTER, fetchPaymentsWithFilter),
     fetchPaymentDetail: createAsyncThunk(types.FETCH_PAYMENT_DETAIL, fetchPaymentDetail),
     createPayment: createAsyncThunk(types.CREATE_PAYMENT, createPayment),
     updatePayment: createAsyncThunk(types.UPDATE_PAYMENT, updatePayment),

@@ -10,7 +10,9 @@ const usePaymentActions = () => {
     const [actions] = useState({
         fetchPaymentDetail: compose(dispatch, asyncThunks.fetchPaymentDetail),
         clearPaymentDetail: compose(dispatch, reduxActions[types.CLEAR_PAYMENT_DETAIL]),
+        
         fetchPayments: compose(dispatch, asyncThunks.fetchPayments),
+        fetchPaymentsWithFilter: compose(dispatch, asyncThunks.fetchPaymentsWithFilter),
         createPayment: compose(dispatch, asyncThunks.createPayment),
         updatePayment: compose(dispatch, asyncThunks.updatePayment),
         deletePayment: compose(dispatch, asyncThunks.deletePayment),

@@ -13,7 +13,7 @@ import ViewMode from "./ViewMode";
 import ViewModeSkeleton from "./ViewModeSkeleton";
 import CancelButton from "components/Buttons/CancelButton";
 import SubmitButton from "components/Buttons/SubmitButton";
-import EditButton from "components/Buttons/EditButton";
+// import EditButton from "components/Buttons/EditButton";
 
 //Helpers
 import yup from "helpers/yupGlobal";
@@ -88,10 +88,6 @@ export default function PaymentDetailDialog({
         onSubmit && onSubmit(preparedData, onSuccess);
     }
 
-    const enableEdit = () => {
-        setIsEditing(true);
-    }
-
     const cancelEdit = () => {
         if (mode === CRUD_MODE.create) {
             onClose && onClose();
@@ -100,6 +96,8 @@ export default function PaymentDetailDialog({
         setIsEditing(false);
         reset();
     }
+
+    console.log(payment);
 
     const renderContent = () => isEditing ? (
         <EditingContent
@@ -124,7 +122,7 @@ export default function PaymentDetailDialog({
                 />
             </>
         ) : (
-            <EditButton onClick={enableEdit} />
+            <CancelButton onClick={cancelEdit} text="Close"/>
         )
     )
 

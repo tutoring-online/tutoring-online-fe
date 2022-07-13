@@ -157,11 +157,10 @@ export default function NTAChipSelectField({
                                     open
                                     onClose={handleClose}
 
-                                    clearOnBlur
+                                    disableCloseOnSelect
                                     PopperComponent={PopperComponent}
                                     renderOption={renderOption}
                                     options={options}
-                                    inputValue=""
                                     renderInput={(params) => (
                                         <StyledInput
                                             ref={params.InputProps.ref}

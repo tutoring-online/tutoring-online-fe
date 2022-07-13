@@ -5,6 +5,7 @@ import * as types from "./types";
 
 const INITIAL_STATE = {
     payments: [],
+    filteredPayments: [],
     paymentDetail: null,
 }
 
@@ -14,6 +15,13 @@ const reducers = {
     },
     fetchPaymentsFailed: (state) => {
         state.payments = [];
+    },
+
+    fetchPaymentsWithFilterSuccessful: (state, action) => {
+        state.filteredPayments = action.payload;
+    },
+    fetchPaymentsWithFilterFailed: (state) => {
+        state.filteredPayments = [];
     },
 
     fetchPaymentDetailSuccessful: (state, action) => {
@@ -42,6 +50,9 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.fetchPayments.fulfilled, reducers.fetchPaymentsSuccessful);
         builder.addCase(asyncThunks.fetchPayments.rejected, reducers.fetchPaymentsFailed);
+
+        builder.addCase(asyncThunks.fetchPaymentsWithFilter.fulfilled, reducers.fetchPaymentsWithFilterSuccessful);
+        builder.addCase(asyncThunks.fetchPaymentsWithFilter.rejected, reducers.fetchPaymentsWithFilterFailed);
 
         builder.addCase(asyncThunks.fetchPaymentDetail.fulfilled, reducers.fetchPaymentDetailSuccessful);
         builder.addCase(asyncThunks.fetchPaymentDetail.rejected, reducers.fetchPaymentDetailFailed);

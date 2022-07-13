@@ -3,13 +3,13 @@ import { axiosRequest } from "helpers/axios";
 
 const baseUrl = PAYMENT_API;
 
-export const fetchPayments = () => {
+export const fetchPayments = (params) => {
     const url = baseUrl;
     const options = {
         method: METHOD.get,
     }
 
-    return axiosRequest(url, options);
+    return axiosRequest(url, options, params);
 }
 
 export const fetchPaymentDetail = (id) => {

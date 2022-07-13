@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 
 //MUI
 import Container from "@mui/material/Container";
@@ -15,11 +15,18 @@ import Table from "components/Table/Table.jsx";
 import NoInformation from "components/Text/NoInformation";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
 import ReactNumberFormat from 'react-number-format';
+import StatisticHeader from "components/Headers/StatisticHeader";
+import NTASelectField from "components/Form/NTASelectField";
+import NTAChipSelectField from "components/Form/NTAChipSelectField";
+import NTATextField from "components/Form/NTATextField";
+import NTALoading from "nta-team/nta-loading/Loading";
+import { ViewPayment } from "crud/payment";
+import { DeletePayment } from "crud/payment";
 
 //Hooks
-import usePaymentList from "hooks/payment/usePaymentList";
-import useStudentList from "hooks/student/useStudentList";
 import useSyllabusList from "hooks/syllabus/useSyllabusList";
+import useFilteredPaymentList from "hooks/payment/useFilteredPaymentList";
+import usePaymentStatistics from "hooks/payment/usePaymentStatistics";
 
 //Helpers
 import { renderPaymentStatus, PAYMENT_STATUSES } from "settings/payment-setting";
@@ -28,12 +35,9 @@ import { formatDateTime, datetimeFormatReverseDate } from "helpers/dateUtils";
 
 //other
 import componentStyles from "assets/theme/views/admin/tables.js";
-import NTALoading from "nta-team/nta-loading/Loading";
-import { ViewPayment } from "crud/payment";
-import { DeletePayment } from "crud/payment";
-import usePaymentStatistics from "hooks/payment/usePaymentStatistics";
-import StatisticHeader from "components/Headers/StatisticHeader";
-import NTASelectField from "components/Form/NTASelectField";
+import { SORTBY_OPTIONS } from "settings/payment-setting";
+import { getSortByLabel } from "settings/payment-setting";
+import { LIST_PAYMENT_STATUS } from "settings/payment-setting";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -44,24 +48,158 @@ const getPrice = (syllabus) => {
 	return parseInt(price);
 }
 
+const getSyllabusOptions = (syllabusList) => {
+	const options = isAvailableArray(syllabusList) ? syllabusList.map(item => ({
+		label: item.name,
+		value: item.id
+	})) : [];
+
+	options.push({ label: "All", value: "" });
+	return options;
+}
+
+const getPaymentStatusOptions = () => {
+	const options = [...LIST_PAYMENT_STATUS];
+	options.push({ label: "All", value: "" });
+	return options;
+}
+
+const Filter = ({
+	setFilter,
+}) => {
+
+	const { syllabusList } = useSyllabusList();
+
+	const { register, control } = useForm({
+		mode: "onSubmit",
+		reValidateMode: "onBlur",
+		defaultValues: {
+			studentName: "",
+			syllabusId: "",
+			status: "",
+			sortBy: "-createdDate",
+		},
+	});
+
+	const syllabusId = useWatch({ control, name: "syllabusId" });
+	const studentName = useWatch({ control, name: "studentName" });
+	const status = useWatch({ control, name: "status" });
+	const sortBy = useWatch({ control, name: "sortBy" });
+
+	useEffect(() => {
+		const filter = {};
+		if (syllabusId) {
+			filter.SyllabusId = syllabusId;
+		}
+
+		if (studentName) {
+			filter["Student.Name"] = studentName;
+		}
+
+		if (status) {
+			filter.Status = status;
+		}
+
+		if (sortBy) {
+			filter["Sort"] = sortBy;
+		}
+
+		setFilter(filter);
+	}, [setFilter, sortBy, status, studentName, syllabusId])
+
+	return (
+		<Box
+			padding="0.5rem 0"
+		>
+			<Grid
+				container
+				spacing="1px"
+				paddingBottom="0.5rem"
+				borderBottom="1px solid rgba(0, 0, 0, 0.05)"
+			>
+				<Grid item xs={12} lg={4} paddingRight="0">
+					<Box
+						display="flex"
+						width="100%"
+					>
+						<NTATextField
+							label="Find student"
+							inputProps={{
+								...register("studentName"),
+								placeholder: "Search student name"
+							}}
+						/>
+						<Divider
+							orientation="vertical"
+							variant="middle"
+							flexItem
+							sx={{ borderColor: "#dadfe1" }}
+						/>
+					</Box>
+				</Grid>
+				<Grid item xs={12} lg={4} paddingRight="0">
+					<Box
+						display="flex"
+						width="100%"
+					>
+						<NTASelectField
+							label="Syllabus"
+							name="syllabusId"
+							options={getSyllabusOptions(syllabusList)}
+							control={control}
+						/>
+						<Divider
+							orientation="vertical"
+							variant="middle"
+							flexItem
+							sx={{ borderColor: "#dadfe1" }}
+						/>
+					</Box>
+				</Grid>
+				<Grid item xs={12} lg={4} paddingRight="0">
+					<NTASelectField
+						label="Status"
+						name="status"
+						options={getPaymentStatusOptions()}
+						control={control}
+					/>
+				</Grid>
+			</Grid>
+			<Grid
+				container
+				spacing="1px"
+				marginTop="0.5rem"
+				justifyContent="flex-end"
+			>
+				<Grid item xs='auto'>
+					<NTAChipSelectField
+						label={`Sort by: ${getSortByLabel(sortBy)}`}
+						name="sortBy"
+						control={control}
+						options={SORTBY_OPTIONS}
+					/>
+				</Grid>
+
+			</Grid>
+		</Box>
+	)
+}
+
 const Payment = () => {
 	const classes = useStyles();
-	const { studentList } = useStudentList();
-	const { syllabusList } = useSyllabusList();
+	const { statistics } = usePaymentStatistics();
+
+	const [filter, setFilter] = useState({});
 	const {
 		paymentList,
 		loading,
 		refresh
-	} = usePaymentList();
-	const { statistics } = usePaymentStatistics();
+	} = useFilteredPaymentList(filter);
 
 	const [columns, setColumns] = useState([]);
 	const [openEdit, setOpenEdit] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
 	const [selectedPayment, setSelectedPayment] = useState(null);
-
-	const { control } = useForm();
-
 
 	const [loadingDetail, setLoadingDetail] = useState({
 		loading: false,
@@ -79,18 +217,6 @@ const Payment = () => {
 	)
 
 	useEffect(() => {
-		const getStudentById = (studentId) => {
-			const student = isAvailableArray(studentList) &&
-				studentList.find(item => item.id === studentId);
-			return student || null;
-		}
-
-		const getSyllabusById = (syllabusId) => {
-			const syllabus = isAvailableArray(syllabusList) &&
-				syllabusList.find(item => item.id === syllabusId);
-			return syllabus || null;
-		}
-
 		const handleOpenEdit = (payment) => {
 			setSelectedPayment(payment);
 			setOpenEdit(true);
@@ -106,7 +232,7 @@ const Payment = () => {
 				key: "studentId",
 				label: "Student",
 				render: (row) => {
-					const student = getStudentById(row.studentId);
+					const student = row.student;
 					return !student ?
 						<NoInformation text="Student doesn't exist." />
 						: (
@@ -129,7 +255,7 @@ const Payment = () => {
 			{
 				key: "syllabusName",
 				label: "Syllabus",
-				render: (row) => getSyllabusById(row.syllabusId)?.name || <NoInformation text="Syllabus doesn't exist." />
+				render: (row) => row.syllabus?.name || <NoInformation text="Syllabus doesn't exist." />
 			},
 			{
 				key: "price",
@@ -137,7 +263,7 @@ const Payment = () => {
 				render: (row) => (
 					<ReactNumberFormat
 						displayType="text"
-						value={getPrice(getSyllabusById(row.syllabusId)) || 0}
+						value={getPrice(row.syllabus) || 0}
 						thousandSeparator={true}
 						suffix=" ₫"
 					/>
@@ -189,7 +315,7 @@ const Payment = () => {
 				)
 			},
 		])
-	}, [studentList, syllabusList])
+	}, [])
 
 	const handleCloseEdit = () => {
 		setOpenEdit(false);
@@ -224,60 +350,6 @@ const Payment = () => {
 		</Box>
 	)
 
-	const renderFilter = () => (
-		<Grid
-			container
-			spacing="1px"
-		>
-			<Grid item xs={12} lg={4} paddingRight="0">
-				<Box
-					display="flex"
-					width="100%"
-				>
-					<NTASelectField
-						label="Syllabus"
-						name="createdDate"
-						options={["23232", "3242424"]}
-						control={control}
-					/>
-					<Divider
-						orientation="vertical"
-						variant="middle"
-						flexItem
-						sx={{ borderColor: "#dadfe1" }}
-					/>
-				</Box>
-			</Grid>
-			<Grid item xs={12} lg={4} paddingRight="0">
-				<Box
-					display="flex"
-					width="100%"
-				>
-					<NTASelectField
-						label="Syllabus"
-						name="createdDate"
-						options={["23232", "3242424"]}
-						control={control}
-					/>
-					<Divider
-						orientation="vertical"
-						variant="middle"
-						flexItem
-						sx={{ borderColor: "#dadfe1" }}
-					/>
-				</Box>
-			</Grid>
-			<Grid item xs={12} lg={4} paddingRight="0">
-				<NTASelectField
-					label="Label"
-					name="createdDate"
-					options={["23232", "3242424"]}
-					control={control}
-				/>
-			</Grid>
-		</Grid>
-	)
-
 	return (
 		<>
 			<StatisticHeader
@@ -295,7 +367,11 @@ const Payment = () => {
 					columns={columns}
 					data={paymentList}
 					panel={renderPanel()}
-					filter={renderFilter()}
+					filter={
+						<Filter
+							setFilter={setFilter}
+						/>
+					}
 					loadingData={loading}
 				/>
 			</Container>

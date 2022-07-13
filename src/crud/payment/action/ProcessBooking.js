@@ -12,7 +12,7 @@ import ProcessPaymentDialog from '../ui-segment/ProcessPaymentDialog';
 import { Box } from '@mui/system';
 import ReactNumberFormat from 'react-number-format';
 import { getPrice } from 'settings/syllabus-setting';
-import { SYLLABUS_STATUSES } from 'settings/syllabus-setting';
+import { PAYMENT_STATUSES } from 'settings/payment-setting';
 
 
 export default function ProcessBooking({
@@ -60,13 +60,13 @@ export default function ProcessBooking({
     }
 
     const handleCloseProcessPayment = () => {
-        callCreate(SYLLABUS_STATUSES.PENDING);
+        callCreate(PAYMENT_STATUSES.PENDING);
         setOpenPaymentProcess(false);
         toast.info("You could continue complete the payment process in your place.");
     }
 
     const handlePurchaseSuccess = () => {
-        callCreate(SYLLABUS_STATUSES.PAID);
+        callCreate(PAYMENT_STATUSES.PAID);
         setOpenPaymentProcess(false);
     }
 

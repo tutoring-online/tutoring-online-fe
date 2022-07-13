@@ -12,7 +12,7 @@ export default function ViewPayment({
     refresh
 }) {
     const actions = usePaymentActions();
-    const { paymentDetail, loading, refresh: refreshDetail } = usePaymentDetail(payment?.id);
+    const { loading, refresh: refreshDetail } = usePaymentDetail(payment?.id);
     const [loadingUpdate, setLoadingUpdate] = useState(false);
 
     const handleSubmit = (data, onSuccess) => {
@@ -46,7 +46,7 @@ export default function ViewPayment({
             loadingDetail={loading}
 
             mode={CRUD_MODE.view}
-            payment={paymentDetail || payment}
+            payment={payment}
             title="Payment Detail"
             submitButton={{
                 text: "Update"

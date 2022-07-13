@@ -54,4 +54,19 @@ export const DATE_SESSION_OPTIONS = [
     { label: "Evening", value: 3 },
 ]
 
-export const DEFAULT_MAX_PRICE = 2* 1000 * 1000;
+export const DEFAULT_MAX_PRICE = 2 * 1000 * 1000;
+
+export const SORTBY_OPTIONS = [
+    { label: "Default", value: "" },
+    { label: "Price: highest first", value: "-price" },
+    { label: "Price: lowest first", value: "+price" },
+    { label: "Created date: newest first", value: "-createdDate" },
+    { label: "Created date: oldest first", value: "+createdDate" },
+    { label: "Status: canceled to pending", value: "-status" },
+    { label: "Status: pending to canceled", value: "+status" },
+]
+
+export const getSortByLabel = (value) => {
+    const option = SORTBY_OPTIONS.find(item => item.value === value);
+    return option?.label || "";
+}
