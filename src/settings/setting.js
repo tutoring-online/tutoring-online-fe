@@ -94,8 +94,8 @@ export const renderStatus = (statusObject, onClick) => {
 
 
 export const GENDERS = {
-    male: "male",
-    female: "female"
+    male: "Male",
+    female: "Female"
 }
 
 export const genderOptions = [

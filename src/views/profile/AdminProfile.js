@@ -17,7 +17,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 // @mui/icons-material components
 
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
 import NoInformation from "components/Text/NoInformation";
 
 import componentStyles from "assets/theme/views/admin/profile.js";
@@ -25,6 +24,7 @@ import { useSelector } from "react-redux";
 import EditButton from "components/Buttons/EditButton";
 import CancelButton from "components/Buttons/CancelButton";
 import SubmitButton from "components/Buttons/SubmitButton";
+import { convertNumberToGender } from "settings/setting";
 
 // {
 //     "type": "signup",
@@ -71,7 +71,7 @@ export default function AdminProfile() {
   const basicDisplay = () => (
     <div className={classes.plLg4}>
       <Grid container>
-        <Grid item xs={12} lg={12}>
+        <Grid item xs={12} lg={6}>
           <FormGroup>
             <FormLabel>Name</FormLabel>
             <FormControl
@@ -80,9 +80,56 @@ export default function AdminProfile() {
               width="100%"
               marginBottom="1rem!important"
             >
-              <Box display="flex" backgroundColor="#f7fafc" type="text">
-                <Box fontSize="14px" width="100%">
+              <Box
+                display="flex"
+                fontFamily="inherit"
+                height={43}
+                boxShadow="1px"
+                alignItems="center"
+                backgroundColor="#f7f7f7"
+                borderRadius="0.375rem"
+                type="text"
+                paddingLeft="10px"
+              >
+                <Box
+                  fontSize="14px"
+                  fontWeight="400"
+                  width="100%"
+                  paddingLeft="14px"
+                >
                   {admin?.name || <NoInformation />}
+                </Box>
+              </Box>
+            </FormControl>
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12} lg={6} maxHeight="103px">
+          <FormGroup>
+            <FormLabel>Gender</FormLabel>
+            <FormControl
+              variant="filled"
+              component={Box}
+              width="100%"
+              marginBottom="1rem!important"
+            >
+              <Box
+                display="flex"
+                fontFamily="inherit"
+                height={43}
+                boxShadow="1px"
+                alignItems="center"
+                backgroundColor="#f7f7f7"
+                borderRadius="0.375rem"
+                type="text"
+                paddingLeft="10px"
+              >
+                <Box
+                  fontSize="14px"
+                  fontWeight="400"
+                  width="100%"
+                  paddingLeft="14px"
+                >
+                  {convertNumberToGender(admin.gender) || <NoInformation />}
                 </Box>
               </Box>
             </FormControl>
@@ -99,42 +146,30 @@ export default function AdminProfile() {
               width="100%"
               marginBottom="1rem!important"
             >
-              <Box display="flex" backgroundColor="#f7fafc" type="text">
-                <Box fontSize="14px" width="100%">
+              <Box
+                display="flex"
+                fontFamily="inherit"
+                height={43}
+                boxShadow="1px"
+                alignItems="center"
+                backgroundColor="#f7f7f7"
+                borderRadius="0.375rem"
+                type="text"
+                paddingLeft="10px"
+              >
+                <Box
+                  fontSize="14px"
+                  fontWeight="400"
+                  width="100%"
+                  paddingLeft="14px"
+                >
                   {admin?.email || <NoInformation />}
                 </Box>
               </Box>
             </FormControl>
           </FormGroup>
         </Grid>
-        <Grid item xs={12} lg={6} maxHeight="103px">
-          <FormGroup>
-            <FormLabel>Gender</FormLabel>
-            <FormControl
-              variant="filled"
-              component={Box}
-              width="100%"
-              marginBottom="1rem!important"
-            >
-              <RadioGroup row>
-                <FormControlLabel
-                  value="male"
-                  control={<Radio />}
-                  label="Male"
-                  disabled="true"
-                />
-                <FormControlLabel
-                  value="female"
-                  control={<Radio />}
-                  label="Female"
-                  disabled="true"
-                />
-              </RadioGroup>
-            </FormControl>
-          </FormGroup>
-        </Grid>
-      </Grid>
-      <Grid container>
+
         <Grid item xs={12} lg={6}>
           <FormGroup>
             <FormLabel>Birthday</FormLabel>
@@ -144,8 +179,23 @@ export default function AdminProfile() {
               width="100%"
               marginBottom="1rem!important"
             >
-              <Box display="flex" backgroundColor="#f7fafc" type="text">
-                <Box fontSize="14px" width="100%">
+              <Box
+                display="flex"
+                fontFamily="inherit"
+                height={43}
+                boxShadow="1px"
+                alignItems="center"
+                backgroundColor="#f7f7f7"
+                borderRadius="0.375rem"
+                type="text"
+                paddingLeft="10px"
+              >
+                <Box
+                  fontSize="14px"
+                  fontWeight="400"
+                  width="100%"
+                  paddingLeft="14px"
+                >
                   {admin?.birthday || <NoInformation />}
                 </Box>
               </Box>
@@ -168,8 +218,23 @@ export default function AdminProfile() {
               width="100%"
               marginBottom="1rem!important"
             >
-              <Box display="flex" backgroundColor="#f7fafc" type="text">
-                <Box fontSize="14px" width="100%">
+              <Box
+                display="flex"
+                fontFamily="inherit"
+                height={43}
+                boxShadow="1px"
+                alignItems="center"
+                backgroundColor="#f7f7f7"
+                borderRadius="0.375rem"
+                type="text"
+                paddingLeft="10px"
+              >
+                <Box
+                  fontSize="14px"
+                  fontWeight="400"
+                  width="100%"
+                  paddingLeft="14px"
+                >
                   {admin?.address || <NoInformation />}
                 </Box>
               </Box>
@@ -187,8 +252,23 @@ export default function AdminProfile() {
               width="100%"
               marginBottom="1rem!important"
             >
-              <Box display="flex" backgroundColor="#f7fafc" type="text">
-                <Box fontSize="14px" width="100%">
+              <Box
+                display="flex"
+                fontFamily="inherit"
+                height={43}
+                boxShadow="1px"
+                alignItems="center"
+                backgroundColor="#f7f7f7"
+                borderRadius="0.375rem"
+                type="text"
+                paddingLeft="10px"
+              >
+                <Box
+                  fontSize="14px"
+                  fontWeight="400"
+                  width="100%"
+                  paddingLeft="14px"
+                >
                   {admin?.phone || <NoInformation />}
                 </Box>
               </Box>
@@ -197,15 +277,30 @@ export default function AdminProfile() {
         </Grid>
         <Grid item xs={12} lg={6}>
           <FormGroup>
-            <FormLabel>AvatarURL</FormLabel>
+            <FormLabel>Avatar URL</FormLabel>
             <FormControl
               variant="filled"
               component={Box}
               width="100%"
               marginBottom="1rem!important"
             >
-              <Box display="flex" backgroundColor="#f7fafc" type="text">
-                <Box fontSize="14px" width="100%">
+              <Box
+                display="flex"
+                fontFamily="inherit"
+                height={43}
+                boxShadow="1px"
+                alignItems="center"
+                backgroundColor="#f7f7f7"
+                borderRadius="0.375rem"
+                type="text"
+                paddingLeft="10px"
+              >
+                <Box
+                  fontSize="14px"
+                  fontWeight="400"
+                  width="100%"
+                  paddingLeft="14px"
+                >
                   {admin?.avatarURL || <NoInformation />}
                 </Box>
               </Box>
@@ -228,8 +323,23 @@ export default function AdminProfile() {
               width="100%"
               marginBottom="1rem!important"
             >
-              <Box display="flex" backgroundColor="#f7fafc" type="text">
-                <Box fontSize="14px" width="100%">
+              <Box
+                display="flex"
+                fontFamily="inherit"
+                height={43}
+                boxShadow="1px"
+                alignItems="center"
+                backgroundColor="#f7f7f7"
+                borderRadius="0.375rem"
+                type="text"
+                paddingLeft="10px"
+              >
+                <Box
+                  fontSize="14px"
+                  fontWeight="400"
+                  width="100%"
+                  paddingLeft="14px"
+                >
                   {admin?.createdDate || <NoInformation />}
                 </Box>
               </Box>
@@ -238,15 +348,30 @@ export default function AdminProfile() {
         </Grid>
         <Grid item xs={12} lg={6}>
           <FormGroup>
-            <FormLabel>Update Date</FormLabel>
+            <FormLabel>Updated Date</FormLabel>
             <FormControl
               variant="filled"
               component={Box}
               width="100%"
               marginBottom="1rem!important"
             >
-              <Box display="flex" backgroundColor="#f7fafc" type="text">
-                <Box fontSize="14px" width="100%">
+              <Box
+                display="flex"
+                fontFamily="inherit"
+                height={43}
+                boxShadow="1px"
+                alignItems="center"
+                backgroundColor="#f7f7f7"
+                borderRadius="0.375rem"
+                type="text"
+                paddingLeft="10px"
+              >
+                <Box
+                  fontSize="14px"
+                  fontWeight="400"
+                  width="100%"
+                  paddingLeft="14px"
+                >
                   {admin?.updatedDate || <NoInformation />}
                 </Box>
               </Box>
@@ -259,12 +384,10 @@ export default function AdminProfile() {
 
   return (
     <>
-      <UserHeader />
-      {/* Page content */}
       <Container
         maxWidth={false}
         component={Box}
-        marginTop="-8rem"
+        marginTop="15rem"
         classes={{ root: classes.containerRoot }}
       >
         <Grid container width={1200}>
@@ -289,7 +412,6 @@ export default function AdminProfile() {
                     ) : (
                       <>
                         <EditButton onClick={enableEdit} />
-                        <CancelButton onClick={cancelEdit} />
                       </>
                     )}
                   </Grid>
@@ -303,6 +425,8 @@ export default function AdminProfile() {
                   style={{ marginBottom: "1rem" }}
                 >
                   <CardHeader
+                  style={{ backgroundColor: "#e6e6e6" }}
+                    
                     subheader={
                       <Grid
                         container
@@ -328,13 +452,12 @@ export default function AdminProfile() {
                         </Grid>
                       </Grid>
                     }
-                    classes={{ root: classes.cardHeaderRoot }}
                   ></CardHeader>
-                  <CardContent>
+                  <CardContent style={{ backgroundColor: "#ffffff" }}>
                     {isEditing ? (
                       <div className={classes.plLg4}>
                         <Grid container>
-                          <Grid item xs={12} lg={12}>
+                          <Grid item xs={12} lg={6}>
                             <FormGroup>
                               <FormLabel>Name</FormLabel>
                               <FormControl
@@ -352,31 +475,6 @@ export default function AdminProfile() {
                                   defaultValue={
                                     admin?.name || <NoInformation />
                                   }
-                                />
-                              </FormControl>
-                            </FormGroup>
-                          </Grid>
-                        </Grid>
-                        <Grid container>
-                          <Grid item xs={12} lg={6} maxHeight="103px">
-                            <FormGroup>
-                              <FormLabel>Email</FormLabel>
-                              <FormControl
-                                variant="filled"
-                                component={Box}
-                                width="100%"
-                                marginBottom="1rem!important"
-                              >
-                                <Box
-                                  paddingLeft="0.75rem"
-                                  paddingRight="0.75rem"
-                                  component={FilledInput}
-                                  autoComplete="off"
-                                  type="email"
-                                  defaultValue={
-                                    admin?.email || <NoInformation />
-                                  }
-                                  disabled={true}
                                 />
                               </FormControl>
                             </FormGroup>
@@ -407,8 +505,39 @@ export default function AdminProfile() {
                             </FormGroup>
                           </Grid>
                         </Grid>
-
                         <Grid container>
+                          <Grid item xs={12} lg={6} maxHeight="103px">
+                            <FormGroup>
+                              <FormLabel>Email</FormLabel>
+                              <FormControl
+                                variant="filled"
+                                component={Box}
+                                width="100%"
+                                marginBottom="1rem!important"
+                              >
+                                <Box
+                                  display="flex"
+                                  fontFamily="inherit"
+                                  height={43}
+                                  boxShadow="1px"
+                                  alignItems="center"
+                                  backgroundColor="#f7f7f7"
+                                  borderRadius="0.375rem"
+                                  type="text"
+                                  paddingLeft="10px"
+                                >
+                                  <Box
+                                    fontSize="14px"
+                                    fontWeight="400"
+                                    width="100%"
+                                    paddingLeft="14px"
+                                  >
+                                    {admin?.email || <NoInformation />}
+                                  </Box>
+                                </Box>
+                              </FormControl>
+                            </FormGroup>
+                          </Grid>
                           <Grid item xs={12} lg={6}>
                             <FormGroup>
                               <FormLabel>Birthday</FormLabel>
@@ -446,6 +575,7 @@ export default function AdminProfile() {
                   style={{ marginBottom: "1rem" }}
                 >
                   <CardHeader
+                  style={{ backgroundColor: "#e6e6e6" }}
                     subheader={
                       <Grid
                         container
@@ -471,9 +601,8 @@ export default function AdminProfile() {
                         </Grid>
                       </Grid>
                     }
-                    classes={{ root: classes.cardHeaderRoot }}
                   ></CardHeader>
-                  <CardContent>
+                  <CardContent style={{ backgroundColor: "#ffffff" }}>
                     {isEditing ? (
                       <div className={classes.plLg4}>
                         <Grid container>
@@ -492,9 +621,7 @@ export default function AdminProfile() {
                                   component={FilledInput}
                                   autoComplete="off"
                                   type="text"
-                                  defaultValue={
-                                    admin?.address || <NoInformation />
-                                  }
+                                  defaultValue={admin?.address || ""}
                                 />
                               </FormControl>
                             </FormGroup>
@@ -516,9 +643,7 @@ export default function AdminProfile() {
                                   component={FilledInput}
                                   autoComplete="off"
                                   type="text"
-                                  defaultValue={
-                                    admin?.phone || "<NoInformation />"
-                                  }
+                                  defaultValue={admin?.phone || ""}
                                 />
                               </FormControl>
                             </FormGroup>
@@ -538,9 +663,7 @@ export default function AdminProfile() {
                                   component={FilledInput}
                                   autoComplete="off"
                                   type="text"
-                                  defaultValue={
-                                    admin?.avatarURL || <NoInformation />
-                                  }
+                                  defaultValue={admin?.avatarURL || ""}
                                 />
                               </FormControl>
                             </FormGroup>
@@ -559,6 +682,7 @@ export default function AdminProfile() {
                   style={{ marginBottom: "1rem" }}
                 >
                   <CardHeader
+                  style={{ backgroundColor: "#e6e6e6" }}
                     subheader={
                       <Grid
                         container
@@ -584,15 +708,14 @@ export default function AdminProfile() {
                         </Grid>
                       </Grid>
                     }
-                    classes={{ root: classes.cardHeaderRoot }}
                   ></CardHeader>
-                  <CardContent>
+                  <CardContent style={{ backgroundColor: "#ffffff" }}>
                     {isEditing ? (
                       <div className={classes.plLg4}>
                         <Grid container>
                           <Grid item xs={12} lg={6}>
                             <FormGroup>
-                              <FormLabel>Create Date</FormLabel>
+                              <FormLabel>Created Date</FormLabel>
                               <FormControl
                                 variant="filled"
                                 component={Box}
@@ -600,22 +723,31 @@ export default function AdminProfile() {
                                 marginBottom="1rem!important"
                               >
                                 <Box
-                                  paddingLeft="0.75rem"
-                                  paddingRight="0.75rem"
-                                  component={FilledInput}
-                                  autoComplete="off"
-                                  type="date"
-                                  defaultValue={
-                                    admin?.createdDate || <NoInformation />
-                                  }
-                                  disabled={true}
-                                />
+                                  display="flex"
+                                  fontFamily="inherit"
+                                  height={43}
+                                  boxShadow="1px"
+                                  alignItems="center"
+                                  backgroundColor="#f7f7f7"
+                                  borderRadius="0.375rem"
+                                  type="text"
+                                  paddingLeft="10px"
+                                >
+                                  <Box
+                                    fontSize="14px"
+                                    fontWeight="400"
+                                    width="100%"
+                                    paddingLeft="14px"
+                                  >
+                                    {admin?.createdDate || <NoInformation />}
+                                  </Box>
+                                </Box>
                               </FormControl>
                             </FormGroup>
                           </Grid>
                           <Grid item xs={12} lg={6}>
                             <FormGroup>
-                              <FormLabel>Update Date!!!</FormLabel>
+                              <FormLabel>Updated Date</FormLabel>
                               <FormControl
                                 variant="filled"
                                 component={Box}
@@ -623,16 +755,25 @@ export default function AdminProfile() {
                                 marginBottom="1rem!important"
                               >
                                 <Box
-                                  paddingLeft="0.75rem"
-                                  paddingRight="0.75rem"
-                                  component={FilledInput}
-                                  autoComplete="off"
-                                  type="date"
-                                  defaultValue={
-                                    admin?.updatedDate || <NoInformation />
-                                  }
-                                  disabled={true}
-                                />
+                                  display="flex"
+                                  fontFamily="inherit"
+                                  height={43}
+                                  boxShadow="1px"
+                                  alignItems="center"
+                                  backgroundColor="#f7f7f7"
+                                  borderRadius="0.375rem"
+                                  type="text"
+                                  paddingLeft="10px"
+                                >
+                                  <Box
+                                    fontSize="14px"
+                                    fontWeight="400"
+                                    width="100%"
+                                    paddingLeft="14px"
+                                  >
+                                    {admin?.updatedDate || <NoInformation />}
+                                  </Box>
+                                </Box>
                               </FormControl>
                             </FormGroup>
                           </Grid>
