@@ -11,7 +11,7 @@ const componentStyles = ({ breakpoints, spacing }) => ({
         position: 'relative',
         transition: '0.3s',
         background: '#f7fafc',
-        boxShadow: '0px 14px 80px rgba(34, 35, 58, 0.2)',
+        boxShadow: "0 1px 2px #c6cfd8",
         [breakpoints.up('sm')]: {
             flexDirection: 'row',
             paddingTop: spacing(2),

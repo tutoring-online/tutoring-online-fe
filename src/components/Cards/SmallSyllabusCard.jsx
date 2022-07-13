@@ -72,12 +72,14 @@ export const SmallSyllabusCard = ({
                     >
                         {syllabus.name}
                     </Box>
-                    <Typography
-                        className={classes.lesson}
-                        marginTop="auto"
-                    >
-                        {`${syllabus.countStudents} active students - ${syllabus.countTutors} tutors.`}
-                    </Typography>
+                    {syllabus.countStudent && syllabus.countTutor &&
+                        <Typography
+                            className={classes.lesson}
+                            marginTop="auto"
+                        >
+                            {`${syllabus.countStudents} active students - ${syllabus.countTutors} tutors.`}
+                        </Typography>
+                    }
                     <Typography
                         className={classes.lesson}
                         marginTop="auto"

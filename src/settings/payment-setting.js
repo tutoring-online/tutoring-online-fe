@@ -44,8 +44,8 @@ export const renderPaymentStatus = (value, onClick) => {
 }
 
 export const COMBO_OPTIONS = [
-    { label: "Even days (Monday, Wednesday, Friday", value: 1 },
-    { label: "Odd days (Tuesday, Thursday, Saturday", value: 2 },
+    { label: "Even days (Monday, Wednesday, Friday)", value: 1 },
+    { label: "Odd days (Tuesday, Thursday, Saturday)", value: 2 },
 ]
 
 export const DATE_SESSION_OPTIONS = [
@@ -68,5 +68,15 @@ export const SORTBY_OPTIONS = [
 
 export const getSortByLabel = (value) => {
     const option = SORTBY_OPTIONS.find(item => item.value === value);
+    return option?.label || "";
+}
+
+export const getComboLabel = (value) => {
+    const option = COMBO_OPTIONS.find(item => item.value === value);
+    return option?.label || "";
+}
+
+export const getDateSessionLabel = (value) => {
+    const option = DATE_SESSION_OPTIONS.find(item => item.value === value);
     return option?.label || "";
 }

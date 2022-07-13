@@ -4,14 +4,14 @@ const componentStyles = ({ breakpoints, spacing }) => ({
         flexDirection: 'column',
         alignItems: 'center',
         overflow: 'initial',
-        
+
         paddingBottom: spacing(2),
         borderRadius: spacing(2), // 16px
 
         position: 'relative',
         transition: '0.3s',
         background: '#f7fafc',
-        boxShadow: '0px 14px 80px rgba(34, 35, 58, 0.2)',
+        boxShadow: "0 1px 2px #c6cfd8",
         [breakpoints.up('sm')]: {
             flexDirection: 'row',
             paddingTop: spacing(2),
@@ -44,7 +44,7 @@ const componentStyles = ({ breakpoints, spacing }) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        
+
         [breakpoints.up('sm')]: {
             flexDirection: 'row',
             alignItems: 'flex-start',
