@@ -14,7 +14,14 @@ import Typography from "@mui/material/Typography";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { Avatar } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Tooltip,
+} from "@mui/material";
+
+import {List, ListItem, ListItemButton } from "@mui/material"
+
 // @mui/icons-material components
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import TransgenderRoundedIcon from "@mui/icons-material/TransgenderRounded";
@@ -30,8 +37,6 @@ import NoInformation from "components/Text/NoInformation";
 
 import componentStyles from "assets/theme/views/admin/profile.js";
 import { useSelector } from "react-redux";
-import EditButton from "components/Buttons/EditButton";
-import SubmitButton from "components/Buttons/SubmitButton";
 import { convertNumberToGender } from "settings/setting";
 
 // {
@@ -81,8 +86,8 @@ export default function AdminProfile() {
       <Grid container>
         <Grid item xs={12} lg={6} alignContent="center" alignItems="center">
           <Grid container>
-            <Grid item xs={12} lg={1.5}>
-              <Box width={30} height={30}>
+            <Grid item xs={12} lg={1.5} paddingLeft="2rem" paddingTop="6px">
+              <Box width={20} height={20}>
                 <BadgeRoundedIcon style={{ width: "100%", height: "100%" }} />
               </Box>
             </Grid>
@@ -94,17 +99,24 @@ export default function AdminProfile() {
                     alignItems="center"
                     backgroundColor="#fff"
                   >
-                    <Box fontWeight={500} fontSize="14px" width="100%" paddingBottom="7px">
-                      {admin?.name || <NoInformation />}
-                    </Box>
+                    <Tooltip title="Name" placement="right">
+                      <Box
+                        fontWeight={500}
+                        fontSize="14px"
+                        width="100%"
+                        paddingBottom="7px"
+                      >
+                        {admin?.name || <NoInformation />}
+                      </Box>
+                    </Tooltip>
                   </Box>
                 </Box>
               </Box>
             </Grid>
           </Grid>
           <Grid container marginTop="1rem">
-            <Grid item xs={12} lg={1.5}>
-              <Box width={30} height={30}>
+            <Grid item xs={12} lg={1.5} paddingLeft="2rem" paddingTop="6px">
+              <Box width={20} height={20}>
                 <EmailRoundedIcon style={{ width: "100%", height: "100%" }} />
               </Box>
             </Grid>
@@ -116,17 +128,24 @@ export default function AdminProfile() {
                     alignItems="center"
                     backgroundColor="#fff"
                   >
-                    <Box fontWeight={500} fontSize="14px" width="100%" paddingBottom="7px">
-                      {admin?.email || <NoInformation />}
-                    </Box>
+                    <Tooltip title="Email" placement="right">
+                      <Box
+                        fontWeight={500}
+                        fontSize="14px"
+                        width="100%"
+                        paddingBottom="7px"
+                      >
+                        {admin?.email || <NoInformation />}
+                      </Box>
+                    </Tooltip>
                   </Box>
                 </Box>
               </Box>
             </Grid>
           </Grid>
           <Grid container marginTop="1rem">
-            <Grid item xs={12} lg={1.5}>
-              <Box width={30} height={30}>
+            <Grid item xs={12} lg={1.5} paddingLeft="2rem" paddingTop="6px">
+              <Box width={20} height={20}>
                 <CelebrationRoundedIcon
                   style={{ width: "100%", height: "100%" }}
                 />
@@ -140,17 +159,24 @@ export default function AdminProfile() {
                     alignItems="center"
                     backgroundColor="#fff"
                   >
-                    <Box fontWeight={500} fontSize="14px" width="100%" paddingBottom="7px">
-                      {admin?.birthday || <NoInformation />}
-                    </Box>
+                    <Tooltip title="Birthday" placement="right">
+                      <Box
+                        fontWeight={500}
+                        fontSize="14px"
+                        width="100%"
+                        paddingBottom="7px"
+                      >
+                        {admin?.birthday || <NoInformation />}
+                      </Box>
+                    </Tooltip>
                   </Box>
                 </Box>
               </Box>
             </Grid>
           </Grid>
           <Grid container marginTop="1rem">
-            <Grid item xs={12} lg={1.5}>
-              <Box width={30} height={30}>
+            <Grid item xs={12} lg={1.5} paddingLeft="2rem" paddingTop="6px">
+              <Box width={20} height={20}>
                 <TransgenderRoundedIcon
                   style={{ width: "100%", height: "100%" }}
                 />
@@ -164,11 +190,18 @@ export default function AdminProfile() {
                     alignItems="center"
                     backgroundColor="#fff"
                   >
-                    <Box fontWeight={500} fontSize="14px" width="100%" paddingBottom="7px">
-                      {convertNumberToGender(admin?.gender) || (
-                        <NoInformation />
-                      )}
-                    </Box>
+                    <Tooltip title="Gender" placement="right">
+                      <Box
+                        fontWeight={500}
+                        fontSize="14px"
+                        width="100%"
+                        paddingBottom="7px"
+                      >
+                        {convertNumberToGender(admin?.gender) || (
+                          <NoInformation />
+                        )}
+                      </Box>
+                    </Tooltip>
                   </Box>
                 </Box>
               </Box>
@@ -202,8 +235,8 @@ export default function AdminProfile() {
       <Grid container>
         <Grid item xs={12} lg={12}>
           <Grid container>
-            <Grid item xs={12} lg={0.75}>
-              <Box width={30} height={30}>
+            <Grid item xs={12} lg={0.75} paddingLeft="2rem" paddingTop="6px">
+              <Box width={20} height={20}>
                 <HomeRoundedIcon style={{ width: "100%", height: "100%" }} />
               </Box>
             </Grid>
@@ -215,9 +248,16 @@ export default function AdminProfile() {
                     alignItems="center"
                     backgroundColor="#fff"
                   >
-                    <Box fontWeight={500} fontSize="14px" width="100%" paddingBottom="7px">
-                      {admin?.address || <NoInformation />}
-                    </Box>
+                    <Tooltip title="Address" placement="right">
+                      <Box
+                        fontWeight={500}
+                        fontSize="14px"
+                        width="100%"
+                        paddingBottom="7px"
+                      >
+                        {admin?.address || <NoInformation />}
+                      </Box>
+                    </Tooltip>
                   </Box>
                 </Box>
               </Box>
@@ -226,8 +266,8 @@ export default function AdminProfile() {
         </Grid>
         <Grid item xs={12} lg={6} marginTop="1rem">
           <Grid container>
-            <Grid item xs={12} lg={1.5}>
-              <Box width={30} height={30}>
+            <Grid item xs={12} lg={1.5} paddingLeft="2rem" paddingTop="6px">
+              <Box width={20} height={20}>
                 <PhoneAndroidRoundedIcon
                   style={{ width: "100%", height: "100%" }}
                 />
@@ -241,9 +281,16 @@ export default function AdminProfile() {
                     alignItems="center"
                     backgroundColor="#fff"
                   >
-                    <Box fontWeight={500} fontSize="14px" width="100%" paddingBottom="7px">
-                      {admin?.phone || <NoInformation />}
-                    </Box>
+                    <Tooltip title="Phone Number" placement="right">
+                      <Box
+                        fontWeight={500}
+                        fontSize="14px"
+                        width="100%"
+                        paddingBottom="7px"
+                      >
+                        {admin?.phone || <NoInformation />}
+                      </Box>
+                    </Tooltip>
                   </Box>
                 </Box>
               </Box>
@@ -252,8 +299,8 @@ export default function AdminProfile() {
         </Grid>
         <Grid item xs={12} lg={6} marginTop="1rem">
           <Grid container>
-            <Grid item xs={12} lg={1.5}>
-              <Box width={30} height={30}>
+            <Grid item xs={12} lg={1.5} paddingLeft="2rem" paddingTop="6px">
+              <Box width={20} height={20}>
                 <AttachmentRoundedIcon
                   style={{ width: "100%", height: "100%" }}
                 />
@@ -267,18 +314,21 @@ export default function AdminProfile() {
                     alignItems="center"
                     backgroundColor="#fff"
                   >
-                    <Box
-                      fontWeight={500} fontSize="14px"
-                      paddingBottom={1.5}
-                      maxWidth="20rem"
-                      style={{
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {admin?.avatarURL || <NoInformation />}
-                    </Box>
+                    <Tooltip title="Avatar URL" placement="top">
+                      <Box
+                        fontWeight={500}
+                        fontSize="14px"
+                        paddingBottom={1.5}
+                        maxWidth="20rem"
+                        style={{
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {admin?.avatarURL || <NoInformation />}
+                      </Box>
+                    </Tooltip>
                   </Box>
                 </Box>
               </Box>
@@ -293,9 +343,8 @@ export default function AdminProfile() {
     <div className={classes.plLg4}>
       <Grid container>
         <Grid item xs={12} lg={6}>
-          <Grid item xs={12} lg={12} paddingLeft="3rem">
+          <Grid item xs={12} lg={12}>
             <FormGroup>
-              <FormLabel>Created Date</FormLabel>
               <FormControl
                 variant="filled"
                 component={Box}
@@ -303,13 +352,12 @@ export default function AdminProfile() {
                 marginBottom="1rem!important"
               >
                 <Grid container>
-                  <Grid xs={12} lg={1.5}>
-                    <Box width={30} height={30}>
+                  <Grid xs={12} lg={1.5} paddingLeft="1rem" paddingTop="6px">
+                    <Box width={20} height={20} paddingLeft="-2rem">
                       <AccessTimeFilledRoundedIcon
                         style={{
                           width: "100%",
                           height: "100%",
-                          marginLeft: "-2rem",
                           marginTop: "5px",
                         }}
                       />
@@ -322,20 +370,22 @@ export default function AdminProfile() {
                       height={43}
                       boxShadow="1px"
                       alignItems="center"
-                      backgroundColor="#f7f7f7"
+                      backgroundColor="#fff"
                       borderRadius="0.375rem"
                       type="text"
-                      width="100%"
-                      marginLeft={-5}
+                      width="50%"
+                      marginLeft={-1}
                     >
-                      <Box
-                        fontSize="14px"
-                        fontWeight="400"
-                        width="100%"
-                        paddingLeft="10px"
-                      >
-                        {admin?.createdDate || <NoInformation />}
-                      </Box>
+                      <Tooltip title="Created Date" placement="right">
+                        <Box
+                          fontSize="14px"
+                          fontWeight="400"
+                          width="100%"
+                          paddingLeft="10px"
+                        >
+                          {admin?.createdDate || <NoInformation />}
+                        </Box>
+                      </Tooltip>
                     </Box>
                   </Grid>
                 </Grid>
@@ -346,7 +396,6 @@ export default function AdminProfile() {
         <Grid item xs={12} lg={6}>
           <Grid item xs={12} lg={12} paddingLeft="3rem">
             <FormGroup>
-              <FormLabel>Updated Date</FormLabel>
               <FormControl
                 variant="filled"
                 component={Box}
@@ -354,8 +403,8 @@ export default function AdminProfile() {
                 marginBottom="1rem!important"
               >
                 <Grid container>
-                  <Grid xs={12} lg={1.5}>
-                    <Box width={30} height={30}>
+                  <Grid xs={12} lg={1.5} paddingLeft="1rem" paddingTop="6px">
+                    <Box width={20} height={20}>
                       <AccessTimeFilledRoundedIcon
                         style={{
                           width: "100%",
@@ -373,20 +422,17 @@ export default function AdminProfile() {
                       height={43}
                       boxShadow="1px"
                       alignItems="center"
-                      backgroundColor="#f7f7f7"
+                      backgroundColor="#fff"
                       borderRadius="0.375rem"
                       type="text"
                       width="100%"
-                      marginLeft={-5}
+                      marginLeft={-3}
                     >
-                      <Box
-                        fontSize="14px"
-                        fontWeight="400"
-                        width="100%"
-                        paddingLeft="10px"
-                      >
-                        {admin?.updatedDate || <NoInformation />}
-                      </Box>
+                      <Tooltip title="Updated Date" placement="right">
+                        <Box fontSize="14px" fontWeight="400" width="50%">
+                          {admin?.updatedDate || <NoInformation />}
+                        </Box>
+                      </Tooltip>
                     </Box>
                   </Grid>
                 </Grid>
@@ -417,20 +463,27 @@ export default function AdminProfile() {
             classes={{ root: classes.gridItemRoot + " " + classes.order2 }}
           >
             <Grid container>
-              <Grid xs={6} lg={2}>
-                <Box border="1px solid black" height={300}>
-                  Admin Profiles
-                  <Grid>
-                    {isEditing ? (
-                      <>
-                        <SubmitButton onClick={cancelEdit} />
-                      </>
-                    ) : (
-                      <>
-                        <EditButton onClick={enableEdit} />
-                      </>
-                    )}
-                  </Grid>
+              <Grid xs={12} lg={2}>
+                <Box width="200px" height="100%" border="1px solid red">
+                  <Box
+                    sx={{
+                      width: "100%",
+                      maxWidth: 360,
+                      bgcolor: "background.paper",
+                    }}
+                  >
+                    <List>
+                      <ListItem>
+                        {/* //ERROR here ListItemButton */}
+                        
+                          <AccessTimeFilledRoundedIcon />
+                        
+
+
+
+                      </ListItem>
+                    </List>
+                  </Box>
                 </Box>
               </Grid>
               <Grid xs={12} lg={9} marginLeft="1rem">
@@ -450,6 +503,15 @@ export default function AdminProfile() {
                         justifyContent="space-between"
                       >
                         <Grid item xs="auto">
+                          <Box
+                            component={Typography}
+                            variant="h3"
+                            marginBottom="0!important"
+                          >
+                            Basic Info
+                          </Box>
+                        </Grid>
+                        <Grid item xs="auto" marginRight={1}>
                           <Box
                             component={Typography}
                             variant="h3"
