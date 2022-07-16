@@ -14,7 +14,16 @@ import Typography from "@mui/material/Typography";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { Avatar } from "@mui/material";
 // @mui/icons-material components
+import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
+import TransgenderRoundedIcon from "@mui/icons-material/TransgenderRounded";
+import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
+import CelebrationRoundedIcon from "@mui/icons-material/CelebrationRounded";
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import PhoneAndroidRoundedIcon from "@mui/icons-material/PhoneAndroidRounded";
+import AttachmentRoundedIcon from "@mui/icons-material/AttachmentRounded";
+import AccessTimeFilledRoundedIcon from "@mui/icons-material/AccessTimeFilledRounded";
 
 // core components
 import NoInformation from "components/Text/NoInformation";
@@ -22,7 +31,6 @@ import NoInformation from "components/Text/NoInformation";
 import componentStyles from "assets/theme/views/admin/profile.js";
 import { useSelector } from "react-redux";
 import EditButton from "components/Buttons/EditButton";
-import CancelButton from "components/Buttons/CancelButton";
 import SubmitButton from "components/Buttons/SubmitButton";
 import { convertNumberToGender } from "settings/setting";
 
@@ -71,136 +79,119 @@ export default function AdminProfile() {
   const basicDisplay = () => (
     <div className={classes.plLg4}>
       <Grid container>
-        <Grid item xs={12} lg={6}>
-          <FormGroup>
-            <FormLabel>Name</FormLabel>
-            <FormControl
-              variant="filled"
-              component={Box}
-              width="100%"
-              marginBottom="1rem!important"
-            >
-              <Box
-                display="flex"
-                fontFamily="inherit"
-                height={43}
-                boxShadow="1px"
-                alignItems="center"
-                backgroundColor="#f7f7f7"
-                borderRadius="0.375rem"
-                type="text"
-                paddingLeft="10px"
-              >
-                <Box
-                  fontSize="14px"
-                  fontWeight="400"
-                  width="100%"
-                  paddingLeft="14px"
-                >
-                  {admin?.name || <NoInformation />}
+        <Grid item xs={12} lg={6} alignContent="center" alignItems="center">
+          <Grid container>
+            <Grid item xs={12} lg={1.5}>
+              <Box width={30} height={30}>
+                <BadgeRoundedIcon style={{ width: "100%", height: "100%" }} />
+              </Box>
+            </Grid>
+            <Grid item xs={12} lg={8}>
+              <Box style={{ width: "100%", height: "40px" }}>
+                <Box display="flex" alignItems="center" height="100%">
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    backgroundColor="#fff"
+                  >
+                    <Box fontWeight={500} fontSize="14px" width="100%" paddingBottom="7px">
+                      {admin?.name || <NoInformation />}
+                    </Box>
+                  </Box>
                 </Box>
               </Box>
-            </FormControl>
-          </FormGroup>
+            </Grid>
+          </Grid>
+          <Grid container marginTop="1rem">
+            <Grid item xs={12} lg={1.5}>
+              <Box width={30} height={30}>
+                <EmailRoundedIcon style={{ width: "100%", height: "100%" }} />
+              </Box>
+            </Grid>
+            <Grid item xs={12} lg={8}>
+              <Box style={{ width: "100%", height: "40px" }}>
+                <Box display="flex" alignItems="center" height="100%">
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    backgroundColor="#fff"
+                  >
+                    <Box fontWeight={500} fontSize="14px" width="100%" paddingBottom="7px">
+                      {admin?.email || <NoInformation />}
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid container marginTop="1rem">
+            <Grid item xs={12} lg={1.5}>
+              <Box width={30} height={30}>
+                <CelebrationRoundedIcon
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} lg={8}>
+              <Box style={{ width: "100%", height: "40px" }}>
+                <Box display="flex" alignItems="center" height="100%">
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    backgroundColor="#fff"
+                  >
+                    <Box fontWeight={500} fontSize="14px" width="100%" paddingBottom="7px">
+                      {admin?.birthday || <NoInformation />}
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid container marginTop="1rem">
+            <Grid item xs={12} lg={1.5}>
+              <Box width={30} height={30}>
+                <TransgenderRoundedIcon
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} lg={8}>
+              <Box style={{ width: "100%", height: "40px" }}>
+                <Box display="flex" alignItems="center" height="100%">
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    backgroundColor="#fff"
+                  >
+                    <Box fontWeight={500} fontSize="14px" width="100%" paddingBottom="7px">
+                      {convertNumberToGender(admin?.gender) || (
+                        <NoInformation />
+                      )}
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={12} lg={6} maxHeight="103px">
-          <FormGroup>
-            <FormLabel>Gender</FormLabel>
-            <FormControl
-              variant="filled"
-              component={Box}
-              width="100%"
-              marginBottom="1rem!important"
-            >
+        <Grid container>
+          <Grid container item xs={12} lg={12} borderLeft="1px solid #e6e6e6">
+            <Grid paddingLeft="7rem">
               <Box
                 display="flex"
-                fontFamily="inherit"
-                height={43}
-                boxShadow="1px"
                 alignItems="center"
-                backgroundColor="#f7f7f7"
-                borderRadius="0.375rem"
-                type="text"
-                paddingLeft="10px"
+                justifyContent="center"
+                padding="2rem 2rem"
               >
-                <Box
-                  fontSize="14px"
-                  fontWeight="400"
-                  width="100%"
-                  paddingLeft="14px"
-                >
-                  {convertNumberToGender(admin.gender) || <NoInformation />}
-                </Box>
+                <Avatar
+                  src={admin?.avatarURL}
+                  alt="avatar"
+                  sx={{ width: 150, height: 150 }}
+                />
               </Box>
-            </FormControl>
-          </FormGroup>
-        </Grid>
-      </Grid>
-      <Grid container>
-        <Grid item xs={12} lg={6} maxHeight="103px">
-          <FormGroup>
-            <FormLabel>Email</FormLabel>
-            <FormControl
-              variant="filled"
-              component={Box}
-              width="100%"
-              marginBottom="1rem!important"
-            >
-              <Box
-                display="flex"
-                fontFamily="inherit"
-                height={43}
-                boxShadow="1px"
-                alignItems="center"
-                backgroundColor="#f7f7f7"
-                borderRadius="0.375rem"
-                type="text"
-                paddingLeft="10px"
-              >
-                <Box
-                  fontSize="14px"
-                  fontWeight="400"
-                  width="100%"
-                  paddingLeft="14px"
-                >
-                  {admin?.email || <NoInformation />}
-                </Box>
-              </Box>
-            </FormControl>
-          </FormGroup>
-        </Grid>
-
-        <Grid item xs={12} lg={6}>
-          <FormGroup>
-            <FormLabel>Birthday</FormLabel>
-            <FormControl
-              variant="filled"
-              component={Box}
-              width="100%"
-              marginBottom="1rem!important"
-            >
-              <Box
-                display="flex"
-                fontFamily="inherit"
-                height={43}
-                boxShadow="1px"
-                alignItems="center"
-                backgroundColor="#f7f7f7"
-                borderRadius="0.375rem"
-                type="text"
-                paddingLeft="10px"
-              >
-                <Box
-                  fontSize="14px"
-                  fontWeight="400"
-                  width="100%"
-                  paddingLeft="14px"
-                >
-                  {admin?.birthday || <NoInformation />}
-                </Box>
-              </Box>
-            </FormControl>
-          </FormGroup>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </div>
@@ -209,103 +200,90 @@ export default function AdminProfile() {
   const contactDisplay = () => (
     <div className={classes.plLg4}>
       <Grid container>
-        <Grid item xs={12}>
-          <FormGroup>
-            <FormLabel>Address</FormLabel>
-            <FormControl
-              variant="filled"
-              component={Box}
-              width="100%"
-              marginBottom="1rem!important"
-            >
-              <Box
-                display="flex"
-                fontFamily="inherit"
-                height={43}
-                boxShadow="1px"
-                alignItems="center"
-                backgroundColor="#f7f7f7"
-                borderRadius="0.375rem"
-                type="text"
-                paddingLeft="10px"
-              >
-                <Box
-                  fontSize="14px"
-                  fontWeight="400"
-                  width="100%"
-                  paddingLeft="14px"
-                >
-                  {admin?.address || <NoInformation />}
+        <Grid item xs={12} lg={12}>
+          <Grid container>
+            <Grid item xs={12} lg={0.75}>
+              <Box width={30} height={30}>
+                <HomeRoundedIcon style={{ width: "100%", height: "100%" }} />
+              </Box>
+            </Grid>
+            <Grid item xs={12} lg={9}>
+              <Box style={{ width: "100%", height: "40px" }}>
+                <Box display="flex" height="100%">
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    backgroundColor="#fff"
+                  >
+                    <Box fontWeight={500} fontSize="14px" width="100%" paddingBottom="7px">
+                      {admin?.address || <NoInformation />}
+                    </Box>
+                  </Box>
                 </Box>
               </Box>
-            </FormControl>
-          </FormGroup>
+            </Grid>
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid container>
-        <Grid item xs={12} lg={6}>
-          <FormGroup>
-            <FormLabel>Phone</FormLabel>
-            <FormControl
-              variant="filled"
-              component={Box}
-              width="100%"
-              marginBottom="1rem!important"
-            >
-              <Box
-                display="flex"
-                fontFamily="inherit"
-                height={43}
-                boxShadow="1px"
-                alignItems="center"
-                backgroundColor="#f7f7f7"
-                borderRadius="0.375rem"
-                type="text"
-                paddingLeft="10px"
-              >
-                <Box
-                  fontSize="14px"
-                  fontWeight="400"
-                  width="100%"
-                  paddingLeft="14px"
-                >
-                  {admin?.phone || <NoInformation />}
+        <Grid item xs={12} lg={6} marginTop="1rem">
+          <Grid container>
+            <Grid item xs={12} lg={1.5}>
+              <Box width={30} height={30}>
+                <PhoneAndroidRoundedIcon
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} lg={8}>
+              <Box style={{ width: "100%", height: "40px" }}>
+                <Box display="flex" height="100%">
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    backgroundColor="#fff"
+                  >
+                    <Box fontWeight={500} fontSize="14px" width="100%" paddingBottom="7px">
+                      {admin?.phone || <NoInformation />}
+                    </Box>
+                  </Box>
                 </Box>
               </Box>
-            </FormControl>
-          </FormGroup>
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={12} lg={6}>
-          <FormGroup>
-            <FormLabel>Avatar URL</FormLabel>
-            <FormControl
-              variant="filled"
-              component={Box}
-              width="100%"
-              marginBottom="1rem!important"
-            >
-              <Box
-                display="flex"
-                fontFamily="inherit"
-                height={43}
-                boxShadow="1px"
-                alignItems="center"
-                backgroundColor="#f7f7f7"
-                borderRadius="0.375rem"
-                type="text"
-                paddingLeft="10px"
-              >
-                <Box
-                  fontSize="14px"
-                  fontWeight="400"
-                  width="100%"
-                  paddingLeft="14px"
-                >
-                  {admin?.avatarURL || <NoInformation />}
+        <Grid item xs={12} lg={6} marginTop="1rem">
+          <Grid container>
+            <Grid item xs={12} lg={1.5}>
+              <Box width={30} height={30}>
+                <AttachmentRoundedIcon
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} lg={8}>
+              <Box style={{ width: "100%", height: "40px" }}>
+                <Box display="flex" height="100%">
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    backgroundColor="#fff"
+                  >
+                    <Box
+                      fontWeight={500} fontSize="14px"
+                      paddingBottom={1.5}
+                      maxWidth="20rem"
+                      style={{
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {admin?.avatarURL || <NoInformation />}
+                    </Box>
+                  </Box>
                 </Box>
               </Box>
-            </FormControl>
-          </FormGroup>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </div>
@@ -315,68 +293,106 @@ export default function AdminProfile() {
     <div className={classes.plLg4}>
       <Grid container>
         <Grid item xs={12} lg={6}>
-          <FormGroup>
-            <FormLabel>Created Date</FormLabel>
-            <FormControl
-              variant="filled"
-              component={Box}
-              width="100%"
-              marginBottom="1rem!important"
-            >
-              <Box
-                display="flex"
-                fontFamily="inherit"
-                height={43}
-                boxShadow="1px"
-                alignItems="center"
-                backgroundColor="#f7f7f7"
-                borderRadius="0.375rem"
-                type="text"
-                paddingLeft="10px"
+          <Grid item xs={12} lg={12} paddingLeft="3rem">
+            <FormGroup>
+              <FormLabel>Created Date</FormLabel>
+              <FormControl
+                variant="filled"
+                component={Box}
+                width="100%"
+                marginBottom="1rem!important"
               >
-                <Box
-                  fontSize="14px"
-                  fontWeight="400"
-                  width="100%"
-                  paddingLeft="14px"
-                >
-                  {admin?.createdDate || <NoInformation />}
-                </Box>
-              </Box>
-            </FormControl>
-          </FormGroup>
+                <Grid container>
+                  <Grid xs={12} lg={1.5}>
+                    <Box width={30} height={30}>
+                      <AccessTimeFilledRoundedIcon
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          marginLeft: "-2rem",
+                          marginTop: "5px",
+                        }}
+                      />
+                    </Box>
+                  </Grid>
+                  <Grid xs={12} lg={10}>
+                    <Box
+                      display="flex"
+                      fontFamily="inherit"
+                      height={43}
+                      boxShadow="1px"
+                      alignItems="center"
+                      backgroundColor="#f7f7f7"
+                      borderRadius="0.375rem"
+                      type="text"
+                      width="100%"
+                      marginLeft={-5}
+                    >
+                      <Box
+                        fontSize="14px"
+                        fontWeight="400"
+                        width="100%"
+                        paddingLeft="10px"
+                      >
+                        {admin?.createdDate || <NoInformation />}
+                      </Box>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </FormControl>
+            </FormGroup>
+          </Grid>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormGroup>
-            <FormLabel>Updated Date</FormLabel>
-            <FormControl
-              variant="filled"
-              component={Box}
-              width="100%"
-              marginBottom="1rem!important"
-            >
-              <Box
-                display="flex"
-                fontFamily="inherit"
-                height={43}
-                boxShadow="1px"
-                alignItems="center"
-                backgroundColor="#f7f7f7"
-                borderRadius="0.375rem"
-                type="text"
-                paddingLeft="10px"
+          <Grid item xs={12} lg={12} paddingLeft="3rem">
+            <FormGroup>
+              <FormLabel>Updated Date</FormLabel>
+              <FormControl
+                variant="filled"
+                component={Box}
+                width="100%"
+                marginBottom="1rem!important"
               >
-                <Box
-                  fontSize="14px"
-                  fontWeight="400"
-                  width="100%"
-                  paddingLeft="14px"
-                >
-                  {admin?.updatedDate || <NoInformation />}
-                </Box>
-              </Box>
-            </FormControl>
-          </FormGroup>
+                <Grid container>
+                  <Grid xs={12} lg={1.5}>
+                    <Box width={30} height={30}>
+                      <AccessTimeFilledRoundedIcon
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          marginLeft: "-2rem",
+                          marginTop: "5px",
+                        }}
+                      />
+                    </Box>
+                  </Grid>
+                  <Grid xs={12} lg={10}>
+                    <Box
+                      display="flex"
+                      fontFamily="inherit"
+                      height={43}
+                      boxShadow="1px"
+                      alignItems="center"
+                      backgroundColor="#f7f7f7"
+                      borderRadius="0.375rem"
+                      type="text"
+                      width="100%"
+                      marginLeft={-5}
+                    >
+                      <Box
+                        fontSize="14px"
+                        fontWeight="400"
+                        width="100%"
+                        paddingLeft="10px"
+                      >
+                        {admin?.updatedDate || <NoInformation />}
+                      </Box>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </FormControl>
+            </FormGroup>
+          </Grid>
         </Grid>
       </Grid>
     </div>
@@ -425,8 +441,7 @@ export default function AdminProfile() {
                   style={{ marginBottom: "1rem" }}
                 >
                   <CardHeader
-                  style={{ backgroundColor: "#e6e6e6" }}
-                    
+                    style={{ backgroundColor: "#e6e6e6" }}
                     subheader={
                       <Grid
                         container
@@ -453,7 +468,9 @@ export default function AdminProfile() {
                       </Grid>
                     }
                   ></CardHeader>
-                  <CardContent style={{ backgroundColor: "#ffffff" }}>
+                  <CardContent
+                    style={{ backgroundColor: "#ffffff", borderRadius: "5px" }}
+                  >
                     {isEditing ? (
                       <div className={classes.plLg4}>
                         <Grid container>
@@ -575,7 +592,7 @@ export default function AdminProfile() {
                   style={{ marginBottom: "1rem" }}
                 >
                   <CardHeader
-                  style={{ backgroundColor: "#e6e6e6" }}
+                    style={{ backgroundColor: "#e6e6e6" }}
                     subheader={
                       <Grid
                         container
@@ -602,7 +619,9 @@ export default function AdminProfile() {
                       </Grid>
                     }
                   ></CardHeader>
-                  <CardContent style={{ backgroundColor: "#ffffff" }}>
+                  <CardContent
+                    style={{ backgroundColor: "#ffffff", borderRadius: "5px" }}
+                  >
                     {isEditing ? (
                       <div className={classes.plLg4}>
                         <Grid container>
@@ -682,7 +701,7 @@ export default function AdminProfile() {
                   style={{ marginBottom: "1rem" }}
                 >
                   <CardHeader
-                  style={{ backgroundColor: "#e6e6e6" }}
+                    style={{ backgroundColor: "#e6e6e6" }}
                     subheader={
                       <Grid
                         container
@@ -709,7 +728,9 @@ export default function AdminProfile() {
                       </Grid>
                     }
                   ></CardHeader>
-                  <CardContent style={{ backgroundColor: "#ffffff" }}>
+                  <CardContent
+                    style={{ backgroundColor: "#ffffff", borderRadius: "5px" }}
+                  >
                     {isEditing ? (
                       <div className={classes.plLg4}>
                         <Grid container>
