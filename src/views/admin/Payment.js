@@ -18,7 +18,6 @@ import ReactNumberFormat from 'react-number-format';
 import StatisticHeader from "components/Headers/StatisticHeader";
 import NTASelectField from "components/Form/NTASelectField";
 import NTAChipSelectField from "components/Form/NTAChipSelectField";
-import NTATextField from "components/Form/NTATextField";
 import NTALoading from "nta-team/nta-loading/Loading";
 import { ViewPayment } from "crud/payment";
 import { DeletePayment } from "crud/payment";
@@ -38,6 +37,7 @@ import componentStyles from "assets/theme/views/admin/tables.js";
 import { SORTBY_OPTIONS } from "settings/payment-setting";
 import { getSortByLabel } from "settings/payment-setting";
 import { LIST_PAYMENT_STATUS } from "settings/payment-setting";
+import useStudentList from "hooks/student/useStudentList";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -46,6 +46,16 @@ const getPrice = (syllabus) => {
 	if (!price) return 0;
 	if (isNaN(price)) return 0;
 	return parseInt(price);
+}
+
+const getStudentOptions = (student) => {
+	const options = isAvailableArray(student) ? student.map(item => ({
+		label: item.name,
+		value: item.id
+	})) : [];
+
+	options.push({ label: "All", value: "" });
+	return options;
 }
 
 const getSyllabusOptions = (syllabusList) => {
@@ -69,12 +79,13 @@ const Filter = ({
 }) => {
 
 	const { syllabusList } = useSyllabusList();
+	const { studentList } = useStudentList();
 
-	const { register, control } = useForm({
+	const { control } = useForm({
 		mode: "onSubmit",
 		reValidateMode: "onBlur",
 		defaultValues: {
-			studentName: "",
+			studentId: "",
 			syllabusId: "",
 			status: "",
 			sortBy: "-createdDate",
@@ -82,7 +93,7 @@ const Filter = ({
 	});
 
 	const syllabusId = useWatch({ control, name: "syllabusId" });
-	const studentName = useWatch({ control, name: "studentName" });
+	const studentId = useWatch({ control, name: "studentId" });
 	const status = useWatch({ control, name: "status" });
 	const sortBy = useWatch({ control, name: "sortBy" });
 
@@ -92,8 +103,8 @@ const Filter = ({
 			filter.SyllabusId = syllabusId;
 		}
 
-		if (studentName) {
-			filter["Student.Name"] = studentName;
+		if (studentId) {
+			filter["Student.Id"] = studentId;
 		}
 
 		if (status) {
@@ -104,17 +115,19 @@ const Filter = ({
 			filter["Sort"] = sortBy;
 		}
 
-		setFilter(filter);
-	}, [setFilter, sortBy, status, studentName, syllabusId])
+		setFilter && setFilter(filter);
+	}, [setFilter, sortBy, status, studentId, syllabusId])
 
 	return (
 		<Box
-			padding="0.5rem 0"
+			padding="0"
+			paddingBottom="0.5rem"
 		>
 			<Grid
 				container
 				spacing="1px"
-				paddingBottom="0.5rem"
+				padding="0 8px"
+				margin="0"
 				borderBottom="1px solid rgba(0, 0, 0, 0.05)"
 			>
 				<Grid item xs={12} lg={4} paddingRight="0">
@@ -122,12 +135,11 @@ const Filter = ({
 						display="flex"
 						width="100%"
 					>
-						<NTATextField
-							label="Find student"
-							inputProps={{
-								...register("studentName"),
-								placeholder: "Search student name"
-							}}
+						<NTASelectField
+							label="Student"
+							name="studentId"
+							options={getStudentOptions(studentList)}
+							control={control}
 						/>
 						<Divider
 							orientation="vertical"
@@ -170,6 +182,7 @@ const Filter = ({
 				spacing="1px"
 				marginTop="0.5rem"
 				justifyContent="flex-end"
+				padding="0 24px"
 			>
 				<Grid item xs='auto'>
 					<NTAChipSelectField
