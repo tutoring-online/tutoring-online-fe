@@ -376,7 +376,7 @@ const Payment = () => {
 				classes={{ root: classes.containerRoot }}
 			>
 				<Table
-					title={"List Payments"}
+					title={"Booking"}
 					columns={columns}
 					data={paymentList}
 					panel={renderPanel()}

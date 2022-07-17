@@ -144,7 +144,7 @@ const ADMIN_ROUTES = {
 	},
 	payment: {
 		key: "payment",
-		name: "Payment",
+		name: "Booking",
 		icon: PaymentsIcon,
 		iconColor: ICON_COLORS.Error,
 		component: Payment,

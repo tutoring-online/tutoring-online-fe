@@ -47,7 +47,7 @@ export default function EditPayment({
 
             mode={CRUD_MODE.edit}
             payment={payment}
-            title="Payment Detail"
+            title="Booking Detail"
             submitButton={{
                 text: "Update"
             }}

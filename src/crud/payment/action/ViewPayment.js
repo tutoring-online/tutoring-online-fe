@@ -47,7 +47,7 @@ export default function ViewPayment({
 
             mode={CRUD_MODE.view}
             payment={payment}
-            title="Payment Detail"
+            title="Booking Detail"
             submitButton={{
                 text: "Update"
             }}
