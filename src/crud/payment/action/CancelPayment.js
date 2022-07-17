@@ -2,8 +2,9 @@ import React from 'react'
 import usePaymentActions from 'hooks/payment/usePaymentActions';
 import ConfirmDialog from 'components/Dialog/confirm/ConfirmDialog';
 import { toast } from 'react-toastify';
+import { PAYMENT_STATUSES } from 'settings/payment-setting';
 
-export default function DeletePayment({
+export default function CancelPayment({
     open,
     handleClose,
     setLoadingInfo,
@@ -23,6 +24,11 @@ export default function DeletePayment({
             return;
         }
 
+        if(payment?.status !== PAYMENT_STATUSES.PENDING && payment?.status !== PAYMENT_STATUSES.ERROR) {
+            toast.warn("Cannot cancel this booking.");
+            return;
+        }
+
         const loading = (isLoading) => {
             setLoadingInfo && setLoadingInfo({
                 loading: Boolean(isLoading),
@@ -36,12 +42,15 @@ export default function DeletePayment({
             }
         }
 
-        actions.deletePayment({ id: payment.id, loading, callback });
+        const data = {
+            status: PAYMENT_STATUSES.CANCELED
+        }
+        actions.updatePayment({ id: payment.id, data , loading, callback });
     }
 
     const getDescription = () => (
         <span>
-            Are you sure you want to delete this booking?
+            Are you sure you want to cancel this booking?
         </span>
     )
 
@@ -49,7 +58,7 @@ export default function DeletePayment({
         open &&
         <ConfirmDialog
             open={open}
-            title={"Delete booking"}
+            title={"Cancel booking"}
             description={getDescription()}
             onCancel={handleOnCancelDelete}
             onConfirm={handleOnConfirmDelete}

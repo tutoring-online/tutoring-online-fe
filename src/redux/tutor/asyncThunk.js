@@ -16,6 +16,19 @@ const fetchTutors = async (params) => {
     }
 }
 
+const fetchTutorsWithFilter = async (params) => {
+    const { filter, setLoading = () => { } } = params;
+    setLoading(true);
+    try {
+        const response = await api.fetchTutors(filter);
+        return response;
+    } catch (error) {
+        throw error;
+    } finally {
+        setLoading(false);
+    }
+}
+
 const fetchTutorDetail = async (params) => {
     const { id, setLoading = () => { } } = params;
     setLoading(true);
@@ -66,6 +79,7 @@ const deleteTutor = async (params) => {
 
 const asyncThunks = {
     fetchTutors: createAsyncThunk(types.FETCH_TUTORS, fetchTutors),
+    fetchTutorsWithFilter: createAsyncThunk(types.FETCH_TUTORS_WITH_FILTER, fetchTutorsWithFilter),
     fetchTutorDetail: createAsyncThunk(types.FETCH_TUTOR_DETAIL, fetchTutorDetail),
     updateTutor: createAsyncThunk(types.UPDATE_TUTOR, updateTutor),
     deleteTutor: createAsyncThunk(types.DELETE_TUTOR, deleteTutor),

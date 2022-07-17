@@ -69,10 +69,10 @@ const updatePayment = async (params) => {
         const response = await api.updatePayment(id, data);
 
         callback(true, response);
-        toast.success("Updated payment successfully.");
+        toast.success("Updated booking successfully.");
     } catch (error) {
         callback(false);
-        toast.error("Failed to update the payment.");
+        toast.error("Failed to update the booking.");
         throw error;
     } finally {
         loading(false);
@@ -86,11 +86,11 @@ const deletePayment = async (params) => {
         await api.deletePayment(id);
 
         callback(true);
-        toast.success("Deleted payment successfully.");
+        toast.success("Deleted booking successfully.");
         return null;
     } catch (error) {
         callback(false);
-        toast.error("Failed to delete the payment.");
+        toast.error("Failed to delete the booking.");
         throw error;
     } finally {
         loading(false);
@@ -99,7 +99,7 @@ const deletePayment = async (params) => {
 
 const asyncThunks = {
     fetchPayments: createAsyncThunk(types.FETCH_PAYMENTS, fetchPayments),
-    fetchPaymentsWithFilter: createAsyncThunk(types.FETCH_PAYMENT_WITH_FILTER, fetchPaymentsWithFilter),
+    fetchPaymentsWithFilter: createAsyncThunk(types.FETCH_PAYMENTS_WITH_FILTER, fetchPaymentsWithFilter),
     fetchPaymentDetail: createAsyncThunk(types.FETCH_PAYMENT_DETAIL, fetchPaymentDetail),
     createPayment: createAsyncThunk(types.CREATE_PAYMENT, createPayment),
     updatePayment: createAsyncThunk(types.UPDATE_PAYMENT, updatePayment),

@@ -7,6 +7,7 @@ import InsertChartOutlined from "@mui/icons-material/InsertChartOutlined";
 import PieChart from "@mui/icons-material/PieChart";
 import ErrorIcon from '@mui/icons-material/Error';
 import CancelIcon from '@mui/icons-material/Cancel';
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 
 import { LIST_PAYMENT_STATUS } from "settings/payment-setting";
 import { PAYMENT_STATUSES } from "settings/payment-setting";
@@ -27,6 +28,11 @@ const STATISTIC_MODEL = {
     paid: {
         icon: ErrorIcon,
         ...LIST_PAYMENT_STATUS.find(item => item.value === PAYMENT_STATUSES.PAID),
+        quantity: 0,
+    },
+    ongoing: {
+        icon: DirectionsRunIcon,
+        ...LIST_PAYMENT_STATUS.find(item => item.value === PAYMENT_STATUSES.ONGOING),
         quantity: 0,
     },
     error: {
@@ -63,6 +69,7 @@ const usePaymentStatistics = () => {
         let total = 0;
         let totalPending = 0;
         let totalPaid = 0;
+        let totalOnGoing = 0;
         let totalError = 0;
         let totalCanceled = 0
 
@@ -75,6 +82,9 @@ const usePaymentStatistics = () => {
             }
             if (item.status === PAYMENT_STATUSES.PAID) {
                 totalPaid += 1;
+            }
+            if (item.status === PAYMENT_STATUSES.ONGOING) {
+                totalOnGoing += 1;
             }
             if (item.status === PAYMENT_STATUSES.ERROR) {
                 totalError += 1;
@@ -101,6 +111,12 @@ const usePaymentStatistics = () => {
                 ...STATISTIC_MODEL.paid,
                 quantity: totalPaid,
                 percent: Math.floor(totalPaid / total * 100)
+            },
+            {
+                key: "ongoing",
+                ...STATISTIC_MODEL.ongoing,
+                quantity: totalOnGoing,
+                percent: Math.floor(totalOnGoing / total * 100)
             },
             {
                 key: "error",

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import PaymentDetailDialog from 'crud/payment/ui-segment/PaymentDetailDialog';
 import usePaymentActions from 'hooks/payment/usePaymentActions';
 import { CRUD_MODE } from 'settings/setting';
@@ -25,8 +25,13 @@ export default function ProcessBooking({
     const user = useSelector(state => state.auth.user);
     const history = useHistory();
 
+    const [openBooking, setOpenBooking] = useState(false);
+    
+    useEffect(() => {
+        setOpenBooking(Boolean(open));
+    }, [open])
+    
     const [loadingCreate, setLoadingCreate] = useState(false);
-
     const [bookingData, setBookingData] = useState(null);
     const [openPaymentProcess, setOpenPaymentProcess] = useState(false);
 
@@ -55,6 +60,7 @@ export default function ProcessBooking({
             return;
         }
 
+        setOpenBooking(false);
         setBookingData(data);
         setOpenPaymentProcess(true);
     }
@@ -89,9 +95,9 @@ export default function ProcessBooking({
     return (
         <>
             {
-                open &&
+                openBooking &&
                 <PaymentDetailDialog
-                    open={open}
+                    open={openBooking}
                     onClose={handleClose}
                     onSubmit={handleSubmit}
                     loadingSubmit={loadingCreate}

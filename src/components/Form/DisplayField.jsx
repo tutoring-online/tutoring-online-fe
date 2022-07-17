@@ -20,7 +20,6 @@ export default function DisplayField({
                 error={Boolean(error)}
                 component={Box}
                 width="100%"
-                marginBottom="1rem!important"
             >
                 <Box
                     display="flex"

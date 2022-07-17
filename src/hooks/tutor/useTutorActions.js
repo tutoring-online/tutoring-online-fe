@@ -10,6 +10,8 @@ const useTutorActions = () => {
     const [actions] = useState({
         fetchTutorDetail: compose(dispatch, asyncThunks.fetchTutorDetail),
         clearTutorDetail: compose(dispatch, reduxActions[types.CLEAR_TUTOR_DETAIL]),
+
+        fetchTutorsWithFilter: compose(dispatch, asyncThunks.fetchTutorsWithFilter),
         fetchTutors: compose(dispatch, asyncThunks.fetchTutors),
         updateTutor: compose(dispatch, asyncThunks.updateTutor),
         deleteTutor: compose(dispatch, asyncThunks.deleteTutor),

@@ -40,6 +40,7 @@ export default function PaymentDetailDialog({
     open,
     onClose,
     onSubmit,
+    onAllocateTutor,
     loadingSubmit,
     loadingDetail,
 
@@ -97,8 +98,6 @@ export default function PaymentDetailDialog({
         reset();
     }
 
-    console.log(payment);
-
     const renderContent = () => isEditing ? (
         <EditingContent
             payment={payment}
@@ -108,7 +107,10 @@ export default function PaymentDetailDialog({
             onSubmit={handleSubmit(preparedBeforeSubmit)}
         />
     ) : (
-        <ViewMode payment={payment} />
+        <ViewMode
+            payment={payment}
+            onAllocateTutor={onAllocateTutor}
+        />
     )
 
     const renderBottomPanel = () => (
@@ -122,7 +124,7 @@ export default function PaymentDetailDialog({
                 />
             </>
         ) : (
-            <CancelButton onClick={cancelEdit} text="Close"/>
+            <CancelButton onClick={onClose} text="Close" />
         )
     )
 

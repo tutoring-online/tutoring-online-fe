@@ -5,7 +5,8 @@ import * as types from "./types";
 
 const INITIAL_STATE = {
     tutors: [],
-    tutorDetail: [],
+    filteredTutors: [],
+    tutorDetail: null,
 }
 
 const reducers = {
@@ -14,6 +15,13 @@ const reducers = {
     },
     fetchTutorsFailed: (state) => {
         state.tutors = [];
+    },
+
+    fetchTutorsWithFilterSuccessful: (state, action) => {
+        state.filteredTutors = action.payload;
+    },
+    fetchTutorsWithFilterFailed: (state) => {
+        state.filteredTutors = [];
     },
 
     fetchTutorDetailSuccessful: (state, action) => {
@@ -38,6 +46,9 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.fetchTutors.fulfilled, reducers.fetchTutorsSuccessful);
         builder.addCase(asyncThunks.fetchTutors.rejected, reducers.fetchTutorsFailed);
+        
+        builder.addCase(asyncThunks.fetchTutorsWithFilter.fulfilled, reducers.fetchTutorsWithFilterSuccessful);
+        builder.addCase(asyncThunks.fetchTutorsWithFilter.rejected, reducers.fetchTutorsWithFilterFailed);
 
         builder.addCase(asyncThunks.fetchTutorDetail.fulfilled, reducers.fetchTutorDetailSuccessful);
         builder.addCase(asyncThunks.fetchTutorDetail.rejected, reducers.fetchTutorDetailFailed);

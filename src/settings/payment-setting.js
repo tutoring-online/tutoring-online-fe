@@ -22,7 +22,7 @@ export const LIST_PAYMENT_STATUS = [
         bgColor: STATUS_COLORS.ACTIVE.bgColor
     },
     {
-        label: "PAID",
+        label: "On going",
         value: PAYMENT_STATUSES.ONGOING,
         textColor: STATUS_COLORS.AVAILABLE.textColor,
         bgColor: STATUS_COLORS.AVAILABLE.bgColor
@@ -36,8 +36,8 @@ export const LIST_PAYMENT_STATUS = [
     {
         label: "Canceled",
         value: PAYMENT_STATUSES.CANCELED,
-        textColor: STATUS_COLORS.AVAILABLE.textColor,
-        bgColor: STATUS_COLORS.AVAILABLE.bgColor
+        textColor: STATUS_COLORS.CANCELED.textColor,
+        bgColor: STATUS_COLORS.CANCELED.bgColor
     },
 ]
 
@@ -65,12 +65,8 @@ export const DEFAULT_MAX_PRICE = 2 * 1000 * 1000;
 
 export const SORTBY_OPTIONS = [
     { label: "Default", value: "" },
-    { label: "Price: highest first", value: "-price" },
-    { label: "Price: lowest first", value: "+price" },
     { label: "Created date: newest first", value: "-createdDate" },
     { label: "Created date: oldest first", value: "+createdDate" },
-    { label: "Status: canceled to pending", value: "-status" },
-    { label: "Status: pending to canceled", value: "+status" },
 ]
 
 export const getSortByLabel = (value) => {

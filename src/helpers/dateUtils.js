@@ -14,7 +14,7 @@ const notMillisecond = (date) => {
 
 export const convertBeDateToIso = (date) => {
     if (!validDate(date)) return null;
-    if (!moment(date, datetimeFormatReverseDate, true).isValid()) return null;
+    if (!moment(date, datetimeFormatV2, true).isValid()) return null;
 
     const array = date.split(" ");
     const reverseDateYear = (date) => {
@@ -38,7 +38,7 @@ function toLocaleUTCDateString(date, locales, options) {
 }
 
 export const getLocaleDateTimeString = (date) => {
-    const options = { hour12: false };
+    const options = { hour12: true };
     const theDate = new Date(convertBeDateToIso(date));
     return toLocaleUTCDateString(theDate, undefined, options);
 }
@@ -77,7 +77,10 @@ export const formatDate = (date, format = dateFormat) => validDate(date) ? momen
 export const formatLocalDate = (date, format = dateFormat) => date ? moment(date).local().format(format) : 'N/A';
 
 export const formatDateTime = (date, format = datetimeFormat, invalidStr = 'N/A') => {
-    return validDate(date) ? moment(new Date()).format(format) : invalidStr;
+    if(!validDate(date)) return invalidStr;
+    
+    let theDate = convertBeDateToIso(date) || date;
+    return moment(new Date(theDate)).format(format);
 }
 
 export const formatLocalDateTime = (date, format = datetimeFormat, invalidStr = 'N/A') => validDate(date) ? moment(date).local().format(format) : invalidStr;

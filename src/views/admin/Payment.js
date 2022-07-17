@@ -9,6 +9,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Avatar, Button, Divider, Grid, IconButton } from "@mui/material";
 import makeStyles from '@mui/styles/makeStyles';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import DoDisturbAltIcon from '@mui/icons-material/DoDisturbAlt';
 
 //Core component
 import Table from "components/Table/Table.jsx";
@@ -30,7 +31,6 @@ import usePaymentStatistics from "hooks/payment/usePaymentStatistics";
 //Helpers
 import { renderPaymentStatus, PAYMENT_STATUSES } from "settings/payment-setting";
 import { isAvailableArray } from "helpers/arrayUtils";
-import { formatDateTime, datetimeFormatReverseDate } from "helpers/dateUtils";
 
 //other
 import componentStyles from "assets/theme/views/admin/tables.js";
@@ -38,6 +38,8 @@ import { SORTBY_OPTIONS } from "settings/payment-setting";
 import { getSortByLabel } from "settings/payment-setting";
 import { LIST_PAYMENT_STATUS } from "settings/payment-setting";
 import useStudentList from "hooks/student/useStudentList";
+import { CancelPayment } from "crud/payment";
+import { getLocaleDateTimeString } from "helpers/dateUtils";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -212,6 +214,7 @@ const Payment = () => {
 	const [columns, setColumns] = useState([]);
 	const [openEdit, setOpenEdit] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
+	const [openCancel, setOpenCancel] = useState(false);
 	const [selectedPayment, setSelectedPayment] = useState(null);
 
 	const [loadingDetail, setLoadingDetail] = useState({
@@ -238,6 +241,11 @@ const Payment = () => {
 		const handleOpenDelete = (payment) => {
 			setSelectedPayment(payment);
 			setOpenDelete(true);
+		}
+
+		const handleOpenCancel = (payment) => {
+			setSelectedPayment(payment);
+			setOpenCancel(true);
 		}
 
 		setColumns([
@@ -285,7 +293,7 @@ const Payment = () => {
 			{
 				key: "createdDate",
 				label: "Created date",
-				render: (row) => formatDateTime(row.createdDate, datetimeFormatReverseDate, "") || <NoInformation />
+				render: (row) => getLocaleDateTimeString(row.createdDate) || <NoInformation />
 			},
 			{
 				key: "status",
@@ -324,6 +332,18 @@ const Payment = () => {
 								</IconButton>
 							</span>
 						</BootstrapTooltip>
+						{(row.status === PAYMENT_STATUSES.PENDING || row.status === PAYMENT_STATUSES.ERROR) &&
+							<BootstrapTooltip title="Cancel">
+								<span>
+									<IconButton
+										style={{ padding: 5 }}
+										onClick={() => handleOpenCancel(row)}
+									>
+										<DoDisturbAltIcon sx={{ width: 18, height: 18 }} />
+									</IconButton>
+								</span>
+							</BootstrapTooltip>
+						}
 					</Box>
 				)
 			},
@@ -337,6 +357,11 @@ const Payment = () => {
 
 	const handleCloseDelete = () => {
 		setOpenDelete(false);
+		setSelectedPayment(null);
+	}
+
+	const handleCloseCancel = () => {
+		setOpenCancel(false);
 		setSelectedPayment(null);
 	}
 
@@ -403,6 +428,16 @@ const Payment = () => {
 				<DeletePayment
 					open={openDelete}
 					handleClose={handleCloseDelete}
+					setLoadingInfo={setLoadingDetail}
+					payment={selectedPayment}
+					refresh={refresh}
+				/>
+			}
+
+			{openCancel &&
+				<CancelPayment
+					open={openCancel}
+					handleClose={handleCloseCancel}
 					setLoadingInfo={setLoadingDetail}
 					payment={selectedPayment}
 					refresh={refresh}
