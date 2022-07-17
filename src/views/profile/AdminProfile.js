@@ -82,14 +82,23 @@ export default function AdminProfile() {
   const authState = useSelector((state) => state.auth);
   const admin = authState.user;
 
-  const [isEditing, setIsEditing] = useState(false);
+  const [isBasicEditing, setIsBasicEditing] = useState(false);
+  const [isContactEditing, setIsContactEditing] = useState(false);
 
-  const enableEdit = () => {
-    setIsEditing(true);
+  const enableBasicEdit = () => {
+    setIsBasicEditing(true);
+  };
+  const enableContactEdit = () => {
+    setIsContactEditing(true);
   };
 
-  const cancelEdit = () => {
-    setIsEditing(false);
+  const cancelBasicEdit = () => {
+    setIsBasicEditing(false);
+    // reset();
+  };
+
+  const cancelContactEdit = () => {
+    setIsContactEditing(false);
     // reset();
   };
 
@@ -358,117 +367,6 @@ export default function AdminProfile() {
     </div>
   );
 
-  const accInfoDisplay = () => (
-    <div className={classes.plLg4}>
-      <Grid container>
-        <Grid item xs={12} lg={6}>
-          <Grid item xs={12} lg={12}>
-            <FormGroup>
-              <FormControl
-                variant="filled"
-                component={Box}
-                width="100%"
-                marginBottom="1rem!important"
-              >
-                <Grid container>
-                  <Grid xs={12} lg={1.5} paddingLeft="1rem" paddingTop="6px">
-                    <Box width={20} height={20} paddingLeft="-2rem">
-                      <AccessTimeFilledRoundedIcon
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          marginTop: "5px",
-                        }}
-                      />
-                    </Box>
-                  </Grid>
-                  <Grid xs={12} lg={10}>
-                    <Box
-                      display="flex"
-                      fontFamily="inherit"
-                      height={43}
-                      boxShadow="1px"
-                      alignItems="center"
-                      backgroundColor="#fff"
-                      borderRadius="0.375rem"
-                      type="text"
-                      width="50%"
-                      marginLeft={-1}
-                    >
-                      <Tooltip title="Created Date" placement="right">
-                        <Box
-                          fontFamily="sans-serif"
-                          fontSize="14px"
-                          fontWeight="400"
-                          width="100%"
-                          paddingLeft="10px"
-                        >
-                          {admin?.createdDate || <NoInformation />}
-                        </Box>
-                      </Tooltip>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </FormControl>
-            </FormGroup>
-          </Grid>
-        </Grid>
-        <Grid item xs={12} lg={6}>
-          <Grid item xs={12} lg={12} paddingLeft="3rem">
-            <FormGroup>
-              <FormControl
-                variant="filled"
-                component={Box}
-                width="100%"
-                marginBottom="1rem!important"
-              >
-                <Grid container>
-                  <Grid xs={12} lg={1.5} paddingLeft="1rem" paddingTop="6px">
-                    <Box width={20} height={20}>
-                      <AccessTimeFilledRoundedIcon
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          marginLeft: "-2rem",
-                          marginTop: "5px",
-                        }}
-                      />
-                    </Box>
-                  </Grid>
-                  <Grid xs={12} lg={10}>
-                    <Box
-                      display="flex"
-                      fontFamily="inherit"
-                      height={43}
-                      boxShadow="1px"
-                      alignItems="center"
-                      backgroundColor="#fff"
-                      borderRadius="0.375rem"
-                      type="text"
-                      width="100%"
-                      marginLeft={-3}
-                    >
-                      <Tooltip title="Updated Date" placement="right">
-                        <Box
-                          fontFamily="sans-serif"
-                          fontSize="14px"
-                          fontWeight="400"
-                          width="50%"
-                        >
-                          {admin?.updatedDate || <NoInformation />}
-                        </Box>
-                      </Tooltip>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </FormControl>
-            </FormGroup>
-          </Grid>
-        </Grid>
-      </Grid>
-    </div>
-  );
-
   return (
     <>
       <Container
@@ -657,13 +555,13 @@ export default function AdminProfile() {
                         </Grid>
                         <Grid item lg={8}></Grid>
                         <Grid item lg={2} paddingLeft="4rem">
-                          {isEditing ? (
+                          {isBasicEditing ? (
                             <div></div>
                           ) : (
                             <Tooltip title="Edit" placement="left">
                               <Box
                                 component={Button}
-                                onClick={enableEdit}
+                                onClick={enableBasicEdit}
                                 width="50%"
                                 height="100%"
                               >
@@ -681,7 +579,7 @@ export default function AdminProfile() {
                       borderRadius: "5px",
                     }}
                   >
-                    {isEditing ? (
+                    {isBasicEditing ? (
                       <div className={classes.plLg4}>
                         <Grid container>
                           <Grid item xs={12} lg={6}>
@@ -788,6 +686,45 @@ export default function AdminProfile() {
                             </FormGroup>
                           </Grid>
                         </Grid>
+                        <Grid container item xs="auto">
+                          <Grid item xs="auto" lg={8}></Grid>
+                          <Grid item xs="auto" lg={2}>
+                            <Box
+                              variant="contained"
+                              width="100%"
+                              height="100%"
+                              marginLeft="2rem"
+                            >
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                fullWidth="true"
+                                startIcon={<SaveRoundedIcon />}
+                                onClick={cancelBasicEdit}
+                              >
+                                Save
+                              </Button>
+                            </Box>
+                          </Grid>
+                          <Grid item xs="auto" lg={2}>
+                            <Box
+                              variant="contained"
+                              width="100%"
+                              height="100%"
+                              marginLeft="1rem"
+                            >
+                              <Button
+                                variant="contained"
+                                color="secondary"
+                                fullWidth="true"
+                                startIcon={<CancelRoundedIcon />}
+                                onClick={cancelBasicEdit}
+                              >
+                                Cancel
+                              </Button>
+                            </Box>
+                          </Grid>
+                        </Grid>
                       </div>
                     ) : (
                       basicDisplay()
@@ -821,13 +758,13 @@ export default function AdminProfile() {
                         </Grid>
                         <Grid item xs="auto" lg={8}></Grid>
                         <Grid item xs="auto" lg={2} paddingLeft="4rem">
-                          {isEditing ? (
+                          {isContactEditing ? (
                             <div></div>
                           ) : (
                             <Tooltip title="Edit" placement="left">
                               <Box
                                 component={Button}
-                                onClick={enableEdit}
+                                onClick={enableContactEdit}
                                 width="50%"
                                 height="100%"
                               >
@@ -845,7 +782,7 @@ export default function AdminProfile() {
                       borderRadius: "5px",
                     }}
                   >
-                    {isEditing ? (
+                    {isContactEditing ? (
                       <div className={classes.plLg4}>
                         <Grid container>
                           <Grid item xs={12}>
@@ -911,6 +848,45 @@ export default function AdminProfile() {
                             </FormGroup>
                           </Grid>
                         </Grid>
+                        <Grid container item xs="auto">
+                          <Grid item xs="auto" lg={8}></Grid>
+                          <Grid item xs="auto" lg={2}>
+                            <Box
+                              variant="contained"
+                              width="100%"
+                              height="100%"
+                              marginLeft="2rem"
+                            >
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                fullWidth="true"
+                                startIcon={<SaveRoundedIcon />}
+                                onClick={cancelContactEdit}
+                              >
+                                Save
+                              </Button>
+                            </Box>
+                          </Grid>
+                          <Grid item xs="auto" lg={2}>
+                            <Box
+                              variant="contained"
+                              width="100%"
+                              height="100%"
+                              marginLeft="1rem"
+                            >
+                              <Button
+                                variant="contained"
+                                color="secondary"
+                                fullWidth="true"
+                                startIcon={<CancelRoundedIcon />}
+                                onClick={cancelContactEdit}
+                              >
+                                Cancel
+                              </Button>
+                            </Box>
+                          </Grid>
+                        </Grid>
                       </div>
                     ) : (
                       contactDisplay()
@@ -957,124 +933,140 @@ export default function AdminProfile() {
                       borderRadius: "5px",
                     }}
                   >
-                    {isEditing ? (
-                      <div className={classes.plLg4}>
-                        <Grid container>
-                          <Grid item xs={12} lg={6}>
+                    <div className={classes.plLg4}>
+                      <Grid container>
+                        <Grid item xs={12} lg={6}>
+                          <Grid item xs={12} lg={12}>
                             <FormGroup>
-                              <FormLabel>Created Date</FormLabel>
                               <FormControl
                                 variant="filled"
                                 component={Box}
                                 width="100%"
                                 marginBottom="1rem!important"
                               >
-                                <Box
-                                  display="flex"
-                                  fontFamily="inherit"
-                                  height={43}
-                                  boxShadow="1px"
-                                  alignItems="center"
-                                  backgroundColor="#f7f7f7"
-                                  borderRadius="0.375rem"
-                                  type="text"
-                                  paddingLeft="10px"
-                                >
-                                  <Box
-                                    fontSize="14px"
-                                    fontWeight="400"
-                                    width="100%"
-                                    paddingLeft="14px"
+                                <Grid container>
+                                  <Grid
+                                    xs={12}
+                                    lg={1.5}
+                                    paddingLeft="1rem"
+                                    paddingTop="6px"
                                   >
-                                    {admin?.createdDate || <NoInformation />}
-                                  </Box>
-                                </Box>
-                              </FormControl>
-                            </FormGroup>
-                          </Grid>
-                          <Grid item xs={12} lg={6}>
-                            <FormGroup>
-                              <FormLabel>Updated Date</FormLabel>
-                              <FormControl
-                                variant="filled"
-                                component={Box}
-                                width="100%"
-                                marginBottom="1rem!important"
-                              >
-                                <Box
-                                  display="flex"
-                                  fontFamily="inherit"
-                                  height={43}
-                                  boxShadow="1px"
-                                  alignItems="center"
-                                  backgroundColor="#f7f7f7"
-                                  borderRadius="0.375rem"
-                                  type="text"
-                                  paddingLeft="10px"
-                                >
-                                  <Box
-                                    fontSize="14px"
-                                    fontWeight="400"
-                                    width="100%"
-                                    paddingLeft="14px"
-                                  >
-                                    {admin?.updatedDate || <NoInformation />}
-                                  </Box>
-                                </Box>
+                                    <Box
+                                      width={20}
+                                      height={20}
+                                      paddingLeft="-2rem"
+                                    >
+                                      <AccessTimeFilledRoundedIcon
+                                        style={{
+                                          width: "100%",
+                                          height: "100%",
+                                          marginTop: "5px",
+                                        }}
+                                      />
+                                    </Box>
+                                  </Grid>
+                                  <Grid xs={12} lg={10}>
+                                    <Box
+                                      display="flex"
+                                      fontFamily="inherit"
+                                      height={43}
+                                      boxShadow="1px"
+                                      alignItems="center"
+                                      backgroundColor="#fff"
+                                      borderRadius="0.375rem"
+                                      type="text"
+                                      width="50%"
+                                      marginLeft={-1}
+                                    >
+                                      <Tooltip
+                                        title="Created Date"
+                                        placement="right"
+                                      >
+                                        <Box
+                                          fontFamily="sans-serif"
+                                          fontSize="14px"
+                                          fontWeight="400"
+                                          width="100%"
+                                          paddingLeft="10px"
+                                        >
+                                          {admin?.createdDate || (
+                                            <NoInformation />
+                                          )}
+                                        </Box>
+                                      </Tooltip>
+                                    </Box>
+                                  </Grid>
+                                </Grid>
                               </FormControl>
                             </FormGroup>
                           </Grid>
                         </Grid>
-                      </div>
-                    ) : (
-                      accInfoDisplay()
-                    )}
+                        <Grid item xs={12} lg={6}>
+                          <Grid item xs={12} lg={12} paddingLeft="3rem">
+                            <FormGroup>
+                              <FormControl
+                                variant="filled"
+                                component={Box}
+                                width="100%"
+                                marginBottom="1rem!important"
+                              >
+                                <Grid container>
+                                  <Grid
+                                    xs={12}
+                                    lg={1.5}
+                                    paddingLeft="1rem"
+                                    paddingTop="6px"
+                                  >
+                                    <Box width={20} height={20}>
+                                      <AccessTimeFilledRoundedIcon
+                                        style={{
+                                          width: "100%",
+                                          height: "100%",
+                                          marginLeft: "-2rem",
+                                          marginTop: "5px",
+                                        }}
+                                      />
+                                    </Box>
+                                  </Grid>
+                                  <Grid xs={12} lg={10}>
+                                    <Box
+                                      display="flex"
+                                      fontFamily="inherit"
+                                      height={43}
+                                      boxShadow="1px"
+                                      alignItems="center"
+                                      backgroundColor="#fff"
+                                      borderRadius="0.375rem"
+                                      type="text"
+                                      width="100%"
+                                      marginLeft={-3}
+                                    >
+                                      <Tooltip
+                                        title="Updated Date"
+                                        placement="right"
+                                      >
+                                        <Box
+                                          fontFamily="sans-serif"
+                                          fontSize="14px"
+                                          fontWeight="400"
+                                          width="50%"
+                                        >
+                                          {admin?.updatedDate || (
+                                            <NoInformation />
+                                          )}
+                                        </Box>
+                                      </Tooltip>
+                                    </Box>
+                                  </Grid>
+                                </Grid>
+                              </FormControl>
+                            </FormGroup>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </div>
                   </CardContent>
                 </Card>
-
-                {isEditing ? (
-                  <Grid container item xs="auto">
-                    <Grid item xs="auto" lg={8}></Grid>
-                    <Grid item xs="auto" lg={2}>
-                      <Box
-                        variant="contained"
-                        width="100%"
-                        height="100%"
-                        marginLeft="2rem"
-                      >
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          fullWidth="true"
-                          startIcon={<SaveRoundedIcon />}
-                          onClick={cancelEdit}
-                        >
-                          Save
-                        </Button>
-                      </Box>
-                    </Grid>
-                    <Grid item xs="auto" lg={2}>
-                      <Box
-                        variant="contained"
-                        width="100%"
-                        height="100%"
-                        marginLeft="1rem"
-                      >
-                        <Button
-                          variant="contained"
-                          color="secondary"
-                          fullWidth="true"
-                          startIcon={<CancelRoundedIcon />}
-                          onClick={cancelEdit}
-                        >
-                          Cancel
-                        </Button>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                ) : (
-                  <div></div>
-                )}
               </Grid>
             </Grid>
           </Grid>
