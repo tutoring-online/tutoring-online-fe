@@ -45,7 +45,7 @@ const UpdatedDate = ({ updatedDate }) => (
 );
 
 const Header = ({ subject }) => (
-  <Box marginBottom="1rem" className="detail-header">
+  <Box className="detail-header">
     <Box
       display="grid"
       gridTemplateRows="1fr 1fr"
@@ -75,13 +75,13 @@ const BasicInfo = ({ subject }) => (
       <Grid item xs={12}>
         <FormLabel sx={{ fontSize: "18px" }}>Basic Info</FormLabel>
       </Grid>
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={12} md={6}>
         <DisplayField label="Code" value={subject?.code || <NoInformation />} />
       </Grid>
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={12} md={6}>
         <DisplayField label="Name" value={subject?.name || <NoInformation />} />
       </Grid>
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={12} md={6}>
         <DisplayField
           label="Category"
           value={subject?.category || <NoInformation />}
@@ -110,7 +110,7 @@ const Description = ({ subject }) => (
 export default function ViewMode({ subject }) {
   return (
     <Box component="div">
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Header subject={subject} />
         </Grid>

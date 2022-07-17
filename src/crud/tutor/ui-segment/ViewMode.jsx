@@ -77,7 +77,6 @@ const UpdatedDate = ({ updatedDate }) => (
 
 const Header = ({ tutor }) => (
     <Box
-        marginBottom="1rem"
         className="detail-header"
     >
         <HeaderImage avatarURL={tutor?.avatarURL} />
@@ -122,21 +121,21 @@ const BasicInfo = ({ tutor }) => (
                 </FormLabel>
             </Grid>
 
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Name"
                     value={tutor?.name || <NoInformation />}
                 />
             </Grid>
 
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Birthday"
                     value={tutor?.birthday || <NoInformation />}
                 />
             </Grid>
 
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Gender"
                     value={convertNumberToGender(tutor?.gender) || <NoInformation />}
@@ -154,14 +153,14 @@ const Contact = ({ tutor }) => (
                     Contact
                 </FormLabel>
             </Grid>
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Email"
                     value={tutor?.email || <NoInformation />}
                 />
             </Grid>
 
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Phone"
                     value={tutor?.phone || <NoInformation />}
@@ -172,11 +171,18 @@ const Contact = ({ tutor }) => (
                 <DisplayField
                     label="Link meeting"
                     value={
-                        <CopyToClipboardWrapper
-                            text={tutor?.meetingUrl}
+                        <Box
+                            padding="0.5rem 1rem"
+                            paddingRight="2rem"
+                            borderRadius="8px"
+                            bgcolor="#f7f7f7"
                         >
-                            {tutor?.meetingUrl || <NoInformation />}
-                        </CopyToClipboardWrapper>
+                            <CopyToClipboardWrapper
+                                text={tutor?.meetingUrl}
+                            >
+                                {tutor?.meetingUrl || <NoInformation />}
+                            </CopyToClipboardWrapper>
+                        </Box>
                     }
                 />
             </Grid>
@@ -195,7 +201,7 @@ const Contact = ({ tutor }) => (
 export default function ViewMode({ tutor }) {
     return (
         <Box component="div">
-            <Grid container >
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Header tutor={tutor} />
                 </Grid>

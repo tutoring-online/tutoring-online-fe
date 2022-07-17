@@ -76,7 +76,6 @@ const UpdatedDate = ({ updatedDate }) => (
 
 const Header = ({ admin }) => (
     <Box
-        marginBottom="1rem"
         className="detail-header"
     >
         <HeaderImage avatarURL={admin?.avatarURL} />
@@ -121,21 +120,21 @@ const BasicInfo = ({ admin }) => (
                 </FormLabel>
             </Grid>
 
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Name"
                     value={admin?.name || <NoInformation />}
                 />
             </Grid>
 
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Birthday"
                     value={admin?.birthday || <NoInformation />}
                 />
             </Grid>
 
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Gender"
                     value={convertNumberToGender(admin?.gender) || <NoInformation />}
@@ -153,14 +152,14 @@ const Contact = ({ admin }) => (
                     Contact
                 </FormLabel>
             </Grid>
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Email"
                     value={admin?.email || <NoInformation />}
                 />
             </Grid>
 
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Phone"
                     value={admin?.phone || <NoInformation />}
@@ -181,7 +180,7 @@ const Contact = ({ admin }) => (
 export default function ViewMode({ admin }) {
     return (
         <Box component="div">
-            <Grid container >
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Header admin={admin} />
                 </Grid>

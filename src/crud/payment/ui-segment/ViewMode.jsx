@@ -8,6 +8,7 @@ import GroupBox from 'components/Form/GroupBox';
 // import { validDate } from 'helpers/dateUtils';
 import React from 'react'
 import { renderAdminStatus } from 'settings/admin-setting';
+import { renderPaymentStatus } from 'settings/payment-setting';
 import { getDateSessionLabel } from 'settings/payment-setting';
 import { getComboLabel } from 'settings/payment-setting';
 
@@ -28,7 +29,7 @@ const StatusBar = ({ status }) => (
     </Box>
 )
 
-const ScheduleInfo = ({ payment }) => (
+const ClassInfo = ({ payment }) => (
     <GroupBox>
         <Grid container>
             <Grid item xs={12}>
@@ -37,32 +38,50 @@ const ScheduleInfo = ({ payment }) => (
                 </FormLabel>
             </Grid>
 
-            <Grid item xs={12}>
-                <Box
-                    marginBottom="1rem"
-                    className="detail-header"
-                >
-                    <Box
-                        display="grid"
-                        gridTemplateRows="1fr 1fr"
-                        gridTemplateColumns="1fr"
-
-                        flexGrow="1"
-                        padding="0 1rem"
-                        minHeight="80px"
-                    >
+            <Grid item xs={12} md={6}>
+                <DisplayField
+                    label="Student"
+                    value={
                         <Box
                             display="flex"
-                            alignItems="center"
-                            height="100%"
                         >
-                            <Box fontWeight="600" fontSize="17px">
-                                {payment?.student?.name}
+                            <Avatar
+                                src={payment?.student?.avatarURL}
+                                alt="Tutor avatar"
+                                sx={{
+                                    width: 20,
+                                    height: 20
+                                }}
+                            />
+                            <Box marginLeft="0.5rem">
+                                {payment?.student?.name || <i>Not allocated yet</i>}
                             </Box>
-                            <StatusBar status={payment?.student?.status} />
                         </Box>
-                    </Box>
-                </Box>
+                    }
+                />
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+                <DisplayField
+                    label="Tutor"
+                    value={
+                        <Box
+                            display="flex"
+                        >
+                            <Avatar
+                                src={payment?.tutor?.avatarURL}
+                                alt="Tutor avatar"
+                                sx={{
+                                    width: 20,
+                                    height: 20
+                                }}
+                            />
+                            <Box marginLeft="0.5rem">
+                                {payment?.tutor?.name || <i>Not allocated yet</i>}
+                            </Box>
+                        </Box>
+                    }
+                />
             </Grid>
         </Grid>
     </GroupBox>
@@ -70,7 +89,7 @@ const ScheduleInfo = ({ payment }) => (
 
 const BookingInfo = ({ payment }) => (
     <GroupBox>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} rowSpacing={1}>
             <Grid item xs={12}>
                 <FormLabel sx={{ fontSize: "18px" }}>
                     Payment details
@@ -96,6 +115,12 @@ const BookingInfo = ({ payment }) => (
                     value={getDateSessionLabel(payment?.dateSession)}
                 />
             </Grid>
+            <Grid item xs={12}>
+                <DisplayField
+                    label="Status"
+                    value={renderPaymentStatus(payment?.status)}
+                />
+            </Grid>
         </Grid>
     </GroupBox>
 )
@@ -108,7 +133,7 @@ export default function ViewMode({ payment }) {
                     <BookingInfo payment={payment} />
                 </Grid>
                 <Grid item xs={12}>
-                    <ScheduleInfo payment={payment} />
+                    <ClassInfo payment={payment} />
                 </Grid>
 
             </Grid>

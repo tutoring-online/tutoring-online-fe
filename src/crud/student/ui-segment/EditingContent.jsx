@@ -102,7 +102,7 @@ const Contact = ({
         <Grid container>
             <Grid item xs={12}>
                 <FormLabel sx={{ fontSize: "18px" }}>
-                    Contact
+                    Contact Info
                 </FormLabel>
             </Grid>
 
@@ -155,7 +155,7 @@ export default function EditingContent({
 
     return (
         <form onSubmit={onSubmit}>
-            <Grid container>
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <BasicInfo
                         student={student}

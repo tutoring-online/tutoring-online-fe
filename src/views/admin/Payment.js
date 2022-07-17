@@ -104,7 +104,7 @@ const Filter = ({
 		}
 
 		if (studentId) {
-			filter["Student.Id"] = studentId;
+			filter.StudentId = studentId;
 		}
 
 		if (status) {

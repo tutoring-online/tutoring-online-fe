@@ -45,7 +45,7 @@ const UpdatedDate = ({ updatedDate }) => (
 );
 
 const Header = ({ category }) => (
-  <Box marginBottom="1rem" className="detail-header">
+  <Box className="detail-header">
     <Box
       display="grid"
       gridTemplateRows="1fr 1fr"
@@ -90,7 +90,7 @@ const Description = ({ category }) => (
 export default function ViewMode({ category }) {
   return (    
     <Box component="div">
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Header category={category} />
         </Grid>

@@ -17,7 +17,7 @@ export default function EditingContent({
     return (
         <form onSubmit={onSubmit}>
             <Grid container>
-                <Grid item xs={12} lg={6}>
+                <Grid item xs={12} md={6}>
                     <TextField
                         label="Code"
                         required={true}
@@ -27,7 +27,7 @@ export default function EditingContent({
                         error={errors.code?.message}
                     />
                 </Grid>
-                <Grid item xs={12} lg={6}>
+                <Grid item xs={12} md={6}>
                     <TextField
                         label="Name"
                         required={true}
@@ -37,7 +37,7 @@ export default function EditingContent({
                         error={errors.name?.message}
                     />
                 </Grid>
-                <Grid item xs={12} lg={6}>
+                <Grid item xs={12} md={6}>
                     <SelectField
                         label="Category"
                         name="categoryId"

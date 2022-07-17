@@ -76,7 +76,6 @@ const UpdatedDate = ({ updatedDate }) => (
 
 const Header = ({ student }) => (
     <Box
-        marginBottom="1rem"
         className="detail-header"
     >
         <HeaderImage avatarURL={student?.avatarURL} />
@@ -121,28 +120,28 @@ const BasicInfo = ({ student }) => (
                 </FormLabel>
             </Grid>
 
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Name"
                     value={student?.name || <NoInformation />}
                 />
             </Grid>
 
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Grade"
                     value={student?.grade || <NoInformation />}
                 />
             </Grid>
 
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Birthday"
                     value={student?.birthday || <NoInformation />}
                 />
             </Grid>
 
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Gender"
                     value={convertNumberToGender(student?.gender) || <NoInformation />}
@@ -160,14 +159,14 @@ const Contact = ({ student }) => (
                     Contact
                 </FormLabel>
             </Grid>
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Email"
                     value={student?.email || <NoInformation />}
                 />
             </Grid>
 
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
                 <DisplayField
                     label="Phone"
                     value={student?.phone || <NoInformation />}
@@ -188,7 +187,7 @@ const Contact = ({ student }) => (
 export default function ViewMode({ student }) {
     return (
         <Box component="div">
-            <Grid container >
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Header student={student} />
                 </Grid>

@@ -5,6 +5,7 @@ export const PAYMENT_STATUSES = {
     PAID: 2,
     CANCELED: 3,
     ERROR: 4,
+    ONGOING: 5,
 }
 
 export const LIST_PAYMENT_STATUS = [
@@ -19,6 +20,12 @@ export const LIST_PAYMENT_STATUS = [
         value: PAYMENT_STATUSES.PAID,
         textColor: STATUS_COLORS.ACTIVE.textColor,
         bgColor: STATUS_COLORS.ACTIVE.bgColor
+    },
+    {
+        label: "PAID",
+        value: PAYMENT_STATUSES.ONGOING,
+        textColor: STATUS_COLORS.AVAILABLE.textColor,
+        bgColor: STATUS_COLORS.AVAILABLE.bgColor
     },
     {
         label: "Error",

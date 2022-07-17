@@ -145,7 +145,7 @@ export default function EditingContent({
 
     return (
         <form onSubmit={onSubmit}>
-            <Grid container>
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <BasicInfo
                         admin={admin}
