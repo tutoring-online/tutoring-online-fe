@@ -17,10 +17,13 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import {
   Avatar,
   Button,
+  Divider,
+  ListItemIcon,
+  ListItemText,
   Tooltip,
 } from "@mui/material";
 
-import {List, ListItem, ListItemButton } from "@mui/material"
+import { List, ListItem, ListItemButton } from "@mui/material";
 
 // @mui/icons-material components
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
@@ -31,6 +34,15 @@ import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import PhoneAndroidRoundedIcon from "@mui/icons-material/PhoneAndroidRounded";
 import AttachmentRoundedIcon from "@mui/icons-material/AttachmentRounded";
 import AccessTimeFilledRoundedIcon from "@mui/icons-material/AccessTimeFilledRounded";
+import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded";
+import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
+import EventNoteRoundedIcon from "@mui/icons-material/EventNoteRounded";
+import LiveHelpRoundedIcon from "@mui/icons-material/LiveHelpRounded";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 
 // core components
 import NoInformation from "components/Text/NoInformation";
@@ -101,10 +113,11 @@ export default function AdminProfile() {
                   >
                     <Tooltip title="Name" placement="right">
                       <Box
+                        fontFamily="san-serif"
                         fontWeight={500}
                         fontSize="14px"
                         width="100%"
-                        paddingBottom="7px"
+                        paddingBottom="6px"
                       >
                         {admin?.name || <NoInformation />}
                       </Box>
@@ -130,6 +143,7 @@ export default function AdminProfile() {
                   >
                     <Tooltip title="Email" placement="right">
                       <Box
+                        fontFamily="san-serif"
                         fontWeight={500}
                         fontSize="14px"
                         width="100%"
@@ -161,6 +175,7 @@ export default function AdminProfile() {
                   >
                     <Tooltip title="Birthday" placement="right">
                       <Box
+                        fontFamily="san-serif"
                         fontWeight={500}
                         fontSize="14px"
                         width="100%"
@@ -192,6 +207,7 @@ export default function AdminProfile() {
                   >
                     <Tooltip title="Gender" placement="right">
                       <Box
+                        fontFamily="san-serif"
                         fontWeight={500}
                         fontSize="14px"
                         width="100%"
@@ -250,6 +266,7 @@ export default function AdminProfile() {
                   >
                     <Tooltip title="Address" placement="right">
                       <Box
+                        fontFamily="san-serif"
                         fontWeight={500}
                         fontSize="14px"
                         width="100%"
@@ -283,6 +300,7 @@ export default function AdminProfile() {
                   >
                     <Tooltip title="Phone Number" placement="right">
                       <Box
+                        fontFamily="san-serif"
                         fontWeight={500}
                         fontSize="14px"
                         width="100%"
@@ -316,6 +334,7 @@ export default function AdminProfile() {
                   >
                     <Tooltip title="Avatar URL" placement="top">
                       <Box
+                        fontFamily="san-serif"
                         fontWeight={500}
                         fontSize="14px"
                         paddingBottom={1.5}
@@ -378,6 +397,7 @@ export default function AdminProfile() {
                     >
                       <Tooltip title="Created Date" placement="right">
                         <Box
+                          fontFamily="sans-serif"
                           fontSize="14px"
                           fontWeight="400"
                           width="100%"
@@ -429,7 +449,12 @@ export default function AdminProfile() {
                       marginLeft={-3}
                     >
                       <Tooltip title="Updated Date" placement="right">
-                        <Box fontSize="14px" fontWeight="400" width="50%">
+                        <Box
+                          fontFamily="sans-serif"
+                          fontSize="14px"
+                          fontWeight="400"
+                          width="50%"
+                        >
                           {admin?.updatedDate || <NoInformation />}
                         </Box>
                       </Tooltip>
@@ -459,34 +484,153 @@ export default function AdminProfile() {
             xl={12}
             component={Box}
             marginBottom="3rem"
-            marginLeft="-10rem"
+            marginLeft="-3rem"
             classes={{ root: classes.gridItemRoot + " " + classes.order2 }}
           >
             <Grid container>
-              <Grid xs={12} lg={2}>
-                <Box width="200px" height="100%" border="1px solid red">
-                  <Box
-                    sx={{
-                      width: "100%",
-                      maxWidth: 360,
-                      bgcolor: "background.paper",
-                    }}
-                  >
-                    <List>
-                      <ListItem>
-                        {/* //ERROR here ListItemButton */}
-                        
-                          <AccessTimeFilledRoundedIcon />
-                        
+              <Grid item xs={12} lg={2}>
+                <Box
+                  sx={{
+                    width: "100%",
+                    maxWidth: 360,
+                    bgcolor: "background.paper",
+                  }}
+                >
+                  <List dense="dense">
+                    <ListItem disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <DashboardRoundedIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          style={{ marginLeft: "-30px" }}
+                          secondary={
+                            <Typography
+                              type="body2"
+                              style={{
+                                fontFamily: "sans-serif",
+                                fontSize: "14px",
+                              }}
+                            >
+                              Dashboard
+                            </Typography>
+                          }
+                        />
+                      </ListItemButton>
 
-
-
-                      </ListItem>
-                    </List>
-                  </Box>
+                      <Divider />
+                    </ListItem>
+                    <ListItem disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <PersonRoundedIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          style={{ marginLeft: "-30px" }}
+                          secondary={
+                            <Typography
+                              type="body2"
+                              style={{
+                                fontFamily: "sans-serif",
+                                fontSize: "14px",
+                              }}
+                            >
+                              My Profile
+                            </Typography>
+                          }
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <SettingsRoundedIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          style={{ marginLeft: "-30px" }}
+                          secondary={
+                            <Typography
+                              type="body2"
+                              style={{
+                                fontFamily: "sans-serif",
+                                fontSize: "14px",
+                              }}
+                            >
+                              Settings
+                            </Typography>
+                          }
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <EventNoteRoundedIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          style={{ marginLeft: "-30px" }}
+                          secondary={
+                            <Typography
+                              type="body2"
+                              style={{
+                                fontFamily: "sans-serif",
+                                fontSize: "14px",
+                              }}
+                            >
+                              Activity
+                            </Typography>
+                          }
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <LiveHelpRoundedIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          style={{ marginLeft: "-30px" }}
+                          secondary={
+                            <Typography
+                              type="body2"
+                              style={{
+                                fontFamily: "sans-serif",
+                                fontSize: "14px",
+                              }}
+                            >
+                              Support
+                            </Typography>
+                          }
+                        />
+                      </ListItemButton>
+                      <Divider />
+                    </ListItem>
+                    <ListItem disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <LogoutRoundedIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          style={{ marginLeft: "-30px" }}
+                          secondary={
+                            <Typography
+                              type="body2"
+                              style={{
+                                fontFamily: "sans-serif",
+                                fontSize: "14px",
+                                color: "red",
+                              }}
+                            >
+                              Log out
+                            </Typography>
+                          }
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                  </List>
                 </Box>
               </Grid>
-              <Grid xs={12} lg={9} marginLeft="1rem">
+              <Grid item xs={12} lg={9} marginLeft="1rem">
                 <Card
                   classes={{
                     root: classes.cardRoot + " " + classes.cardRootSecondary,
@@ -502,7 +646,7 @@ export default function AdminProfile() {
                         alignItems="center"
                         justifyContent="space-between"
                       >
-                        <Grid item xs="auto">
+                        <Grid item xs="auto" lg={2}>
                           <Box
                             component={Typography}
                             variant="h3"
@@ -511,27 +655,31 @@ export default function AdminProfile() {
                             Basic Info
                           </Box>
                         </Grid>
-                        <Grid item xs="auto" marginRight={1}>
-                          <Box
-                            component={Typography}
-                            variant="h3"
-                            marginBottom="0!important"
-                          >
-                            Basic Info
-                          </Box>
-                        </Grid>
-                        <Grid item xs="auto">
-                          <Box
-                            justifyContent="flex-end"
-                            display="flex"
-                            flexWrap="wrap"
-                          />
+                        <Grid item lg={8}></Grid>
+                        <Grid item lg={2} paddingLeft="4rem">
+                          {isEditing ? (
+                            <div></div>
+                          ) : (
+                            <Tooltip title="Edit" placement="left">
+                              <Box
+                                component={Button}
+                                onClick={enableEdit}
+                                width="50%"
+                                height="100%"
+                              >
+                                <BorderColorRoundedIcon />
+                              </Box>
+                            </Tooltip>
+                          )}
                         </Grid>
                       </Grid>
                     }
                   ></CardHeader>
                   <CardContent
-                    style={{ backgroundColor: "#ffffff", borderRadius: "5px" }}
+                    style={{
+                      backgroundColor: "#ffffff",
+                      borderRadius: "5px",
+                    }}
                   >
                     {isEditing ? (
                       <div className={classes.plLg4}>
@@ -662,7 +810,7 @@ export default function AdminProfile() {
                         alignItems="center"
                         justifyContent="space-between"
                       >
-                        <Grid item xs="auto">
+                        <Grid item xs="auto" lg={2}>
                           <Box
                             component={Typography}
                             variant="h3"
@@ -671,18 +819,31 @@ export default function AdminProfile() {
                             Contact
                           </Box>
                         </Grid>
-                        <Grid item xs="auto">
-                          <Box
-                            justifyContent="flex-end"
-                            display="flex"
-                            flexWrap="wrap"
-                          />
+                        <Grid item xs="auto" lg={8}></Grid>
+                        <Grid item xs="auto" lg={2} paddingLeft="4rem">
+                          {isEditing ? (
+                            <div></div>
+                          ) : (
+                            <Tooltip title="Edit" placement="left">
+                              <Box
+                                component={Button}
+                                onClick={enableEdit}
+                                width="50%"
+                                height="100%"
+                              >
+                                <BorderColorRoundedIcon />
+                              </Box>
+                            </Tooltip>
+                          )}
                         </Grid>
                       </Grid>
                     }
                   ></CardHeader>
                   <CardContent
-                    style={{ backgroundColor: "#ffffff", borderRadius: "5px" }}
+                    style={{
+                      backgroundColor: "#ffffff",
+                      borderRadius: "5px",
+                    }}
                   >
                     {isEditing ? (
                       <div className={classes.plLg4}>
@@ -791,7 +952,10 @@ export default function AdminProfile() {
                     }
                   ></CardHeader>
                   <CardContent
-                    style={{ backgroundColor: "#ffffff", borderRadius: "5px" }}
+                    style={{
+                      backgroundColor: "#ffffff",
+                      borderRadius: "5px",
+                    }}
                   >
                     {isEditing ? (
                       <div className={classes.plLg4}>
@@ -867,6 +1031,50 @@ export default function AdminProfile() {
                     )}
                   </CardContent>
                 </Card>
+
+                {isEditing ? (
+                  <Grid container item xs="auto">
+                    <Grid item xs="auto" lg={8}></Grid>
+                    <Grid item xs="auto" lg={2}>
+                      <Box
+                        variant="contained"
+                        width="100%"
+                        height="100%"
+                        marginLeft="2rem"
+                      >
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          fullWidth="true"
+                          startIcon={<SaveRoundedIcon />}
+                          onClick={cancelEdit}
+                        >
+                          Save
+                        </Button>
+                      </Box>
+                    </Grid>
+                    <Grid item xs="auto" lg={2}>
+                      <Box
+                        variant="contained"
+                        width="100%"
+                        height="100%"
+                        marginLeft="1rem"
+                      >
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          fullWidth="true"
+                          startIcon={<CancelRoundedIcon />}
+                          onClick={cancelEdit}
+                        >
+                          Cancel
+                        </Button>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                ) : (
+                  <div></div>
+                )}
               </Grid>
             </Grid>
           </Grid>
