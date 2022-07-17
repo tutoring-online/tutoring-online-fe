@@ -395,7 +395,7 @@ export default function AdminProfile() {
                     borderRadius: "5px"
                   }}
                 >
-                  <List dense="dense">
+                  <List>
                     <ListItem disablePadding>
                       <ListItemButton>
                         <ListItemIcon>
