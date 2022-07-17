@@ -392,6 +392,7 @@ export default function AdminProfile() {
                     width: "100%",
                     maxWidth: 360,
                     bgcolor: "background.paper",
+                    borderRadius: "5px"
                   }}
                 >
                   <List dense="dense">
