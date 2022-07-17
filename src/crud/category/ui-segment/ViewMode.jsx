@@ -80,7 +80,7 @@ const Description = ({ category }) => (
 
       <Grid item xs={12}>
         <FormLabel sx={{ fontSize: "14px" }} style={{ fontWeight: "normal" }}>
-          {category?.address || <NoInformation />} 
+          {category?.description || <NoInformation />} 
         </FormLabel>
       </Grid>
     </Grid>
@@ -88,7 +88,7 @@ const Description = ({ category }) => (
 );
 
 export default function ViewMode({ category }) {
-  return (
+  return (    
     <Box component="div">
       <Grid container>
         <Grid item xs={12}>
