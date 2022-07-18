@@ -9,6 +9,7 @@ import { LIST_CATEGORY_STATUS } from "settings/category-setting";
 import { CATEGORY_STATUSES } from "settings/category-setting";
 import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
 import useCategoryList from "./useCategoryList";
+import { calculatePercentToFix } from "helpers/numberUtils";
 
 const STATISTIC_MODEL = {
     total: {
@@ -74,13 +75,13 @@ const useCategoryStatistics = () => {
                 key: "active",
                 ...STATISTIC_MODEL.active,
                 quantity: totalActive,
-                percent: Math.floor(totalActive / total * 100)
+                percent: calculatePercentToFix(totalActive, total)
             },
             {
                 key: "inactive",
                 ...STATISTIC_MODEL.inactive,
                 quantity: totalInactive,
-                percent: Math.floor(totalInactive / total * 100)
+                percent: calculatePercentToFix(totalInactive, total)
             },
         ]);
     }, [categoryList]);

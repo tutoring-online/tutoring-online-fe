@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Scheduler,
     DayView,
@@ -6,24 +6,66 @@ import {
     Appointments,
     MonthView,
     ViewSwitcher,
-    Toolbar
+    Toolbar,
+    AppointmentTooltip
 } from '@devexpress/dx-react-scheduler-material-ui';
 import Paper from '@mui/material/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
+import useFilteredLessonList from 'hooks/lesson/useFilteredLessonList';
+import { isAvailableArray } from 'helpers/arrayUtils';
+import { getLessonStartDate } from 'settings/payment-setting';
+import { getLessonEndDate } from 'settings/payment-setting';
 
 const startDayHour = 8;
 const endDayHour = 22;
 
 export default function BookingCalendar({
-    paymentId
+    payment
 }) {
-    
+
+    const [filter, setFilter] = useState({})
+    useEffect(() => {
+        if (!payment?.id) {
+            setFilter(null);
+        };
+
+        setFilter({ PaymentId: payment.id });
+    }, [payment]);
+
+    // eslint-disable-next-line no-unused-vars, unused-imports/no-unused-vars
+    const { lessonList, loading, refresh } = useFilteredLessonList(filter);
+
+    const [data, setData] = useState([]);
+
+
+    useEffect(() => {
+        if (!isAvailableArray(lessonList) || !payment) {
+            setData([]);
+            return;
+        }
+
+        const preparedLessons = lessonList.map(lesson => ({
+            title: 'Lesson',
+            startDate: getLessonStartDate(lesson.date, payment.dateSession),
+            endDate: getLessonEndDate(lesson.date, payment.dateSession),
+            id: lesson.id,
+            location: 'Room 1',
+        }))
+
+        setData([...preparedLessons]);
+
+    }, [lessonList, payment])
+
+    console.log(lessonList);
+    console.log(data);
 
     return (
         <Paper>
-            <Scheduler>
+            <Scheduler
+                data={data}
+            >
                 <ViewState
-                    defaultCurrentViewName="Week"
+                    defaultCurrentViewName="Month"
                 />
                 <DayView
                     startDayHour={startDayHour}
@@ -37,6 +79,7 @@ export default function BookingCalendar({
                 <Toolbar />
                 <ViewSwitcher />
                 <Appointments />
+                <AppointmentTooltip />
             </Scheduler>
         </Paper>
     )

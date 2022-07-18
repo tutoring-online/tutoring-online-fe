@@ -68,16 +68,16 @@ export default function ViewPayment({
                 return;
             }
 
-            toast.success("Tutor allocation error.");
-            actions.updatePayment({
-                id: payment.id,
-                data: { status: PAYMENT_STATUSES.ERROR },
-                loading,
-                callback: listenUpdateOnGoingStatus
-            });
+            toast.error("Tutor allocation error.");
         }
 
-        actions.updatePayment({ id: payment.id, data, loading, callback: listenAllocateTutorStatus });
+        actions.updatePayment({
+            id: payment.id,
+            data,
+            loading,
+            callback: listenAllocateTutorStatus,
+            hasToast: false
+        });
     }
 
     return (

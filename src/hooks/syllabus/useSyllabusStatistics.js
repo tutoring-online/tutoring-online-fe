@@ -8,12 +8,13 @@ import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
 import { LIST_SYLLABUS_STATUS } from "settings/syllabus-setting";
 import { SYLLABUS_STATUSES } from "settings/syllabus-setting";
 import useSyllabusList from "./useSyllabusList";
+import { calculatePercentToFix } from "helpers/numberUtils";
 
 const STATISTIC_MODEL = {
     total: {
         label: "Total",
         quantity: 0,
-        textColor: "#5e72e4",   
+        textColor: "#5e72e4",
         icon: InsertChartOutlined,
     },
     active: {
@@ -49,7 +50,7 @@ const useSyllabusStatistics = () => {
 
         let total = 0;
         let totalActive = 0;
-        let totalInactive= 0;
+        let totalInactive = 0;
 
         syllabusList.forEach(item => {
             if (item.status === SYLLABUS_STATUSES.DELETED) return;
@@ -73,13 +74,13 @@ const useSyllabusStatistics = () => {
                 key: "active",
                 ...STATISTIC_MODEL.active,
                 quantity: totalActive,
-                percent: Math.floor(totalActive / total * 100)
+                percent: calculatePercentToFix(totalActive, total)
             },
             {
                 key: "inactive",
                 ...STATISTIC_MODEL.inactive,
                 quantity: totalInactive,
-                percent: Math.floor(totalInactive / total * 100)
+                percent: calculatePercentToFix(totalInactive, total)
             }
         ]);
     }, [syllabusList]);

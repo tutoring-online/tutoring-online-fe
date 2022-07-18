@@ -15,7 +15,7 @@ export const LIST_TUTOR_STATUS = [
     },
     {
         label: "Inactive",
-        value: TUTOR_STATUSES.DELETED,
+        value: TUTOR_STATUSES.INACTIVE,
         textColor: STATUS_COLORS.DELETED.textColor,
         bgColor: STATUS_COLORS.DELETED.bgColor
     },

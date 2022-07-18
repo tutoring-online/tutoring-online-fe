@@ -42,6 +42,7 @@ const StyledAutocompletePopper = styled('div')(({ theme }) => ({
 }));
 
 function PopperComponent(props) {
+    // eslint-disable-next-line unused-imports/no-unused-vars
     const { disablePortal, anchorEl, open, ...other } = props;
     return <StyledAutocompletePopper {...other} />;
 }

@@ -9,12 +9,13 @@ import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
 import { LIST_SUBJECT_STATUS } from "settings/subject-setting";
 import { SUBJECT_STATUSES } from "settings/subject-setting";
 import useSubjectList from "./useSubjectList";
+import { calculatePercentToFix } from "helpers/numberUtils";
 
 const STATISTIC_MODEL = {
     total: {
         label: "Total",
         quantity: 0,
-        textColor: "#5e72e4",   
+        textColor: "#5e72e4",
         icon: InsertChartOutlined,
     },
     active: {
@@ -50,7 +51,7 @@ const useSubjectStatistics = () => {
 
         let total = 0;
         let totalActive = 0;
-        let totalInactive= 0;
+        let totalInactive = 0;
 
         subjectList.forEach(item => {
             if (item.status === SUBJECT_STATUSES.DELETED) return;
@@ -74,13 +75,13 @@ const useSubjectStatistics = () => {
                 key: "active",
                 ...STATISTIC_MODEL.active,
                 quantity: totalActive,
-                percent: Math.floor(totalActive / total * 100)
+                percent: calculatePercentToFix(totalActive, total)
             },
             {
                 key: "inactive",
                 ...STATISTIC_MODEL.inactive,
                 quantity: totalInactive,
-                percent: Math.floor(totalInactive / total * 100)
+                percent: calculatePercentToFix(totalInactive, total)
             },
         ]);
     }, [subjectList]);

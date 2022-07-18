@@ -9,6 +9,7 @@ import InsertChartOutlined from "@mui/icons-material/InsertChartOutlined";
 import PieChart from "@mui/icons-material/PieChart";
 import { LIST_TUTOR_STATUS } from "settings/tutor-setting";
 import { TUTOR_STATUSES } from "settings/tutor-setting";
+import { calculatePercentToFix } from "helpers/numberUtils";
 
 const STATISTIC_MODEL = {
     total: {
@@ -83,19 +84,19 @@ const useTutorStatistics = () => {
                 key: "active",
                 ...STATISTIC_MODEL.active,
                 quantity: totalActive,
-                percent: Math.floor(totalActive / total * 100)
+                percent: calculatePercentToFix(totalActive, total)
             },
             {
                 key: "inactive",
                 ...STATISTIC_MODEL.inactive,
                 quantity: totalInactive,
-                percent: Math.floor(totalInactive / total * 100)
+                percent: calculatePercentToFix(totalInactive, total)
             },
             {
                 key: "banned",
                 ...STATISTIC_MODEL.banned,
                 quantity: totalBanned,
-                percent: Math.floor(totalBanned / total * 100)
+                percent: calculatePercentToFix(totalBanned, total)
             }
         ]);
     }, [tutorList]);

@@ -28,8 +28,6 @@ import Settings from "@mui/icons-material/Settings";
 
 
 // core components
-import componentStyles from "assets/theme/components/auth-navbar.js";
-import dropdownComponentStyles from "assets/theme/components/navbar-dropdown.js";
 
 import LogoWhite from "assets/img/brand/logo_white.png";
 import Logo from "assets/img/brand/logo.png";
@@ -43,8 +41,8 @@ import { isAdmin } from "settings/setting";
 import NavbarDropdown from "components/Dropdowns/NavbarDropdown";
 import { Avatar, ListItemIcon, ListItemText } from "@mui/material";
 
+import componentStyles from "assets/theme/components/auth-navbar.js";
 const useStyles = makeStyles(componentStyles);
-const useDropdownStyles = makeStyles(dropdownComponentStyles);
 
 const menuId = "responsive-menu-id";
 
@@ -84,7 +82,6 @@ const menuList = [
 
 export default function GeneralNavbar() {
     const classes = useStyles();
-    const dropdownClasses = useDropdownStyles();
     const theme = useTheme();
 
     const history = useHistory();
@@ -163,10 +160,10 @@ export default function GeneralNavbar() {
                             marginRight: ".5rem!important"
                         }}
                     >
-                        <item.icon 
+                        <item.icon
                             sx={{
                                 width: "1.25rem!important",
-                            height: "1.25rem!important",
+                                height: "1.25rem!important",
                             }}
                         />
                     </ListItemIcon>
@@ -194,18 +191,17 @@ export default function GeneralNavbar() {
                     root: classes.listItemRoot,
                 }}
             >
-                <Box
-                    component={Avatar}
-                    alt="..."
-                    src={user?.avatarURL}
-                    classes={{
-                        root: dropdownClasses.avatarRoot,
-                    }}
-                    marginRight="0.5rem!important"
-                >
-
-                </Box>
-                {user?.name || ""}
+                <ListItemIcon>
+                    <Avatar
+                        alt="..."
+                        src={user?.avatarURL}
+                        sx={{
+                            width: "22px !important",
+                            height: "22px !important",
+                        }}
+                    />
+                </ListItemIcon>
+                <ListItemText primary={user?.name || ""} />
             </ListItem>
 
             {isAvailableArray(menuList) && menuList.map((item, index) =>
@@ -218,17 +214,16 @@ export default function GeneralNavbar() {
                         root: classes.listItemRoot,
                     }}
                 >
-                    <Box
-                        component={item.icon}
-                        width="1.25rem!important"
-                        height="1.25rem!important"
-                        marginRight=".5rem!important"
-                    />
-                    {item.label || "N/A"}
-
+                    <ListItemIcon>
+                        <Box
+                            component={item.icon}
+                            width="1.25rem!important"
+                            height="1.25rem!important"
+                        />
+                    </ListItemIcon>
+                    <ListItemText primary={item.label || "N/A"} />
                 </ListItem>
-            )
-            }
+            )}
         </Box>
     );
 

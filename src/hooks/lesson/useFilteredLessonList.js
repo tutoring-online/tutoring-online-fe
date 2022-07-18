@@ -6,25 +6,27 @@ import useLessonActions from "./useLessonActions";
 const useFilteredLessonList = (filter) => {
     const actions = useLessonActions();
 
-    const filteredLesson = useSelector(state => state.lesson.filteredLesson);
+    const filteredLessons = useSelector(state => state.lesson.filteredLessons);
     const [lessonList, setLessonList] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (!isAvailableArray(filteredLesson?.data)) {
+        if (!isAvailableArray(filteredLessons?.data)) {
             setLessonList([]);
             return;
         }
 
-        setLessonList([...filteredLesson.data]);
-    }, [filteredLesson])
+        setLessonList([...filteredLessons.data]);
+    }, [filteredLessons])
 
 
     useEffect(() => {
+        if(!filter) return;
         actions.fetchLessonsWithFilter({ filter, setLoading });
     }, [actions, filter]);
 
     const refresh = useCallback(() => {
+        if(!filter) return;
         actions.fetchLessonsWithFilter({ filter, setLoading });
     }, [actions, filter]);
 

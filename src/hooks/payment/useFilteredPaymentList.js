@@ -21,10 +21,12 @@ const useFilteredPaymentList = (filter) => {
 
 
     useEffect(() => {
+        if(!filter) return;
         actions.fetchPaymentsWithFilter({ filter, setLoading });
     }, [actions, filter]);
 
     const refresh = useCallback(() => {
+        if(!filter) return;
         actions.fetchPaymentsWithFilter({ filter, setLoading });
     }, [actions, filter]);
 

@@ -5,7 +5,6 @@ import { useForm, useWatch } from "react-hook-form";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import SettingsIcon from '@mui/icons-material/Settings';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Avatar, Button, Divider, Grid, IconButton } from "@mui/material";
 import makeStyles from '@mui/styles/makeStyles';
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -29,7 +28,7 @@ import useFilteredPaymentList from "hooks/payment/useFilteredPaymentList";
 import usePaymentStatistics from "hooks/payment/usePaymentStatistics";
 
 //Helpers
-import { renderPaymentStatus, PAYMENT_STATUSES } from "settings/payment-setting";
+import { renderPaymentStatus } from "settings/payment-setting";
 import { isAvailableArray } from "helpers/arrayUtils";
 
 //other
@@ -238,11 +237,6 @@ const Payment = () => {
 			setOpenEdit(true);
 		}
 
-		const handleOpenDelete = (payment) => {
-			setSelectedPayment(payment);
-			setOpenDelete(true);
-		}
-
 		const handleOpenCancel = (payment) => {
 			setSelectedPayment(payment);
 			setOpenCancel(true);
@@ -321,29 +315,16 @@ const Payment = () => {
 								</IconButton>
 							</span>
 						</BootstrapTooltip>
-						<BootstrapTooltip title="Delete">
+						<BootstrapTooltip title="Cancel">
 							<span>
 								<IconButton
 									style={{ padding: 5 }}
-									onClick={() => handleOpenDelete(row)}
-									disabled={row.status === PAYMENT_STATUSES.DELETED}
+									onClick={() => handleOpenCancel(row)}
 								>
-									<DeleteForeverIcon sx={{ width: 18, height: 18 }} />
+									<DoDisturbAltIcon sx={{ width: 18, height: 18 }} />
 								</IconButton>
 							</span>
 						</BootstrapTooltip>
-						{(row.status === PAYMENT_STATUSES.PENDING || row.status === PAYMENT_STATUSES.ERROR) &&
-							<BootstrapTooltip title="Cancel">
-								<span>
-									<IconButton
-										style={{ padding: 5 }}
-										onClick={() => handleOpenCancel(row)}
-									>
-										<DoDisturbAltIcon sx={{ width: 18, height: 18 }} />
-									</IconButton>
-								</span>
-							</BootstrapTooltip>
-						}
 					</Box>
 				)
 			},

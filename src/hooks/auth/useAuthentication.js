@@ -17,10 +17,12 @@ const useAuthentication = () => {
     const history = useHistory();
     useEffect(() => {
         const unregisterAuthObserver = auth().onAuthStateChanged(async (currentUser) => {
-
+            setLoading(true);
+            
             const location = history.location?.pathname;
             if (!currentUser) {
                 actions.unsubscribeUser();
+                setLoading(false);
                 return;
             }
 
@@ -30,7 +32,6 @@ const useAuthentication = () => {
             let hasError = false;
 
             try {
-                setLoading(true);
                 if (location === getFullPath(ROUTES.login)) {
                     await actions.asyncLoginUser({ token });
                 } else if (location === getFullPath(ROUTES.signup)) {
@@ -71,7 +72,6 @@ const useAuthentication = () => {
                 } else {
                     //...
                 }
-
             }
         });
 

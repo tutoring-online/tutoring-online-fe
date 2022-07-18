@@ -7,9 +7,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Hidden from "@mui/material/Hidden";
-import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
+
 // @mui/icons-material components
 import LogoutIcon from '@mui/icons-material/Logout';
 import EventNote from "@mui/icons-material/EventNote";
@@ -25,6 +24,7 @@ import { ROUTES } from "route/routes";
 import { useHistory } from "react-router-dom";
 
 import "./index.scss";
+import { ClickAwayListener, Popper } from "@mui/material";
 const useStyles = makeStyles(componentStyles);
 
 const menuList = [
@@ -79,50 +79,66 @@ export default function NavbarDropdown() {
         history.push(path);
     };
 
-    const menuId = "primary-search-account-menu";
     const renderMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{ vertical: "top", horizontal: "right" }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
+        isMenuOpen &&
+        <ClickAwayListener
+            onClickAway={handleMenuClose}
         >
-            <Typography
-                variant="h5"
-                component="h5"
-                classes={{ root: classes.menuTitle }}
+            <Popper
+                anchorEl={anchorEl}
+                open={isMenuOpen}
+                onClose={handleMenuClose}
+                keepMounted
+                sx={{
+                    zIndex: 1000,
+                    background: "#fff",
+                    borderRadius: "4px",
+                    overflow: "hidden",
+                    padding: "0.5rem 0",
+                    minWidth: "260px",
+                    boxShadow: "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.31) 0px 0px 1px 0px"
+                }}
             >
-                {`Hi, ${user?.name}`}
-            </Typography>
-            <Divider component="div" classes={{ root: classes.dividerRoot }} />
-            {menuList.map((item, index) =>
                 <Box
-                    key={item.key || index}
-                    display="flex!important"
-                    alignItems="center!important"
-                    component={MenuItem}
-                    onClick={() => handleMenuClose(item.path)}
+                    display="flex"
+                    alignItems="center"
+                    padding="0.25rem 1rem"
                 >
-                    <Box
-                        component={item.icon}
-                        width="1.25rem!important"
-                        height="1.25rem!important"
-                        marginRight="1rem"
+                    <Avatar
+                        alt="..."
+                        src={user?.avatarURL}
+                        sx={{
+                            width: "40px !important",
+                            height: "40px !important",
+                            marginRight: "0.5rem"
+                        }}
                     />
-                    <span>{item.label}</span>
+                    {user?.name}
                 </Box>
-            )}
-        </Menu>
+                <Divider component="div" classes={{ root: classes.dividerRoot }} />
+                {menuList.map((item, index) =>
+                    <Box
+                        key={item.key || index}
+                        display="flex!important"
+                        alignItems="center!important"
+                        component={MenuItem}
+                        onClick={() => handleMenuClose(item.path)}
+                    >
+                        <Box
+                            component={item.icon}
+                            width="1.25rem!important"
+                            height="1.25rem!important"
+                            marginRight="1rem"
+                        />
+                        <span>{item.label}</span>
+                    </Box>
+                )}
+            </Popper>
+        </ClickAwayListener>
     );
 
     return <>
         <Button
-            edge="end"
-            aria-label="account of current user"
-            aria-controls={menuId}
             aria-haspopup="true"
             onClick={handleProfileMenuOpen}
             color="inherit"
@@ -135,8 +151,10 @@ export default function NavbarDropdown() {
             <Avatar
                 alt="..."
                 src={user?.avatarURL}
-                classes={{
-                    root: classes.avatarRoot,
+                sx={{
+                    width: "24px !important",
+                    height: "24px !important",
+                    marginRight: "0.5rem"
                 }}
             />
             <Hidden mdDown>{user?.name || ""}</Hidden>

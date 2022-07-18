@@ -2,13 +2,15 @@ import moment from 'moment';
 
 export const dateFormat = 'DD/MM/YYYY';
 export const dateFormat2 = 'yyyy-MM-DD';
+export const isoFormat = 'YYYY-MM-DDTHH:mm:ssZ';
 export const iso8601Format = 'YYYY-MM-DDTHH:mm:ss.SSSZZ';
 export const datetimeFormat = 'DD/MM/YYYY HH:mm:ss';
 export const datetimeFormatV2 = 'DD-MM-YYYY HH:mm:ss';
 export const datetimeFormatReverseDate = 'YYYY-MM-DD HH:mm:ss';
 
+export const isNumberOnly = (value) => /^[0-9]*$/.test(value);
+
 const notMillisecond = (date) => {
-    const isNumberOnly = (value) => /^[0-9]*$/.test(value);
     return !isNumberOnly(date);
 }
 
@@ -31,10 +33,14 @@ export const convertBeDateToIso = (date) => {
     return newArray.join("");
 }
 
-function toLocaleUTCDateString(date, locales, options) {
+export const removeOffsetTimeZone = (date) => {
     const timeDiff = date.getTimezoneOffset() * 60000;
     const adjustedDate = new Date(date.getTime() + timeDiff);
-    return adjustedDate.toLocaleString(locales, options);
+    return adjustedDate;
+}
+
+function toLocaleUTCDateString(date, locales, options) {
+    return removeOffsetTimeZone(date).toLocaleString(locales, options);
 }
 
 export const getLocaleDateTimeString = (date) => {
@@ -60,6 +66,7 @@ export const validDate = (date) => {
             moment(date, datetimeFormat, true).isValid() ||
             moment(date, datetimeFormatV2, true).isValid() ||
             moment(date, datetimeFormatReverseDate, true).isValid() ||
+            moment(date, isoFormat, true).isValid() ||
             moment(date, iso8601Format, true).isValid() ||
             moment(date, "MM/DD/YYYY", true).isValid()
         );

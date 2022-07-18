@@ -12,6 +12,7 @@ import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import { LIST_PAYMENT_STATUS } from "settings/payment-setting";
 import { PAYMENT_STATUSES } from "settings/payment-setting";
 import usePaymentList from "./usePaymentList";
+import { calculatePercentToFix } from "helpers/numberUtils";
 
 const STATISTIC_MODEL = {
     total: {
@@ -104,31 +105,31 @@ const usePaymentStatistics = () => {
                 key: "pending",
                 ...STATISTIC_MODEL.pending,
                 quantity: totalPending,
-                percent: Math.floor(totalPending / total * 100)
+                percent: calculatePercentToFix(totalPending , total)
             },
             {
                 key: "paid",
                 ...STATISTIC_MODEL.paid,
                 quantity: totalPaid,
-                percent: Math.floor(totalPaid / total * 100)
+                percent: calculatePercentToFix(totalPaid , total)
             },
             {
                 key: "ongoing",
                 ...STATISTIC_MODEL.ongoing,
                 quantity: totalOnGoing,
-                percent: Math.floor(totalOnGoing / total * 100)
+                percent: calculatePercentToFix(totalOnGoing , total)
             },
             {
                 key: "error",
                 ...STATISTIC_MODEL.error,
                 quantity: totalError,
-                percent: Math.floor(totalError / total * 100)
+                percent: calculatePercentToFix(totalError , total)
             },
             {
                 key: "canceled",
                 ...STATISTIC_MODEL.canceled,
                 quantity: totalCanceled,
-                percent: Math.floor(totalCanceled / total * 100)
+                percent: calculatePercentToFix(totalCanceled , total)
             }
         ]);
     }, [paymentList]);

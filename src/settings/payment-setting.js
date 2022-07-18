@@ -1,3 +1,8 @@
+import Combo from "components/Combo/Combo";
+import { ComboItem } from "components/Combo/Combo";
+import { validDate } from "helpers/dateUtils";
+import { removeOffsetTimeZone } from "helpers/dateUtils";
+import { isNumberOnly } from "helpers/dateUtils";
 import { renderStatus, STATUS_COLORS } from "./setting"
 
 export const PAYMENT_STATUSES = {
@@ -51,15 +56,78 @@ export const renderPaymentStatus = (value, onClick) => {
 }
 
 export const COMBO_OPTIONS = [
-    { label: "Even days (Monday, Wednesday, Friday)", value: 1 },
-    { label: "Odd days (Tuesday, Thursday, Saturday)", value: 2 },
+    {
+        label: (
+            <Combo
+                list={["Monday", "Wednesday", "Friday"]}
+            />
+        ),
+        value: 1
+    },
+    {
+        label: (
+            <Combo
+                list={["Tuesday", "Thursday", "Saturday"]}
+            />
+        ),
+        value: 2
+    },
 ]
 
 export const DATE_SESSION_OPTIONS = [
-    { label: "Morning", value: 1 },
-    { label: "Afternoon", value: 2 },
-    { label: "Evening", value: 3 },
+    {
+        label: <ComboItem content="Morning (8h - 11h)" />,
+        value: 1,
+        startHour: 8,
+        endHour: 11
+    },
+    {
+        label: <ComboItem content="Afternoon (13h - 16h)" />,
+        value: 2,
+        startHour: 13,
+        endHour: 16
+    },
+    {
+        label: <ComboItem content="Evening (19h - 22h)" />,
+        value: 3,
+        startHour: 19,
+        endHour: 22
+    },
 ]
+
+const getDateSessionObject = (value) => {
+    const theValue = isNumberOnly(value) ? Number.parseInt(value) : value;
+    return DATE_SESSION_OPTIONS.find(item => item.value === theValue) || null;
+}
+
+const prepareDate = (date) => {
+    console.log(date);
+    console.log(validDate(date));
+    if(!validDate(date)) return null;
+    return removeOffsetTimeZone(new Date(date));
+}
+
+export const getLessonStartDate = (date, dateSession) => {
+    const dateSessionObject = getDateSessionObject(dateSession);
+    if (!dateSessionObject) return null;
+    
+    const startDate = prepareDate(date);
+    if(!startDate) return null;
+    
+    startDate.setHours(dateSessionObject.startHour);
+    return startDate;
+}
+
+export const getLessonEndDate = (date, dateSession) => {
+    const dateSessionObject = getDateSessionObject(dateSession);
+    if (!dateSessionObject) return null;
+    
+    const endDate = prepareDate(date);
+    if(!endDate) return null;
+    
+    endDate.setHours(dateSessionObject.endHour);
+    return endDate;
+}
 
 export const DEFAULT_MAX_PRICE = 2 * 1000 * 1000;
 

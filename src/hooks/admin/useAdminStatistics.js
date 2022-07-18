@@ -8,13 +8,14 @@ import useAdminList from "./useAdminList";
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import InsertChartOutlined from "@mui/icons-material/InsertChartOutlined";
 import PieChart from "@mui/icons-material/PieChart";
+import { calculatePercentToFix } from "helpers/numberUtils";
 
 
 const STATISTIC_MODEL = {
     total: {
         label: "Total",
         quantity: 0,
-        textColor: "#5e72e4",   
+        textColor: "#5e72e4",
         icon: InsertChartOutlined,
     },
     active: {
@@ -74,13 +75,13 @@ const useAdminStatistics = () => {
                 key: "active",
                 ...STATISTIC_MODEL.active,
                 quantity: totalActiveAdmin,
-                percent: Math.floor(totalActiveAdmin / total * 100)
+                percent: calculatePercentToFix(totalActiveAdmin, total)
             },
             {
                 key: "disabled",
                 ...STATISTIC_MODEL.disabled,
                 quantity: totalDisabledAdmin,
-                percent: Math.floor(totalDisabledAdmin / total * 100)
+                percent: calculatePercentToFix(totalDisabledAdmin, total)
             }
         ]);
     }, [adminList]);

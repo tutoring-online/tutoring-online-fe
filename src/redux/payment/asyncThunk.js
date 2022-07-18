@@ -63,16 +63,22 @@ const createPayment = async (params) => {
 }
 
 const updatePayment = async (params) => {
-    const { id, data, loading = () => { }, callback = () => { } } = params;
+    const {
+        id,
+        data,
+        loading = () => { },
+        callback = () => { },
+        hasToast = true
+    } = params;
     loading(true);
     try {
         const response = await api.updatePayment(id, data);
 
         callback(true, response);
-        toast.success("Updated booking successfully.");
+        hasToast && toast.success("Updated booking successfully.");
     } catch (error) {
         callback(false);
-        toast.error("Failed to update the booking.");
+        hasToast && toast.error("Failed to update the booking.");
         throw error;
     } finally {
         loading(false);

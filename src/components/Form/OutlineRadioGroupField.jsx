@@ -14,6 +14,7 @@ export default function OutlineRadioGroupField({
     error,
     control
 }) {
+
     return (
         <FormGroup>
             <FormLabel>
@@ -43,9 +44,10 @@ export default function OutlineRadioGroupField({
                                     control={<Radio size="small" />}
                                     disabled={Boolean(disabled)}
                                     sx={{
-                                        borderRadius: "4px",
+                                        borderRadius: "8px",
+                                        padding: "0.5rem 0",
                                         paddingRight: "0.75rem",
-                                        border: "1px solid #ccc"
+                                        border: `1px solid ${field.value === "" + item.value ? "#233dd2" : "#ececec"}`,
                                     }}
                                 />
                             )}

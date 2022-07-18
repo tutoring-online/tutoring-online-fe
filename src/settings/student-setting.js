@@ -15,7 +15,7 @@ export const LIST_STUDENT_STATUS = [
     },
     {
         label: "Inactive",
-        value: STUDENT_STATUSES.DELETED,
+        value: STUDENT_STATUSES.INACTIVE,
         textColor: STATUS_COLORS.DELETED.textColor,
         bgColor: STATUS_COLORS.DELETED.bgColor
     },
