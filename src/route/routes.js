@@ -21,7 +21,8 @@ import TopicIcon from '@mui/icons-material/Topic';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import LogoutIcon from '@mui/icons-material/Logout';
 import CategoryIcon from '@mui/icons-material/Category';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+// import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 //Admin
 import Admin from "views/admin/Admin.js";
@@ -179,7 +180,7 @@ export const ROUTES = {
 		layout: LAYOUT_PATHS.detail,
 	},
 	signup: {
-		icon: AccountCircleIcon,
+		icon: PersonAddIcon,
 		component: Signup,
 		key: "signup",
 		name: "Sign Up",

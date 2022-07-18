@@ -15,6 +15,7 @@ import EventNote from "@mui/icons-material/EventNote";
 import LiveHelp from "@mui/icons-material/LiveHelp";
 import Person from "@mui/icons-material/Person";
 import Settings from "@mui/icons-material/Settings";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 // core components
 import componentStyles from "assets/theme/components/navbar-dropdown.js";
@@ -23,9 +24,12 @@ import { getFullPath } from "route/routes";
 import { ROUTES } from "route/routes";
 import { useHistory } from "react-router-dom";
 
+import { ClickAwayListener, ListItem, ListItemIcon, ListItemText, Popper } from "@mui/material";
+import componentStylesAuth from "assets/theme/components/auth-navbar.js";
 import "./index.scss";
-import { ClickAwayListener, Popper } from "@mui/material";
+
 const useStyles = makeStyles(componentStyles);
+const useStylesAuth = makeStyles(componentStylesAuth);
 
 const menuList = [
     {
@@ -62,6 +66,7 @@ const menuList = [
 
 export default function NavbarDropdown() {
     const classes = useStyles();
+    const classesAuth = useStylesAuth();
     const history = useHistory();
     const user = useSelector(state => state.auth.user);
 
@@ -148,16 +153,33 @@ export default function NavbarDropdown() {
             }}
             className="navbar-dropdown"
         >
-            <Avatar
-                alt="..."
-                src={user?.avatarURL}
-                sx={{
-                    width: "24px !important",
-                    height: "24px !important",
-                    marginRight: "0.5rem"
+            <ListItem
+                classes={{
+                    root: classesAuth.listItemRoot,
                 }}
-            />
-            <Hidden mdDown>{user?.name || ""}</Hidden>
+                style={{
+                    padding: 0
+                }}
+            >
+                <ListItemIcon
+                    sx={{
+                        minWidth: "0",
+                        color: "#fff",
+                        marginRight: ".5rem!important"
+                    }}
+                >
+                    <AccountCircleIcon sx={{ width: "20px", height: "20px" }} />
+                </ListItemIcon>
+
+                <Hidden mdDown>
+                    <ListItemText
+                        primary="User"
+                        primaryTypographyProps={{
+                            style: { whiteSpace: "nowrap" }
+                        }}
+                    />
+                </Hidden>
+            </ListItem>
         </Button>
         {renderMenu}
     </>;

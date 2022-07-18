@@ -18,14 +18,13 @@ import Dashboard from "@mui/icons-material/Dashboard";
 import MenuIcon from "@mui/icons-material/Menu";
 import VpnKey from "@mui/icons-material/VpnKey";
 import HomeIcon from '@mui/icons-material/Home';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import DirectionsRun from "@mui/icons-material/DirectionsRun";
 import EventNote from "@mui/icons-material/EventNote";
 import LiveHelp from "@mui/icons-material/LiveHelp";
 import Person from "@mui/icons-material/Person";
 import Settings from "@mui/icons-material/Settings";
-
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 // core components
 
@@ -124,7 +123,7 @@ export default function GeneralNavbar() {
                 key: "signup",
                 to: getFullPath(ROUTES.signup),
                 label: "Sign up",
-                icon: AccountCircleIcon
+                icon: PersonAddIcon
             },
             !isSignedIn && {
                 key: "login",
