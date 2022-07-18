@@ -23,6 +23,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import CategoryIcon from '@mui/icons-material/Category';
 // import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import ClassIcon from '@mui/icons-material/Class';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 //Admin
 import Admin from "views/admin/Admin.js";
@@ -71,13 +73,61 @@ export const ROUTE_PATHS = {
 	category: "/category",
 	subject: "/subjects",
 	syllabus: "/syllabuses",
+
+	booking: "/booking",
+	schedule: "/schedule",
+	class: "/class"
 }
 
 export const LAYOUT_PATHS = {
 	admin: "/admin",
 	auth: "/auth",
 	home: "/home",
-	detail: "/detail"
+	detail: "/detail",
+	tutor: "/tutor",
+	student: "/student"
+}
+
+const TUTOR_ROUTES = {
+	tutorSchedule: {
+		key: "tutorSchedule",
+		name: "Schedule",
+		icon: CalendarMonthIcon,
+		iconColor: ICON_COLORS.Warning,
+		component: Category,
+		path: ROUTE_PATHS.schedule,
+		layout: LAYOUT_PATHS.tutor
+	},
+	tutorClass: {
+		key: "tutorClass",
+		name: "Class",
+		icon: ClassIcon,
+		iconColor: ICON_COLORS.InfoLight,
+		component: Category,
+		path: ROUTE_PATHS.class,
+		layout: LAYOUT_PATHS.tutor
+	},
+}
+
+const STUDENT_ROUTES = {
+	studentSchedule: {
+		key: "studentSchedule",
+		name: "Schedule",
+		icon: CalendarMonthIcon,
+		iconColor: ICON_COLORS.Warning,
+		component: Category,
+		path: ROUTE_PATHS.schedule,
+		layout: LAYOUT_PATHS.student
+	},
+	studentClass: {
+		key: "studentClass",
+		name: "Class",
+		icon: ClassIcon,
+		iconColor: ICON_COLORS.InfoLight,
+		component: Category,
+		path: ROUTE_PATHS.class,
+		layout: LAYOUT_PATHS.student
+	},
 }
 
 const ADMIN_ROUTES = {
@@ -170,6 +220,8 @@ const ADMIN_ROUTES = {
 
 export const ROUTES = {
 	...ADMIN_ROUTES,
+	...STUDENT_ROUTES,
+	...TUTOR_ROUTES,
 	profile: {
 		key: "profile",
 		name: "User Profile",

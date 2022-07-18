@@ -20,11 +20,12 @@ import VpnKey from "@mui/icons-material/VpnKey";
 import HomeIcon from '@mui/icons-material/Home';
 
 import DirectionsRun from "@mui/icons-material/DirectionsRun";
-import EventNote from "@mui/icons-material/EventNote";
 import LiveHelp from "@mui/icons-material/LiveHelp";
 import Person from "@mui/icons-material/Person";
-import Settings from "@mui/icons-material/Settings";
+// import EventNote from "@mui/icons-material/EventNote";
+// import Settings from "@mui/icons-material/Settings";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 // core components
 
@@ -41,6 +42,8 @@ import NavbarDropdown from "components/Dropdowns/NavbarDropdown";
 import { Avatar, ListItemIcon, ListItemText } from "@mui/material";
 
 import componentStyles from "assets/theme/components/auth-navbar.js";
+import { isStudent } from "settings/setting";
+import { isTutor } from "settings/setting";
 const useStyles = makeStyles(componentStyles);
 
 const menuId = "responsive-menu-id";
@@ -51,18 +54,6 @@ const menuList = [
         icon: Person,
         label: "My Profile",
         to: getFullPath(ROUTES.profile)
-    },
-    {
-        key: "setting",
-        icon: Settings,
-        label: "Settings",
-        to: "#"
-    },
-    {
-        key: "activity",
-        icon: EventNote,
-        label: "Activity",
-        to: "#"
     },
     {
         key: "support",
@@ -118,6 +109,18 @@ export default function GeneralNavbar() {
                 to: getFullPath(ROUTES.dashboard),
                 label: "Dashboard",
                 icon: Dashboard
+            },
+            isSignedIn && isStudent(user?.role) && {
+                key: "studentSchedule",
+                to: getFullPath(ROUTES.studentSchedule),
+                label: "Schedule",
+                icon: CalendarMonthIcon
+            },
+            isSignedIn && isTutor(user?.role) && {
+                key: "tutorSchedule",
+                to: getFullPath(ROUTES.tutorSchedule),
+                label: "Schedule",
+                icon: CalendarMonthIcon
             },
             !isSignedIn && {
                 key: "signup",

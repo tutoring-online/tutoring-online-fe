@@ -5,12 +5,7 @@ import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 import makeStyles from '@mui/styles/makeStyles';
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import FormControl from "@mui/material/FormControl";
-import InputAdornment from "@mui/material/InputAdornment";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
 // @mui/icons-material components
-import Search from "@mui/icons-material/Search";
 
 // core components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
@@ -107,26 +102,6 @@ const Admin = ({ authLoading }) => {
                     imgAlt: "...",
                 }}
                 dropdown={<NavbarDropdown />}
-                input={
-                    <FormControl variant="outlined" fullWidth>
-                        <InputLabel htmlFor="outlined-adornment-search-responsive">
-                            Search
-                        </InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-search-responsive"
-                            type="text"
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <Box
-                                        component={Search}
-                                        width="1.25rem!important"
-                                        height="1.25rem!important"
-                                    />
-                                </InputAdornment>
-                            }
-                        />
-                    </FormControl>
-                }
             />
             <Box position="relative" className={classes.mainContent}>
                 <AdminNavbar brandText={getBrandText(location.pathname)} />

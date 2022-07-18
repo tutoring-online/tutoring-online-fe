@@ -8,6 +8,8 @@ import { LAYOUT_PATHS } from "./routes";
 
 const AuthLayout = React.lazy(() => import('layouts/Auth.js'));
 const AdminLayout = React.lazy(() => import('layouts/Admin.js'));
+const StudentLayout = React.lazy(() => import('layouts/Student.js'));
+const TutorLayout = React.lazy(() => import('layouts/Tutor.js'));
 const HomeLayout = React.lazy(() => import('layouts/Home.js'));
 const DetailLayout = React.lazy(() => import('layouts/Detail'));
 
@@ -22,7 +24,7 @@ const AuthenticationWrapper = ({ children }) => {
 
 const Router = () => {
     useSubscribeUser();
-    
+
     return (
         <BrowserRouter>
             <Suspense fallback={<FullPageLoader />}>
@@ -31,6 +33,8 @@ const Router = () => {
                         {(loading) => (
                             <>
                                 <Route path={LAYOUT_PATHS.admin} render={(props) => <AdminLayout authLoading={loading} {...props} />} />
+                                <Route path={LAYOUT_PATHS.tutor} render={(props) => <TutorLayout authLoading={loading} {...props} />} />
+                                <Route path={LAYOUT_PATHS.student} render={(props) => <StudentLayout authLoading={loading} {...props} />} />
                                 <Route path={LAYOUT_PATHS.auth} render={(props) => <AuthLayout authLoading={loading} {...props} />} />
                                 <Route path={LAYOUT_PATHS.home} render={(props) => <HomeLayout authLoading={loading} {...props} />} />
                                 <Route path={LAYOUT_PATHS.detail} render={(props) => <DetailLayout authLoading={loading} {...props} />} />
