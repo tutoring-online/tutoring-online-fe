@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import { adminReducer } from "./admin/slice";
 import { authReducer } from "./auth/slice";
 import { categoryReducer } from "./category/slice";
+import { lessonReducer } from "./lesson/slice";
 import { paymentReducer } from "./payment/slice";
 import { studentReducer } from "./student/slice";
 import { subjectReducer } from "./subject/slice";
@@ -19,4 +20,5 @@ export default combineReducers({
     category: categoryReducer,
     tutor: tutorReducer,
     tutorSubject: tutorSubjectReducer,
+    lesson: lessonReducer
 })

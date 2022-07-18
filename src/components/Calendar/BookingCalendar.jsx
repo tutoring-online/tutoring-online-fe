@@ -14,7 +14,11 @@ import { ViewState } from '@devexpress/dx-react-scheduler';
 const startDayHour = 8;
 const endDayHour = 22;
 
-export default function BookingCalendar() {
+export default function BookingCalendar({
+    paymentId
+}) {
+    
+
     return (
         <Paper>
             <Scheduler>
