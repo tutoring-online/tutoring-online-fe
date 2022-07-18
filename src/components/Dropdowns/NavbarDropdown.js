@@ -24,7 +24,6 @@ import { useHistory } from "react-router-dom";
 import { ClickAwayListener, ListItem, ListItemIcon, ListItemText, Popper } from "@mui/material";
 import componentStylesAuth from "assets/theme/components/auth-navbar.js";
 import "./index.scss";
-
 const useStyles = makeStyles(componentStyles);
 const useStylesAuth = makeStyles(componentStylesAuth);
 
