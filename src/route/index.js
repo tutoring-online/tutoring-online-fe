@@ -1,5 +1,6 @@
 import FullPageLoader from "components/Loading/FullPageLoader";
 import useAuthentication from "hooks/auth/useAuthentication";
+import useSubscribeUser from "hooks/notification/useSubscribeUser";
 import React, { memo, Suspense } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import RedirectHomeWithUserRole from "views/home/RedirectHomeWithUserRole";
@@ -20,7 +21,8 @@ const AuthenticationWrapper = ({ children }) => {
 }
 
 const Router = () => {
-
+    useSubscribeUser();
+    
     return (
         <BrowserRouter>
             <Suspense fallback={<FullPageLoader />}>

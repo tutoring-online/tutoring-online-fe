@@ -11,8 +11,6 @@ const useSyllabusesWithDetails = (filter) => {
         refresh: refreshSyllabusList,
     } = useFilteredSyllabusList(filter);
 
-    console.log(syllabusList);
-
     const {
         paymentList,
         loading: loadingPaymentList,
