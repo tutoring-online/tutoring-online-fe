@@ -1,13 +1,14 @@
 import { isAvailableArray } from "helpers/arrayUtils";
 import { useEffect, useState } from "react";
-import { LIST_TUTOR_STATUS } from "settings/tutor-setting";
-import { TUTOR_STATUSES } from "settings/tutor-setting";
 import useTutorList from "./useTutorList";
 
 //Icons
+import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import InsertChartOutlined from "@mui/icons-material/InsertChartOutlined";
 import PieChart from "@mui/icons-material/PieChart";
+import { LIST_TUTOR_STATUS } from "settings/tutor-setting";
+import { TUTOR_STATUSES } from "settings/tutor-setting";
 
 const STATISTIC_MODEL = {
     total: {
@@ -20,6 +21,11 @@ const STATISTIC_MODEL = {
         ...LIST_TUTOR_STATUS.find(item => item.value === TUTOR_STATUSES.ACTIVE),
         quantity: 0,
         icon: PieChart,
+    },
+    inactive: {
+        ...LIST_TUTOR_STATUS.find(item => item.value === TUTOR_STATUSES.INACTIVE),
+        quantity: 0,
+        icon: PauseCircleFilledIcon,
     },
     banned: {
         icon: RemoveCircleIcon,
@@ -49,6 +55,7 @@ const useTutorStatistics = () => {
 
         let total = 0;
         let totalActive = 0;
+        let totalInactive = 0;
         let totalBanned = 0;
 
         tutorList.forEach(item => {
@@ -57,6 +64,9 @@ const useTutorStatistics = () => {
             total += 1;
             if (item.status === TUTOR_STATUSES.ACTIVE) {
                 totalActive += 1;
+            }
+            if (item.status === TUTOR_STATUSES.INACTIVE) {
+                totalInactive += 1;
             }
             if (item.status === TUTOR_STATUSES.BANNED) {
                 totalBanned += 1;
@@ -76,6 +86,12 @@ const useTutorStatistics = () => {
                 percent: Math.floor(totalActive / total * 100)
             },
             {
+                key: "inactive",
+                ...STATISTIC_MODEL.inactive,
+                quantity: totalInactive,
+                percent: Math.floor(totalInactive / total * 100)
+            },
+            {
                 key: "banned",
                 ...STATISTIC_MODEL.banned,
                 quantity: totalBanned,
@@ -83,8 +99,6 @@ const useTutorStatistics = () => {
             }
         ]);
     }, [tutorList]);
-
-    console.log(statistics);
 
     return {
         statistics,

@@ -1,37 +1,37 @@
 import { renderStatus, STATUS_COLORS } from "./setting"
 
-export const CATEGORY_STATUSES = {
-    ACTIVE: 1,
-    INACTIVE: 2,
-    DELETED: 3,
+export const LESSON_STATUSES = {
+    PENDING: 1,
+    FINISHED: 2,
+    CANCELED: 3
 }
 
-export const LIST_CATEGORY_STATUS = [
+export const LIST_LESSON_STATUS = [
     {
         label: "Active",
-        value: CATEGORY_STATUSES.ACTIVE,
+        value: LESSON_STATUSES.PENDING,
         textColor: STATUS_COLORS.ACTIVE.textColor,
         bgColor: STATUS_COLORS.ACTIVE.bgColor
     },
     {
-        label: "Inactive",
-        value: CATEGORY_STATUSES.INACTIVE,
+        label: "Finished",
+        value: LESSON_STATUSES.FINISHED,
         textColor: STATUS_COLORS.FINISHED.textColor,
         bgColor: STATUS_COLORS.FINISHED.bgColor
     },
     {
-        label: "Deleted",
-        value: CATEGORY_STATUSES.DELETED,
+        label: "Canceled",
+        value: LESSON_STATUSES.CANCELED,
         textColor: STATUS_COLORS.DELETED.textColor,
         bgColor: STATUS_COLORS.DELETED.bgColor
     },
 ]
 
 const findStatus = (value) => {
-    return value != null && LIST_CATEGORY_STATUS.find(item => item.value === value);
+    return value != null && LIST_LESSON_STATUS.find(item => item.value === value);
 }
 
-export const renderCategoryStatus = (value, onClick) => {
+export const renderLessonStatus = (value, onClick) => {
     const statusObject = findStatus(value);
     return renderStatus(statusObject, onClick);
 }

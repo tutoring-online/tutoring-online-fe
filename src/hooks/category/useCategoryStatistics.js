@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 
 
 //Icons
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import InsertChartOutlined from "@mui/icons-material/InsertChartOutlined";
 import PieChart from "@mui/icons-material/PieChart";
 import { LIST_CATEGORY_STATUS } from "settings/category-setting";
@@ -28,11 +27,6 @@ const STATISTIC_MODEL = {
         ...LIST_CATEGORY_STATUS.find(item => item.value === CATEGORY_STATUSES.INACTIVE),
         quantity: 0,
     },
-    disabled: {
-        icon: RemoveCircleIcon,
-        ...LIST_CATEGORY_STATUS.find(item => item.value === CATEGORY_STATUSES.DISABLED),
-        quantity: 0,
-    }
 }
 
 const useCategoryStatistics = () => {
@@ -56,7 +50,6 @@ const useCategoryStatistics = () => {
 
         let total = 0;
         let totalActive = 0;
-        let totalDisabled = 0;
         let totalInactive= 0;
 
         categoryList.forEach(item => {
@@ -65,9 +58,6 @@ const useCategoryStatistics = () => {
             total += 1;
             if (item.status === CATEGORY_STATUSES.ACTIVE) {
                 totalActive += 1;
-            }
-            if (item.status === CATEGORY_STATUSES.DISABLED) {
-                totalDisabled += 1;
             }
             if (item.status === CATEGORY_STATUSES.INACTIVE) {
                 totalInactive += 1;
@@ -92,12 +82,6 @@ const useCategoryStatistics = () => {
                 quantity: totalInactive,
                 percent: Math.floor(totalInactive / total * 100)
             },
-            {
-                key: "disabled",
-                ...STATISTIC_MODEL.disabled,
-                quantity: totalDisabled,
-                percent: Math.floor(totalDisabled / total * 100)
-            }
         ]);
     }, [categoryList]);
 

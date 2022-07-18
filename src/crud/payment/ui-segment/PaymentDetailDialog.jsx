@@ -132,7 +132,7 @@ export default function PaymentDetailDialog({
         <Dialog
             open={open}
             onClose={onClose}
-            maxWidth="md"
+            maxWidth="lg"
         >
             <CustomDialogTitle
                 title={title}

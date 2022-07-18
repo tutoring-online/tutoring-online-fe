@@ -1,9 +1,9 @@
 import { renderStatus, STATUS_COLORS } from "./setting"
 
 export const ADMIN_STATUSES = {
-    DELETED: 0,
-    DISABLED: -1,
     ACTIVE: 1,
+    INACTIVE: 2,
+    DELETED: 3,
 }
 
 export const LIST_ADMIN_STATUS = [
@@ -14,7 +14,7 @@ export const LIST_ADMIN_STATUS = [
         bgColor: STATUS_COLORS.DELETED.bgColor
     },
     {
-        label: "Disabled",
+        label: "Inactive",
         value: ADMIN_STATUSES.DISABLED,
         textColor: STATUS_COLORS.DISABLED.textColor,
         bgColor: STATUS_COLORS.DISABLED.bgColor

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 
 
 //Icons
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import InsertChartOutlined from "@mui/icons-material/InsertChartOutlined";
 import PieChart from "@mui/icons-material/PieChart";
 import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
@@ -28,11 +27,6 @@ const STATISTIC_MODEL = {
         ...LIST_SUBJECT_STATUS.find(item => item.value === SUBJECT_STATUSES.INACTIVE),
         quantity: 0,
     },
-    disabled: {
-        icon: RemoveCircleIcon,
-        ...LIST_SUBJECT_STATUS.find(item => item.value === SUBJECT_STATUSES.DISABLED),
-        quantity: 0,
-    }
 }
 
 const useSubjectStatistics = () => {
@@ -56,7 +50,6 @@ const useSubjectStatistics = () => {
 
         let total = 0;
         let totalActive = 0;
-        let totalDisabled = 0;
         let totalInactive= 0;
 
         subjectList.forEach(item => {
@@ -65,9 +58,6 @@ const useSubjectStatistics = () => {
             total += 1;
             if (item.status === SUBJECT_STATUSES.ACTIVE) {
                 totalActive += 1;
-            }
-            if (item.status === SUBJECT_STATUSES.DISABLED) {
-                totalDisabled += 1;
             }
             if (item.status === SUBJECT_STATUSES.INACTIVE) {
                 totalInactive += 1;
@@ -92,12 +82,6 @@ const useSubjectStatistics = () => {
                 quantity: totalInactive,
                 percent: Math.floor(totalInactive / total * 100)
             },
-            {
-                key: "disabled",
-                ...STATISTIC_MODEL.disabled,
-                quantity: totalDisabled,
-                percent: Math.floor(totalDisabled / total * 100)
-            }
         ]);
     }, [subjectList]);
 

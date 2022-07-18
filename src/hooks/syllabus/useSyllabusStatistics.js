@@ -2,7 +2,6 @@ import { isAvailableArray } from "helpers/arrayUtils";
 import { useEffect, useState } from "react";
 
 //Icons
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import InsertChartOutlined from "@mui/icons-material/InsertChartOutlined";
 import PieChart from "@mui/icons-material/PieChart";
 import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
@@ -25,11 +24,6 @@ const STATISTIC_MODEL = {
     inactive: {
         icon: PauseCircleFilledIcon,
         ...LIST_SYLLABUS_STATUS.find(item => item.value === SYLLABUS_STATUSES.INACTIVE),
-        quantity: 0,
-    },
-    disabled: {
-        icon: RemoveCircleIcon,
-        ...LIST_SYLLABUS_STATUS.find(item => item.value === SYLLABUS_STATUSES.DISABLED),
         quantity: 0,
     }
 }
@@ -55,7 +49,6 @@ const useSyllabusStatistics = () => {
 
         let total = 0;
         let totalActive = 0;
-        let totalDisabled = 0;
         let totalInactive= 0;
 
         syllabusList.forEach(item => {
@@ -64,9 +57,6 @@ const useSyllabusStatistics = () => {
             total += 1;
             if (item.status === SYLLABUS_STATUSES.ACTIVE) {
                 totalActive += 1;
-            }
-            if (item.status === SYLLABUS_STATUSES.DISABLED) {
-                totalDisabled += 1;
             }
             if (item.status === SYLLABUS_STATUSES.INACTIVE) {
                 totalInactive += 1;
@@ -90,12 +80,6 @@ const useSyllabusStatistics = () => {
                 ...STATISTIC_MODEL.inactive,
                 quantity: totalInactive,
                 percent: Math.floor(totalInactive / total * 100)
-            },
-            {
-                key: "disabled",
-                ...STATISTIC_MODEL.disabled,
-                quantity: totalDisabled,
-                percent: Math.floor(totalDisabled / total * 100)
             }
         ]);
     }, [syllabusList]);

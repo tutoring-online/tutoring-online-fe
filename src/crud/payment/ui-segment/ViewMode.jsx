@@ -42,7 +42,7 @@ const StartDate = ({ date }) => (
         fontSize="14px"
     >
         <Box display="flex">
-            <FormLabel sx={{ margin: 0 }}>Class starts on</FormLabel>
+            <FormLabel sx={{ margin: 0 }}>* Class starts on</FormLabel>
             <Box
                 marginLeft="4px"
                 fontSize="14px"
@@ -55,7 +55,7 @@ const StartDate = ({ date }) => (
 
 const EndDate = ({ date }) => (
     <Box
-        marginLeft="auto"
+        marginLeft="4px"
         fontSize="14px"
     >
         <Box display="flex">
@@ -124,7 +124,6 @@ const ClassInfo = ({
         onAllocateTutor(preparedData);
     }
 
-    console.log(payment)
     return (
         <GroupBox>
             <Grid container spacing={2}>
@@ -186,27 +185,41 @@ const ClassInfo = ({
                 </Grid>
 
                 {payment?.status === PAYMENT_STATUSES.ONGOING &&
-                    <Grid item xs={12} >
-                        <Box>
-                            <StartDate date={payment?.startDate} />
-                            <EndDate date={payment?.endDate} />
-                        </Box>
-                    </Grid>
+                    <>
+                        <Grid item xs={12} >
+                            <Box
+                                component="div"
+                                display="flex"
+                                flexDirection="row"
+                                justifyContent="flex-start"
+                            >
+                                <StartDate date={payment?.startDate} />
+                                <EndDate date={payment?.endDate} />
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} >
+                            <DisplayField
+                                label={
+                                    <Box
+                                        component="h3"
+                                        textAlign="center"
+                                        width="100%"
+                                    >
+                                        Schedule
+                                    </Box>
+                                }
+                                value={
+                                    <BookingCalendar
+                                        payment={payment}
+                                    />
+                                }
+                            />
+                        </Grid>
 
+                    </>
                 }
 
                 <Grid item xs={12}>
-                    {payment?.tutor?.id != null &&
-                        <DisplayField
-                            label="Schedule"
-                            value={
-                                <BookingCalendar
-                                    payment={payment}
-                                />
-                            }
-                        />
-                    }
-
                     {payment?.status === PAYMENT_STATUSES.PAID &&
                         <Box>
                             <SelectField

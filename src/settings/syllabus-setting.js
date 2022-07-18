@@ -1,10 +1,9 @@
 import { renderStatus, STATUS_COLORS } from "./setting"
 
 export const SYLLABUS_STATUSES = {
-    DISABLED: -1,
-    DELETED: 0,
     ACTIVE: 1,
     INACTIVE: 2,
+    DELETED: 3,
 }
 
 export const LIST_SYLLABUS_STATUS = [
@@ -19,12 +18,6 @@ export const LIST_SYLLABUS_STATUS = [
         value: SYLLABUS_STATUSES.INACTIVE,
         textColor: STATUS_COLORS.FINISHED.textColor,
         bgColor: STATUS_COLORS.FINISHED.bgColor
-    },
-    {
-        label: "Disabled",
-        value: SYLLABUS_STATUSES.DISABLED,
-        textColor: STATUS_COLORS.DISABLED.textColor,
-        bgColor: STATUS_COLORS.DISABLED.bgColor
     },
     {
         label: "Deleted",

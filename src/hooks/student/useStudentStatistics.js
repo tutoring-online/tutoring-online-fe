@@ -4,6 +4,7 @@ import useStudentList from "./useStudentList";
 
 
 //Icons
+import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import InsertChartOutlined from "@mui/icons-material/InsertChartOutlined";
 import PieChart from "@mui/icons-material/PieChart";
@@ -21,6 +22,11 @@ const STATISTIC_MODEL = {
         ...LIST_STUDENT_STATUS.find(item => item.value === STUDENT_STATUSES.ACTIVE),
         quantity: 0,
         icon: PieChart,
+    },
+    inactive: {
+        ...LIST_STUDENT_STATUS.find(item => item.value === STUDENT_STATUSES.INACTIVE),
+        quantity: 0,
+        icon: PauseCircleFilledIcon,
     },
     banned: {
         icon: RemoveCircleIcon,
@@ -50,6 +56,7 @@ const useStudentStatistics = () => {
 
         let total = 0;
         let totalActive = 0;
+        let totalInactive = 0;
         let totalBanned = 0;
 
         studentList.forEach(item => {
@@ -58,6 +65,9 @@ const useStudentStatistics = () => {
             total += 1;
             if (item.status === STUDENT_STATUSES.ACTIVE) {
                 totalActive += 1;
+            }
+            if (item.status === STUDENT_STATUSES.INACTIVE) {
+                totalInactive += 1;
             }
             if (item.status === STUDENT_STATUSES.BANNED) {
                 totalBanned += 1;
@@ -75,6 +85,12 @@ const useStudentStatistics = () => {
                 ...STATISTIC_MODEL.active,
                 quantity: totalActive,
                 percent: Math.floor(totalActive / total * 100)
+            },
+            {
+                key: "inactive",
+                ...STATISTIC_MODEL.inactive,
+                quantity: totalInactive,
+                percent: Math.floor(totalInactive / total * 100)
             },
             {
                 key: "banned",
