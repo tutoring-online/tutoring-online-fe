@@ -7,6 +7,7 @@ const useTutorSubjectActions = () => {
     const dispatch = useDispatch();
     const [actions] = useState({
         fetchTutorSubjects: compose(dispatch, asyncThunks.fetchTutorSubjects),
+        getTutorSubject: compose(dispatch, asyncThunks.getTutorSubject)
     })
 
     return actions;

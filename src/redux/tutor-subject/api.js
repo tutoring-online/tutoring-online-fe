@@ -12,6 +12,15 @@ export const fetchTutorSubjects = () => {
     return axiosRequest(url, options);
 }
 
+export const getTutorSubject = (id) => {
+    const url = baseUrl + `/${id}`;
+    const options = {
+        method: METHOD.get,
+    }
+
+    return axiosRequest(url, options);
+}
+
 // export const createTutorSubject = () => {
 
 // }

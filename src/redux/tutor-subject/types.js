@@ -1,2 +1,3 @@
 //Type
 export const FETCH_TUTOR_SUBJECTS = "tutor/FETCH_TUTOR_SUBJECTS";
+export const GET_TUTOR_SUBJECT = "tutor/GET_TUTOR_SUBJECT";

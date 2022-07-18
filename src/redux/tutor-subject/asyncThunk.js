@@ -15,8 +15,22 @@ const fetchTutorSubjects = async (params) => {
     }
 }
 
+const getTutorSubject = async (params) => {
+    const { id, setLoading = () => { } } = params;
+    setLoading(true);
+    try {
+        const response = await api.getTutorSubject(id);
+        return response;
+    } catch (error) {
+        throw error;
+    } finally {
+        setLoading(false);
+    }
+}
+
 const asyncThunks = {
     fetchTutorSubjects: createAsyncThunk(types.FETCH_TUTOR_SUBJECTS, fetchTutorSubjects),
+    getTutorSubject: createAsyncThunk(types.GET_TUTOR_SUBJECT, getTutorSubject),
 }
 
 export default asyncThunks;

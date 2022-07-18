@@ -4,6 +4,7 @@ import asyncThunks from "./asyncThunk";
 const INITIAL_STATE = {
     tutorSubjects: [],
     tutorDetail: [],
+    tutorSubject: []
 }
 
 const reducers = {
@@ -13,6 +14,12 @@ const reducers = {
     fetchTutorSubjectsFailed: (state) => {
         state.tutorSubjects = [];
     },
+    getTutorSubjectSuccessful: (state, action) => {
+        state.tutorSubject = action.payload;
+    },
+    getTutorSubjectFailed: (state) => {
+        state.tutorSubject = [];
+    }
 }
 
 const slice = createSlice({
@@ -23,6 +30,8 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.fetchTutorSubjects.fulfilled, reducers.fetchTutorSubjectsSuccessful);
         builder.addCase(asyncThunks.fetchTutorSubjects.rejected, reducers.fetchTutorSubjectsFailed);
+        builder.addCase(asyncThunks.getTutorSubject.fulfilled, reducers.getTutorSubjectSuccessful);
+        builder.addCase(asyncThunks.getTutorSubject.rejected, reducers.getTutorSubjectFailed);
     }
 })
 
