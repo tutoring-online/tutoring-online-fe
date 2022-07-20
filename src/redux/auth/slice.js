@@ -27,7 +27,7 @@ const isNotSignedInYet = (isSignedIn) => isSignedIn !== true;
 
 const reducers = {
     loginUserSuccessful: (state, action) => {
-        const role = "ADMIN";
+        const role = action.payload?.role;
         const user = action.payload?.data;
 
         if (!role || !user) {

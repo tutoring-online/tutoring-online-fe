@@ -40,10 +40,8 @@ import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import EventNoteRoundedIcon from "@mui/icons-material/EventNoteRounded";
 import LiveHelpRoundedIcon from "@mui/icons-material/LiveHelpRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
 import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
-import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 
 // core components
 import NoInformation from "components/Text/NoInformation";
@@ -51,13 +49,11 @@ import NoInformation from "components/Text/NoInformation";
 import componentStyles from "assets/theme/views/admin/profile.js";
 import { useSelector } from "react-redux";
 import { convertNumberToGender } from "settings/setting";
-import useTutorActions from "hooks/tutor/useTutorActions";
-import useTutorSubjectActions from "hooks/tutor-subject/useTutorSubjectActions";
-import useSubjectActions from "hooks/subject/useSubjectActions";
+import useStudentActions from "hooks/student/useStudentActions";
 
 const useStyles = makeStyles(componentStyles);
 
-export default function TutorProfile() {
+export default function StudentProfile() {
   const classes = useStyles();
 
   const authState = useSelector((state) => state.auth);
@@ -65,28 +61,18 @@ export default function TutorProfile() {
 
   const [isBasicEditing, setIsBasicEditing] = useState(false);
   const [isContactEditing, setIsContactEditing] = useState(false);
-  const [isDetailEditing, setIsDetailEditing] = useState(false);
 
-  const tutorActions = useTutorActions();
-  const tutorSubjectActions = useTutorSubjectActions();
-  const subjectActions = useSubjectActions();
-
+  //FetchStudentDetail
+  const studentID = 5
+  const studentActions = useStudentActions();
   useEffect(() => {
-    tutorActions.fetchTutorDetail({ id: user?.id });
+    studentActions.fetchStudentDetail({ id: studentID });
   }, []);
 
-  const tutor = useSelector((state) => state.tutor.tutorDetail);
+  const student = useSelector((state) => state.student.studentDetail);
+  console.log(student)
 
-  useEffect(() => {
-    tutorSubjectActions.getTutorSubject({ id: tutor?.id });
-  }, []);
 
-  const tutorSubject = useSelector((state) => state.tutorSubject.tutorSubject);  
-
-  useEffect(() => {
-    subjectActions.fetchSubjectDetail({ id: tutorSubject[0]?.subjectId });
-  }, []);
-  const subject = useSelector((state) => state.subject.subjectDetail);
 
 
   const enableBasicEdit = () => {
@@ -100,19 +86,17 @@ export default function TutorProfile() {
     setIsBasicEditing(false);
     // reset();
   };
-  const cancelDetailEdit = () => {
-    setIsDetailEditing(false);
-    // reset();
-  };
   const cancelContactEdit = () => {
     setIsContactEditing(false);
     // reset();
   };
-  const setAllCancel = () => {
+
+  const setCancelAllEditing = () => {
     setIsContactEditing(false);
     setIsBasicEditing(false);
     // reset();
   };
+  
 
   const basicDisplay = () => (
     <div className={classes.plLg4}>
@@ -140,7 +124,7 @@ export default function TutorProfile() {
                         width="100%"
                         paddingBottom="6px"
                       >
-                        {user?.name || <NoInformation />}
+                        {student?.name || <NoInformation />}
                       </Box>
                     </Tooltip>
                   </Box>
@@ -170,7 +154,41 @@ export default function TutorProfile() {
                         width="100%"
                         paddingBottom="7px"
                       >
-                        {user?.email || <NoInformation />}
+                        {student?.email || <NoInformation />}
+                      </Box>
+                    </Tooltip>
+                  </Box>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid container marginTop="1rem">
+            <Grid item xs={12} lg={1.5} paddingLeft="2rem" paddingTop="6px">
+              <Box width={20} height={20}>
+                <TransgenderRoundedIcon
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} lg={8}>
+              <Box style={{ width: "100%", height: "40px" }}>
+                <Box display="flex" alignItems="center" height="100%">
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    backgroundColor="#fff"
+                  >
+                    <Tooltip title="Grade" placement="right">
+                      <Box
+                        fontFamily="san-serif"
+                        fontWeight={500}
+                        fontSize="14px"
+                        width="100%"
+                        paddingBottom="7px"
+                      >
+                        Grade: {student?.grade || (
+                          <NoInformation />
+                        )}
                       </Box>
                     </Tooltip>
                   </Box>
@@ -202,7 +220,7 @@ export default function TutorProfile() {
                         width="100%"
                         paddingBottom="7px"
                       >
-                        {user?.birthday || <NoInformation />}
+                        {student?.birthday || <NoInformation />}
                       </Box>
                     </Tooltip>
                   </Box>
@@ -244,6 +262,7 @@ export default function TutorProfile() {
               </Box>
             </Grid>
           </Grid>
+          
         </Grid>
         <Grid container>
           <Grid container item xs={12} lg={12} borderLeft="1px solid #e6e6e6">
@@ -259,82 +278,6 @@ export default function TutorProfile() {
                   alt="avatar"
                   sx={{ width: 150, height: 150 }}
                 />
-              </Box>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-    </div>
-  );
-
-  const DetailDisplay = () => (
-    <div className={classes.plLg4}>
-      <Grid container>
-        <Grid item xs={12} lg={6} marginTop="1rem">
-          <Grid container>
-            <Grid item xs={12} lg={1.5} paddingLeft="2rem" paddingTop="6px">
-              <Box width={20} height={20}>
-                <MenuBookRoundedIcon
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} lg={8}>
-              <Box style={{ width: "100%", height: "40px" }}>
-                <Box display="flex" height="100%">
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    backgroundColor="#fff"
-                  >
-                    <Tooltip title="Phone Number" placement="right">
-                      <Box
-                        fontFamily="san-serif"
-                        fontWeight={500}
-                        fontSize="14px"
-                        width="100%"
-                        paddingBottom="7px"
-                      >
-                        Subjects Number: {tutor?.subjects || <NoInformation />}
-                      </Box>
-                    </Tooltip>
-                  </Box>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
-        </Grid>
-
-        <Grid item xs={12} lg={6} marginTop="1rem">
-          <Grid container>
-            <Grid item xs={12} lg={1.5} paddingLeft="2rem" paddingTop="6px">
-              <Box width={20} height={20}>
-                <MenuBookRoundedIcon
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} lg={8}>
-              <Box style={{ width: "100%", height: "40px" }}>
-                <Box display="flex" height="100%">
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    backgroundColor="#fff"
-                  >
-                    <Tooltip title="Phone Number" placement="right">
-                      <Box
-                        fontFamily="san-serif"
-                        fontWeight={500}
-                        fontSize="14px"
-                        width="100%"
-                        paddingBottom="7px"
-                      >
-                        Subjects: {subject?.name || <NoInformation />}
-                      </Box>
-                    </Tooltip>
-                  </Box>
-                </Box>
               </Box>
             </Grid>
           </Grid>
@@ -369,46 +312,7 @@ export default function TutorProfile() {
                         width="100%"
                         paddingBottom="7px"
                       >
-                        Address: {user?.address || <NoInformation />}
-                      </Box>
-                    </Tooltip>
-                  </Box>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12} lg={6} marginTop="1rem">
-          <Grid container>
-            <Grid item xs={12} lg={1.5} paddingLeft="2rem" paddingTop="6px">
-              <Box width={20} height={20}>
-                <GroupsRoundedIcon
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} lg={8}>
-              <Box style={{ width: "100%", height: "40px" }}>
-                <Box display="flex" height="100%">
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    backgroundColor="#fff"
-                  >
-                    <Tooltip title="Meeting URL" placement="top">
-                      <Box
-                        fontFamily="san-serif"
-                        fontWeight={500}
-                        fontSize="14px"
-                        paddingBottom={1.5}
-                        maxWidth="20rem"
-                        style={{
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        Meeting: {tutor?.meetingUrl || <NoInformation />}
+                        Address: {student?.address || <NoInformation />}
                       </Box>
                     </Tooltip>
                   </Box>
@@ -442,7 +346,7 @@ export default function TutorProfile() {
                         width="100%"
                         paddingBottom="7px"
                       >
-                        Phone: {user?.phone || <NoInformation />}
+                        Phone: {student?.phone || <NoInformation />}
                       </Box>
                     </Tooltip>
                   </Box>
@@ -474,7 +378,7 @@ export default function TutorProfile() {
                         fontWeight={500}
                         fontSize="14px"
                         paddingBottom={1.5}
-                        maxWidth="20rem"
+                        maxWidth="100%"
                         style={{
                           overflow: "hidden",
                           whiteSpace: "nowrap",
@@ -524,7 +428,7 @@ export default function TutorProfile() {
                 >
                   <List>
                     <ListItem disablePadding>
-                      <ListItemButton onClick={setAllCancel}>
+                      <ListItemButton onClick={setCancelAllEditing}>
                         <ListItemIcon>
                           <PersonRoundedIcon />
                         </ListItemIcon>
@@ -703,7 +607,7 @@ export default function TutorProfile() {
                                   component={FilledInput}
                                   autoComplete="off"
                                   type="text"
-                                  defaultValue={user?.name || <NoInformation />}
+                                  defaultValue={student?.name || <NoInformation />}
                                 />
                               </FormControl>
                             </FormGroup>
@@ -761,7 +665,7 @@ export default function TutorProfile() {
                                     width="100%"
                                     paddingLeft="14px"
                                   >
-                                    {user?.email || <NoInformation />}
+                                    {student?.email || <NoInformation />}
                                   </Box>
                                 </Box>
                               </FormControl>
@@ -783,7 +687,7 @@ export default function TutorProfile() {
                                   autoComplete="off"
                                   type="date"
                                   defaultValue={
-                                    user?.birthday || <NoInformation />
+                                    student?.birthday || <NoInformation />
                                   } //!!!
                                 />
                               </FormControl>
@@ -857,151 +761,6 @@ export default function TutorProfile() {
                             variant="h3"
                             marginBottom="0!important"
                           >
-                            Subject Info
-                          </Box>
-                        </Grid>
-                      </Grid>
-                    }
-                  ></CardHeader>
-                  <CardContent
-                    style={{
-                      backgroundColor: "#ffffff",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    {isDetailEditing ? (
-                      <div className={classes.plLg4}>
-                        <Grid container>
-                          <Grid item xs={12}>
-                            <FormGroup>
-                              <FormLabel>Address</FormLabel>
-                              <FormControl
-                                variant="filled"
-                                component={Box}
-                                width="100%"
-                                marginBottom="1rem!important"
-                              >
-                                <Box
-                                  paddingLeft="0.75rem"
-                                  paddingRight="0.75rem"
-                                  component={FilledInput}
-                                  autoComplete="off"
-                                  type="text"
-                                  defaultValue={user?.address || ""}
-                                />
-                              </FormControl>
-                            </FormGroup>
-                          </Grid>
-                        </Grid>
-                        <Grid container>
-                          <Grid item xs={12} lg={6}>
-                            <FormGroup>
-                              <FormLabel>Phone</FormLabel>
-                              <FormControl
-                                variant="filled"
-                                component={Box}
-                                width="100%"
-                                marginBottom="1rem!important"
-                              >
-                                <Box
-                                  paddingLeft="0.75rem"
-                                  paddingRight="0.75rem"
-                                  component={FilledInput}
-                                  autoComplete="off"
-                                  type="text"
-                                  defaultValue={user?.phone || ""}
-                                />
-                              </FormControl>
-                            </FormGroup>
-                          </Grid>
-                          <Grid item xs={12} lg={6}>
-                            <FormGroup>
-                              <FormLabel>Avatar URL</FormLabel>
-                              <FormControl
-                                variant="filled"
-                                component={Box}
-                                width="100%"
-                                marginBottom="1rem!important"
-                              >
-                                <Box
-                                  paddingLeft="0.75rem"
-                                  paddingRight="0.75rem"
-                                  component={FilledInput}
-                                  autoComplete="off"
-                                  type="text"
-                                  defaultValue={user?.avatarURL || ""}
-                                />
-                              </FormControl>
-                            </FormGroup>
-                          </Grid>
-                        </Grid>
-                        <Grid container item xs="auto">
-                          <Grid item xs="auto" lg={8}></Grid>
-                          <Grid item xs="auto" lg={2}>
-                            <Box
-                              variant="contained"
-                              width="100%"
-                              height="100%"
-                              marginLeft="2rem"
-                            >
-                              <Button
-                                variant="contained"
-                                color="primary"
-                                fullWidth="true"
-                                startIcon={<SaveRoundedIcon />}
-                                onClick={cancelDetailEdit}
-                              >
-                                Save
-                              </Button>
-                            </Box>
-                          </Grid>
-                          <Grid item xs="auto" lg={2}>
-                            <Box
-                              variant="contained"
-                              width="100%"
-                              height="100%"
-                              marginLeft="1rem"
-                            >
-                              <Button
-                                variant="contained"
-                                color="secondary"
-                                fullWidth="true"
-                                startIcon={<CancelRoundedIcon />}
-                                onClick={cancelDetailEdit}
-                              >
-                                Cancel
-                              </Button>
-                            </Box>
-                          </Grid>
-                        </Grid>
-                      </div>
-                    ) : (
-                      DetailDisplay()
-                    )}
-                  </CardContent>
-                </Card>
-
-                <Card
-                  classes={{
-                    root: classes.cardRoot + " " + classes.cardRootSecondary,
-                  }}
-                  style={{ marginBottom: "1rem" }}
-                >
-                  <CardHeader
-                    style={{ backgroundColor: "#e6e6e6" }}
-                    subheader={
-                      <Grid
-                        container
-                        component={Box}
-                        alignItems="center"
-                        justifyContent="space-between"
-                      >
-                        <Grid item xs="auto" lg={2}>
-                          <Box
-                            component={Typography}
-                            variant="h3"
-                            marginBottom="0!important"
-                          >
                             Contact
                           </Box>
                         </Grid>
@@ -1049,33 +808,11 @@ export default function TutorProfile() {
                                   component={FilledInput}
                                   autoComplete="off"
                                   type="text"
-                                  defaultValue={user?.address || ""}
+                                  defaultValue={student?.address || ""}
                                 />
                               </FormControl>
                             </FormGroup>
                           </Grid>
-                          <Grid item xs={12} lg={6}>
-                            <FormGroup>
-                              <FormLabel>Meeting URL</FormLabel>
-                              <FormControl
-                                variant="filled"
-                                component={Box}
-                                width="100%"
-                                marginBottom="1rem!important"
-                              >
-                                <Box
-                                  paddingLeft="0.75rem"
-                                  paddingRight="0.75rem"
-                                  component={FilledInput}
-                                  autoComplete="off"
-                                  type="text"
-                                  defaultValue={tutor?.meetingUrl || ""}
-                                />
-                              </FormControl>
-                            </FormGroup>
-                          </Grid>
-                        </Grid>
-                        <Grid container>
                           <Grid item xs={12} lg={6}>
                             <FormGroup>
                               <FormLabel>Phone</FormLabel>
@@ -1091,12 +828,14 @@ export default function TutorProfile() {
                                   component={FilledInput}
                                   autoComplete="off"
                                   type="text"
-                                  defaultValue={user?.phone || ""}
+                                  defaultValue={student?.phone || ""}
                                 />
                               </FormControl>
                             </FormGroup>
                           </Grid>
-                          <Grid item xs={12} lg={6}>
+                        </Grid>
+                        <Grid container>                          
+                          <Grid item xs={12} lg={12}>
                             <FormGroup>
                               <FormLabel>Avatar URL</FormLabel>
                               <FormControl

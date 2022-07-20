@@ -51,29 +51,6 @@ import componentStyles from "assets/theme/views/admin/profile.js";
 import { useSelector } from "react-redux";
 import { convertNumberToGender } from "settings/setting";
 
-// {
-//     "type": "signup",
-//     "role": "student",
-//     "resultCode": 0,
-//     "resultMessage": "Success",
-//     "data": [
-//         {
-//             "id": "5",
-//             "email": "anhndhse151389@fpt.edu.vn",
-//             "name": "Nguyen Dang Hai Anh (K15 HCM)",
-//             "grade": 0,
-//             "phone": "",
-//             "status": 1,
-//             "gender": 0,
-//             "birthday": "",
-//             "address": "",
-//             "avatarURL": "https://lh3.googleusercontent.com/a/AATXAJwtkePvLgfpiJzyI0IbUDVlVDN4OesJ243CNZZY=s96-c",
-//             "createdDate": "09-06-2022 23:22:53",
-//             "updatedDate": ""
-//         }
-//     ]
-// }
-
 const useStyles = makeStyles(componentStyles);
 
 export default function AdminProfile() {
@@ -101,6 +78,13 @@ export default function AdminProfile() {
     setIsContactEditing(false);
     // reset();
   };
+
+  const setAllCancel = () => {
+    setIsContactEditing(false);
+    setIsBasicEditing(false);
+    // reset();
+  };
+  
 
   const basicDisplay = () => (
     <div className={classes.plLg4}>
@@ -420,7 +404,7 @@ export default function AdminProfile() {
                       <Divider />
                     </ListItem>
                     <ListItem disablePadding>
-                      <ListItemButton>
+                      <ListItemButton onClick={setAllCancel}>
                         <ListItemIcon>
                           <PersonRoundedIcon />
                         </ListItemIcon>
