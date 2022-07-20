@@ -287,7 +287,7 @@ export default function TutorProfile() {
                     alignItems="center"
                     backgroundColor="#fff"
                   >
-                    <Tooltip title="Phone Number" placement="right">
+                    <Tooltip title="Number of Subject" placement="right">
                       <Box
                         fontFamily="san-serif"
                         fontWeight={500}
@@ -322,7 +322,7 @@ export default function TutorProfile() {
                     alignItems="center"
                     backgroundColor="#fff"
                   >
-                    <Tooltip title="Phone Number" placement="right">
+                    <Tooltip title="Subjects" placement="right">
                       <Box
                         fontFamily="san-serif"
                         fontWeight={500}
@@ -361,7 +361,7 @@ export default function TutorProfile() {
                     alignItems="center"
                     backgroundColor="#fff"
                   >
-                    <Tooltip title="Phone Number" placement="right">
+                    <Tooltip title="Address" placement="right">
                       <Box
                         fontFamily="san-serif"
                         fontWeight={500}

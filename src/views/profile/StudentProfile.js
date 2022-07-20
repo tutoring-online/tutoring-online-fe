@@ -42,6 +42,7 @@ import LiveHelpRoundedIcon from "@mui/icons-material/LiveHelpRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
+import GradeRoundedIcon from "@mui/icons-material/GradeRounded";
 
 // core components
 import NoInformation from "components/Text/NoInformation";
@@ -62,18 +63,13 @@ export default function StudentProfile() {
   const [isBasicEditing, setIsBasicEditing] = useState(false);
   const [isContactEditing, setIsContactEditing] = useState(false);
 
-  //FetchStudentDetail
-  const studentID = 5
   const studentActions = useStudentActions();
   useEffect(() => {
-    studentActions.fetchStudentDetail({ id: studentID });
+    studentActions.fetchStudentDetail({ id: user?.id });
   }, []);
 
   const student = useSelector((state) => state.student.studentDetail);
-  console.log(student)
-
-
-
+  console.log(student);
 
   const enableBasicEdit = () => {
     setIsBasicEditing(true);
@@ -96,7 +92,6 @@ export default function StudentProfile() {
     setIsBasicEditing(false);
     // reset();
   };
-  
 
   const basicDisplay = () => (
     <div className={classes.plLg4}>
@@ -165,9 +160,7 @@ export default function StudentProfile() {
           <Grid container marginTop="1rem">
             <Grid item xs={12} lg={1.5} paddingLeft="2rem" paddingTop="6px">
               <Box width={20} height={20}>
-                <TransgenderRoundedIcon
-                  style={{ width: "100%", height: "100%" }}
-                />
+                <GradeRoundedIcon style={{ width: "100%", height: "100%" }} />
               </Box>
             </Grid>
             <Grid item xs={12} lg={8}>
@@ -186,9 +179,7 @@ export default function StudentProfile() {
                         width="100%"
                         paddingBottom="7px"
                       >
-                        Grade: {student?.grade || (
-                          <NoInformation />
-                        )}
+                        Grade: {student?.grade || <NoInformation />}
                       </Box>
                     </Tooltip>
                   </Box>
@@ -262,7 +253,6 @@ export default function StudentProfile() {
               </Box>
             </Grid>
           </Grid>
-          
         </Grid>
         <Grid container>
           <Grid container item xs={12} lg={12} borderLeft="1px solid #e6e6e6">
@@ -304,7 +294,7 @@ export default function StudentProfile() {
                     alignItems="center"
                     backgroundColor="#fff"
                   >
-                    <Tooltip title="Phone Number" placement="right">
+                    <Tooltip title="Address" placement="right">
                       <Box
                         fontFamily="san-serif"
                         fontWeight={500}
@@ -607,7 +597,9 @@ export default function StudentProfile() {
                                   component={FilledInput}
                                   autoComplete="off"
                                   type="text"
-                                  defaultValue={student?.name || <NoInformation />}
+                                  defaultValue={
+                                    student?.name || <NoInformation />
+                                  }
                                 />
                               </FormControl>
                             </FormGroup>
@@ -834,7 +826,7 @@ export default function StudentProfile() {
                             </FormGroup>
                           </Grid>
                         </Grid>
-                        <Grid container>                          
+                        <Grid container>
                           <Grid item xs={12} lg={12}>
                             <FormGroup>
                               <FormLabel>Avatar URL</FormLabel>
