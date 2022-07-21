@@ -87,7 +87,7 @@ export default function GeneralNavbar() {
     };
 
     const handleMenuClose = () => {
-        setAnchorEl(null);
+        // setAnchorEl(null);
     };
 
     const handleOnClickLogo = () => {

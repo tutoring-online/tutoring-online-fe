@@ -112,7 +112,7 @@ export default function NavbarDropdown() {
                         display="flex!important"
                         alignItems="center!important"
                         component={MenuItem}
-                        onClick={() => handleMenuClose(item.path)}
+                        onClick={() => handleMenuClose(item.to)}
                     >
                         <Box
                             component={item.icon}
