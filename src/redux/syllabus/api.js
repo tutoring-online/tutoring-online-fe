@@ -25,7 +25,7 @@ export const createSyllabus = (data) => {
     const url = baseUrl;
     const options = {
         method: METHOD.post,
-        data: { ...data }
+        data: [...data]
     }
 
     return axiosRequest(url, options);

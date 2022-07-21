@@ -10,7 +10,6 @@ const useSubscribeUser = () => {
                 console.log(token);
             }).catch(e => {
                 console.log(e);
-                console.log("Permission denied");
             })
     }, [])
 }

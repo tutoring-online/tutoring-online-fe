@@ -20,7 +20,6 @@ const showAuthenticatedSuccessfulMessage = (type) => {
         toast.success("Welcome you joining us.");
         return;
     }
-    console.log(type);
 }
 
 const isNotSignedInYet = (isSignedIn) => isSignedIn !== true;

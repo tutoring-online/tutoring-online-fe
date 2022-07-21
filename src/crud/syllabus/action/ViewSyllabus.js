@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SyllabusDetailDialog from 'crud/syllabus/ui-segment/SyllabusDetailDialog';
 import useSyllabusActions from 'hooks/syllabus/useSyllabusActions';
 import useSyllabusDetail from 'hooks/syllabus/useSyllabusDetail';
@@ -14,6 +14,15 @@ export default function ViewSyllabus({
     const actions = useSyllabusActions();
     const { syllabusDetail, loading, refresh: refreshDetail } = useSyllabusDetail(syllabus?.id);
     const [loadingUpdate, setLoadingUpdate] = useState(false);
+
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        setData(() => ({
+            ...(syllabus || {}),
+            ...(syllabusDetail || {}),
+        }))
+    }, [syllabus, syllabusDetail])
 
 
     const handleSubmit = (data, onSuccess) => {
@@ -47,7 +56,7 @@ export default function ViewSyllabus({
             loadingDetail={loading}
 
             mode={CRUD_MODE.view}
-            syllabus={syllabusDetail || syllabus}
+            syllabus={data}
             title="Syllabus Detail"
             submitButton={{
                 text: "Update"

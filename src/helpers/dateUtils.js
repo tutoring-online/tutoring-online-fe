@@ -18,6 +18,20 @@ export const isThePast = (date) => {
     return moment(date).isBefore(new Date());
 }
 
+
+export const getFirstDayOfMonth = () => {
+    const date = new Date();
+    const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    return firstDay;
+}
+
+export const getLastDayOfMonth = () => {
+    const date = new Date();
+    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    return lastDay;
+}
+
+
 export const convertBeDateToIso = (date) => {
     if (!validDate(date)) return null;
     if (!moment(date, datetimeFormatV2, true).isValid()) return null;

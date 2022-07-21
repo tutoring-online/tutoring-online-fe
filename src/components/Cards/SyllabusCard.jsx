@@ -81,6 +81,7 @@ export const SyllabusCard = ({
             <CardMedia
                 className={styles.media}
                 image={
+                    syllabus?.imageUrl ||
                     syllabusImageUrl ||
                     'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/2000px-Git_icon.svg.png'
                 }

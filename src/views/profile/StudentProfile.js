@@ -69,7 +69,6 @@ export default function StudentProfile() {
   }, []);
 
   const student = useSelector((state) => state.student.studentDetail);
-  console.log(student);
 
   const enableBasicEdit = () => {
     setIsBasicEditing(true);

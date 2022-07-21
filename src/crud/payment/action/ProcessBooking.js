@@ -47,7 +47,6 @@ export default function ProcessBooking({
     }, [handleClose, refresh]);
 
     const handleSubmit = (data) => {
-        console.log(data);
 
         if (!user) {
             toast.warn("Please login before you can booking a course.");

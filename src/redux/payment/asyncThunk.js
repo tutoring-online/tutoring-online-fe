@@ -62,7 +62,6 @@ const createPayment = async (params) => {
     try {
         const response = await api.createPayment(data);
 
-        console.log(response)
         callback(true, response);
         toast.success("Booking successfully.");
         return response;

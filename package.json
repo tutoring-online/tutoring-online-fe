@@ -25,6 +25,7 @@
     "axios": "^0.27.2",
     "chart.js": "2.9.4",
     "firebase": "^9.8.2",
+    "image-conversion": "^2.1.1",
     "moment": "^2.16.0",
     "nouislider": "14.6.3",
     "prop-types": "15.7.2",

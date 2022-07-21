@@ -35,14 +35,23 @@ import {
 } from "variables/charts.js";
 
 import componentStyles from "assets/theme/views/admin/dashboard.js";
+import useFilteredPaymentList from "hooks/payment/useFilteredPaymentList";
+import { getFirstDayOfMonth } from "helpers/dateUtils";
 
 const useStyles = makeStyles(componentStyles);
+
+const paymentFilter = {
+    FromCreatedDate: getFirstDayOfMonth()
+}
 
 function Dashboard() {
     const classes = useStyles();
     const theme = useTheme();
     const [activeNav, setActiveNav] = React.useState(1);
     const [chartExample1Data, setChartExample1Data] = React.useState("data1");
+
+    const { paymentList } = useFilteredPaymentList(paymentFilter);
+
 
     if (window.Chart) {
         parseOptions(Chart, chartOptions());
@@ -55,7 +64,7 @@ function Dashboard() {
     return (
         <>
             <Header />
-            {/* Page content */}
+            
             <Container
                 maxWidth={false}
                 component={Box}
@@ -151,7 +160,6 @@ function Dashboard() {
                                     <Line
                                         data={chartExample1[chartExample1Data]}
                                         options={chartExample1.options}
-                                        getDatasetAtEvent={(e) => console.log(e)}
                                     />
                                 </Box>
                             </CardContent>

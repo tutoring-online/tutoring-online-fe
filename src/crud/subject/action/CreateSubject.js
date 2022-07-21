@@ -13,7 +13,6 @@ export default function CreateSubject({
 
     const handleSubmit = (data) => {
         if (!data) return;
-        console.log(data);
 
         const loading = (isLoading) => {
             setLoadingInfo && setLoadingInfo({

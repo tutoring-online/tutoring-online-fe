@@ -13,7 +13,6 @@ export default function CreateCategory({
 
     const handleSubmit = (data) => {
         if (!data) return;
-        console.log(data);
 
         const loading = (isLoading) => {
             setLoadingInfo && setLoadingInfo({

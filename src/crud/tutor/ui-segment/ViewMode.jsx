@@ -222,7 +222,6 @@ const Subject = ({ tutor }) => {
         })
     }, [tutor?.id, tutorSubjectList])
 
-    // console.log(subjects);
     const getSubjectName = (subjectId) => {
         const subject = isAvailableArray(subjectList) && subjectList.find(item => item.id === subjectId);
         return subject?.name || "N/A";

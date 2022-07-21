@@ -26,7 +26,6 @@ const useAuthentication = () => {
             setLoading(true);
 
             const token = await currentUser.getIdToken();
-            console.log(token);
 
             let hasError = false;
 
