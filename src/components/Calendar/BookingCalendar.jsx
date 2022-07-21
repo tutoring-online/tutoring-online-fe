@@ -18,12 +18,14 @@ import { getLessonStartDate } from 'settings/payment-setting';
 import { getLessonEndDate } from 'settings/payment-setting';
 import { Box } from '@mui/system';
 import BackDropLoader from 'components/Loading/BackDropLoader';
+import CustomAppointmentContent from './CustomAppointmentContent';
 
 const startDayHour = 8;
 const endDayHour = 22;
 
 export default function BookingCalendar({
     payment,
+    meetingUrl
 }) {
 
     const [filter, setFilter] = useState({})
@@ -53,12 +55,11 @@ export default function BookingCalendar({
             startDate: getLessonStartDate(lesson.date, payment.dateSession),
             endDate: getLessonEndDate(lesson.date, payment.dateSession),
             id: lesson.id,
-            location: 'Room 1',
+            meetingUrl: meetingUrl || null,
         }))
 
         setData([...preparedLessons]);
-
-    }, [lessonList, payment])
+    }, [lessonList, meetingUrl, payment])
 
     return (
         <Box
@@ -69,7 +70,7 @@ export default function BookingCalendar({
                     data={data}
                 >
                     <ViewState
-                        defaultCurrentViewName="Week"
+                        defaultCurrentViewName="Month"
                     />
                     <DayView
                         startDayHour={startDayHour}
@@ -83,7 +84,9 @@ export default function BookingCalendar({
                     <Toolbar />
                     <ViewSwitcher />
                     <Appointments />
-                    <AppointmentTooltip />
+                    <AppointmentTooltip
+                        contentComponent={CustomAppointmentContent}
+                    />
                     <DateNavigator />
                 </Scheduler>
             </Paper>

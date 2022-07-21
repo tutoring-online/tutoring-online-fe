@@ -8,8 +8,6 @@ export default function useClassesDetailedLessons(classes, filter) {
     const { lessonList, loading, refresh } = useFilteredLessonList(filter);
     const [detailedLessons, setDetailedLessons] = useState([]);
 
-    console.log(lessonList);
-
     useEffect(() => {
         if (!isAvailableArray(classes)) {
             setDetailedLessons([]);
@@ -25,6 +23,7 @@ export default function useClassesDetailedLessons(classes, filter) {
                 startDate: getLessonStartDate(lesson.date, classItem.dateSession),
                 endDate: getLessonEndDate(lesson.date, classItem.dateSession),
                 id: lesson.id,
+                meetingUrl: classItem.tutor?.meetingUrl
             }))
 
             if (isAvailableArray(preparedLessons)) {

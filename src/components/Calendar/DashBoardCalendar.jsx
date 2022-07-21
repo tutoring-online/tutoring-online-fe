@@ -12,13 +12,15 @@ import {
 } from '@devexpress/dx-react-scheduler-material-ui';
 import Paper from '@mui/material/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
+import CustomAppointmentContent from './CustomAppointmentContent';
 
 const startDayHour = 8;
 const endDayHour = 22;
 
+
 export default function DashBoardCalendar({
     lessons,
-}) {    
+}) {
 
     return (
         <Paper>
@@ -40,7 +42,9 @@ export default function DashBoardCalendar({
                 <Toolbar />
                 <ViewSwitcher />
                 <Appointments />
-                <AppointmentTooltip />
+                <AppointmentTooltip
+                    contentComponent={CustomAppointmentContent}
+                />
                 <DateNavigator />
             </Scheduler>
         </Paper>

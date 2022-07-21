@@ -213,6 +213,7 @@ const ClassInfo = ({
                                 value={
                                     <BookingCalendar
                                         payment={payment}
+                                        meetingUrl={tutorDetail?.meetingUrl}
                                     />
                                 }
                             />

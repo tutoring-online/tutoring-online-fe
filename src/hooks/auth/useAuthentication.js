@@ -17,14 +17,13 @@ const useAuthentication = () => {
     const history = useHistory();
     useEffect(() => {
         const unregisterAuthObserver = auth().onAuthStateChanged(async (currentUser) => {
-            setLoading(true);
-            
             const location = history.location?.pathname;
             if (!currentUser) {
                 actions.unsubscribeUser();
-                setLoading(false);
                 return;
             }
+            
+            setLoading(true);
 
             const token = await currentUser.getIdToken();
             console.log(token);
