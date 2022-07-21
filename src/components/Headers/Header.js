@@ -13,7 +13,6 @@ import CardStats from "components/Cards/CardStats.js";
 
 import componentStyles from "assets/theme/components/header.js";
 import { getFirstDayOfMonth } from "helpers/dateUtils";
-import useFilteredPaymentList from "hooks/payment/useFilteredPaymentList";
 import { isAvailableArray } from "helpers/arrayUtils";
 import { Skeleton } from "@mui/material";
 import { formatDate } from "helpers/dateUtils";
@@ -21,6 +20,7 @@ import { isoFormat } from "helpers/dateUtils";
 import { PAYMENT_STATUSES } from "settings/payment-setting";
 import { STUDENT_STATUSES } from "settings/student-setting";
 import useFilteredStudentList from "hooks/student/useFilteredStudentList";
+import useFilteredBookingsNotRedux from "hooks/payment/useFilteredBookingsNotRedux";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -38,13 +38,12 @@ const studentFilter = {
 const Header = () => {
 	const classes = useStyles();
 
-	const { paymentList, loading: loadingPayments } = useFilteredPaymentList(paymentFilter);
+	const { paymentList, loading: loadingPayments } = useFilteredBookingsNotRedux(paymentFilter);
 	const { studentList, loading: loadingStudents } = useFilteredStudentList(studentFilter);
 
 	const [loadingStatistic, setLoadingStatistic] = useState([]);
 	const [statistic, setStatistic] = useState({});
 
-	console.log(studentList);
 	useEffect(() => {
 		let revenue = 0.0;
 		let newBooking = 0;

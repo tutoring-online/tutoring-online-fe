@@ -9,7 +9,6 @@ import NoInformation from "components/Text/NoInformation";
 import ReactNumberFormat from 'react-number-format';
 import EastIcon from '@mui/icons-material/East';
 //Hooks
-import useFilteredPaymentList from "hooks/payment/useFilteredPaymentList";
 
 //Helpers
 import { renderPaymentStatus } from "settings/payment-setting";
@@ -17,6 +16,7 @@ import { PAYMENT_STATUSES } from "settings/payment-setting";
 import { useHistory } from "react-router-dom";
 import { getFullPath } from "route/routes";
 import { ROUTES } from "route/routes";
+import useFilteredBookingsNotRedux from "hooks/payment/useFilteredBookingsNotRedux";
 
 const getPrice = (syllabus) => {
 	const price = syllabus?.price;
@@ -29,12 +29,14 @@ const getPrice = (syllabus) => {
 const Payment = () => {
 	const history = useHistory();
 	const [filter] = useState({
-		status: PAYMENT_STATUSES.PAID
+		Status: PAYMENT_STATUSES.PAID,
+		Page: 0,
+		Size: 5
 	});
 	const {
 		paymentList,
 		loading,
-	} = useFilteredPaymentList(filter);
+	} = useFilteredBookingsNotRedux(filter);
 
 	const [columns, setColumns] = useState([]);
 

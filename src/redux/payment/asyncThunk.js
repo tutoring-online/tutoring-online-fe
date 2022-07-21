@@ -17,17 +17,20 @@ const fetchPayments = async (params) => {
 }
 
 const fetchPaymentsWithFilter = async (params) => {
-    const { filter, setLoading = () => { } } = params;
+    const { filter, setLoading = () => { }, callback = () => {} } = params;
     setLoading(true);
     try {
         const response = await api.fetchPayments(filter);
+        callback(response)
         return response;
     } catch (error) {
+        callback(null);
         throw error;
     } finally {
         setLoading(false);
     }
 }
+
 
 const fetchPaymentsByTutorId = async (params) => {
     const { filter, setLoading = () => { } } = params;

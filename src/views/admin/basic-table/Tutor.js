@@ -29,7 +29,6 @@ const Tutor = () => {
 	const {
 		tutorList,
 		loading,
-		refresh
 	} = useFilteredTutorList(filter);
 	const [columns, setColumns] = useState([]);
 

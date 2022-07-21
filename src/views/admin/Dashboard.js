@@ -40,7 +40,7 @@ function Dashboard() {
             <Container
                 maxWidth={false}
                 component={Box}
-                marginTop="-6rem"
+                marginTop="-8.5rem"
                 classes={{ root: classes.containerRoot }}
             >
                 <Grid container spacing={2} >
