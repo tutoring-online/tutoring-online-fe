@@ -26,7 +26,7 @@ export default function DashBoardCalendar({
                 data={lessons || []}
             >
                 <ViewState
-                    defaultCurrentViewName="Week"
+                    defaultCurrentViewName="Month"
                 />
                 <DayView
                     startDayHour={startDayHour}

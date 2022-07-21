@@ -1,7 +1,7 @@
 import { Box, Chip, CircularProgress, Divider } from "@mui/material";
 import NTASelectField from "components/Form/NTASelectField";
 import { isAvailableArray } from "helpers/arrayUtils";
-import useAllStudentClasses from "hooks/student/useAllStudentClasses";
+import useAllTutorClasses from "hooks/tutor/useAllTutorClasses";
 import { useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -88,7 +88,7 @@ export default function ScheduleFilter({
 }) {
 
     const user = useSelector(state => state.auth.user);
-    const classes = useAllStudentClasses(user?.id);
+    const classes = useAllTutorClasses(user?.id);
 
     const { control } = useForm({
         mode: "onSubmit",
