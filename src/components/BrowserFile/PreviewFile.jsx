@@ -19,18 +19,20 @@ export default function PreviewFileArea({
                 src={imageUrl || previewFileURL}
                 className="preview-file__area"
             />
-            <span
-                className="preview-file__panel"
-            >
-                <>{file?.name || ""}</>
-                <BootstrapTooltip title="Clear">
-                    <IconButton onClick={handleClear} sx={{ width: "40px", padding: "5px" }}>
-                        <span>
-                            <DeleteForeverIcon sx={{ color: "#fff", width: "20px", height: "20px" }} />
-                        </span>
-                    </IconButton>
-                </BootstrapTooltip>
-            </span>
+            {file &&
+                <span
+                    className="preview-file__panel"
+                >
+                    <>{file?.name || ""}</>
+                    <BootstrapTooltip title="Clear">
+                        <IconButton onClick={handleClear} sx={{ width: "40px", padding: "5px" }}>
+                            <span>
+                                <DeleteForeverIcon sx={{ color: "#fff", width: "20px", height: "20px" }} />
+                            </span>
+                        </IconButton>
+                    </BootstrapTooltip>
+                </span>
+            }
         </Box>
     )
 }
