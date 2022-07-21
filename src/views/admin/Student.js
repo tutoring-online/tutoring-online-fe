@@ -66,9 +66,9 @@ const Student = () => {
 		}
 
 		const handleOpenEditStatus = (student) => {
-				setSelectedStudent(student);
-				setOpenEditStatus(true);
-			}
+			setSelectedStudent(student);
+			setOpenEditStatus(true);
+		}
 
 
 		const handleOpenDelete = (student) => {
@@ -99,16 +99,7 @@ const Student = () => {
 			{
 				key: "grade",
 				label: "Grade",
-				render: (row) => row.grade != null ? row.grade : <NoInformation />
-			},
-			{
-				key: "totalLessons",
-				label: (
-					<BootstrapTooltip title="Total lessons">
-						<div>Lessons</div>
-					</BootstrapTooltip>
-				),
-				render: (row) => row.totalLessons || 0
+				render: (row) => row.grade || <NoInformation />
 			},
 			{
 				key: "email",

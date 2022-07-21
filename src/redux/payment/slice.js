@@ -6,6 +6,7 @@ import * as types from "./types";
 const INITIAL_STATE = {
     payments: [],
     filteredPayments: [],
+    tutorClasses: [],
     paymentDetail: null,
 }
 
@@ -23,6 +24,14 @@ const reducers = {
     fetchPaymentsWithFilterFailed: (state) => {
         state.filteredPayments = [];
     },
+
+    fetchPaymentsByTutorIdSuccessful: (state, action) => {
+        state.tutorClasses = action.payload;
+    },
+    fetchPaymentsByTutorIdFailed: (state) => {
+        state.tutorClasses = [];
+    },
+
 
     fetchPaymentDetailSuccessful: (state, action) => {
         state.paymentDetail = isAvailableArray(action.payload) ? action.payload[0] : null;
@@ -53,6 +62,10 @@ const slice = createSlice({
 
         builder.addCase(asyncThunks.fetchPaymentsWithFilter.fulfilled, reducers.fetchPaymentsWithFilterSuccessful);
         builder.addCase(asyncThunks.fetchPaymentsWithFilter.rejected, reducers.fetchPaymentsWithFilterFailed);
+
+        builder.addCase(asyncThunks.fetchPaymentsByTutorId.fulfilled, reducers.fetchPaymentsByTutorIdSuccessful);
+        builder.addCase(asyncThunks.fetchPaymentsByTutorId.rejected, reducers.fetchPaymentsByTutorIdFailed);
+
 
         builder.addCase(asyncThunks.fetchPaymentDetail.fulfilled, reducers.fetchPaymentDetailSuccessful);
         builder.addCase(asyncThunks.fetchPaymentDetail.rejected, reducers.fetchPaymentDetailFailed);

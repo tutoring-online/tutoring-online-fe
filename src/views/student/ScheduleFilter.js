@@ -120,7 +120,7 @@ export default function ScheduleFilter({
         const classFilter = {};
 
         if (user?.id) {
-            classFilter.TutorId = user.id;
+            classFilter.StudentId = user.id;
         }
 
         if (paymentId) {

@@ -72,11 +72,11 @@ export default function ProcessBooking({
     }
 
     const handlePurchaseSuccess = () => {
-        callCreate(PAYMENT_STATUSES.PAID);
-        setOpenPaymentProcess(false);
+        const callback = () => setOpenPaymentProcess(false);
+        callCreate(PAYMENT_STATUSES.PAID, callback);
     }
 
-    const callCreate = (status) => {
+    const callCreate = (status, callback) => {
         const fullData = {
             ...bookingData,
             status,
@@ -88,7 +88,10 @@ export default function ProcessBooking({
         actions.createPayment({
             data: [fullData],
             loading,
-            callback: listenCreateStatus
+            callback: (...props) => {
+                listenCreateStatus(...props);
+                callback && callback();
+            }
         });
     }
 
@@ -116,6 +119,7 @@ export default function ProcessBooking({
                     open={open}
                     onClose={handleCloseProcessPayment}
                     onSubmit={handlePurchaseSuccess}
+                    loadingSubmit={loadingCreate}
                     submitButton={{
                         text: (
                             <>

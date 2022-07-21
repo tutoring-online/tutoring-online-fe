@@ -98,15 +98,6 @@ const Tutor = () => {
 				)
 			},
 			{
-				key: "totalLessons",
-				label: (
-					<BootstrapTooltip title="Total lessons">
-						<div>Lessons</div>
-					</BootstrapTooltip>
-				),
-				render: (row) => row.totalLessons || 0
-			},
-			{
 				key: "email",
 				label: "Email",
 				render: (row) => row.email || <NoInformation />

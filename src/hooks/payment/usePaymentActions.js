@@ -13,6 +13,7 @@ const usePaymentActions = () => {
         
         fetchPayments: compose(dispatch, asyncThunks.fetchPayments),
         fetchPaymentsWithFilter: compose(dispatch, asyncThunks.fetchPaymentsWithFilter),
+        fetchPaymentsByTutorId: compose(dispatch, asyncThunks.fetchPaymentsByTutorId),
         createPayment: compose(dispatch, asyncThunks.createPayment),
         updatePayment: compose(dispatch, asyncThunks.updatePayment),
         deletePayment: compose(dispatch, asyncThunks.deletePayment),

@@ -1,14 +1,18 @@
-import { Avatar, Box, FormLabel, Grid } from '@mui/material';
+import { Avatar, Box, Chip, FormLabel, Grid } from '@mui/material';
 import DisplayField from 'components/Form/DisplayField';
 import GroupBox from 'components/Form/GroupBox';
 import NoInformation from 'components/Text/NoInformation';
 import { getLocaleDateString } from 'helpers/dateUtils';
 import { getLocaleDateTimeString } from 'helpers/dateUtils';
 import { validDate } from 'helpers/dateUtils';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { renderTutorStatus } from 'settings/tutor-setting';
 import { convertNumberToGender } from 'settings/setting';
 import CopyToClipboardWrapper from 'components/common/CopyToClipboardWrapper';
+import useTutorSubjectList from 'hooks/tutor-subject/useTutorSubjectList';
+import { isAvailableArray } from 'helpers/arrayUtils';
+import useSubjectList from 'hooks/subject/useSubjectList';
+import { TUTOR_SUBJECT_STATUSES } from 'settings/tutor-subject-setting';
 
 const getDisplayDateTime = (date) => {
     return validDate(date) ? getLocaleDateTimeString(date) : "N/A";
@@ -198,6 +202,65 @@ const Contact = ({ tutor }) => (
 )
 
 
+const Subject = ({ tutor }) => {
+
+    const { tutorSubjectList } = useTutorSubjectList();
+    const { subjectList } = useSubjectList();
+    const [tutorSubjects, setTutorSubjects] = useState([]);
+
+    useEffect(() => {
+        if (!isAvailableArray(tutorSubjectList) || tutor?.id == null) {
+            setTutorSubjects([]);
+            return;
+        }
+
+        setTutorSubjects(() => {
+            return tutorSubjectList.filter(item =>
+                item.tutorId === tutor?.id &&
+                item.status !== TUTOR_SUBJECT_STATUSES.DELETED
+            );
+        })
+    }, [tutor?.id, tutorSubjectList])
+
+    // console.log(subjects);
+    const getSubjectName = (subjectId) => {
+        const subject = isAvailableArray(subjectList) && subjectList.find(item => item.id === subjectId);
+        return subject?.name || "N/A";
+    }
+
+    return (
+        <GroupBox>
+            <Grid container>
+                <Grid item xs={12}>
+                    <FormLabel sx={{ fontSize: "18px" }}>
+                        Subject Info
+                    </FormLabel>
+                </Grid>
+                <Grid item xs={12}>
+                    <Box
+                        display="flex"
+                        alignItems="center"
+                        flexDirection="row"
+                        flexWrap="wrap"
+                        gap="1rem"
+                    >
+                        {isAvailableArray(tutorSubjects) ? (
+                            tutorSubjects.map(item =>
+                                <Chip
+                                    key={item.id}
+                                    label={getSubjectName(item.subjectId)}
+                                    component="button"
+                                    type="button"
+                                />
+                            )) : (<i>No subject</i>)
+                        }
+                    </Box>
+                </Grid>
+            </Grid>
+        </GroupBox>
+    )
+}
+
 export default function ViewMode({ tutor }) {
     return (
         <Box component="div">
@@ -212,6 +275,10 @@ export default function ViewMode({ tutor }) {
 
                 <Grid item xs={12}>
                     <Contact tutor={tutor} />
+                </Grid>
+
+                <Grid item xs={12}>
+                    <Subject tutor={tutor} />
                 </Grid>
             </Grid>
         </Box>

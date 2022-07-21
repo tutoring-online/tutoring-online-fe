@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
 //Mui
-import { Avatar, Box, Button, FormLabel, Grid } from '@mui/material';
+import { Avatar, Box, FormLabel, Grid } from '@mui/material';
+import SubmitButton from "components/Buttons/SubmitButton";
 
 //Core components
 import BookingCalendar from 'components/Calendar/BookingCalendar';
@@ -101,6 +102,7 @@ const useAvailableTutors = (syllabusId) => {
 
 const ClassInfo = ({
     payment,
+    loadingSubmit,
     onAllocateTutor
 }) => {
 
@@ -229,20 +231,18 @@ const ClassInfo = ({
                                 options={availableTutorOptions}
                             />
 
-                            <Button
-                                variant="contained"
-                                color="primary"
+                            <SubmitButton
                                 size="large"
                                 disabled={tutorId == null}
                                 onClick={handleSubmit(onSubmit)}
                                 startIcon={<PersonSearch fontSize="medium" />}
+                                loading={loadingSubmit}
                                 sx={{
                                     marginLeft: "auto",
                                     marginTop: "-1rem"
                                 }}
-                            >
-                                Allocate tutors
-                            </Button>
+                                text="Allocate tutors"
+                            />
                         </Box>
                     }
                 </Grid>
@@ -291,6 +291,7 @@ const BookingInfo = ({ payment }) => (
 
 export default function ViewMode({
     payment,
+    loadingSubmit,
     onAllocateTutor
 }) {
     return (
@@ -302,6 +303,7 @@ export default function ViewMode({
                 <Grid item xs={12}>
                     <ClassInfo
                         payment={payment}
+                        loadingSubmit={loadingSubmit}
                         onAllocateTutor={onAllocateTutor}
                     />
                 </Grid>

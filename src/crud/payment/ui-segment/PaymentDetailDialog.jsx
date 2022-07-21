@@ -109,6 +109,7 @@ export default function PaymentDetailDialog({
     ) : (
         <ViewMode
             payment={payment}
+            loadingSubmit={loadingSubmit}
             onAllocateTutor={onAllocateTutor}
         />
     )

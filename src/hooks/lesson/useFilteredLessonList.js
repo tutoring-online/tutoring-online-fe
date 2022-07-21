@@ -11,23 +11,26 @@ const useFilteredLessonList = (filter) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (!isAvailableArray(filteredLessons?.data)) {
+        const data = (!filter || !isAvailableArray(Object.values(filter))) ?
+            filteredLessons : filteredLessons?.data;
+
+        if (!isAvailableArray(data)) {
             setLessonList([]);
             return;
         }
 
-        setLessonList([...filteredLessons.data]);
-    }, [filteredLessons])
+        setLessonList([...data]);
+    }, [filter, filteredLessons])
 
 
     useEffect(() => {
-        if(!filter) return;
-        actions.fetchLessonsWithFilter({ filter, setLoading });
+        if (!filter) return;
+        actions.fetchLessonsWithFilter({ filter: { Page: 0, ...filter }, setLoading });
     }, [actions, filter]);
 
     const refresh = useCallback(() => {
-        if(!filter) return;
-        actions.fetchLessonsWithFilter({ filter, setLoading });
+        if (!filter) return;
+        actions.fetchLessonsWithFilter({ filter: { Page: 0, ...filter }, setLoading });
     }, [actions, filter]);
 
     return {

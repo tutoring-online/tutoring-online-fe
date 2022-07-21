@@ -25,3 +25,4 @@ export { default as NewIcon } from "./svg-icon/NewIcon";
 export { default as RemoveIcon } from "./svg-icon/RemoveIcon";
 export { default as BeginIcon } from "./svg-icon/BeginIcon";
 export { default as SquareRefreshingIcon } from "./svg-icon/SquareRefreshingIcon";
+export { default as TeacherIcon } from "./svg-icon/TeacherIcon";

@@ -45,6 +45,8 @@ const Profile = React.lazy(() => import('views/profile/index.js'));
 const PageNotFound = React.lazy(() => import('views/auth/PageNotFound.jsx'));
 
 const TutorSchedule = React.lazy(() => import('views/tutor/Schedule.js'));
+const StudentSchedule = React.lazy(() => import('views/student/Schedule.js'));
+const BookingHistory = React.lazy(() => import('views/student/StudentBookingHistory.js'));
 
 export const ICON_COLORS = {
 	Primary: "Primary",
@@ -99,15 +101,6 @@ const TUTOR_ROUTES = {
 		path: ROUTE_PATHS.schedule,
 		layout: LAYOUT_PATHS.tutor
 	},
-	tutorClass: {
-		key: "tutorClass",
-		name: "Class",
-		icon: ClassIcon,
-		iconColor: ICON_COLORS.InfoLight,
-		component: Category,
-		path: ROUTE_PATHS.class,
-		layout: LAYOUT_PATHS.tutor
-	},
 }
 
 const STUDENT_ROUTES = {
@@ -116,17 +109,17 @@ const STUDENT_ROUTES = {
 		name: "Schedule",
 		icon: CalendarMonthIcon,
 		iconColor: ICON_COLORS.Warning,
-		component: Category,
+		component: StudentSchedule,
 		path: ROUTE_PATHS.schedule,
 		layout: LAYOUT_PATHS.student
 	},
-	studentClass: {
-		key: "studentClass",
-		name: "Class",
+	studentBooking: {
+		key: "studentBooking",
+		name: "Booking history",
 		icon: ClassIcon,
 		iconColor: ICON_COLORS.InfoLight,
-		component: Category,
-		path: ROUTE_PATHS.class,
+		component: BookingHistory,
+		path: ROUTE_PATHS.booking,
 		layout: LAYOUT_PATHS.student
 	},
 }

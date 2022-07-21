@@ -3,16 +3,16 @@ import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import usePaymentActions from "./usePaymentActions";
 
-const useFilteredPaymentList = (filter) => {
+const usePaymentsByTutorId = (filter) => {
     const actions = usePaymentActions();
 
-    const filteredPayments = useSelector(state => state.payment.filteredPayments);
+    const tutorClasses = useSelector(state => state.payment.tutorClasses);
     const [paymentList, setPaymentList] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const data = (!filter || !isAvailableArray(Object.values(filter))) ?
-        filteredPayments : filteredPayments?.data; 
+        tutorClasses : tutorClasses?.data; 
             
         if (!isAvailableArray(data)) {
             setPaymentList([]);
@@ -20,18 +20,16 @@ const useFilteredPaymentList = (filter) => {
         }
 
         setPaymentList([...data]);
-    }, [filter, filteredPayments])
+    }, [filter, tutorClasses])
 
 
     useEffect(() => {
-        actions.fetchPaymentsWithFilter({ filter, setLoading });
+        actions.fetchPaymentsByTutorId({ filter, setLoading });
     }, [actions, filter]);
 
     const refresh = useCallback(() => {
-        actions.fetchPaymentsWithFilter({ filter, setLoading });
+        actions.fetchPaymentsByTutorId({ filter, setLoading });
     }, [actions, filter]);
-
-
 
     return {
         paymentList,
@@ -40,4 +38,4 @@ const useFilteredPaymentList = (filter) => {
     };
 }
 
-export default useFilteredPaymentList;
+export default usePaymentsByTutorId;

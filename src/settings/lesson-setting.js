@@ -8,7 +8,7 @@ export const LESSON_STATUSES = {
 
 export const LIST_LESSON_STATUS = [
     {
-        label: "Active",
+        label: "Pending",
         value: LESSON_STATUSES.PENDING,
         textColor: STATUS_COLORS.ACTIVE.textColor,
         bgColor: STATUS_COLORS.ACTIVE.bgColor

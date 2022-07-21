@@ -61,6 +61,8 @@ export default function TutorDetailDialog({
         resolver: yupResolver(schema)
     })
 
+    const [newTutorSubjectIds, setNewTutorSubjectIds] = useState([]);
+
     useEffect(() => {
         reset(getDefaultValues(tutor));
     }, [tutor, reset]);
@@ -82,6 +84,7 @@ export default function TutorDetailDialog({
     const preparedBeforeSubmit = (data) => {
         const preparedData = {
             ...data,
+            subjects: [...newTutorSubjectIds],
             gender: convertGenderToNumber(data.gender)
         }
         const onSuccess = () => setIsEditing(false);
@@ -106,6 +109,7 @@ export default function TutorDetailDialog({
             errors={errors}
             onSubmit={handleSubmit(preparedBeforeSubmit)}
             isUpdateMode={isUpdateMode()}
+            setNewTutorSubjectIds={setNewTutorSubjectIds}
         />
     ) : (
         <ViewMode tutor={tutor} />

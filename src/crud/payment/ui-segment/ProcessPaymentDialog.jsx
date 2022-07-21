@@ -16,6 +16,7 @@ export default function ProcessPaymentDialog({
     open,
     onClose,
     onSubmit,
+    loadingSubmit,
     submitButton = {
         text: "Confirm"
     }
@@ -92,6 +93,7 @@ export default function ProcessPaymentDialog({
                 <SubmitButton
                     onClick={onSubmit}
                     text={submitButton.text}
+                    loading={loadingSubmit}
                 />
             </CustomDialogActions>
         </Dialog>

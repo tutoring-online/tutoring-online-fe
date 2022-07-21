@@ -1,5 +1,6 @@
 import Combo from "components/Combo/Combo";
 import { ComboItem } from "components/Combo/Combo";
+import { convertBeDateToIso } from "helpers/dateUtils";
 import { validDate } from "helpers/dateUtils";
 import { removeOffsetTimeZone } from "helpers/dateUtils";
 import { isNumberOnly } from "helpers/dateUtils";
@@ -106,9 +107,10 @@ const getDateSessionObject = (value) => {
 }
 
 const prepareDate = (date) => {
-    console.log(date);
-    console.log(validDate(date));
     if(!validDate(date)) return null;
+    if(new Date(date) == "Invalid Date") {
+        return removeOffsetTimeZone(new Date(convertBeDateToIso(date)));
+    }
     return removeOffsetTimeZone(new Date(date));
 }
 

@@ -18,9 +18,8 @@ const endDayHour = 22;
 
 export default function DashBoardCalendar({
     lessons,
-}) {
+}) {    
 
-    
     return (
         <Paper>
             <Scheduler
@@ -42,7 +41,7 @@ export default function DashBoardCalendar({
                 <ViewSwitcher />
                 <Appointments />
                 <AppointmentTooltip />
-                <DateNavigator/>
+                <DateNavigator />
             </Scheduler>
         </Paper>
     )

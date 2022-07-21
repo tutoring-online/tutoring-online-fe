@@ -1,8 +1,8 @@
-import React from 'react'
-import { Avatar, FormLabel, Grid } from '@mui/material';
+import React, { useEffect, useState } from 'react'
+import { Avatar, Chip, FormLabel, Grid } from '@mui/material';
 import { Box } from '@mui/system';
 import { genderOptions } from 'settings/setting';
-
+import ClearIcon from '@mui/icons-material/Clear';
 
 //Component
 import NoInformation from 'components/Text/NoInformation';
@@ -10,6 +10,12 @@ import DisplayField from 'components/Form/DisplayField';
 import RadioGroupField from 'components/Form/RadioGroupField';
 import TextField from 'components/Form/TextField';
 import GroupBox from 'components/Form/GroupBox';
+import { isAvailableArray } from 'helpers/arrayUtils';
+import useSubjectList from 'hooks/subject/useSubjectList';
+import SelectField from 'components/Form/SelectField';
+import { useForm, useWatch } from 'react-hook-form';
+import useTutorSubjectList from 'hooks/tutor-subject/useTutorSubjectList';
+import { TUTOR_SUBJECT_STATUSES } from 'settings/tutor-subject-setting';
 
 const BasicInfo = ({
     tutor,
@@ -142,11 +148,117 @@ const Contact = ({
     </GroupBox>
 )
 
+const getSubjectOptions = (subjectList) => {
+    return isAvailableArray(subjectList) ? subjectList.map(item => ({
+        label: item.name,
+        value: item.id
+    })) : null;
+}
+
+const Subject = ({ tutor, setNewTutorSubjectIds }) => {
+
+    const { tutorSubjectList } = useTutorSubjectList();
+    const { subjectList } = useSubjectList();
+    const [tutorSubjectIds, setTutorSubjectIds] = useState([]);
+
+    useEffect(() => {
+        if (!isAvailableArray(tutorSubjectList) || tutor?.id == null) {
+            setTutorSubjectIds([]);
+            return;
+        }
+
+        setTutorSubjectIds(() => {
+            return tutorSubjectList.filter(item =>
+                item.tutorId === tutor?.id && item.status !== TUTOR_SUBJECT_STATUSES.DELETED
+            ).map(item => item.subjectId);
+        })
+    }, [tutor, tutorSubjectList])
+
+    const { control } = useForm({
+        defaultValues: {
+            subjectId: null
+        },
+    });
+
+    const subjectId = useWatch({ control, name: "subjectId" });
+
+    useEffect(() => {
+        if (!subjectId) return;
+
+        setTutorSubjectIds((prev) => {
+            const alreadyExist = isAvailableArray(prev) && prev.find(item => item === subjectId);
+            if (alreadyExist) return prev;
+
+            prev.push(subjectId);
+            return [...prev];
+        })
+    }, [subjectId])
+
+    useEffect(() => {
+        setNewTutorSubjectIds && setNewTutorSubjectIds(tutorSubjectIds);
+    }, [setNewTutorSubjectIds, tutorSubjectIds])
+
+
+    const getSubjectName = (subjectId) => {
+        const subject = isAvailableArray(subjectList) && subjectList.find(item => item.id === subjectId);
+        return subject?.name || "N/A";
+    }
+
+    const removeSubjectId = (subjectId) => {
+        setTutorSubjectIds(prev => prev.filter(item => item !== subjectId));
+    }
+
+    return (
+        <GroupBox>
+            <Grid container>
+                <Grid item xs={12}>
+                    <FormLabel sx={{ fontSize: "18px" }}>
+                        Subject Info
+                    </FormLabel>
+                </Grid>
+                <Grid item xs={12}>
+                    <SelectField
+                        inputProps={{
+                            placeholder: "Find subject"
+                        }}
+                        name="subjectId"
+                        control={control}
+                        options={getSubjectOptions(subjectList)}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Box
+                        display="flex"
+                        alignItems="center"
+                        flexDirection="row"
+                        flexWrap="wrap"
+                        gap="1rem"
+                    >
+                        {isAvailableArray(tutorSubjectIds) ? (
+                            tutorSubjectIds.map(subjectId =>
+                                <Chip
+                                    key={subjectId}
+                                    label={getSubjectName(subjectId)}
+                                    component="button"
+                                    type="button"
+                                    onDelete={() => removeSubjectId(subjectId)}
+                                    deleteIcon={<ClearIcon />}
+                                />
+                            )) : (<i>No subject</i>)
+                        }
+                    </Box>
+                </Grid>
+            </Grid>
+        </GroupBox>
+    )
+}
+
 export default function EditingContent({
     tutor,
     control,
     register,
     errors,
+    setNewTutorSubjectIds,
     isUpdateMode,
     onSubmit,
 }) {
@@ -172,6 +284,13 @@ export default function EditingContent({
                     />
                 </Grid>
 
+                <Grid item xs={12}>
+                    <Subject
+                        tutor={tutor}
+                        errors={errors}
+                        setNewTutorSubjectIds={setNewTutorSubjectIds}
+                    />
+                </Grid>
             </Grid>
         </form>
     )

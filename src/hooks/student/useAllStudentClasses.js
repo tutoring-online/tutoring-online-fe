@@ -1,22 +1,26 @@
 import { isAvailableArray } from "helpers/arrayUtils";
-import useFilteredPaymentList from "hooks/payment/useFilteredPaymentList";
+import usePaymentsByTutorId from "hooks/payment/usePaymentsByTutorId";
 import { useEffect, useState } from "react";
 import { PAYMENT_STATUSES } from "settings/payment-setting";
 
 
-const useTutorClasses = (inputFilter) => {
-
+const useAllStudentClasses = (studentId) => {
     const [filter, setFilter] = useState(null);
-    const { paymentList, loading, refresh } = useFilteredPaymentList(filter);
+    const { paymentList } = usePaymentsByTutorId(filter);
 
     const [classes, setClasses] = useState([]);
 
     useEffect(() => {
+        if (studentId == null) {
+            setFilter(null);
+            return;
+        }
+
         setFilter({
-            ...(inputFilter || {}),
+            StudentId: studentId,
             status: PAYMENT_STATUSES.ONGOING,
         });
-    }, [inputFilter])
+    }, [studentId])
 
     useEffect(() => {
         if (!isAvailableArray(paymentList)) {
@@ -29,12 +33,8 @@ const useTutorClasses = (inputFilter) => {
 
 
 
-    return {
-        classes,
-        loading,
-        refresh
-    }
+    return classes;
 
 }
 
-export default useTutorClasses;
+export default useAllStudentClasses;

@@ -14,6 +14,10 @@ const notMillisecond = (date) => {
     return !isNumberOnly(date);
 }
 
+export const isThePast = (date) => {
+    return moment(date).isBefore(new Date());
+}
+
 export const convertBeDateToIso = (date) => {
     if (!validDate(date)) return null;
     if (!moment(date, datetimeFormatV2, true).isValid()) return null;

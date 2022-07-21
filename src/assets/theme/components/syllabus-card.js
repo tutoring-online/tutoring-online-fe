@@ -22,7 +22,7 @@ const componentStyles = ({ breakpoints, spacing }) => ({
         width: '100%',
         height: 0,
         marginRight: 'auto',
-        paddingBottom: '200px',
+        paddingBottom: '240px',
 
         borderRadius: spacing(2),
         backgroundColor: '#fff',
@@ -31,7 +31,7 @@ const componentStyles = ({ breakpoints, spacing }) => ({
 
         [breakpoints.up('sm')]: {
             marginLeft: "16px",
-            maxWidth: '150px',
+            maxWidth: '240px',
             paddingBottom: '100px',
             marginTop: 0,
         },
