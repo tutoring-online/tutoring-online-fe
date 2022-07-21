@@ -83,7 +83,7 @@ const Payment = () => {
 				}}
 				startIcon={<EastIcon fontSize="medium" />}
 			>
-				Go to payment Dashboard
+				Go to dashboard
 			</Button>
 		</Box>
 	)

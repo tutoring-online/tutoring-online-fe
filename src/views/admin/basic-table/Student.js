@@ -78,7 +78,7 @@ const Student = () => {
 				}}
 				startIcon={<EastIcon fontSize="medium" />}
 			>
-				Refresh
+				Go to dashboard
 			</Button>
 		</Box>
 	)

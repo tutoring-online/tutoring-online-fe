@@ -84,7 +84,7 @@ const Syllabus = () => {
 				}}
 				startIcon={<EastIcon fontSize="medium" />}
 			>
-				Go to syllabuses dashboard
+				Go to dashboard
 			</Button>
 		</Box>
 	)

@@ -79,7 +79,7 @@ const Tutor = () => {
 				}}
 				startIcon={<EastIcon fontSize="medium" />}
 			>
-				Go to tutor management
+				Go to dashboard
 			</Button>
 		</Box>
 	)
