@@ -7,7 +7,8 @@ import {
     MonthView,
     ViewSwitcher,
     Toolbar,
-    AppointmentTooltip
+    AppointmentTooltip,
+    DateNavigator,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import Paper from '@mui/material/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
@@ -20,13 +21,14 @@ const startDayHour = 8;
 const endDayHour = 22;
 
 export default function BookingCalendar({
-    payment
+    payment,
 }) {
 
     const [filter, setFilter] = useState({})
     useEffect(() => {
         if (!payment?.id) {
             setFilter(null);
+            return;
         };
 
         setFilter({ PaymentId: payment.id });
@@ -56,16 +58,13 @@ export default function BookingCalendar({
 
     }, [lessonList, payment])
 
-    console.log(lessonList);
-    console.log(data);
-
     return (
         <Paper>
             <Scheduler
                 data={data}
             >
                 <ViewState
-                    defaultCurrentViewName="Month"
+                    defaultCurrentViewName="Week"
                 />
                 <DayView
                     startDayHour={startDayHour}
@@ -80,6 +79,7 @@ export default function BookingCalendar({
                 <ViewSwitcher />
                 <Appointments />
                 <AppointmentTooltip />
+                <DateNavigator/>
             </Scheduler>
         </Paper>
     )

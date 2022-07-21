@@ -21,7 +21,7 @@ const useFilteredPaymentList = (filter) => {
 
 
     useEffect(() => {
-        if(!filter) return;
+        if(!filter || !isAvailableArray(Object.values(filter))) return;
         actions.fetchPaymentsWithFilter({ filter, setLoading });
     }, [actions, filter]);
 

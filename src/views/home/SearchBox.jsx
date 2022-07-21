@@ -49,7 +49,7 @@ const getCategoryOptions = (categoryList) => {
         label: item.name,
         value: item.id
     })) : [];
-    options.push({ label: "All", value: "" })
+    options.unshift({ label: "All", value: "" })
 
     return options;
 }
@@ -91,7 +91,7 @@ const CustomDivider = () => (
 
 const getDurationOptions = () => {
     const options = [...DURATION_OPTIONS];
-    options.push({ label: "All", value: "" });
+    options.unshift({ label: "All", value: "" });
     return options;
 }
 
@@ -172,7 +172,7 @@ export default function SearchBox() {
                 label: item.name,
                 value: item.id
             })) : [];
-        options.push({ label: "All", value: "" })
+        options.unshift({ label: "All", value: "" })
 
         return options;
     }

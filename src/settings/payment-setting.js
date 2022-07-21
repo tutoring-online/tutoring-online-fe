@@ -62,7 +62,8 @@ export const COMBO_OPTIONS = [
                 list={["Monday", "Wednesday", "Friday"]}
             />
         ),
-        value: 1
+        value: 1,
+        text: "Even days (Monday, Wednesday, Friday)", 
     },
     {
         label: (
@@ -70,25 +71,29 @@ export const COMBO_OPTIONS = [
                 list={["Tuesday", "Thursday", "Saturday"]}
             />
         ),
-        value: 2
+        value: 2,
+        text: "Odd days (Tuesday, Thursday, Saturday)", 
     },
 ]
 
 export const DATE_SESSION_OPTIONS = [
     {
         label: <ComboItem content="Morning (8h - 11h)" />,
+        text: "Morning (8h - 11h)",
         value: 1,
         startHour: 8,
         endHour: 11
     },
     {
         label: <ComboItem content="Afternoon (13h - 16h)" />,
+        text: "Afternoon (13h - 16h)",
         value: 2,
         startHour: 13,
         endHour: 16
     },
     {
         label: <ComboItem content="Evening (19h - 22h)" />,
+        text: "Evening (19h - 22h)",
         value: 3,
         startHour: 19,
         endHour: 22

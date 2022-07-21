@@ -14,7 +14,7 @@ export default function RedirectHomeWithUserRole() {
     }
 
     if (isTutor(user?.role)) {
-        // return <Redirect to={getFullPath(ROUTES.dashboard)} />
+        return <Redirect to={getFullPath(ROUTES.tutorSchedule)} />
     }
 
     if (isStudent(user?.student)) {

@@ -13,6 +13,7 @@ const StyledAutocompletePopper = styled('div')(({ theme }) => ({
         boxShadow: 'none',
         color: 'inherit',
         fontSize: 13,
+        minWidth: "fit-content",
     },
     [`& .${autocompleteClasses.listbox}`]: {
         backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#1c2128',
@@ -43,6 +44,7 @@ const StyledPopper = styled(Popper)(({ theme }) => ({
     border: `1px solid ${theme.palette.mode === 'light' ? '#e1e4e8' : '#30363d'}`,
     boxShadow: `0 8px 24px ${theme.palette.mode === 'light' ? 'rgba(149, 157, 165, 0.2)' : 'rgb(1, 4, 9)'
         }`,
+    minWidth: "fit-content",
     borderRadius: 6,
     zIndex: theme.zIndex.modal,
     fontSize: 13,

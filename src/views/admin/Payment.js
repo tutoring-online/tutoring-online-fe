@@ -55,7 +55,7 @@ const getStudentOptions = (student) => {
 		value: item.id
 	})) : [];
 
-	options.push({ label: "All", value: "" });
+	options.unshift({ label: "All", value: "" });
 	return options;
 }
 
@@ -65,13 +65,13 @@ const getSyllabusOptions = (syllabusList) => {
 		value: item.id
 	})) : [];
 
-	options.push({ label: "All", value: "" });
+	options.unshift({ label: "All", value: "" });
 	return options;
 }
 
 const getPaymentStatusOptions = () => {
 	const options = [...LIST_PAYMENT_STATUS];
-	options.push({ label: "All", value: "" });
+	options.unshift({ label: "All", value: "" });
 	return options;
 }
 

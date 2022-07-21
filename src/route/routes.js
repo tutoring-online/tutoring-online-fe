@@ -44,6 +44,7 @@ const Logout = React.lazy(() => import('views/auth/Logout.js'));
 const Profile = React.lazy(() => import('views/profile/index.js'));
 const PageNotFound = React.lazy(() => import('views/auth/PageNotFound.jsx'));
 
+const TutorSchedule = React.lazy(() => import('views/tutor/Schedule.js'));
 
 export const ICON_COLORS = {
 	Primary: "Primary",
@@ -94,7 +95,7 @@ const TUTOR_ROUTES = {
 		name: "Schedule",
 		icon: CalendarMonthIcon,
 		iconColor: ICON_COLORS.Warning,
-		component: Category,
+		component: TutorSchedule,
 		path: ROUTE_PATHS.schedule,
 		layout: LAYOUT_PATHS.tutor
 	},
