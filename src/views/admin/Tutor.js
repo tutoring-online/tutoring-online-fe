@@ -201,7 +201,7 @@ const Tutor = () => {
 				classes={{ root: classes.containerRoot }}
 			>
 				<Table
-					title={"List Tutor Users"}
+					title={"Tutors"}
 					columns={columns}
 					data={tutorList}
 					panel={renderPanel()}

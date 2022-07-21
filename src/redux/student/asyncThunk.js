@@ -16,6 +16,20 @@ const fetchStudents = async (params) => {
     }
 }
 
+
+const fetchStudentsWithFilter = async (params) => {
+    const { filter, setLoading = () => { } } = params;
+    setLoading(true);
+    try {
+        const response = await api.fetchStudents(filter);
+        return response;
+    } catch (error) {
+        throw error;
+    } finally {
+        setLoading(false);
+    }
+}
+
 const fetchStudentDetail = async (params) => {
     const { id, setLoading = () => { } } = params;
     setLoading(true);
@@ -66,6 +80,7 @@ const deleteStudent = async (params) => {
 
 const asyncThunks = {
     fetchStudents: createAsyncThunk(types.FETCH_STUDENTS, fetchStudents),
+    fetchStudentsWithFilter: createAsyncThunk(types.FETCH_STUDENTS_WITH_FILTER, fetchStudentsWithFilter),
     fetchStudentDetail: createAsyncThunk(types.FETCH_STUDENT_DETAIL, fetchStudentDetail),
     updateStudent: createAsyncThunk(types.UPDATE_STUDENT, updateStudent),
     deleteStudent: createAsyncThunk(types.DELETE_STUDENT, deleteStudent),

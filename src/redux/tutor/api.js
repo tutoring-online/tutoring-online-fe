@@ -3,13 +3,13 @@ import { axiosRequest } from "helpers/axios";
 
 const baseUrl = TUTOR_API;
 
-export const fetchTutors = () => {
+export const fetchTutors = (params) => {
     const url = baseUrl;
     const options = {
         method: METHOD.get,
     }
 
-    return axiosRequest(url, options);
+    return axiosRequest(url, options, params);
 }
 
 export const fetchTutorDetail = (id) => {

@@ -205,7 +205,7 @@ const Student = () => {
 				classes={{ root: classes.containerRoot }}
 			>
 				<Table
-					title={"List Student Users"}
+					title={"Students"}
 					columns={columns}
 					data={studentList}
 					panel={renderPanel()}

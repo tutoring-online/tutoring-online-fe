@@ -223,7 +223,7 @@ const Subject = () => {
 				classes={{ root: classes.containerRoot }}
 			>
 				<Table
-					title={"List Subjects"}
+					title={"Subjects"}
 					columns={columns}
 					data={subjectList}
 					panel={renderPanel()}

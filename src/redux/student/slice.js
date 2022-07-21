@@ -5,6 +5,7 @@ import * as types from "./types";
 
 const INITIAL_STATE = {
     students: [],
+    filteredStudents: [],
     studentDetail: null,
 }
 
@@ -16,6 +17,13 @@ const reducers = {
         state.students = [];
     },
 
+    fetchStudentsWithFilterSuccessful: (state, action) => {
+        state.filteredStudents = action.payload;
+    },
+    fetchStudentsWithFilterFailed: (state) => {
+        state.filteredStudents = [];
+    },
+
     fetchStudentDetailSuccessful: (state, action) => {
         state.studentDetail = isAvailableArray(action.payload) ? action.payload[0] : null;
     },
@@ -23,8 +31,8 @@ const reducers = {
         state.studentDetail = null
     },
 
-    deleteStudentSuccessful: () => {},
-    deleteStudentFailed: () => {},
+    deleteStudentSuccessful: () => { },
+    deleteStudentFailed: () => { },
 }
 
 const slice = createSlice({
@@ -38,6 +46,10 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(asyncThunks.fetchStudents.fulfilled, reducers.fetchStudentsSuccessful);
         builder.addCase(asyncThunks.fetchStudents.rejected, reducers.fetchStudentsFailed);
+
+        builder.addCase(asyncThunks.fetchStudentsWithFilter.fulfilled, reducers.fetchStudentsWithFilterSuccessful);
+        builder.addCase(asyncThunks.fetchStudentsWithFilter.rejected, reducers.fetchStudentsWithFilterFailed);
+
 
         builder.addCase(asyncThunks.fetchStudentDetail.fulfilled, reducers.fetchStudentDetailSuccessful);
         builder.addCase(asyncThunks.fetchStudentDetail.rejected, reducers.fetchStudentDetailFailed);

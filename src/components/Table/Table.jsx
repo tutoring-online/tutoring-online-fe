@@ -26,7 +26,8 @@ const Tables = ({
     data,
     panel,
     filter,
-    loadingData
+    loadingData,
+    noPaging
 }) => {
     const classes = useStyles();
 
@@ -90,19 +91,21 @@ const Tables = ({
                         />
                     </Box>
                 </TableContainer>
-                <Box
-                    classes={{ root: classes.cardActionsRoot }}
-                    component={CardActions}
-                    justifyContent="flex-end"
-                >
-                    <CustomTablePagination
-                        count={isAvailableArray(data) ? data.length : 0}
-                        page={page}
-                        rowsPerPage={rowsPerPage}
-                        handleChangePage={handleChangePage}
-                        handleChangeRowsPerPage={handleChangeRowsPerPage}
-                    />
-                </Box>
+                {noPaging !== true &&
+                    <Box
+                        classes={{ root: classes.cardActionsRoot }}
+                        component={CardActions}
+                        justifyContent="flex-end"
+                    >
+                        <CustomTablePagination
+                            count={isAvailableArray(data) ? data.length : 0}
+                            page={page}
+                            rowsPerPage={rowsPerPage}
+                            handleChangePage={handleChangePage}
+                            handleChangeRowsPerPage={handleChangeRowsPerPage}
+                        />
+                    </Box>
+                }
             </Card>
         </>
     );

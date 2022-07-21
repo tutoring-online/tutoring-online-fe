@@ -9,6 +9,7 @@ const useStudentActions = () => {
     const dispatch = useDispatch();
     const [actions] = useState({
         fetchStudentDetail: compose(dispatch, asyncThunks.fetchStudentDetail),
+        fetchStudentsWithFilter: compose(dispatch, asyncThunks.fetchStudentsWithFilter),
         clearStudentDetail: compose(dispatch, reduxActions[types.CLEAR_STUDENT_DETAIL]),
         fetchStudents: compose(dispatch, asyncThunks.fetchStudents),
         updateStudent: compose(dispatch, asyncThunks.updateStudent),

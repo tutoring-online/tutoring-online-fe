@@ -253,7 +253,7 @@ const Syllabus = () => {
 				classes={{ root: classes.containerRoot }}
 			>
 				<Table
-					title={"List Syllabuses"}
+					title={"Syllabuses"}
 					columns={columns}
 					data={syllabusList}
 					panel={renderPanel()}

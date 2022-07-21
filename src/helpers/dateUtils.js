@@ -97,13 +97,22 @@ export const validDate = (date) => {
     return false;
 }
 
+export const toMonthName = (monthNumber) => {
+    const date = new Date();
+    date.setMonth(monthNumber);
+
+    return date.toLocaleString('en-US', {
+        month: 'long',
+    });
+}
+
 export const formatDate = (date, format = dateFormat) => validDate(date) ? moment(new Date(date)).format(format) : 'N/A';
 
 export const formatLocalDate = (date, format = dateFormat) => date ? moment(date).local().format(format) : 'N/A';
 
 export const formatDateTime = (date, format = datetimeFormat, invalidStr = 'N/A') => {
-    if(!validDate(date)) return invalidStr;
-    
+    if (!validDate(date)) return invalidStr;
+
     let theDate = convertBeDateToIso(date) || date;
     return moment(new Date(theDate)).format(format);
 }

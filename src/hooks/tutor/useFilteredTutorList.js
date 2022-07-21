@@ -1,23 +1,26 @@
 import { isAvailableArray } from "helpers/arrayUtils";
 import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import usePaymentActions from "./usePaymentActions";
+import useTutorActions from "./useTutorActions";
 
 const useFilteredTutorList = (filter) => {
-    const actions = usePaymentActions();
+    const actions = useTutorActions();
 
     const filteredTutors = useSelector(state => state.tutor.filteredTutors);
     const [tutorList, setTutorList] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (!isAvailableArray(filteredTutors?.data)) {
+        const data = (isAvailableArray(filteredTutors)) ?
+            filteredTutors : filteredTutors?.data;
+
+        if (!isAvailableArray(data)) {
             setTutorList([]);
             return;
         }
 
-        setTutorList([...filteredTutors.data]);
-    }, [filteredTutors])
+        setTutorList([...data]);
+    }, [filter, filteredTutors])
 
 
     useEffect(() => {

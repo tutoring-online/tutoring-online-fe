@@ -203,7 +203,7 @@ const Admin = () => {
 				classes={{ root: classes.containerRoot }}
 			>
 				<Table
-					title={"List Admin Users"}
+					title={"Admin"}
 					columns={columns}
 					data={adminList}
 					panel={renderPanel()}

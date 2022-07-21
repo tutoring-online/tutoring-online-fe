@@ -217,7 +217,7 @@ const Category = () => {
 				classes={{ root: classes.containerRoot }}
 			>
 				<Table
-					title={"List Categories"}
+					title={"Categories"}
 					columns={columns}
 					data={categoryList}
 					panel={renderPanel()}
