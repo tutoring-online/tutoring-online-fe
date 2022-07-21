@@ -90,6 +90,8 @@ export const SyllabusCard = ({
                 <Box
                     display="flex"
                     flexDirection="column"
+                    flexGrow={1}
+                    width="100%"
                 >
                     <Box
                         component="h3"
@@ -113,10 +115,8 @@ export const SyllabusCard = ({
                 <Box
                     display="flex"
                     flexDirection="column"
-                    flexGrow="1"
-                    minWidth="fit-content"
+                    minWidth="300px"
                     marginLeft="1rem"
-                    width="100%"
                 >
                     <Box
                         fontSize="1rem"

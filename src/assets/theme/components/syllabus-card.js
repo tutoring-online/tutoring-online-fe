@@ -42,6 +42,7 @@ const componentStyles = ({ breakpoints, spacing }) => ({
     content: {
         padding: "16px",
         display: 'flex',
+        flexGrow: "1",
         flexDirection: 'column',
         alignItems: 'center',
         
