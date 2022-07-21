@@ -1,13 +1,13 @@
 import { isAvailableArray } from "helpers/arrayUtils";
 import useFilteredPaymentList from "hooks/payment/useFilteredPaymentList";
 import useTutorList from "hooks/tutor/useTutorList";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 
 const useBookingRecords = (studentId) => {
     const [filter, setFilter] = useState(null);
-    const { paymentList, loading: loadingPayment } = useFilteredPaymentList(filter);
-    const { tutorList, loading: loadingTutors } = useTutorList();
+    const { paymentList, loading: loadingPayment, refresh: refreshPayments } = useFilteredPaymentList(filter);
+    const { tutorList, loading: loadingTutors, refresh: refreshTutor } = useTutorList();
 
     const [bookingRecords, setBookingRecords] = useState([]);
 
@@ -42,9 +42,15 @@ const useBookingRecords = (studentId) => {
 
     }, [paymentList, tutorList])
 
+    const refresh = useCallback(() => {
+        refreshPayments && refreshPayments();
+        refreshTutor && refreshTutor();
+    }, [refreshPayments, refreshTutor])
+
     return {
         bookingRecords,
         loading: loadingPayment || loadingTutors,
+        refresh
     }
 }
 

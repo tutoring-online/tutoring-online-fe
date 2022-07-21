@@ -33,7 +33,7 @@ const SyllabusCardSkeleton = () => {
                 <Skeleton
                     variant="rectangular"
                     animation="wave"
-                    height="150px"
+                    height="140px"
                 />
             </CardMedia>
             <CardContent className={styles.content}>

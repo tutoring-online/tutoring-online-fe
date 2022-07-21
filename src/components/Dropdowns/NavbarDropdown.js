@@ -10,13 +10,10 @@ import Hidden from "@mui/material/Hidden";
 import MenuItem from "@mui/material/MenuItem";
 
 // @mui/icons-material components
-import LogoutIcon from '@mui/icons-material/Logout';
-import EventNote from "@mui/icons-material/EventNote";
 import LiveHelp from "@mui/icons-material/LiveHelp";
 import Person from "@mui/icons-material/Person";
-import Settings from "@mui/icons-material/Settings";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
+import DirectionsRun from "@mui/icons-material/DirectionsRun";
 // core components
 import componentStyles from "assets/theme/components/navbar-dropdown.js";
 import { useSelector } from "react-redux";
@@ -36,31 +33,19 @@ const menuList = [
         key: "profile",
         icon: Person,
         label: "My Profile",
-        path: getFullPath(ROUTES.profile)
-    },
-    {
-        key: "setting",
-        icon: Settings,
-        label: "Settings",
-        path: "#"
-    },
-    {
-        key: "activity",
-        icon: EventNote,
-        label: "Activity",
-        path: "#"
+        to: getFullPath(ROUTES.profile)
     },
     {
         key: "support",
         icon: LiveHelp,
         label: "Support",
-        path: "#"
+        to: "#"
     },
     {
         key: "logout",
-        icon: LogoutIcon,
+        icon: DirectionsRun,
         label: "Logout",
-        path: getFullPath(ROUTES.logout)
+        to: getFullPath(ROUTES.logout)
     }
 ]
 

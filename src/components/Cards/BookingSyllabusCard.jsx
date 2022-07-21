@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cx from 'clsx';
 import makeStyles from '@mui/styles/makeStyles';
 import Card from '@mui/material/Card';
@@ -15,6 +15,15 @@ import { TeacherIcon } from 'nta-team/nta-icon';
 import { MeetingImage } from 'nta-team/nta-img';
 import { ResearchImage } from 'nta-team/nta-img';
 import { STATUS_COLORS } from 'settings/setting';
+// import ReactNumberFormat from 'react-number-format';
+// import { getPrice } from 'settings/syllabus-setting';
+
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
+import { CancelPayment } from 'crud/payment';
+import { getComboText } from 'settings/payment-setting';
+import { getDateSessionText } from 'settings/payment-setting';
+import { PayPayment } from 'crud/payment';
 
 const useStyles = makeStyles(componentStyles);
 const useStylesEllipsis = makeStyles({
@@ -24,6 +33,7 @@ const useStylesEllipsis = makeStyles({
         // display: "-webkit-box",
         // "-webkit-line-clamp": 2,
         // "-webkit-box-orient": "vertical",
+        textAlign: "justify",
         fontSize: "16px",
         marginTop: "8px"
     },
@@ -60,9 +70,29 @@ const StatisticItem = ({ icon, content, classes }) => (
 
 export const BookingSyllabusCard = ({
     payment,
+    refresh
 }) => {
     const styles = useStyles();
     const classes = useStylesEllipsis();
+
+    const [openCancelPayment, setOpenCancelPayment] = useState(false);
+    const [openContinuePayment, setOpenContinuePayment] = useState(false);
+
+    const handleOpenCancel = () => {
+        setOpenCancelPayment(true);
+    }
+
+    const handleCloseCancel = () => {
+        setOpenCancelPayment(false);
+    }
+
+    const handleOpenContinuePayment = () => {
+        setOpenContinuePayment(true);
+    }
+
+    const handleCloseContinuePayment = () => {
+        setOpenContinuePayment(false);
+    }
 
     const renderButton = () => {
         const status = payment?.status;
@@ -112,121 +142,177 @@ export const BookingSyllabusCard = ({
 
             )
         }
+
+        if (status === PAYMENT_STATUSES.PENDING) {
+            return (
+                <>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="medium"
+                        sx={{ width: "100%" }}
+                        startIcon={<CreditCardIcon />}
+                        onClick={handleOpenContinuePayment}
+                    >
+                        Continue payment
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        size="medium"
+                        onClick={handleOpenCancel}
+                        sx={{ marginTop: "0.5rem", width: "100%" }}
+                        startIcon={<DoDisturbOnIcon />}
+                    >
+                        Cancel
+                    </Button>
+                </>
+            )
+        }
     }
 
     return (
-        <Card
-            className={cx(styles.root)}
-            style={{
-                boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px",
-                backgroundColor: "#fff",
-                width: "100%"
-            }}
-            component="div"
-        >
-
-            <Grid
-                container
-                spacing={1}
+        <>
+            <Card
+                className={cx(styles.root)}
                 style={{
-                    padding: '0 2rem'
+                    boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px",
+                    backgroundColor: "#fff",
+                    width: "100%"
                 }}
+                component="div"
             >
-                <Grid item xs={12} md={3}>
-                    <CardMedia
-                        className={styles.media}
-                        image={
-                            syllabusImageUrl ||
-                            'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/2000px-Git_icon.svg.png'
-                        }
-                    />
-                </Grid>
 
-                <Grid item xs={12} md={6}>
-                    <Box
-                        display="flex"
-                        flexDirection="column"
-                        height="100%"
-                    >
-                        <Box
-                            component="h3"
-                            margin="0"
-                        >
-                            {payment?.syllabus.name}
-                        </Box>
-                        <Typography
-                            className={classes.multiLineEllipsis}
-                        >
-                            {payment?.syllabus.description}
-                        </Typography>
+                <Grid
+                    container
+                    spacing={1}
+                    style={{
+                        padding: '0 2rem'
+                    }}
+                >
+                    <Grid item xs={12} md={3}>
+                        <CardMedia
+                            className={styles.media}
+                            image={
+                                syllabusImageUrl ||
+                                'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/2000px-Git_icon.svg.png'
+                            }
+                        />
+                    </Grid>
 
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="medium"
-                            sx={{
-                                width: "fit-content",
-                                marginTop: "8px"
-                            }}
-                        >
-                            More Detail
-                        </Button>
-                    </Box>
-                </Grid>
-                <Grid item xs={12} md={3}>
-                    <Box
-                        display="flex"
-                        flexDirection="column"
-                        flexGrow="1"
-                        minWidth="fit-content"
-                        marginLeft="1rem"
-                        width="100%"
-                        height="100%"
-                    >
-                        <Box
-                            fontSize="1rem"
-                            fontWeight="600"
-                            margin="0 auto"
-                        >
-                            {renderPaymentStatus(payment?.status)}
-                        </Box>
-                        <List>
-                            <StatisticItem
-                                icon={<ListAltIcon />}
-                                content={`${payment?.syllabus.totalLessons} total lessons`}
-                                classes={classes}
-                            />
-                            <StatisticItem
-                                icon={<AccessTimeIcon />}
-                                content={`${payment?.syllabus.totalLessons / 3} weeks`}
-                                classes={classes}
-                            />
-                            {payment?.status === PAYMENT_STATUSES.ONGOING &&
-                                <StatisticItem
-                                    icon={<TeacherIcon width="14px" height="14px" />}
-                                    content={`Tutor Mx. ${payment?.tutor?.name || "N/A"}`}
-                                    classes={classes}
-                                />
-                            }
-                            {payment?.status === PAYMENT_STATUSES.PAID &&
-                                <StatisticItem
-                                    icon={<TeacherIcon width="14px" height="14px" />}
-                                    content={<b>Searching tutor...</b>}
-                                    classes={classes}
-                                />
-                            }
-                        </List>
+                    <Grid item xs={12} md={6}>
                         <Box
                             display="flex"
-                            width="100%"
-                            marginTop="auto"
+                            flexDirection="column"
+                            height="100%"
                         >
-                            {renderButton()}
+                            <Box
+                                component="h3"
+                                margin="0"
+                            >
+                                {payment?.syllabus.name}
+                            </Box>
+                            <Typography
+                                className={classes.multiLineEllipsis}
+                            >
+                                {payment?.syllabus.description}
+                            </Typography>
+
+                            <Typography
+                                className={classes.lesson}
+                                marginTop="auto"
+                            >
+                                {`${getComboText(payment?.combo)} - ${getDateSessionText(payment?.dateSession)}.`}
+                            </Typography>
+
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                size="medium"
+                                sx={{
+                                    width: "fit-content",
+                                    marginTop: "8px"
+                                }}
+                                disabled={payment?.status === PAYMENT_STATUSES.CANCELED}
+                            >
+                                Schedule
+                            </Button>
                         </Box>
-                    </Box>
+                    </Grid>
+                    <Grid item xs={12} md={3}>
+                        <Box
+                            display="flex"
+                            flexDirection="column"
+                            flexGrow="1"
+                            minWidth="fit-content"
+                            marginLeft="1rem"
+                            width="100%"
+                            height="100%"
+                        >
+                            <Box
+                                fontSize="1rem"
+                                fontWeight="600"
+                                margin="0 auto"
+                            >
+                                {renderPaymentStatus(payment?.status)}
+                            </Box>
+                            <List>
+                                <StatisticItem
+                                    icon={<ListAltIcon />}
+                                    content={`${payment?.syllabus.totalLessons} total lessons`}
+                                    classes={classes}
+                                />
+                                <StatisticItem
+                                    icon={<AccessTimeIcon />}
+                                    content={`${payment?.syllabus.totalLessons / 3} weeks`}
+                                    classes={classes}
+                                />
+                                {payment?.status === PAYMENT_STATUSES.ONGOING &&
+                                    <StatisticItem
+                                        icon={<TeacherIcon width="14px" height="14px" />}
+                                        content={`Tutor Mx. ${payment?.tutor?.name || "N/A"}`}
+                                        classes={classes}
+                                    />
+                                }
+                                {payment?.status === PAYMENT_STATUSES.PAID &&
+                                    <StatisticItem
+                                        icon={<TeacherIcon width="14px" height="14px" />}
+                                        content={<b>Searching tutor...</b>}
+                                        classes={classes}
+                                    />
+                                }
+                            </List>
+                            <Box
+                                display="flex"
+                                flexDirection="column"
+                                width="100%"
+                                marginTop="auto"
+                            >
+                                {renderButton()}
+                            </Box>
+                        </Box>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </Card>
+            </Card>
+
+            {openCancelPayment &&
+                <CancelPayment
+                    open={openCancelPayment}
+                    handleClose={handleCloseCancel}
+                    payment={payment}
+                    refresh={refresh}
+                />
+            }
+
+            {openContinuePayment &&
+                <PayPayment
+                    open={openContinuePayment}
+                    handleClose={handleCloseContinuePayment}
+                    payment={payment}
+                    refresh={refresh}
+                />
+            }
+        </>
     );
 }
 

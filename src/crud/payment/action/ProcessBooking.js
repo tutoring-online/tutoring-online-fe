@@ -13,7 +13,7 @@ import { Box } from '@mui/system';
 import ReactNumberFormat from 'react-number-format';
 import { getPrice } from 'settings/syllabus-setting';
 import { PAYMENT_STATUSES } from 'settings/payment-setting';
-
+import CreditCardIcon from '@mui/icons-material/CreditCard';
 
 export default function ProcessBooking({
     open,
@@ -26,11 +26,11 @@ export default function ProcessBooking({
     const history = useHistory();
 
     const [openBooking, setOpenBooking] = useState(false);
-    
+
     useEffect(() => {
         setOpenBooking(Boolean(open));
     }, [open])
-    
+
     const [loadingCreate, setLoadingCreate] = useState(false);
     const [bookingData, setBookingData] = useState(null);
     const [openPaymentProcess, setOpenPaymentProcess] = useState(false);
@@ -66,9 +66,10 @@ export default function ProcessBooking({
     }
 
     const handleCloseProcessPayment = () => {
-        callCreate(PAYMENT_STATUSES.PENDING);
-        setOpenPaymentProcess(false);
         toast.info("You could continue complete the payment process in your place.");
+
+        const callback = () => setOpenPaymentProcess(false);
+        callCreate(PAYMENT_STATUSES.PENDING, callback);
     }
 
     const handlePurchaseSuccess = () => {
@@ -124,7 +125,6 @@ export default function ProcessBooking({
                         text: (
                             <>
                                 <Box
-                                    fontSize="1rem"
                                     fontWeight="600"
                                     marginLeft="auto"
                                 >
@@ -137,7 +137,8 @@ export default function ProcessBooking({
                                     />
                                 </Box>
                             </>
-                        )
+                        ),
+                        icon: <CreditCardIcon/>
                     }}
                 />
             }

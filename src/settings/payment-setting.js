@@ -154,7 +154,17 @@ export const getComboLabel = (value) => {
     return option?.label || "";
 }
 
+export const getComboText = (value) => {
+    const option = COMBO_OPTIONS.find(item => item.value === value);
+    return option?.text || "";
+}
+
 export const getDateSessionLabel = (value) => {
     const option = DATE_SESSION_OPTIONS.find(item => item.value === value);
     return option?.label || "";
+}
+
+export const getDateSessionText = (value) => {
+    const option = DATE_SESSION_OPTIONS.find(item => item.value === value);
+    return option?.text || "";
 }

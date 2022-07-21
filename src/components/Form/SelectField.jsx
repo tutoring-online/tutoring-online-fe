@@ -29,10 +29,16 @@ export default function SelectField({
     }
 
     return (
-        <FormGroup>
-            <FormLabel>
-                {required ? <RequiredLabel label={label} /> : label}
-            </FormLabel>
+        <FormGroup
+            sx={{
+                width:"100%"
+            }}
+        >
+            {label &&
+                <FormLabel>
+                    {required ? <RequiredLabel label={label} /> : label}
+                </FormLabel>
+            }
             <FormControl
                 error={Boolean(error)}
                 component={Box}
@@ -55,6 +61,7 @@ export default function SelectField({
                                 <TextField
                                     variant="filled"
                                     className="select-field-filledInput"
+                                    placeholder={inputProps?.placeholder}
                                     {...params}
                                 />
                             )}

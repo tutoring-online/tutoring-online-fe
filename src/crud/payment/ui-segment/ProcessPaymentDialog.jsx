@@ -11,6 +11,30 @@ import SubmitButton from "components/Buttons/SubmitButton";
 import TextField from "components/Form/TextField";
 import DisplayField from "components/Form/DisplayField";
 import { Box } from "@mui/system";
+import BackDropLoader from "components/Loading/BackDropLoader";
+import { MasterCardImage } from "nta-team/nta-img";
+import { VisaCardImage } from "nta-team/nta-img";
+import { PaypalImage } from "nta-team/nta-img";
+import SelectField from "components/Form/SelectField";
+import { useForm } from "react-hook-form";
+
+const generateCartYearOptions = () => {
+    const options = [];
+    for (let i = 1; i < 100; i++) {
+        const temp = i < 10 ? "0" + i : "" + i;
+        options.push({ label: temp, value: temp });
+    }
+    return options;
+}
+
+const getMonthOptions = () => {
+    const options = [];
+    for (let i = 1; i < 13; i++) {
+        const temp = i < 10 ? "0" + i : "" + i;
+        options.push({ label: temp, value: temp });
+    }
+    return options;
+}
 
 export default function ProcessPaymentDialog({
     open,
@@ -21,6 +45,8 @@ export default function ProcessPaymentDialog({
         text: "Confirm"
     }
 }) {
+
+    const { control } = useForm()
 
     return (
         <Dialog
@@ -33,8 +59,20 @@ export default function ProcessPaymentDialog({
                 onClose={onClose}
             />
             <DialogContent>
-                {/* <GroupBox> */}
+                <Box
+                    display="flex"
+                    gap="0.5rem"
+                >
+                    <MasterCardImage width="50px" height="50px" />
+                    <VisaCardImage width="50px" height="50px" />
+                    <PaypalImage width="50px" height="50px" />
+                </Box>
                 <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <TextField
+                            label="Name"
+                        />
+                    </Grid>
                     <Grid item xs={12}>
                         <TextField
                             label="Card number"
@@ -52,16 +90,25 @@ export default function ProcessPaymentDialog({
                                     columnGap="0.5rem"
                                     height="fit-content"
                                     overFlow="hidden"
+                                    width="100%"
                                 >
-                                    <TextField
+                                    <SelectField
                                         inputProps={{
-                                            placeholder: "MM"
+                                            placeholder: "MM",
+                                            type: "number"
                                         }}
+                                        name="month"
+                                        options={getMonthOptions()}
+                                        control={control}
                                     />
-                                    <TextField
+                                    <SelectField
                                         inputProps={{
-                                            placeholder: "YY"
+                                            placeholder: "YY",
+                                            type: "number"
                                         }}
+                                        name="year"
+                                        options={generateCartYearOptions()}
+                                        control={control}
                                     />
                                 </Box>
                             }
@@ -74,16 +121,10 @@ export default function ProcessPaymentDialog({
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
-                            label="Name"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
                             label="Address"
                         />
                     </Grid>
                 </Grid>
-                {/* </GroupBox> */}
             </DialogContent>
             <CustomDialogActions>
                 <CancelButton
@@ -93,9 +134,13 @@ export default function ProcessPaymentDialog({
                 <SubmitButton
                     onClick={onSubmit}
                     text={submitButton.text}
-                    loading={loadingSubmit}
+                    startIcon={submitButton.icon}
                 />
             </CustomDialogActions>
+            <BackDropLoader
+                open={loadingSubmit}
+                text="Processing.."
+            />
         </Dialog>
     )
 }

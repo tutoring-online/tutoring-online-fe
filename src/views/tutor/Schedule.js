@@ -40,6 +40,7 @@ const TutorSchedule = () => {
 						position: "sticky",
 						top: "0.5rem",
 						zIndex: 1000,
+						boxShadow: "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px"
 					}}
 				>
 					<ScheduleFilter
