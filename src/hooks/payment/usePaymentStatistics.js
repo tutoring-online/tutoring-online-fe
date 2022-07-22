@@ -55,9 +55,7 @@ const usePaymentStatistics = () => {
         refresh
     } = usePaymentList();
 
-    const [statistics, setStatistics] = useState(() => {
-        return
-    });
+    const [statistics, setStatistics] = useState({});
 
     useEffect(() => {
         if (!isAvailableArray(paymentList)) {
@@ -105,31 +103,31 @@ const usePaymentStatistics = () => {
                 key: "pending",
                 ...STATISTIC_MODEL.pending,
                 quantity: totalPending,
-                percent: calculatePercentToFix(totalPending , total)
+                percent: calculatePercentToFix(totalPending, total)
             },
             {
                 key: "paid",
                 ...STATISTIC_MODEL.paid,
                 quantity: totalPaid,
-                percent: calculatePercentToFix(totalPaid , total)
+                percent: calculatePercentToFix(totalPaid, total)
             },
             {
                 key: "ongoing",
                 ...STATISTIC_MODEL.ongoing,
                 quantity: totalOnGoing,
-                percent: calculatePercentToFix(totalOnGoing , total)
+                percent: calculatePercentToFix(totalOnGoing, total)
             },
             {
                 key: "error",
                 ...STATISTIC_MODEL.error,
                 quantity: totalError,
-                percent: calculatePercentToFix(totalError , total)
+                percent: calculatePercentToFix(totalError, total)
             },
             {
                 key: "canceled",
                 ...STATISTIC_MODEL.canceled,
                 quantity: totalCanceled,
-                percent: calculatePercentToFix(totalCanceled , total)
+                percent: calculatePercentToFix(totalCanceled, total)
             }
         ]);
     }, [paymentList]);

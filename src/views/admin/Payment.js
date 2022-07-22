@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 
 //MUI
@@ -98,6 +98,12 @@ const Filter = ({
 	const status = useWatch({ control, name: "status" });
 	const sortBy = useWatch({ control, name: "sortBy" });
 
+	const mounted = useRef(false);
+    useEffect(() => {
+        mounted.current = true;
+        return () => mounted.current = false;
+    }, [])
+
 	useEffect(() => {
 		const filter = {};
 		if (syllabusId) {
@@ -116,7 +122,7 @@ const Filter = ({
 			filter["Sort"] = sortBy;
 		}
 
-		setFilter && setFilter(filter);
+		mounted.current && setFilter && setFilter(filter);
 	}, [setFilter, sortBy, status, studentId, syllabusId])
 
 	return (

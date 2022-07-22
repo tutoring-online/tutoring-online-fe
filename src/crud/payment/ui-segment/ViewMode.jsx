@@ -80,6 +80,7 @@ const useAvailableTutors = (syllabusId) => {
     useEffect(() => {
         if (!syllabusDetail) {
             setAvailableTutorOptions([]);
+            return;
         }
 
         const getTutor = (tutorSubject) => isAvailableArray(tutorList) &&
