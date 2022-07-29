@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import BackDropLoader from "components/Loading/BackDropLoader";
 
+import Information from "components/Information.jsx";
 
 export default function App() {
     return (
@@ -27,6 +28,7 @@ export default function App() {
                             <CssBaseline />
 
                             <Router />
+                            <Information />
                         </ThemeProvider>
                     </StyledEngineProvider>
                 </PersistGate>
