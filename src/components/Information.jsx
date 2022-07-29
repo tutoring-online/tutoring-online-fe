@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
 import InfoIcon from '@mui/icons-material/Info';
 
-const message = "Our server is down. From at July 24, 2022, the page just show the UI only.";
+const message = "Our server is down, we will not bring it back. From July 24, 2022, the page just shows the UI only.";
 
 export default function Information() {
 
