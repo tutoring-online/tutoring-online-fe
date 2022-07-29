@@ -1,8 +1,9 @@
 import FullPageLoader from "components/Loading/FullPageLoader";
 import useAuthentication from "hooks/auth/useAuthentication";
 import useSubscribeUser from "hooks/notification/useSubscribeUser";
-import React, { memo, Suspense } from "react";
+import React, { memo, Suspense, useEffect } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 import RedirectHomeWithUserRole from "views/home/RedirectHomeWithUserRole";
 import { LAYOUT_PATHS } from "./routes";
 
@@ -24,6 +25,14 @@ const AuthenticationWrapper = ({ children }) => {
 
 const Router = () => {
     useSubscribeUser();
+
+    useEffect(() => {
+        const message = "Our server is down at 24-07-2022, this page is just the UI only.";
+        toast.info(message, {
+            position: toast.POSITION.TOP_CENTER,
+            onOpen: true
+        });
+    } ,[]);
 
     return (
         <BrowserRouter>

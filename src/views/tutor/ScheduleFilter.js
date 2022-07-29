@@ -137,7 +137,7 @@ export default function ScheduleFilter({
         }
 
         setClassFilter && setClassFilter(classFilter);
-    }, [combo, dateSession, paymentId, setClassFilter, user.id])
+    }, [combo, dateSession, paymentId, setClassFilter, user])
 
 
     return (
@@ -206,10 +206,11 @@ export default function ScheduleFilter({
                 paddingTop="0.5rem"
                 fontSize="14px"
                 color="#8898aa"
+                minHeight="40px"
             >
                 {loading ?
                     <CircularProgress
-                        size={27}
+                        size={26}
                         thickness={4}
                     />
                     :

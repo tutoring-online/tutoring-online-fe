@@ -15,6 +15,7 @@ const useAuthentication = () => {
     const actions = useAuthActions();
     const [loading, setLoading] = useState(false);
     const history = useHistory();
+    
     useEffect(() => {
         const unregisterAuthObserver = auth().onAuthStateChanged(async (currentUser) => {
             const location = history.location?.pathname;
@@ -24,12 +25,10 @@ const useAuthentication = () => {
             }
             
             setLoading(true);
-
-            const token = await currentUser.getIdToken();
-
             let hasError = false;
-
+            
             try {
+                const token = await currentUser.getIdToken();
                 if (location === getFullPath(ROUTES.login)) {
                     await actions.asyncLoginUser({ token });
                 } else if (location === getFullPath(ROUTES.signup)) {

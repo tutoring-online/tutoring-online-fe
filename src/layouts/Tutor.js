@@ -28,14 +28,14 @@ const useStyles = makeStyles(componentStyles);
 const PrivateRoute = (props) => {
     const isSignedIn = useSelector(state => state.auth.isSignedIn);
     const user = useSelector(state => state.auth.user);
+    return <Route {...props} />
+    // if (isSignedIn && isTutor(user?.role)) {
+        // return <Route {...props} />
+    // }
 
-    if (isSignedIn && isTutor(user?.role)) {
-        return <Route {...props} />
-    }
-
-    return (
-        <Redirect from="*" to="/auth/login" />
-    );
+    // return (
+    //     <Redirect from="*" to="/auth/login" />
+    // );
 }
 
 const getTutorRoutes = () => {

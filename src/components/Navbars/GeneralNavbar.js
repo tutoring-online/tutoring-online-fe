@@ -37,13 +37,12 @@ import { getFullPath } from "route/routes";
 import { ROUTES } from "route/routes";
 import { isAvailableArray } from "helpers/arrayUtils";
 import { useSelector } from "react-redux";
-import { isAdmin } from "settings/setting";
+import { isAdmin, isTutor, isStudent } from "settings/setting";
 import NavbarDropdown from "components/Dropdowns/NavbarDropdown";
 import { Avatar, ListItemIcon, ListItemText } from "@mui/material";
 
 import componentStyles from "assets/theme/components/auth-navbar.js";
-import { isStudent } from "settings/setting";
-import { isTutor } from "settings/setting";
+
 const useStyles = makeStyles(componentStyles);
 
 const menuId = "responsive-menu-id";
@@ -104,31 +103,61 @@ export default function GeneralNavbar() {
                 label: "Home",
                 icon: HomeIcon
             },
-            isSignedIn && isAdmin(user?.role) && {
+            // isSignedIn && isAdmin(user?.role) && {
+            //     key: "dashboard",
+            //     to: getFullPath(ROUTES.dashboard),
+            //     label: "Dashboard",
+            //     icon: Dashboard
+            // },
+            // isSignedIn && isStudent(user?.role) && {
+            //     key: "studentSchedule",
+            //     to: getFullPath(ROUTES.studentSchedule),
+            //     label: "Schedule",
+            //     icon: CalendarMonthIcon
+            // },
+            // isSignedIn && isTutor(user?.role) && {
+            //     key: "tutorSchedule",
+            //     to: getFullPath(ROUTES.tutorSchedule),
+            //     label: "Schedule",
+            //     icon: CalendarMonthIcon
+            // },
+            // !isSignedIn && {
+            //     key: "signup",
+            //     to: getFullPath(ROUTES.signup),
+            //     label: "Sign up",
+            //     icon: PersonAddIcon
+            // },
+            // !isSignedIn && {
+            //     key: "login",
+            //     to: getFullPath(ROUTES.login),
+            //     label: "Sign in",
+            //     icon: VpnKey
+            // },
+            {
                 key: "dashboard",
                 to: getFullPath(ROUTES.dashboard),
                 label: "Dashboard",
                 icon: Dashboard
             },
-            isSignedIn && isStudent(user?.role) && {
+            {
                 key: "studentSchedule",
                 to: getFullPath(ROUTES.studentSchedule),
                 label: "Schedule",
                 icon: CalendarMonthIcon
             },
-            isSignedIn && isTutor(user?.role) && {
+            {
                 key: "tutorSchedule",
                 to: getFullPath(ROUTES.tutorSchedule),
                 label: "Schedule",
                 icon: CalendarMonthIcon
             },
-            !isSignedIn && {
+            {
                 key: "signup",
                 to: getFullPath(ROUTES.signup),
                 label: "Sign up",
                 icon: PersonAddIcon
             },
-            !isSignedIn && {
+            {
                 key: "login",
                 to: getFullPath(ROUTES.login),
                 label: "Sign in",
