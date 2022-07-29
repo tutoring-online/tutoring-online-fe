@@ -1,0 +1,25 @@
+.Root-root {
+    display: flex;
+    flex-flow: row nowrap;
+    min-width: fit-content;
+    gap: 1rem;
+
+    > .NavigationButton-button {
+        width: 43px;
+        height: 43px;
+        color: #8898aa;
+        &:hover {
+            color: #5e72e4;
+        }
+    }
+
+    > .OpenButton-textButton {
+        box-shadow: none;
+        border-color: #8898aa;
+        color: #8898aa;
+        &:hover {
+            color: #5e72e4;
+            border-color: #5e72e4;
+        }
+    }
+}

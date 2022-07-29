@@ -19,22 +19,34 @@ import SchoolIcon from '@mui/icons-material/School';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import TopicIcon from '@mui/icons-material/Topic';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-import DirectionsRun from "@mui/icons-material/DirectionsRun";
+import LogoutIcon from '@mui/icons-material/Logout';
+import CategoryIcon from '@mui/icons-material/Category';
+// import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import ClassIcon from '@mui/icons-material/Class';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+
+//Admin
+import Admin from "views/admin/Admin.js";
+import Tutor from "views/admin/Tutor.js";
+import Student from "views/admin/Student.js";
+import Category from "views/admin/Category.js";
+import Subject from "views/admin/Subject.js";
+import Syllabus from "views/admin/Syllabus.js";
+import Payment from "views/admin/Payment.js";
 
 // core components
 const Home = React.lazy(() => import('views/home/Home.jsx'));
 const Dashboard = React.lazy(() => import('views/admin/Dashboard.js'));
 const Login = React.lazy(() => import('views/auth/Login.js'));
+const Signup = React.lazy(() => import('views/auth/Signup.js'));
 const Logout = React.lazy(() => import('views/auth/Logout.js'));
 const Profile = React.lazy(() => import('views/profile/index.js'));
 const PageNotFound = React.lazy(() => import('views/auth/PageNotFound.jsx'));
 
-const Admin = React.lazy(() => import("views/admin/Admin.js"));
-const Tutor = React.lazy(() => import("views/admin/Tutor.js"));
-const Student = React.lazy(() => import("views/admin/Student.js"));
-const Subject = React.lazy(() => import("views/admin/Subject.js"));
-const Syllabus = React.lazy(() => import("views/admin/Syllabus.js"));
-const Payment = React.lazy(() => import("views/admin/Payment.js"));
+const TutorSchedule = React.lazy(() => import('views/tutor/Schedule.js'));
+const StudentSchedule = React.lazy(() => import('views/student/Schedule.js'));
+const BookingHistory = React.lazy(() => import('views/student/StudentBookingHistory.js'));
 
 export const ICON_COLORS = {
 	Primary: "Primary",
@@ -50,6 +62,7 @@ export const ICON_COLORS = {
 export const ROUTE_PATHS = {
 	login: "/login",
 	logout: "/logout",
+	signup: "/signup",
 	pageNotFound: "/page-not-found",
 
 	home: "/index",
@@ -60,18 +73,61 @@ export const ROUTE_PATHS = {
 	tutor: "/tutors",
 	student: "/students",
 	payment: "/payments",
+	category: "/category",
 	subject: "/subjects",
 	syllabus: "/syllabuses",
+
+	booking: "/booking",
+	schedule: "/schedule",
+	class: "/class"
 }
 
 export const LAYOUT_PATHS = {
 	admin: "/admin",
 	auth: "/auth",
 	home: "/home",
-	detail: "/detail"
+	detail: "/detail",
+	tutor: "/tutor",
+	student: "/student"
+}
+
+const TUTOR_ROUTES = {
+	tutorSchedule: {
+		key: "tutorSchedule",
+		name: "Schedule",
+		icon: CalendarMonthIcon,
+		iconColor: ICON_COLORS.Warning,
+		component: TutorSchedule,
+		path: ROUTE_PATHS.schedule,
+		layout: LAYOUT_PATHS.tutor
+	},
+}
+
+const STUDENT_ROUTES = {
+	studentSchedule: {
+		key: "studentSchedule",
+		name: "Schedule",
+		icon: CalendarMonthIcon,
+		iconColor: ICON_COLORS.Warning,
+		component: StudentSchedule,
+		path: ROUTE_PATHS.schedule,
+		layout: LAYOUT_PATHS.student
+	},
+	studentBooking: {
+		key: "studentBooking",
+		name: "Booking history",
+		icon: ClassIcon,
+		iconColor: ICON_COLORS.InfoLight,
+		component: BookingHistory,
+		path: ROUTE_PATHS.booking,
+		layout: LAYOUT_PATHS.student
+	},
 }
 
 const ADMIN_ROUTES = {
+	adminManagement: {
+		title: "Management"
+	},
 	dashboard: {
 		key: "dashboard",
 		name: "Dashboard",
@@ -104,11 +160,20 @@ const ADMIN_ROUTES = {
 		path: ROUTE_PATHS.student,
 		layout: LAYOUT_PATHS.admin
 	},
+	category: {
+		key: "category",
+		name: "Category",
+		icon: CategoryIcon,
+		iconColor: ICON_COLORS.InfoLight,
+		component: Category,
+		path: ROUTE_PATHS.category,
+		layout: LAYOUT_PATHS.admin
+	},
 	subject: {
 		key: "subject",
 		name: "Subject",
 		icon: TopicIcon,
-		iconColor: ICON_COLORS.InfoLight,
+		iconColor: ICON_COLORS.Info,
 		component: Subject,
 		path: ROUTE_PATHS.subject,
 		layout: LAYOUT_PATHS.admin
@@ -117,16 +182,16 @@ const ADMIN_ROUTES = {
 		key: "syllabus",
 		name: "Syllabus",
 		icon: ReceiptLongIcon,
-		iconColor: ICON_COLORS.Info,
+		iconColor: ICON_COLORS.Warning,
 		component: Syllabus,
 		path: ROUTE_PATHS.syllabus,
 		layout: LAYOUT_PATHS.admin
 	},
 	payment: {
 		key: "payment",
-		name: "Payment",
+		name: "Booking",
 		icon: PaymentsIcon,
-		iconColor: ICON_COLORS.Warning,
+		iconColor: ICON_COLORS.Error,
 		component: Payment,
 		path: ROUTE_PATHS.payment,
 		layout: LAYOUT_PATHS.admin
@@ -149,6 +214,8 @@ const ADMIN_ROUTES = {
 
 export const ROUTES = {
 	...ADMIN_ROUTES,
+	...STUDENT_ROUTES,
+	...TUTOR_ROUTES,
 	profile: {
 		key: "profile",
 		name: "User Profile",
@@ -157,6 +224,15 @@ export const ROUTES = {
 		component: Profile,
 		path: ROUTE_PATHS.profile,
 		layout: LAYOUT_PATHS.detail,
+	},
+	signup: {
+		icon: PersonAddIcon,
+		component: Signup,
+		key: "signup",
+		name: "Sign Up",
+		iconColor: "Info",
+		path: ROUTE_PATHS.signup,
+		layout: LAYOUT_PATHS.auth,
 	},
 	login: {
 		icon: VpnKey,
@@ -170,11 +246,12 @@ export const ROUTES = {
 	logout: {
 		key: "logout",
 		name: "Logout",
-		icon: DirectionsRun,
+		icon: LogoutIcon,
 		iconColor: "Primary",
 		component: Logout,
 		path: ROUTE_PATHS.logout,
 		layout: LAYOUT_PATHS.auth,
+		upgradeToPro: true
 	},
 	pageNotFound: {
 		key: "pageNotFound",

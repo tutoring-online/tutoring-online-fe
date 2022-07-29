@@ -16,6 +16,7 @@ import CustomTableBody from "./CustomTableBody";
 import CustomTablePagination from "./CusomTablePagination";
 import { isAvailableArray } from "helpers/arrayUtils";
 import { DEFAULT_PAGINATION } from "settings/table-setting";
+import TableFilter from "./TableFilter";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -23,7 +24,10 @@ const Tables = ({
     title,
     columns,
     data,
-    panel
+    panel,
+    filter,
+    loadingData,
+    noPaging
 }) => {
     const classes = useStyles();
 
@@ -65,6 +69,11 @@ const Tables = ({
                     }}
                     action={panel}
                 />
+                {filter &&
+                    <TableFilter>
+                        {filter}
+                    </TableFilter>
+                }
                 <TableContainer>
                     <Box
                         component={Table}
@@ -78,22 +87,25 @@ const Tables = ({
                         <CustomTableBody
                             columns={columns}
                             data={paginationData}
+                            loadingData={loadingData}
                         />
                     </Box>
                 </TableContainer>
-                <Box
-                    classes={{ root: classes.cardActionsRoot }}
-                    component={CardActions}
-                    justifyContent="flex-end"
-                >
-                    <CustomTablePagination
-                        count={isAvailableArray(data) ? data.length : 0}
-                        page={page}
-                        rowsPerPage={rowsPerPage}
-                        handleChangePage={handleChangePage}
-                        handleChangeRowsPerPage={handleChangeRowsPerPage}
-                    />
-                </Box>
+                {noPaging !== true &&
+                    <Box
+                        classes={{ root: classes.cardActionsRoot }}
+                        component={CardActions}
+                        justifyContent="flex-end"
+                    >
+                        <CustomTablePagination
+                            count={isAvailableArray(data) ? data.length : 0}
+                            page={page}
+                            rowsPerPage={rowsPerPage}
+                            handleChangePage={handleChangePage}
+                            handleChangeRowsPerPage={handleChangeRowsPerPage}
+                        />
+                    </Box>
+                }
             </Card>
         </>
     );

@@ -1,2 +1,6 @@
 //Type
-export const FETCH_ALL_LESSON = "lesson/FETCH_ALL_LESSON";
+export const FETCH_LESSONS = "lesson/FETCH_LESSONS";
+export const FETCH_LESSONS_WITH_FILTER = "lesson/FETCH_LESSONS_WITH_FILTER";
+export const FETCH_LESSON_DETAIL = "lesson/FETCH_LESSON_DETAIL";
+
+export const CLEAR_LESSON_DETAIL = "lesson/CLEAR_LESSON_DETAIL";

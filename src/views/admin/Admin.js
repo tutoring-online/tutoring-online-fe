@@ -5,23 +5,25 @@ import Box from "@mui/material/Box";
 import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import makeStyles from '@mui/styles/makeStyles';
+import { Avatar, Button, IconButton } from "@mui/material";
+
 //Core component
-import Header from "components/Headers/Header.js";
 import Table from "components/Table/Table.jsx";
+import NoInformation from "components/Text/NoInformation";
+import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
+import NTALoading from "nta-team/nta-loading/Loading";
+import { ViewAdmin, DeleteAdmin } from "crud/admin";
 
 //Hooks
 import useAdminList from "hooks/admin/useAdminList";
+import { useEffect, useState } from "react";
 
 import componentStyles from "assets/theme/views/admin/tables.js";
-import makeStyles from '@mui/styles/makeStyles';
-import { useEffect, useState } from "react";
-import { Avatar, Button, IconButton } from "@mui/material";
-import NoInformation from "components/Text/NoInformation";
-import { renderAdminStatus } from "settings/adminSetting";
-import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
-import { LoadingButton } from "@mui/lab";
-
+import { renderAdminStatus, ADMIN_STATUSES } from "settings/admin-setting";
+import { EditStatus } from "crud/admin";
+import useAdminStatistics from "hooks/admin/useAdminStatistics";
+import StatisticHeader from "components/Headers/StatisticHeader";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -32,71 +34,137 @@ const Admin = () => {
 		loading,
 		refresh
 	} = useAdminList();
+	const { statistics } = useAdminStatistics();
 
 	const [columns, setColumns] = useState([]);
 
-	useEffect(() => {
-		setColumns([
-			{
-				key: "name",
-				label: "Name",
-				render: (admin) => (
-					<Box
-						display="flex"
-						alignItems="center"
-					>
+	const [openEdit, setOpenEdit] = useState(false);
+	const [openDelete, setOpenDelete] = useState(false);
+	const [openEditStatus, setOpenEditStatus] = useState(false);
+	const [selectedAdmin, setSelectedAdmin] = useState(null);
+
+	const [loadingDetail, setLoadingDetail] = useState({
+		loading: false,
+		text: ""
+	});
+
+	useEffect(
+		function listenLoadingAdminList() {
+			setLoadingDetail({
+				loading: loading,
+				text: "Loading list..."
+			})
+		},
+		[loading]
+	)
+
+	useEffect(
+		function configColumns() {
+
+			const handleOpenEdit = (admin) => {
+				setSelectedAdmin(admin);
+				setOpenEdit(true);
+			}
+
+			const handleOpenEditStatus = (admin) => {
+				setSelectedAdmin(admin);
+				setOpenEditStatus(true);
+			}
+
+			const handleOpenDelete = (admin) => {
+				setSelectedAdmin(admin);
+				setOpenDelete(true);
+			}
+
+			setColumns([
+				{
+					key: "name",
+					label: "Name",
+					render: (row) => (
 						<Box
-							component={Avatar}
-							marginRight="1rem"
-							alt="avatar"
-							src={admin.avatarURL}
-							sx={{ width: 32, height: 32 }}
-						/>
-						{admin.name || <NoInformation />}
-					</Box>
-				)
-			},
-			{
-				key: "email",
-				label: "Email",
-				render: (admin) => admin.email || <NoInformation />
-			},
-			{
-				key: "phone",
-				label: "Phone",
-				render: (admin) => admin.phone || <NoInformation />
-			},
-			{
-				key: "status",
-				label: "Status",
-				render: (admin) => renderAdminStatus(admin.status)
-			},
-			{
-				key: "action",
-				label: "Actions",
-				render: () => (
-					<Box
-						component="div"
-						display="flex"
-						alignItems="center"
-						columnGap="8px"
-						fontSize="13px"
-					>
-						<BootstrapTooltip title="Detail">
-							<IconButton style={{ padding: 5 }}>
-								<SettingsIcon sx={{ width: 18, height: 18 }} />
-							</IconButton>
-						</BootstrapTooltip>
-						<BootstrapTooltip title="Delete">
-							<IconButton style={{ padding: 5 }}>
-								<DeleteForeverIcon sx={{ width: 18, height: 18 }} />
-							</IconButton>
-						</BootstrapTooltip>
-					</Box>
-				)
-			},
-		])
-	}, [])
+							display="flex"
+							alignItems="center"
+						>
+							<Box
+								component={Avatar}
+								marginRight="1rem"
+								alt="avatar"
+								src={row.avatarURL}
+								sx={{ width: 32, height: 32 }}
+							/>
+							{row.name || <NoInformation />}
+						</Box>
+					)
+				},
+				{
+					key: "email",
+					label: "Email",
+					render: (row) => row.email || <NoInformation />
+				},
+				{
+					key: "phone",
+					label: "Phone",
+					render: (row) => row.phone || <NoInformation />
+				},
+				{
+					key: "status",
+					label: "Status",
+					render: (row) => renderAdminStatus(row.status, () => handleOpenEditStatus(row))
+				},
+				{
+					key: "action",
+					label: "Actions",
+					render: (row) => (
+						<Box
+							component="div"
+							display="flex"
+							alignItems="center"
+							columnGap="8px"
+							fontSize="13px"
+						>
+							<BootstrapTooltip title="Detail">
+								<span>
+									<IconButton
+										style={{ padding: 5 }}
+										onClick={() => handleOpenEdit(row)}
+									>
+										<SettingsIcon sx={{ width: 18, height: 18 }} />
+									</IconButton>
+								</span>
+							</BootstrapTooltip>
+							<BootstrapTooltip title="Delete">
+								<span>
+									<IconButton
+										style={{ padding: 5 }}
+										onClick={() => handleOpenDelete(row)}
+										disabled={row.status === ADMIN_STATUSES.DELETED}
+									>
+										<DeleteForeverIcon sx={{ width: 18, height: 18 }} />
+									</IconButton>
+								</span>
+							</BootstrapTooltip>
+						</Box>
+					)
+				},
+			])
+		},
+		[]
+	)
+
+	const handleCloseEdit = () => {
+		setOpenEdit(false);
+		setSelectedAdmin(null);
+	}
+
+	const handleCloseEditStatus = () => {
+		setOpenEditStatus(false);
+		setSelectedAdmin(null);
+	}
+
+	const handleCloseDelete = () => {
+		setOpenDelete(false);
+		setSelectedAdmin(null);
+	}
 
 	const renderPanel = () => (
 		<Box
@@ -105,31 +173,29 @@ const Admin = () => {
 			alignItems="center"
 			columnGap="0.5rem"
 		>
-			<LoadingButton
-				loading={loading}
-				loadingPosition="start"
-				variant="contained"
-				color="primary"
-				size="small"
-				onClick={() => refresh && refresh()}
-				startIcon={<RefreshIcon fontSize="medium" />}
-			>
-				{loading ? "Loading data" : "Refresh"}
-			</LoadingButton>
+			<NTALoading
+				loading={loadingDetail.loading}
+				text={loadingDetail.text}
+			/>
 			<Button
 				variant="contained"
 				color="primary"
-				size="small"
-				startIcon={<AddBoxIcon fontSize="medium" />}
+				size="medium"
+				onClick={() => refresh && refresh()}
+				startIcon={<RefreshIcon fontSize="medium" />}
 			>
-				Add
+				Refresh
 			</Button>
 		</Box>
 	)
 
 	return (
 		<>
-			<Header />
+			<StatisticHeader
+				statistics={statistics}
+				loading={loading}
+			/>
+
 			<Container
 				maxWidth={false}
 				component={Box}
@@ -137,12 +203,42 @@ const Admin = () => {
 				classes={{ root: classes.containerRoot }}
 			>
 				<Table
-					title={"List Admin Users"}
+					title={"Admin"}
 					columns={columns}
 					data={adminList}
 					panel={renderPanel()}
+					loadingData={loading}
 				/>
 			</Container>
+
+			{openEdit &&
+				<ViewAdmin
+					open={openEdit}
+					handleClose={handleCloseEdit}
+					admin={selectedAdmin}
+					refresh={refresh}
+				/>
+			}
+
+			{openDelete &&
+				<DeleteAdmin
+					open={openDelete}
+					handleClose={handleCloseDelete}
+					setLoadingInfo={setLoadingDetail}
+					admin={selectedAdmin}
+					refresh={refresh}
+				/>
+			}
+
+			{openEditStatus &&
+				<EditStatus
+					open={openEditStatus}
+					handleClose={handleCloseEditStatus}
+					admin={selectedAdmin}
+					refresh={refresh}
+				/>
+
+			}
 		</>
 	)
 }

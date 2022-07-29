@@ -1,16 +1,26 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import usePaymentActions from "./usePaymentActions.js";
+import usePaymentActions from "./usePaymentActions";
 
 const usePaymentList = () => {
-    const paymentList = useSelector(state => state.payment.payments);
     const actions = usePaymentActions();
 
+    const paymentList = useSelector(state => state.payment.payments);
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
-        actions.fetchPayments();
+        actions.fetchPayments({ setLoading });
     }, [actions])
-    
-    return paymentList;
+
+    const refresh = useCallback(() => {
+        actions.fetchPayments({ setLoading });
+    }, [actions])
+
+    return {
+        paymentList,
+        loading,
+        refresh
+    };
 }
 
 export default usePaymentList;

@@ -27,7 +27,7 @@ const AuthHeader = () => {
             >
                 <Container maxWidth="xl">
                     <Box marginBottom="6rem" textAlign="center">
-                        {location.pathname === "/auth/login" &&
+                        {(location.pathname === "/auth/login" || location.pathname === "/auth/signup") &&
                             <Box
                                 component={Grid}
                                 container

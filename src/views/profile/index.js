@@ -2,6 +2,8 @@ import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { isAdmin, isStudent, isTutor } from "settings/setting";
 import AdminProfile from "./AdminProfile";
+import TutorProfile from "./TutorProfile";
+import StudentProfile from "./StudentProfile";
 
 
 const Profile = () => {
@@ -12,11 +14,11 @@ const Profile = () => {
     }
 
     if (isTutor(user?.role)) {
-        return <div>tutor profile</div>
+        return <TutorProfile />
     }
 
     if (isStudent(user?.role)) {
-        return <div>student profile</div>
+        return <StudentProfile />
     }
 
     return <Redirect to="home/index" />

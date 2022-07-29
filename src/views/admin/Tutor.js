@@ -8,16 +8,20 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Avatar, Button, IconButton } from "@mui/material";
 import makeStyles from '@mui/styles/makeStyles';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import AddBoxIcon from '@mui/icons-material/AddBox';
 
 //Core component
-import Header from "components/Headers/Header.js";
 import Table from "components/Table/Table.jsx";
+import StatisticHeader from "components/Headers/StatisticHeader";
+import NTALoading from "nta-team/nta-loading/Loading";
+import { ViewTutor } from "crud/tutor";
+import { DeleteTutor } from "crud/tutor";
+import { EditStatus } from "crud/tutor";
 
 //Hooks
 import useTutorList from "hooks/tutor/useTutorList";
+import useTutorStatistics from "hooks/tutor/useTutorStatistics";
 
-import { renderTutorStatus } from "settings/tutorSetting";
+import { renderTutorStatus, TUTOR_STATUSES } from "settings/tutor-setting";
 import NoInformation from "components/Text/NoInformation";
 import BootstrapTooltip from "nta-team/nta-tooltips/BootstrapTooltip";
 
@@ -27,12 +31,52 @@ const useStyles = makeStyles(componentStyles);
 
 const Tutor = () => {
 	const classes = useStyles();
-	const tutorList = useTutorList();
-	console.log(tutorList);
+	const {
+		tutorList,
+		loading,
+		refresh
+	} = useTutorList();
+	const { statistics } = useTutorStatistics();
 
 	const [columns, setColumns] = useState([]);
 
+	const [openEdit, setOpenEdit] = useState(false);
+	const [openEditStatus, setOpenEditStatus] = useState(false);
+	const [openDelete, setOpenDelete] = useState(false);
+	const [selectedTutor, setSelectedTutor] = useState(null);
+
+	const [loadingDetail, setLoadingDetail] = useState({
+		loading: false,
+		text: ""
+	});
+
+	useEffect(
+		function listenLoadingList() {
+			setLoadingDetail({
+				loading: loading,
+				text: "Loading list..."
+			})
+		},
+		[loading]
+	)
+
 	useEffect(() => {
+		const handleOpenEdit = (admin) => {
+			setSelectedTutor(admin);
+			setOpenEdit(true);
+		}
+
+		const handleOpenEditStatus = (admin) => {
+				setSelectedTutor(admin);
+				setOpenEditStatus(true);
+			}
+
+
+		const handleOpenDelete = (admin) => {
+			setSelectedTutor(admin);
+			setOpenDelete(true);
+		}
+
 		setColumns([
 			{
 				key: "name",
@@ -54,16 +98,6 @@ const Tutor = () => {
 				)
 			},
 			{
-				key: "totalLessons",
-				align: "center",
-				label: (
-					<BootstrapTooltip title="Total lessons">
-						<div>Lessons</div>
-					</BootstrapTooltip>
-				),
-				render: (row) => row.totalLessons || 0
-			},
-			{
 				key: "email",
 				label: "Email",
 				render: (row) => row.email || <NoInformation />
@@ -76,13 +110,12 @@ const Tutor = () => {
 			{
 				key: "status",
 				label: "Status",
-				render: (row) => renderTutorStatus(row.status)
+				render: (row) => renderTutorStatus(row.status, () => handleOpenEditStatus(row))
 			},
 			{
 				key: "action",
-				align: "center",
 				label: "Actions",
-				render: () => (
+				render: (row) => (
 					<Box
 						component="div"
 						display="flex"
@@ -91,20 +124,46 @@ const Tutor = () => {
 						fontSize="13px"
 					>
 						<BootstrapTooltip title="Detail">
-							<IconButton style={{ padding: 5 }}>
-								<SettingsIcon sx={{ width: 18, height: 18 }} />
-							</IconButton>
+							<span>
+								<IconButton
+									style={{ padding: 5 }}
+									onClick={() => handleOpenEdit(row)}
+								>
+									<SettingsIcon sx={{ width: 18, height: 18 }} />
+								</IconButton>
+							</span>
 						</BootstrapTooltip>
 						<BootstrapTooltip title="Delete">
-							<IconButton style={{ padding: 5 }}>
-								<DeleteForeverIcon sx={{ width: 18, height: 18 }} />
-							</IconButton>
+							<span>
+								<IconButton
+									style={{ padding: 5 }}
+									onClick={() => handleOpenDelete(row)}
+									disabled={row.status === TUTOR_STATUSES.DELETED}
+								>
+									<DeleteForeverIcon sx={{ width: 18, height: 18 }} />
+								</IconButton>
+							</span>
 						</BootstrapTooltip>
 					</Box>
 				)
 			},
 		])
 	}, [])
+
+	const handleCloseEdit = () => {
+		setOpenEdit(false);
+		setSelectedTutor(null);
+	}
+
+	const handleCloseEditStatus = () => {
+		setOpenEditStatus(false);
+		setSelectedTutor(null);
+	}
+
+	const handleCloseDelete = () => {
+		setOpenDelete(false);
+		setSelectedTutor(null);
+	}
 
 	const renderPanel = () => (
 		<Box
@@ -113,28 +172,28 @@ const Tutor = () => {
 			alignItems="center"
 			columnGap="0.5rem"
 		>
+			<NTALoading
+				loading={loadingDetail.loading}
+				text={loadingDetail.text}
+			/>
 			<Button
 				variant="contained"
 				color="primary"
-				size="small"
+				size="medium"
+				onClick={() => refresh && refresh()}
 				startIcon={<RefreshIcon fontSize="medium" />}
 			>
 				Refresh
-			</Button>
-			<Button
-				variant="contained"
-				color="primary"
-				size="small"
-				startIcon={<AddBoxIcon fontSize="medium" />}
-			>
-				Add
 			</Button>
 		</Box>
 	)
 
 	return (
 		<>
-			<Header />
+			<StatisticHeader
+				statistics={statistics}
+				loading={loading}
+			/>
 			<Container
 				maxWidth={false}
 				component={Box}
@@ -142,12 +201,43 @@ const Tutor = () => {
 				classes={{ root: classes.containerRoot }}
 			>
 				<Table
-					title={"List Tutor Users"}
+					title={"Tutors"}
 					columns={columns}
 					data={tutorList}
 					panel={renderPanel()}
+					loadingData={loading}
 				/>
 			</Container>
+
+			{openEdit &&
+				<ViewTutor
+					open={openEdit}
+					handleClose={handleCloseEdit}
+					setLoadingInfo={setLoadingDetail}
+					tutor={selectedTutor}
+					refresh={refresh}
+				/>
+			}
+
+			{openDelete &&
+				<DeleteTutor
+					open={openDelete}
+					handleClose={handleCloseDelete}
+					setLoadingInfo={setLoadingDetail}
+					tutor={selectedTutor}
+					refresh={refresh}
+				/>
+			}
+
+			{openEditStatus &&
+				<EditStatus
+					open={openEditStatus}
+					handleClose={handleCloseEditStatus}
+					tutor={selectedTutor}
+					refresh={refresh}
+				/>
+
+			}
 		</>
 	)
 }

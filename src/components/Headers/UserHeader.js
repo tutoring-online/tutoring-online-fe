@@ -19,7 +19,7 @@ const UserHeader = () => {
     const theme = useTheme();
 
     const user = useSelector(state => state.auth.user);
-    console.log(user);
+
     return (
         <>
             <Box

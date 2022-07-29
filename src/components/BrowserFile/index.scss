@@ -1,0 +1,65 @@
+$text-color: #677683;
+$bg-color: #f0f2f4;
+$border-color: #3f4a59;
+
+.browser-avatar {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+
+    cursor: pointer;
+    color: $text-color;
+    border: 1px dashed $border-color;
+    background: $bg-color;
+
+    &:hover,
+    &:focus {
+        filter: brightness(0.9);
+    }
+
+    &__cloud-icon {
+        color: #a6b6c2;
+    }
+}
+
+.preview-file {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px 4px 0 0;
+    background: #fff;
+
+    cursor: pointer !important;
+
+    &__area {
+        width: 100%;
+        flex-grow: 1;
+        object-fit: contain;
+        overflow: auto;
+    }
+
+    &__panel {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+
+        width: 100%;
+        height: 50px;
+        padding: 0.5rem;
+        border-radius: 0 0 4px 4px;
+
+        color: #fff;
+        background: rgba(0, 0, 0, 0.4);
+    }
+}

@@ -1,8 +1,10 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import 'firebase/compat/messaging';
 
+export const keyPair = "BFBZZug0kR_HiFaADJK7ei0qvccGiQd1MHBC1u76Vps2HZXYpXJCAqtX9tPwtTa9K-Memu1VsFaiO9nIwQiGn-s";
 
-const config = {
+export const config = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
     projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
@@ -17,6 +19,8 @@ firebase.auth(app);
 
 export const auth = firebase.auth;
 export default app;
+
+export const messaging = firebase.messaging();
 
 export const getFirebaseToken = async () => {
     const currentUser = auth().currentUser;

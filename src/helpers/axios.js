@@ -60,7 +60,7 @@ export const axiosRequest = async (url, options = {}, params = {}) => {
 		const response = await axiosClient(config);
 
 		if (isResponseError(response)) {
-			throw new Error(response.message);
+			throw response;
 		}
 
 		return response;

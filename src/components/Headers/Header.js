@@ -1,27 +1,84 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import makeStyles from '@mui/styles/makeStyles';
-import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 // @mui/icons-material components
-import ArrowDownward from "@mui/icons-material/ArrowDownward";
-import ArrowUpward from "@mui/icons-material/ArrowUpward";
-import EmojiEvents from "@mui/icons-material/EmojiEvents";
-import GroupAdd from "@mui/icons-material/GroupAdd";
 import InsertChartOutlined from "@mui/icons-material/InsertChartOutlined";
 import PieChart from "@mui/icons-material/PieChart";
-
+import GroupAdd from "@mui/icons-material/GroupAdd";
+import ReactNumberFormat from 'react-number-format';
 // core components
 import CardStats from "components/Cards/CardStats.js";
 
 import componentStyles from "assets/theme/components/header.js";
+import { getFirstDayOfMonth } from "helpers/dateUtils";
+import { isAvailableArray } from "helpers/arrayUtils";
+import { Skeleton } from "@mui/material";
+import { formatDate } from "helpers/dateUtils";
+import { isoFormat } from "helpers/dateUtils";
+import { PAYMENT_STATUSES } from "settings/payment-setting";
+import { STUDENT_STATUSES } from "settings/student-setting";
+import useFilteredStudentList from "hooks/student/useFilteredStudentList";
+import useFilteredBookingsNotRedux from "hooks/payment/useFilteredBookingsNotRedux";
 
 const useStyles = makeStyles(componentStyles);
 
+const firstDayOfMonthString = formatDate(getFirstDayOfMonth(), isoFormat);
+
+const paymentFilter = {
+	FromCreatedDate: firstDayOfMonthString,
+}
+
+const studentFilter = {
+	FromCreatedDate: firstDayOfMonthString,
+	Status: STUDENT_STATUSES.ACTIVE
+}
+
 const Header = () => {
 	const classes = useStyles();
-	const theme = useTheme();
+
+	const { paymentList, loading: loadingPayments } = useFilteredBookingsNotRedux(paymentFilter);
+	const { studentList, loading: loadingStudents } = useFilteredStudentList(studentFilter);
+
+	const [loadingStatistic, setLoadingStatistic] = useState([]);
+	const [statistic, setStatistic] = useState({});
+
+	useEffect(() => {
+		let revenue = 0.0;
+		let newBooking = 0;
+		if (isAvailableArray(paymentList)) {
+			paymentList.forEach(item => {
+				newBooking += 1;
+				if (item.status === PAYMENT_STATUSES.PAID) {
+					revenue += (item.syllabus.price || 0);
+				}
+			})
+		}
+
+		let newStudent = 0;
+		if (isAvailableArray(studentList)) {
+			newStudent = studentList.length
+		}
+
+
+		setStatistic((prev) => ({
+			...prev,
+			revenue,
+			newStudent,
+			newBooking
+		}))
+	}, [paymentList, studentList])
+
+	useEffect(() => {
+		setLoadingStatistic(() =>
+			loadingPayments ||
+			loadingStudents
+		);
+	}, [loadingPayments, loadingStudents])
+
+
+
 	return (
 		<>
 			<div className={classes.header}>
@@ -32,29 +89,27 @@ const Header = () => {
 				>
 					<div>
 						<Grid container>
-							<Grid item xl={3} lg={6} xs={12}>
+							<Grid item xl={4} lg={4} xs={12}>
 								<CardStats
-									subtitle="Traffic"
-									title="350,897"
+									subtitle="Revenue"
+									title={loadingStatistic ?
+										<Skeleton
+											variant="text"
+											animation="wave"
+											height={30}
+										/>
+										:
+										<ReactNumberFormat
+											displayType="text"
+											value={statistic.revenue}
+											thousandSeparator={true}
+											suffix=" ₫"
+										/>
+									}
 									icon={InsertChartOutlined}
 									color="bgError"
 									footer={
 										<>
-											<Box
-												component="span"
-												fontSize=".875rem"
-												color={theme.palette.success.main}
-												marginRight=".5rem"
-												display="flex"
-												alignItems="center"
-											>
-												<Box
-													component={ArrowUpward}
-													width="1.5rem!important"
-													height="1.5rem!important"
-												/>{" "}
-												3.48%
-											</Box>
 											<Box component="span" whiteSpace="nowrap">
 												Since last month
 											</Box>
@@ -62,89 +117,53 @@ const Header = () => {
 									}
 								/>
 							</Grid>
-							<Grid item xl={3} lg={6} xs={12}>
+							<Grid item xl={4} lg={4} xs={12}>
 								<CardStats
-									subtitle="New users"
-									title="2,356"
-									icon={PieChart}
+									subtitle="New students"
+									title={loadingStatistic ?
+										<Skeleton
+											variant="text"
+											animation="wave"
+											height={30}
+										/>
+										:
+										<ReactNumberFormat
+											displayType="text"
+											value={statistic.newStudent}
+											thousandSeparator={true}
+										/>
+									}
+									icon={GroupAdd}
 									color="bgWarning"
 									footer={
 										<>
-											<Box
-												component="span"
-												fontSize=".875rem"
-												color={theme.palette.error.main}
-												marginRight=".5rem"
-												display="flex"
-												alignItems="center"
-											>
-												<Box
-													component={ArrowDownward}
-													width="1.5rem!important"
-													height="1.5rem!important"
-												/>{" "}
-												3.48%
-											</Box>
 											<Box component="span" whiteSpace="nowrap">
-												Since last week
+												Since last month
 											</Box>
 										</>
 									}
 								/>
 							</Grid>
-							<Grid item xl={3} lg={6} xs={12}>
+							<Grid item xl={4} lg={4} xs={12}>
 								<CardStats
-									subtitle="Sales"
-									title="924"
-									icon={GroupAdd}
-									color="bgWarningLight"
-									footer={
-										<>
-											<Box
-												component="span"
-												fontSize=".875rem"
-												color={theme.palette.warning.main}
-												marginRight=".5rem"
-												display="flex"
-												alignItems="center"
-											>
-												<Box
-													component={ArrowDownward}
-													width="1.5rem!important"
-													height="1.5rem!important"
-												/>{" "}
-												1.10%
-											</Box>
-											<Box component="span" whiteSpace="nowrap">
-												Since yesterday
-											</Box>
-										</>
+									subtitle="New Booking"
+									title={loadingStatistic ?
+										<Skeleton
+											variant="text"
+											animation="wave"
+											height={30}
+										/>
+										:
+										<ReactNumberFormat
+											displayType="text"
+											value={statistic.newBooking}
+											thousandSeparator={true}
+										/>
 									}
-								/>
-							</Grid>
-							<Grid item xl={3} lg={6} xs={12}>
-								<CardStats
-									subtitle="Performance"
-									title="49,65%"
-									icon={EmojiEvents}
-									color="bgInfo"
+									icon={PieChart}
+									color="bgError"
 									footer={
 										<>
-											<Box
-												component="span"
-												fontSize=".875rem"
-												color={theme.palette.success.main}
-												marginRight=".5rem"
-												display="flex"
-												alignItems="center"
-											>
-												<Box
-													component={ArrowUpward}
-													width="1.5rem!important"
-													height="1.5rem!important"
-												/>{" "}
-												10%
-											</Box>
 											<Box component="span" whiteSpace="nowrap">
 												Since last month
 											</Box>

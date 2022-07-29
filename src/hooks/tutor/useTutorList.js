@@ -1,16 +1,38 @@
-import { useEffect } from "react";
+import { isAvailableArray } from "helpers/arrayUtils";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import useTutorActions from "./useTutorActions.js";
+import { TUTOR_STATUSES } from "settings/tutor-setting";
+import useTutorActions from "./useTutorActions";
 
 const useTutorList = () => {
-    const tutorList = useSelector(state => state.tutor.tutors);
     const actions = useTutorActions();
 
+    const data = useSelector(state => state.tutor.tutors);
+    const [tutorList, setTutorList] = useState([])
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
-        actions.fetchTutors();
+        actions.fetchTutors({ setLoading });
     }, [actions])
-    
-    return tutorList;
+
+    const refresh = useCallback(() => {
+        actions.fetchTutors({ setLoading });
+    }, [actions])
+
+    useEffect(() => {
+        if (!isAvailableArray(data)) {
+            setTutorList([]);
+            return;
+        }
+
+        setTutorList(data.filter(item => item.status !== TUTOR_STATUSES.BANNED))
+    }, [data])
+
+    return {
+        tutorList,
+        loading,
+        refresh
+    };
 }
 
 export default useTutorList;
