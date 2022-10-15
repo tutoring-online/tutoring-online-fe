@@ -5,14 +5,15 @@ import React from 'react'
 export const ComboItem = ({ content }) => (
     <Box
         display="flex"
+        flexWrap="nowrap"
         alignItems="center"
         justifyContent="center"
         padding="0.375rem 0.75rem"
-        maxWidth="fit-content"
+        width="fit-content"
 
         color="#fff"
         bgcolor="#04AA6D"
-        borderRadius="4px"  
+        borderRadius="4px"
         fontWeight="600"
     >
         {content}
