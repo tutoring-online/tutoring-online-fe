@@ -9,6 +9,8 @@ import useBookingRecords from 'hooks/student/useBookingRecords';
 import BookingSyllabusCard from 'components/Cards/BookingSyllabusCard';
 import { Grid } from '@mui/material';
 import SyllabusCardSkeleton from 'components/Cards/SyllabusCardSkeleton';
+import DelayRenderWrapper from 'nta-team/DelayRenderWrapper';
+import { DELAY_RENDER_DIRECTION } from 'nta-team/DelayRenderWrapper';
 
 const useStyles = makeStyles(componentStyles);
 
@@ -63,7 +65,19 @@ const TutorSchedule = () => {
                 marginTop="-6rem"
                 classes={{ root: styleClasses.containerRoot }}
             >
-                {loading ? renderSkeleton() : renderList()}
+                <DelayRenderWrapper
+                    isRender={loading}
+                    direction={DELAY_RENDER_DIRECTION.stopRender}
+                >
+                    {renderSkeleton()}
+                </DelayRenderWrapper>
+                <DelayRenderWrapper
+                    isRender={!loading}
+                    delay={100}
+                    direction={DELAY_RENDER_DIRECTION.render}
+                >
+                    {renderList()}
+                </DelayRenderWrapper>
             </Container>
         </>
     )

@@ -81,7 +81,7 @@ const Payment = () => {
 				color="primary"
 				size="medium"
 				onClick={() => {
-					history.push(getFullPath(ROUTES.tutor))
+					history.push(getFullPath(ROUTES.payment))
 				}}
 				startIcon={<EastIcon fontSize="medium" />}
 			>

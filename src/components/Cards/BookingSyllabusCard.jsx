@@ -17,13 +17,23 @@ import { ResearchImage } from 'nta-team/nta-img';
 import { STATUS_COLORS } from 'settings/setting';
 // import ReactNumberFormat from 'react-number-format';
 // import { getPrice } from 'settings/syllabus-setting';
+import useFilteredLessonList from "hooks/lesson/useFilteredLessonList";
+import { LESSON_STATUSES } from 'settings/lesson-setting';
 
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import { CancelPayment } from 'crud/payment';
 import { getComboText } from 'settings/payment-setting';
 import { getDateSessionText } from 'settings/payment-setting';
 import { PayPayment } from 'crud/payment';
+import { useHistory } from 'react-router-dom';
+import { getFullPath } from 'route/routes';
+import { ROUTES } from "route/routes";
+import { useMemo } from 'react';
+import { isAvailableArray } from 'helpers/arrayUtils';
+import moment from 'moment/moment';
+import { validDate } from 'helpers/dateUtils';
 
 const useStyles = makeStyles(componentStyles);
 const useStylesEllipsis = makeStyles({
@@ -68,13 +78,36 @@ const StatisticItem = ({ icon, content, classes }) => (
     </ListItem>
 )
 
+const useClassNextLesson = (payment) => {
+
+    const filter = useMemo(() => {
+        if (payment?.status === PAYMENT_STATUSES.ONGOING) {
+            return { Status: payment?.status };
+        }
+        return {};
+    }, [payment?.status])
+
+    const { lessonList } = useFilteredLessonList(filter);
+
+
+    const nextLesson = useMemo(() => {
+        if (!isAvailableArray(lessonList)) return null;
+        return lessonList.find(item => item.paymentId === payment?.id && item.status === LESSON_STATUSES.PENDING)
+    }, [lessonList, payment?.id]);
+
+    if (payment?.status !== PAYMENT_STATUSES.ONGOING) return null;
+    return nextLesson;
+}
+
 export const BookingSyllabusCard = ({
     payment,
     refresh
 }) => {
     const styles = useStyles();
     const classes = useStylesEllipsis();
+    const history = useHistory();
 
+    const nextLesson = useClassNextLesson(payment);
     const [openCancelPayment, setOpenCancelPayment] = useState(false);
     const [openContinuePayment, setOpenContinuePayment] = useState(false);
 
@@ -97,6 +130,32 @@ export const BookingSyllabusCard = ({
     const renderButton = () => {
         const status = payment?.status;
         if (status === PAYMENT_STATUSES.ONGOING) {
+
+            const timeDiff = (() => {
+                if (!validDate(nextLesson?.date)) {
+                    return null;
+                }
+
+                const now = moment(new Date());
+                const lessonDate = moment(nextLesson.date);
+                const duration = moment.duration(lessonDate.diff(now)).asHours();
+                return duration;
+            })();
+
+            const diffString = (() => {
+                if (!validDate(nextLesson?.date)) {
+                    return "Waiting";
+                }
+
+                const now = moment(new Date());
+                const lessonDate = moment(nextLesson.date);
+                return lessonDate.from(now);
+            })();
+
+            const isActive = timeDiff != null && (-1 <= timeDiff && timeDiff <= 3);
+
+            console.log(timeDiff);
+
             return (
                 <Button
                     variant="contained"
@@ -112,8 +171,9 @@ export const BookingSyllabusCard = ({
                         const url = payment?.tutor?.meetingUrl;
                         window.open(url, '_blank', 'noopener,noreferrer');
                     }}
+                    disabled={!isActive}
                 >
-                    Go to meeting
+                    {isActive ? "Go to meeting" : `Next lesson ${diffString}`}
                 </Button>
             )
         }
@@ -169,7 +229,34 @@ export const BookingSyllabusCard = ({
                 </>
             )
         }
+
+        if (status === PAYMENT_STATUSES.CANCELED) {
+            return (
+                <>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="medium"
+                        sx={{ width: "100%" }}
+                        startIcon={<CreditCardIcon />}
+                        onClick={handleOpenContinuePayment}
+                        disabled={true}
+                    >
+                        Re-Order
+                    </Button>
+                </>
+            )
+        }
     }
+
+
+    const isAvailableSchedule = useMemo(() => {
+        if (payment?.status === PAYMENT_STATUSES.CANCELED) return false;
+        if (payment?.status === PAYMENT_STATUSES.PENDING) return false;
+        if (payment?.status === PAYMENT_STATUSES.PAID) return false;
+
+        return true;
+    }, [payment?.status]);
 
     return (
         <>
@@ -226,18 +313,38 @@ export const BookingSyllabusCard = ({
                                 {`${getComboText(payment?.combo)} - ${getDateSessionText(payment?.dateSession)}.`}
                             </Typography>
 
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                size="medium"
-                                sx={{
-                                    width: "fit-content",
-                                    marginTop: "8px"
-                                }}
-                                disabled={payment?.status === PAYMENT_STATUSES.CANCELED}
+                            <Box
+                                display="flex"
+                                alignItems="center"
+                                gap="1rem"
                             >
-                                Schedule
-                            </Button>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    size="medium"
+                                    sx={{
+                                        width: "fit-content",
+                                        marginTop: "8px"
+                                    }}
+                                    onClick={() => history.push(getFullPath(ROUTES.studentSchedule))}
+                                    disabled={!isAvailableSchedule}
+                                >
+                                    Schedule
+                                </Button>
+
+                                <Button
+                                    variant="contained"
+                                    size="medium"
+                                    sx={{
+                                        width: "fit-content",
+                                        marginTop: "8px"
+                                    }}
+                                    startIcon={<HelpOutlineIcon />}
+                                    onClick={() => window.open("https://fb.com/le.d.trong.95", "_blank")}
+                                >
+                                    Help
+                                </Button>
+                            </Box>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={3}>
