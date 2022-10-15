@@ -18,6 +18,7 @@ import yup from "helpers/yupGlobal";
 import useCategoryList from "hooks/category/useCategoryList";
 import useSubjectList from "hooks/subject/useSubjectList";
 import useSyllabusActions from "hooks/syllabus/useSyllabusActions";
+import { useCallback } from "react";
 
 const SearchBar = ({ children }) => (
     <Box
@@ -114,7 +115,7 @@ export default function SearchBox() {
     const { categoryList } = useCategoryList();
     const actions = useSyllabusActions();
 
-    const { control } = useForm({
+    const { control, reset } = useForm({
         mode: "onSubmit",
         reValidateMode: "onBlur",
         defaultValues: {
@@ -133,19 +134,18 @@ export default function SearchBox() {
     const sortBy = useWatch({ control, name: "sortBy" });
     const price = useWatch({ control, name: "price" });
 
-
-    useEffect(() => {
+    const getFilterPayload = useCallback(() => {
         const filter = {
             FromPrice: price ? price[0] : 0,
             ToPrice: price ? price[1] : DEFAULT_MAX_PRICE,
         };
 
         if (duration) {
-            filter.FromTotalLessons = duration * 3;
-            filter.ToTotalLessons = duration * 3;
+            filter.FromTotalLessons = duration;
+            filter.ToTotalLessons = duration;
         }
 
-        if(subjectId) {
+        if (subjectId) {
             filter.SubjectId = subjectId;
         }
 
@@ -153,8 +153,27 @@ export default function SearchBox() {
             filter["Sort"] = sortBy;
         }
 
+        return filter;
+    }, [duration, price, sortBy, subjectId])
+
+    useEffect(() => {
+        const filter = getFilterPayload();
         actions.updateFilter(filter);
-    }, [subjectId, duration, sortBy, price, actions])
+    }, [actions, getFilterPayload])
+
+    useEffect(() => {
+        const filter = getFilterPayload();
+        const { SubjectId, ...others } = filter;
+        actions.updateFilter(others);
+        reset({
+            categoryId,
+            subjectId: "",
+            duration,
+            sortBy,
+            price,
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [categoryId]);
 
     const maxPrice = getMaxPrice();
 
