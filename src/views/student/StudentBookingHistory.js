@@ -11,6 +11,7 @@ import { Grid } from '@mui/material';
 import SyllabusCardSkeleton from 'components/Cards/SyllabusCardSkeleton';
 import DelayRenderWrapper from 'nta-team/DelayRenderWrapper';
 import { DELAY_RENDER_DIRECTION } from 'nta-team/DelayRenderWrapper';
+import { useMemo } from 'react';
 
 const useStyles = makeStyles(componentStyles);
 
@@ -39,9 +40,16 @@ const TutorSchedule = () => {
     const user = useSelector(state => state.auth.user);
     const { bookingRecords, loading, refresh } = useBookingRecords(user?.id);
 
+    const reorderRecords = useMemo(() => {
+        if (!isAvailableArray(bookingRecords)) return [];
+        const temp = [...bookingRecords];
+        temp.reverse();
+        return temp;
+    }, [bookingRecords])
+
     const renderList = () => (
         <Grid container spacing={2}>
-            {isAvailableArray(bookingRecords) && bookingRecords.map(record =>
+            {reorderRecords.map(record =>
                 <Grid
                     item
                     key={record.id}

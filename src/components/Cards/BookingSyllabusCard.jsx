@@ -154,8 +154,6 @@ export const BookingSyllabusCard = ({
 
             const isActive = timeDiff != null && (-1 <= timeDiff && timeDiff <= 3);
 
-            console.log(timeDiff);
-
             return (
                 <Button
                     variant="contained"

@@ -17,7 +17,6 @@ export default function useClassesDetailedLessons(classes, filter) {
         const detailedLessons = [];
         classes.forEach(classItem => {
             const classLessons = lessonList.filter(lesson => lesson.paymentId === classItem.id);
-            console.log(classLessons);
             const preparedLessons = classLessons.map(lesson => ({
                 title: 'Lesson',
                 startDate: getLessonStartDate(lesson.date, classItem.dateSession),

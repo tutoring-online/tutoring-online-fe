@@ -37,7 +37,6 @@ const createAdmin = async (params) => {
         const createAdminData = { ...data, role: ROLES.admin };
         const response = await api.createAdmin(createAdminData);
 
-        console.log(response)
         callback(true, response);
         toast.success("Created admin successfully.");
         return response;

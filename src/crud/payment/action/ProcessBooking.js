@@ -67,12 +67,18 @@ export default function ProcessBooking({
     const handleCloseProcessPayment = () => {
         toast.info("You could continue complete the payment process in your place.");
 
-        const callback = () => setOpenPaymentProcess(false);
+        const callback = () => {
+            setOpenPaymentProcess(false);
+            history.push(getFullPath(ROUTES.studentBooking))
+        }
         callCreate(PAYMENT_STATUSES.PENDING, callback);
     }
 
     const handlePurchaseSuccess = () => {
-        const callback = () => setOpenPaymentProcess(false);
+        const callback = () => {
+            setOpenPaymentProcess(false);
+            history.push(getFullPath(ROUTES.studentBooking))
+        }
         callCreate(PAYMENT_STATUSES.PAID, callback);
     }
 
@@ -137,7 +143,7 @@ export default function ProcessBooking({
                                 </Box>
                             </>
                         ),
-                        icon: <CreditCardIcon/>
+                        icon: <CreditCardIcon />
                     }}
                 />
             }
