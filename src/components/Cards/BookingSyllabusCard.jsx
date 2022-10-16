@@ -338,7 +338,7 @@ export const BookingSyllabusCard = ({
                                         marginTop: "8px"
                                     }}
                                     startIcon={<HelpOutlineIcon />}
-                                    onClick={() => window.open("https://fb.com/le.d.trong.95", "_blank")}
+                                    onClick={() => window.open("https://fb.com/myNhuq01", "_blank")}
                                 >
                                     Help
                                 </Button>

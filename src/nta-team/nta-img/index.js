@@ -5,3 +5,4 @@ export { default as MeetingImage } from "./svg-img/MeetingImage.jsx";
 export { default as VisaCardImage } from "./svg-img/VisaCardImage.jsx";
 export { default as MasterCardImage } from "./svg-img/MasterCardImage";
 export { default as PaypalImage } from "./svg-img/PaypalImage";
+export { default as LogoImage } from "./svg-img/LogoImage";
