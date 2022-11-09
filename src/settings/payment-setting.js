@@ -64,7 +64,7 @@ export const COMBO_OPTIONS = [
             />
         ),
         value: 1,
-        text: "Even days (Monday, Wednesday, Friday)", 
+        text: "Even days (Monday, Wednesday, Friday)",
     },
     {
         label: (
@@ -73,7 +73,7 @@ export const COMBO_OPTIONS = [
             />
         ),
         value: 2,
-        text: "Odd days (Tuesday, Thursday, Saturday)", 
+        text: "Odd days (Tuesday, Thursday, Saturday)",
     },
 ]
 
@@ -107,8 +107,9 @@ const getDateSessionObject = (value) => {
 }
 
 const prepareDate = (date) => {
-    if(!validDate(date)) return null;
-    if(new Date(date) == "Invalid Date") {
+    if (!validDate(date)) return null;
+    // eslint-disable-next-line eqeqeq
+    if (new Date(date) == "Invalid Date") {
         return removeOffsetTimeZone(new Date(convertBeDateToIso(date)));
     }
     return removeOffsetTimeZone(new Date(date));
@@ -117,10 +118,10 @@ const prepareDate = (date) => {
 export const getLessonStartDate = (date, dateSession) => {
     const dateSessionObject = getDateSessionObject(dateSession);
     if (!dateSessionObject) return null;
-    
+
     const startDate = prepareDate(date);
-    if(!startDate) return null;
-    
+    if (!startDate) return null;
+
     startDate.setHours(dateSessionObject.startHour);
     return startDate;
 }
@@ -128,10 +129,10 @@ export const getLessonStartDate = (date, dateSession) => {
 export const getLessonEndDate = (date, dateSession) => {
     const dateSessionObject = getDateSessionObject(dateSession);
     if (!dateSessionObject) return null;
-    
+
     const endDate = prepareDate(date);
-    if(!endDate) return null;
-    
+    if (!endDate) return null;
+
     endDate.setHours(dateSessionObject.endHour);
     return endDate;
 }

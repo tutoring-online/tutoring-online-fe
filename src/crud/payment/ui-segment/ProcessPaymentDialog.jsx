@@ -1,39 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 
 //Mui
-import { Dialog, DialogContent, Grid } from "@mui/material";
+import { Box, Container, Dialog, DialogContent } from "@mui/material";
 
 //Core components
 import CustomDialogTitle from "components/Dialog/custom/CustomDialogTitle";
 import CustomDialogActions from "components/Dialog/custom/CustomDialogActions";
 import CancelButton from "components/Buttons/CancelButton";
 import SubmitButton from "components/Buttons/SubmitButton";
-import TextField from "components/Form/TextField";
-import DisplayField from "components/Form/DisplayField";
-import { Box } from "@mui/system";
 import BackDropLoader from "components/Loading/BackDropLoader";
-import { MasterCardImage } from "nta-team/nta-img";
-import { VisaCardImage } from "nta-team/nta-img";
-import { PaypalImage } from "nta-team/nta-img";
-import SelectField from "components/Form/SelectField";
-import { useForm } from "react-hook-form";
+import SelectPaymentMethod from "./SelectPaymentMethod";
+import CompletePayment from "./CompletePayment";
 
-const generateCartYearOptions = () => {
-    const options = [];
-    for (let i = 1; i < 100; i++) {
-        const temp = i < 10 ? "0" + i : "" + i;
-        options.push({ label: temp, value: temp });
-    }
-    return options;
+const STEPS = {
+    SELECT_PAYMENT_METHOD: 1,
+    DO_PAYMENT: 2
 }
 
-const getMonthOptions = () => {
-    const options = [];
-    for (let i = 1; i < 13; i++) {
-        const temp = i < 10 ? "0" + i : "" + i;
-        options.push({ label: temp, value: temp });
-    }
-    return options;
+const STEP_OPTIONS = [
+    { label: "1. How do you want to pay?", value: STEPS.SELECT_PAYMENT_METHOD },
+    { label: "2. Complete you payment.", value: STEPS.DO_PAYMENT },
+]
+
+export const PAYMENT_METHOD = {
+    MOMO: "MOMO",
+    CREDIT_CARD: "CREDIT_CARD",
+    PAY_LATER: "PAY_LATER"
 }
 
 export default function ProcessPaymentDialog({
@@ -41,101 +33,85 @@ export default function ProcessPaymentDialog({
     onClose,
     onSubmit,
     loadingSubmit,
+    onPayLater,
+    onPayByMomo,
     submitButton = {
         text: "Confirm"
     }
 }) {
+    const [paymentMethod, setPaymentMethod] = useState(PAYMENT_METHOD.MOMO);
 
-    const { control } = useForm()
+    const handleChangePaymentMethod = (newValue) => {
+        setPaymentMethod(newValue);
+    }
+
+    const renderContent = () => (
+        <>
+            <Box
+                component={Container}
+                display="flex"
+                flexDirection="column"
+                gap="1rem"
+            >
+                <SelectPaymentMethod
+                    title={STEP_OPTIONS[0].label}
+                    paymentMethod={paymentMethod}
+                    onChange={handleChangePaymentMethod}
+                />
+                {paymentMethod &&
+                    <CompletePayment
+                        title={STEP_OPTIONS[1].label}
+                        paymentMethod={paymentMethod}
+                    />
+                }
+            </Box>
+        </>
+    )
+
+    const renderActions = () => {
+        if (paymentMethod === PAYMENT_METHOD.MOMO) {
+            return (
+                <SubmitButton
+                    onClick={onPayByMomo}
+                    text={"Confirm"}
+                    startIcon={submitButton.icon}
+                />
+            )
+        }
+
+        if (paymentMethod === PAYMENT_METHOD.CREDIT_CARD) {
+            return (
+                <SubmitButton
+                    onClick={onSubmit}
+                    text={submitButton.text}
+                    startIcon={submitButton.icon}
+                />
+            )
+        }
+
+        return (
+            <CancelButton
+                onClick={onPayLater}
+                text="Close"
+            />
+        )
+    }
 
     return (
         <Dialog
             open={open}
             onClose={onClose}
-            maxWidth="sm"
+            maxWidth="md"
         >
             <CustomDialogTitle
                 title={"Process Payment"}
                 onClose={onClose}
             />
             <DialogContent>
-                <Box
-                    display="flex"
-                    gap="0.5rem"
-                >
-                    <MasterCardImage width="50px" height="50px" />
-                    <VisaCardImage width="50px" height="50px" />
-                    <PaypalImage width="50px" height="50px" />
-                </Box>
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <TextField
-                            label="Name"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            label="Card number"
-                            inputProps={{
-                                placeholder: "XXXX XXXX XXXX XXXX"
-                            }}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <DisplayField
-                            label="Expiry date"
-                            value={
-                                <Box
-                                    display="flex"
-                                    columnGap="0.5rem"
-                                    height="fit-content"
-                                    overFlow="hidden"
-                                    width="100%"
-                                >
-                                    <SelectField
-                                        inputProps={{
-                                            placeholder: "MM",
-                                            type: "number"
-                                        }}
-                                        name="month"
-                                        options={getMonthOptions()}
-                                        control={control}
-                                    />
-                                    <SelectField
-                                        inputProps={{
-                                            placeholder: "YY",
-                                            type: "number"
-                                        }}
-                                        name="year"
-                                        options={generateCartYearOptions()}
-                                        control={control}
-                                    />
-                                </Box>
-                            }
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <TextField
-                            label="CVV"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            label="Address"
-                        />
-                    </Grid>
-                </Grid>
+                {renderContent()}
             </DialogContent>
             <CustomDialogActions>
-                <CancelButton
-                    onClick={onClose}
-                    text="Pay later"
-                />
-                <SubmitButton
-                    onClick={onSubmit}
-                    text={submitButton.text}
-                    startIcon={submitButton.icon}
-                />
+                {renderActions()}
             </CustomDialogActions>
             <BackDropLoader
                 open={loadingSubmit}

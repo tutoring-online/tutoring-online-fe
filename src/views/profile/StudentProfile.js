@@ -66,6 +66,7 @@ export default function StudentProfile() {
   const studentActions = useStudentActions();
   useEffect(() => {
     studentActions.fetchStudentDetail({ id: user?.id });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const student = useSelector((state) => state.student.studentDetail);

@@ -74,6 +74,16 @@ export default function ProcessBooking({
         callCreate(PAYMENT_STATUSES.PENDING, callback);
     }
 
+    const handlePayByMomo = () => {
+        toast.info("We are checking for you, please wait.");
+
+        const callback = () => {
+            setOpenPaymentProcess(false);
+            history.push(getFullPath(ROUTES.studentBooking))
+        }
+        callCreate(PAYMENT_STATUSES.PENDING, callback);
+    }
+
     const handlePurchaseSuccess = () => {
         const callback = () => {
             setOpenPaymentProcess(false);
@@ -123,8 +133,13 @@ export default function ProcessBooking({
             {openPaymentProcess &&
                 <ProcessPaymentDialog
                     open={open}
-                    onClose={handleCloseProcessPayment}
+                    onClose={() => {
+                        setOpenPaymentProcess(false)
+                        handleClose();
+                    }}
                     onSubmit={handlePurchaseSuccess}
+                    onPayLater={handleCloseProcessPayment}
+                    onPayByMomo={handlePayByMomo}
                     loadingSubmit={loadingCreate}
                     submitButton={{
                         text: (

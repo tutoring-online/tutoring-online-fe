@@ -11,6 +11,8 @@ import { Skeleton } from '@mui/material';
 import { isAvailableArray } from 'helpers/arrayUtils';
 
 import componentStyles from "assets/theme/views/admin/tables.js";
+import { DELAY_RENDER_DIRECTION } from 'components/Wrapper/DelayRenderWrapper';
+import DelayRenderWrapper from 'components/Wrapper/DelayRenderWrapper';
 
 const useStyles = makeStyles(componentStyles);
 
@@ -85,7 +87,21 @@ export default function CustomTableBody({
     return (
 
         <TableBody>
-            {loadingData ? renderSkeleton() : renderContent()}
+            <DelayRenderWrapper
+                isRender={loadingData}
+                delay={1500}
+                direction={DELAY_RENDER_DIRECTION.stopRender}
+            >
+                {renderSkeleton()}
+            </DelayRenderWrapper>
+
+            <DelayRenderWrapper
+                isRender={!loadingData}
+                delay={1500}
+                direction={DELAY_RENDER_DIRECTION.render}
+            >
+                {renderContent()}
+            </DelayRenderWrapper>
         </TableBody>
     )
 }

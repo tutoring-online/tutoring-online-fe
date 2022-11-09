@@ -163,6 +163,7 @@ export default function SearchBox() {
 
     useEffect(() => {
         const filter = getFilterPayload();
+        // eslint-disable-next-line unused-imports/no-unused-vars
         const { SubjectId, ...others } = filter;
         actions.updateFilter(others);
         reset({
@@ -213,8 +214,8 @@ export default function SearchBox() {
                 component="p"
                 className="home-search-box__description"
             >
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus.
+                Are you looking for an online tutor? TuOn is the best online learning platform in Vietnam.
+                Explore online classes to learn online.
             </Box>
 
             <SearchBar>

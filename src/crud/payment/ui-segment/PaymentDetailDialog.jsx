@@ -18,6 +18,8 @@ import SubmitButton from "components/Buttons/SubmitButton";
 //Helpers
 import yup from "helpers/yupGlobal";
 import { CRUD_MODE } from "settings/setting";
+import DelayRenderWrapper from "nta-team/DelayRenderWrapper";
+import { PAYMENT_STATUSES } from "settings/payment-setting";
 
 const schema = yup.object().shape({
     combo: yup.string().required("Combo is required").nullable(),
@@ -89,6 +91,14 @@ export default function PaymentDetailDialog({
         onSubmit && onSubmit(preparedData, onSuccess);
     }
 
+    const handlePurchaseSuccess = () => {
+
+        const data = {
+            status: PAYMENT_STATUSES.PAID
+        }
+        onSubmit && onSubmit(data, () => { onClose && onClose() });
+    }
+
     const cancelEdit = () => {
         if (mode === CRUD_MODE.create) {
             onClose && onClose();
@@ -125,7 +135,16 @@ export default function PaymentDetailDialog({
                 />
             </>
         ) : (
-            <CancelButton onClick={onClose} text="Close" />
+            <>
+                <CancelButton onClick={onClose} text="Close" />
+                <DelayRenderWrapper isRender={payment?.status === PAYMENT_STATUSES.PENDING}>
+                    <SubmitButton
+                        onClick={handlePurchaseSuccess}
+                        text={"Confirm user has paid"}
+                        loading={loadingSubmit}
+                    />
+                </DelayRenderWrapper>
+            </>
         )
     )
 

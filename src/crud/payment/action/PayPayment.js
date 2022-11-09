@@ -60,12 +60,19 @@ export default function PayPayment({
         });
     }
 
+    const handlePayByMomo = () => {
+        toast.info("We are checking for you, please wait.");
+        refresh && refresh();
+        handleClose && handleClose();
+    }
+
     return (
         open &&
         <ProcessPaymentDialog
             open={open}
             onClose={handleCloseProcessPayment}
             onSubmit={handlePurchaseSuccess}
+            onPayByMomo={handlePayByMomo}
             loadingSubmit={loadingProcessPay}
             submitButton={{
                 text: (
@@ -84,7 +91,7 @@ export default function PayPayment({
                         </Box>
                     </>
                 ),
-                icon: <CreditCardIcon/>
+                icon: <CreditCardIcon />
             }}
         />
     )

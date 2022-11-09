@@ -9,11 +9,13 @@ import useBookingRecords from 'hooks/student/useBookingRecords';
 import BookingSyllabusCard from 'components/Cards/BookingSyllabusCard';
 import { Grid } from '@mui/material';
 import SyllabusCardSkeleton from 'components/Cards/SyllabusCardSkeleton';
-import DelayRenderWrapper from 'nta-team/DelayRenderWrapper';
-import { DELAY_RENDER_DIRECTION } from 'nta-team/DelayRenderWrapper';
 import { useMemo } from 'react';
+import DelayRenderWrapper from 'components/Wrapper/DelayRenderWrapper';
+import { DELAY_RENDER_DIRECTION } from 'components/Wrapper/DelayRenderWrapper';
+import cardComponentStyles from 'assets/theme/components/booking-record-card.js';
 
 const useStyles = makeStyles(componentStyles);
+const useCardStyles = makeStyles(cardComponentStyles);
 
 const renderSkeleton = () => (
     <Grid container spacing={2}>
@@ -35,8 +37,9 @@ const renderSkeleton = () => (
     </Grid>
 )
 
-const TutorSchedule = () => {
+const StudentBookingHistory = () => {
     const styleClasses = useStyles();
+    const classes = useCardStyles();
     const user = useSelector(state => state.auth.user);
     const { bookingRecords, loading, refresh } = useBookingRecords(user?.id);
 
@@ -47,22 +50,48 @@ const TutorSchedule = () => {
         return temp;
     }, [bookingRecords])
 
-    const renderList = () => (
-        <Grid container spacing={2}>
-            {reorderRecords.map(record =>
+    const renderList = () => {
+        if (isAvailableArray(reorderRecords)) {
+            return (
+                <Grid container spacing={2}>
+                    {reorderRecords.map(record =>
+                        <Grid
+                            item
+                            key={record.id}
+                            xs={12}
+                        >
+                            <BookingSyllabusCard
+                                payment={record}
+                                refresh={refresh}
+                            />
+                        </Grid>
+                    )}
+                </Grid>
+            )
+        }
+
+        return (
+            <Grid container spacing={2}>
                 <Grid
                     item
-                    key={record.id}
                     xs={12}
                 >
-                    <BookingSyllabusCard
-                        payment={record}
-                        refresh={refresh}
-                    />
+                    <Box
+                        className={classes.root}
+                        sx={{
+                            boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px",
+                            backgroundColor: "#fff",
+                            width: "100%"
+                        }}
+                        component="div"
+                        padding="2rem"
+                    >
+                        You haven't booked anything yet
+                    </Box>
                 </Grid>
-            )}
-        </Grid>
-    )
+            </Grid>
+        )
+    }
 
     return (
         <>
@@ -75,13 +104,14 @@ const TutorSchedule = () => {
             >
                 <DelayRenderWrapper
                     isRender={loading}
+                    delay={2000}
                     direction={DELAY_RENDER_DIRECTION.stopRender}
                 >
                     {renderSkeleton()}
                 </DelayRenderWrapper>
                 <DelayRenderWrapper
                     isRender={!loading}
-                    delay={100}
+                    delay={2000}
                     direction={DELAY_RENDER_DIRECTION.render}
                 >
                     {renderList()}
@@ -91,4 +121,4 @@ const TutorSchedule = () => {
     )
 }
 
-export default TutorSchedule;
+export default StudentBookingHistory;

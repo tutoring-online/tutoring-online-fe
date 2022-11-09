@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import makeStyles from "@mui/styles/makeStyles";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -61,7 +61,11 @@ export default function TutorProfile() {
   const classes = useStyles();
 
   const authState = useSelector((state) => state.auth);
-  const user = authState.user;
+  const tutorSubject = useSelector((state) => state.tutorSubject.tutorSubject);
+  const subject = useSelector((state) => state.subject.subjectDetail);
+  const tutor = useSelector((state) => state.tutor.tutorDetail);
+
+  const user = useMemo(() => authState.user, [authState.user]);
 
   const [isBasicEditing, setIsBasicEditing] = useState(false);
   const [isContactEditing, setIsContactEditing] = useState(false);
@@ -73,20 +77,18 @@ export default function TutorProfile() {
 
   useEffect(() => {
     tutorActions.fetchTutorDetail({ id: user?.id });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const tutor = useSelector((state) => state.tutor.tutorDetail);
 
   useEffect(() => {
     tutorSubjectActions.getTutorSubject({ id: tutor?.id });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const tutorSubject = useSelector((state) => state.tutorSubject.tutorSubject);  
 
   useEffect(() => {
     subjectActions.fetchSubjectDetail({ id: tutorSubject[0]?.subjectId });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const subject = useSelector((state) => state.subject.subjectDetail);
 
 
   const enableBasicEdit = () => {
